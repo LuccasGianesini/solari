@@ -10,7 +10,7 @@
         <LangVersion>8</LangVersion>
         <RootNamespace>Solari.Deimos.Elastic</RootNamespace>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-        <repositoryUrl>https://github.com/LuccasGianesini/solari-deimos</repositoryUrl>
+        <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
         <Product>Solari.Deimos.Elastic</Product>
     </PropertyGroup>
     <ItemGroup>

@@ -11,17 +11,11 @@ pr:
       - develop
 pool:
   vmImage: 'Windows-2019'
-
-variables:
-  push1: true
-  push2: true
-  prj1: 'Solari.Titan'
-  prj2: 'Solari.Titan.Abstractions'
-
 jobs:
   - job: Build
     variables:
       solution: '**/*.sln'
+      src: '**/src/**/*.csproj'
       buildPlatform: 'Any CPU'
       buildConfiguration: 'Release'
     displayName: 'Build solution and create NuGet packages'
@@ -59,30 +53,19 @@ jobs:
           command: 'pack'
           nobuild: true
           projects: |
-            $(solution)
+            $(src)
           versioningScheme: byBuildNumber
 
-      - task: NuGetCommand@2
-        condition: and(succeeded(), eq('${{ variables.push1 }}', true))
-        continueOnError: false
-        displayName: 'Push project $(prj1)'
-        inputs:
-          command: 'push'
-          packagesToPush: '$(Build.ArtifactStagingDirectory)/**/$(prj1).$(Build.BuildNumber).nupkg;!$(Build
-      .ArtifactStagingDirectory)/**/$(prj1).$(Build.BuildNumber).symbols.nupkg'
-          nuGetFeedType: 'external'
-          publishFeedCredentials: 'Nuget.org'
-
-      - task: NuGetCommand@2
-        condition: and(succeeded(), eq('${{ variables.push2 }}', true))
-        continueOnError: false
-        displayName: 'Push project $(prj2)'
-        inputs:
-          command: 'push'
-          packagesToPush: '$(Build.ArtifactStagingDirectory)/**/$(prj2).$(Build.BuildNumber).nupkg;!$(Build
-      .ArtifactStagingDirectory)/**/$(prj2).$(Build.BuildNumber).symbols.nupkg'
-          nuGetFeedType: 'external'
-          publishFeedCredentials: 'Nuget.org'
+#      - task: NuGetCommand@2
+#        condition: and(succeeded(), eq('${{ variables.push1 }}', true))
+#        continueOnError: false
+#        displayName: 'Push project $(prj1)'
+#        inputs:
+#          command: 'push'
+#          packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build
+#      .ArtifactStagingDirectory)/**/$(prj1).$(Build.BuildNumber).symbols.nupkg'
+#          nuGetFeedType: 'external'
+#          publishFeedCredentials: 'Nuget.org'
 
       - task: GitHubRelease@1
         displayName: 'Create GitHub release'

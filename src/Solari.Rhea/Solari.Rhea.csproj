@@ -10,7 +10,7 @@
         <LangVersion>8</LangVersion>
         <RootNamespace>Solari.Rhea</RootNamespace>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-        <repositoryUrl>https://github.com/LuccasGianesini/solari-rhea</repositoryUrl>
+        <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>

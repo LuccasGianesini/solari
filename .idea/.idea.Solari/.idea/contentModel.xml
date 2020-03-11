@@ -7,6 +7,84 @@
       <e p=".git\info\exclude" t="IncludeRecursive" />
       <e p="LICENSE.txt" t="Include" />
       <e p="packages" t="ExcludeRecursive" />
+      <e p="samples" t="Include">
+        <e p="Solari.Samples.Application" t="IncludeRecursive">
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Class1.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive">
+            <e p="Debug" t="Include">
+              <e p="netstandard2.0" t="Include">
+                <e p="Solari.Samples.Application.AssemblyInfo.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Solari.Samples.Application.csproj" t="IncludeRecursive" />
+        </e>
+        <e p="Solari.Samples.Console" t="IncludeRecursive">
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="obj" t="ExcludeRecursive">
+            <e p="Debug" t="Include">
+              <e p="netcoreapp3.1" t="Include">
+                <e p="Solari.Samples.Console.AssemblyInfo.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Program.cs" t="Include" />
+          <e p="Solari.Samples.Console.csproj" t="IncludeRecursive" />
+        </e>
+        <e p="Solari.Samples.Domain" t="IncludeRecursive">
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Class1.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive">
+            <e p="Debug" t="Include">
+              <e p="netstandard2.0" t="Include">
+                <e p="Solari.Samples.Domain.AssemblyInfo.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Solari.Samples.Domain.csproj" t="IncludeRecursive" />
+        </e>
+        <e p="Solari.Samples.WebApi" t="IncludeRecursive">
+          <e p="appsettings.Development.json" t="Include" />
+          <e p="appsettings.json" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Controllers" t="Include">
+            <e p="WeatherForecastController.cs" t="Include" />
+          </e>
+          <e p="obj" t="ExcludeRecursive">
+            <e p="Debug" t="Include">
+              <e p="netcoreapp3.1" t="Include">
+                <e p="Solari.Samples.WebApi.AssemblyInfo.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Program.cs" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="launchSettings.json" t="Include" />
+          </e>
+          <e p="Solari.Samples.WebApi.csproj" t="IncludeRecursive" />
+          <e p="Startup.cs" t="Include" />
+          <e p="WeatherForecast.cs" t="Include" />
+        </e>
+        <e p="Solari.Samples.WorkerService" t="IncludeRecursive">
+          <e p="appsettings.Development.json" t="Include" />
+          <e p="appsettings.json" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="obj" t="ExcludeRecursive">
+            <e p="Debug" t="Include">
+              <e p="netcoreapp3.1" t="Include">
+                <e p="Solari.Samples.WorkerService.AssemblyInfo.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Program.cs" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="launchSettings.json" t="Include" />
+          </e>
+          <e p="Solari.Samples.WorkerService.csproj" t="IncludeRecursive" />
+          <e p="Worker.cs" t="Include" />
+        </e>
+      </e>
       <e p="Solari.sln" t="IncludeFlat" />
       <e p="src" t="Include">
         <e p="LICENSE.txt" t="Include" />

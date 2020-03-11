@@ -10,7 +10,7 @@
         <PackageTags>C#; DotnetCore; Http</PackageTags>
         <LangVersion>8</LangVersion>
         <RootNamespace>Solari.Ganymede</RootNamespace>
-        <RepositoryUrl>https://github.com/LuccasGianesini/solari-ganymede</RepositoryUrl>
+        <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
       <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     </PropertyGroup>
     <ItemGroup>

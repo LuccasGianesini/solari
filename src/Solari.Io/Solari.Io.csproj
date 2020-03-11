@@ -9,7 +9,7 @@
     <LangVersion>8</LangVersion>
     <RootNamespace>Solari.Io</RootNamespace>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-    <repositoryUrl>https://github.com/LuccasGianesini/solari-io</repositoryUrl>
+    <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>

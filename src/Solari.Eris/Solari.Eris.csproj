@@ -7,7 +7,7 @@
     <PackageId>Solari.Eris</PackageId>
     <PackageDescription>CQRS components</PackageDescription>
     <PackageTags>C#; DotnetCore; CQRS</PackageTags>
-    <repositoryUrl>https://github.com/LuccasGianesini/solari-eris</repositoryUrl>
+    <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
     <LangVersion>8</LangVersion>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <RootNamespace>Solari.Eris</RootNamespace>
