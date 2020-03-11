@@ -1,0 +1,25 @@
+
+--- This file can be deleted.
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+<PropertyGroup>
+  <AssemblyName>Solari.Titan.Shared.Domain</AssemblyName>
+  <Authors>Lauth</Authors>
+  <Title>Solari.Titan.Shared.Domain</Title>
+  <TargetFrameworks>netcoreapp3.0;netcoreapp3.1</TargetFrameworks>
+  <PackageId>Solari.Titan.Shared.Domain</PackageId>
+  <PackageDescription>Shared domain of the Titan library</PackageDescription>
+  <PackageTags>C#; DotnetCore; SharedDomain</PackageTags>
+  <LangVersion>8</LangVersion>
+  <RootNamespace>Solari.Titan.Shared.Domain</RootNamespace>
+  <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+  <repositoryUrl>https://github.com/LuccasGianesini/solari-titan-shared-domain</repositoryUrl>
+</PropertyGroup>
+<ItemGroup>
+  <None Include="..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+</ItemGroup>
+</Project>
+
+
+

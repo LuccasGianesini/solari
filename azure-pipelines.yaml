@@ -1,0 +1,98 @@
+trigger:
+  branches:
+    include:
+      - master
+    exclude:
+      - develop
+pr:
+  branches:
+    exclude:
+      - master
+      - develop
+pool:
+  vmImage: 'Windows-2019'
+
+variables:
+  push1: true
+  push2: true
+  prj1: 'Solari.Titan'
+  prj2: 'Solari.Titan.Abstractions'
+
+jobs:
+  - job: Build
+    variables:
+      solution: '**/*.sln'
+      buildPlatform: 'Any CPU'
+      buildConfiguration: 'Release'
+    displayName: 'Build solution and create NuGet packages'
+    continueOnError: false
+    workspace:
+      clean: resources
+    cancelTimeoutInMinutes: 5
+    steps:
+      - task: DotNetCoreCLI@2
+        displayName: 'Install GitVersion'
+        inputs:
+          command: 'custom'
+          custom: 'tool'
+          arguments: 'install -g gitversion.tool'
+      - task: DotNetCoreCLI@2
+        displayName: 'GitVersion setup'
+        inputs:
+          command: 'custom'
+          custom: 'gitversion'
+          arguments: '/output buildserver'
+  
+      - task: DotNetCoreCLI@2
+        displayName: 'Build solution'
+        inputs:
+          command: 'build'
+          projects: |
+            $(solution)
+          arguments: '--configuration $(BuildConfiguration)  /p:Version=$(Build.BuildNumber)'
+          versioningScheme: byBuildNumber
+    
+      - task: DotNetCoreCLI@2
+        displayName: 'Create NuGet packages for solution'
+        continueOnError: false
+        inputs:
+          command: 'pack'
+          nobuild: true
+          projects: |
+            $(solution)
+          versioningScheme: byBuildNumber
+
+      - task: NuGetCommand@2
+        condition: and(succeeded(), eq('${{ variables.push1 }}', true))
+        continueOnError: false
+        displayName: 'Push project $(prj1)'
+        inputs:
+          command: 'push'
+          packagesToPush: '$(Build.ArtifactStagingDirectory)/**/$(prj1).$(Build.BuildNumber).nupkg;!$(Build
+      .ArtifactStagingDirectory)/**/$(prj1).$(Build.BuildNumber).symbols.nupkg'
+          nuGetFeedType: 'external'
+          publishFeedCredentials: 'Nuget.org'
+
+      - task: NuGetCommand@2
+        condition: and(succeeded(), eq('${{ variables.push2 }}', true))
+        continueOnError: false
+        displayName: 'Push project $(prj2)'
+        inputs:
+          command: 'push'
+          packagesToPush: '$(Build.ArtifactStagingDirectory)/**/$(prj2).$(Build.BuildNumber).nupkg;!$(Build
+      .ArtifactStagingDirectory)/**/$(prj2).$(Build.BuildNumber).symbols.nupkg'
+          nuGetFeedType: 'external'
+          publishFeedCredentials: 'Nuget.org'
+
+      - task: GitHubRelease@1
+        displayName: 'Create GitHub release'
+        inputs:
+          gitHubConnection: 'github.com_azpipelines'
+          repositoryName: '$(Build.Repository.Name)'
+          action: 'create'
+          target: '$(Build.SourceVersion)'
+          tagSource: 'userSpecifiedTag'
+          tag: '$(Build.BuildNumber)'
+          title: 'Version $(Build.BuildNumber)'
+          assets:
+          addChangeLog: false
