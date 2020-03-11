@@ -87,7 +87,6 @@
       </e>
       <e p="Solari.sln" t="IncludeFlat" />
       <e p="src" t="Include">
-        <e p="LICENSE.txt" t="Include" />
         <e p="SOlari.Callisto" t="IncludeRecursive">
           <e p="bin" t="ExcludeRecursive" />
           <e p="CallistoClassMapBase.cs" t="Include" />
