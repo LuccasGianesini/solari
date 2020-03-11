@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\Lucca\.Rider2019.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\Lucca\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_Solari.1240444223.00" t="ExcludeRecursive" />
-    <e p="K:\git\solari" t="IncludeFlat">
+    <e p="C:\git\solari" t="IncludeFlat">
       <e p=".git\info\exclude" t="IncludeRecursive" />
       <e p="LICENSE.txt" t="Include" />
       <e p="packages" t="ExcludeRecursive" />
@@ -587,5 +585,11 @@
         </e>
       </e>
     </e>
+    <e p="C:\Users\75453\Documents\gitignore_global.txt" t="IncludeRecursive" />
+    <e p="C:\Users\75453\rider_logs\config\consoles\db" t="IncludeRecursive" />
+    <e p="C:\Users\75453\rider_logs\config\Extensions" t="IncludeRecursive" />
+    <e p="C:\Users\75453\rider_logs\config\scratches" t="IncludeRecursive" />
+    <e p="C:\Users\75453\rider_logs\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\75453\rider_logs\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_Solari.1776498247.00" t="ExcludeRecursive" />
   </component>
 </project>
