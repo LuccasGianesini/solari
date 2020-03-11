@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Solari.Callisto</AssemblyName>
+    <Authors>Lauth</Authors>
+    <Title>Solari.Callisto</Title>
+    <PackageId>Solari.Callisto</PackageId>
+    <PackageDescription>Callisto library</PackageDescription>
+    <PackageTags>C#; DotnetCore; MongoDb; Callisto; Solari</PackageTags>
+    <LangVersion>8</LangVersion>
+    <RootNamespace>Solari.Callisto</RootNamespace>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <repositoryUrl>https://github.com/LuccasGianesini/solari-callisto</repositoryUrl>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Solari.Callisto.Abstractions\Solari.Callisto.Abstractions.csproj" />
+    <ProjectReference Include="..\Solari.Callisto.Connector\Solari.Callisto.Connector.csproj" />
+  </ItemGroup>
+
+</Project>

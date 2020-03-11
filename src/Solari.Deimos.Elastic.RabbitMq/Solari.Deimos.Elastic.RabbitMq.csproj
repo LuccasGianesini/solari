@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <Authors>Lauth</Authors>
+        <Title>Solari.Deimos.Elastic.RabbitMq</Title>
+        <PackageId>Solari.Deimos.Elastic.RabbitMq</PackageId>
+        <PackageDescription>Convey RabbitMQ ElasticApm plugin</PackageDescription>
+        <PackageTags>C#; DotnetCore; RabbitMq; Deimos</PackageTags>
+        <LangVersion>8</LangVersion>
+        <RootNamespace>Solari.Deimos.Elastic.RabbitMq</RootNamespace>
+        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <repositoryUrl>https://github.com/LuccasGianesini/solari-deimos</repositoryUrl>
+        <Product>Solari.Deimos.Elastic.RabbitMq</Product>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <PackageReference Include="Convey.MessageBrokers.RabbitMQ" Version="0.4.273" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <ProjectReference Include="..\Solari.Deimos.Elastic\Solari.Deimos.Elastic.csproj" />
+    </ItemGroup>
+
+</Project>

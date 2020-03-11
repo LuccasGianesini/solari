@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Solari.Eris</AssemblyName>
+    <Authors>Lauth</Authors>
+    <Title>Solari.Eris</Title>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <PackageId>Solari.Eris</PackageId>
+    <PackageDescription>CQRS components</PackageDescription>
+    <PackageTags>C#; DotnetCore; CQRS</PackageTags>
+    <repositoryUrl>https://github.com/LuccasGianesini/solari-eris</repositoryUrl>
+    <LangVersion>8</LangVersion>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <RootNamespace>Solari.Eris</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <AssemblyName>Solari.Deimos.Abstractions</AssemblyName>
+        <Authors>Lauth</Authors>
+        <Title>Solari.Deimos.Abstractions</Title>
+        <PackageId>Solari.Deimos.Abstractions</PackageId>
+        <PackageDescription>Abstractions library of Deimos</PackageDescription>
+        <PackageTags>C#; DotnetCore; Abstractions; Deimos</PackageTags>
+        <LangVersion>8</LangVersion>
+        <RootNamespace>Solari.Deimos.Abstractions</RootNamespace>
+        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <repositoryUrl>https://github.com/LuccasGianesini/solari-deimos</repositoryUrl>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
+      <ProjectReference Include="..\Solari.Titan.Abstractions\Solari.Titan.Abstractions.csproj" />
+    </ItemGroup>
+</Project>

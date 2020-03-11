@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+   <PropertyGroup>
+      <AssemblyName>Solari.Vanth</AssemblyName>
+      <Authors>Lauth</Authors>
+      <Title>Solari.Vanth</Title>
+      <TargetFramework>netcoreapp3.1</TargetFramework>
+      <PackageId>Solari.Vanth</PackageId>
+      <PackageDescription>Common response objects</PackageDescription>
+      <PackageTags>C#; DotnetCore; CommonReponse</PackageTags>
+      <LangVersion>8</LangVersion>
+      <RootNamespace>Solari.Vanth</RootNamespace>
+      <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+      <repositoryUrl>https://github.com/LuccasGianesini/solari-vanth</repositoryUrl>
+   </PropertyGroup>
+   <ItemGroup>
+      <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+   </ItemGroup>
+   <ItemGroup>
+     <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
+   </ItemGroup>
+
+</Project>
