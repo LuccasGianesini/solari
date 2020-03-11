@@ -56,25 +56,25 @@ jobs:
             $(src)
           versioningScheme: byBuildNumber
 
-#      - task: NuGetCommand@2
-#        condition: and(succeeded(), eq('${{ variables.push1 }}', true))
-#        continueOnError: false
-#        displayName: 'Push project $(prj1)'
-#        inputs:
-#          command: 'push'
-#          packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build
-#      .ArtifactStagingDirectory)/**/$(prj1).$(Build.BuildNumber).symbols.nupkg'
-#          nuGetFeedType: 'external'
-#          publishFeedCredentials: 'Nuget.org'
-      # - task: GitHubRelease@1
-      #   displayName: 'Create GitHub release'
-      #   inputs:
-      #     gitHubConnection: 'github.com_azpipelines'
-      #     repositoryName: '$(Build.Repository.Name)'
-      #     action: 'create'
-      #     target: '$(Build.SourceVersion)'
-      #     tagSource: 'userSpecifiedTag'
-      #     tag: '$(Build.BuildNumber)'
-      #     title: 'Version $(Build.BuildNumber)'
-      #     assets:
-      #     addChangeLog: false
+      - task: NuGetCommand@2
+        condition: and(succeeded(), eq('${{ variables.push1 }}', true))
+        continueOnError: false
+        displayName: 'Push project $(prj1)'
+        inputs:
+          command: 'push'
+          packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build
+      .ArtifactStagingDirectory)/**/$(prj1).$(Build.BuildNumber).symbols.nupkg'
+          nuGetFeedType: 'external'
+          publishFeedCredentials: 'Nuget.org'
+       - task: GitHubRelease@1
+         displayName: 'Create GitHub release'
+         inputs:
+           gitHubConnection: 'github.com_azpipelines'
+           repositoryName: '$(Build.Repository.Name)'
+           action: 'create'
+           target: '$(Build.SourceVersion)'
+           tagSource: 'userSpecifiedTag'
+           tag: '$(Build.BuildNumber)'
+           title: 'Version $(Build.BuildNumber)'
+           assets:
+           addChangeLog: false

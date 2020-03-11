@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Solari.Vanth.Builders
 {
@@ -43,7 +44,7 @@ namespace Solari.Vanth.Builders
         public CommonResponse<TResult> Build()
         {
             if (_model == null && _errors == null) return new CommonResponse<TResult>();
-            return new CommonResponse<TResult>().AddErrors(_errors).AddResult(_model);
+            return _errors.Any() ? new CommonResponse<TResult>().AddErrors(_errors) : new CommonResponse<TResult>().AddResult(_model);
         }
     }
 }

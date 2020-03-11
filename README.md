@@ -19,7 +19,7 @@
    | [Deimos](https://www.nuget.org/packages/Solari.Deimos/)                               | ![Nuget](https://img.shields.io/nuget/v/Solari.Deimos)                  |
    | [Deimos Abstractions](https://www.nuget.org/packages/Solari.Deimos.Abstractions/)     | ![Nuget](https://img.shields.io/nuget/v/Solari.Deimos.Abstractions)     |
    | [Deimos Elastic](https://www.nuget.org/packages/Solari.Deimos.Elastic/)               | ![Nuget](https://img.shields.io/nuget/v/Solari.Deimos.Elastic)          |
-   | [Deimos Jaeger](https://www.nuget.org/packages/Solari.Jaeger/)                       | ![Nuget](https://img.shields.io/nuget/v/Solari.Deimos.Jaeger)            |
+   | [Deimos Jaeger](https://www.nuget.org/packages/Solari.Jaeger/)                        | ![Nuget](https://img.shields.io/nuget/v/Solari.Deimos.Jaeger)            |
    | [Miranda Tracer](https://www.nuget.org/packages/Solari.Miranda.Tracer/)               | ![Nuget](https://img.shields.io/nuget/v/Solari.Miranda.Tracer)          |
   
 ### Description
