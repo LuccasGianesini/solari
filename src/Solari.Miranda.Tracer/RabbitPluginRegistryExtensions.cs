@@ -1,6 +1,6 @@
 ﻿using Convey.MessageBrokers.RabbitMQ;
 
-namespace Solari.Deimos.Elastic.RabbitMq
+namespace Solari.Miranda.Tracer
 {
     public static class RabbitPluginRegistryExtensions
     {

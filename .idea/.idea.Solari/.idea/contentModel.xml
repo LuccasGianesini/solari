@@ -293,19 +293,6 @@
           </e>
           <e p="Solari.Deimos.Elastic.csproj" t="IncludeRecursive" />
         </e>
-        <e p="Solari.Deimos.Elastic.RabbitMq" t="IncludeRecursive">
-          <e p="bin" t="ExcludeRecursive" />
-          <e p="ElasticPlugin.cs" t="Include" />
-          <e p="obj" t="ExcludeRecursive">
-            <e p="Debug" t="Include">
-              <e p="netcoreapp3.1" t="Include">
-                <e p="Solari.Deimos.Elastic.RabbitMq.AssemblyInfo.cs" t="Include" />
-              </e>
-            </e>
-          </e>
-          <e p="RabbitPluginRegistryExtensions.cs" t="Include" />
-          <e p="Solari.Deimos.Elastic.RabbitMq.csproj" t="IncludeRecursive" />
-        </e>
         <e p="Solari.Deimos.Jaeger" t="IncludeRecursive">
           <e p="bin" t="ExcludeRecursive" />
           <e p="DeimosJaegerDescriptor.cs" t="Include" />
@@ -463,6 +450,19 @@
           <e p="ServiceCollectionExtension.cs" t="Include" />
           <e p="Solari.Io.csproj" t="IncludeRecursive" />
           <e p="StringExtensions.cs" t="Include" />
+        </e>
+        <e p="Solari.Miranda.Tracer" t="IncludeRecursive">
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="ElasticPlugin.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive">
+            <e p="Debug" t="Include">
+              <e p="netcoreapp3.1" t="Include">
+                <e p="Solari.Miranda.Tracer.AssemblyInfo.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="RabbitPluginRegistryExtensions.cs" t="Include" />
+          <e p="Solari.Miranda.Tracer.csproj" t="IncludeRecursive" />
         </e>
         <e p="Solari.Rhea" t="IncludeRecursive">
           <e p="bin" t="ExcludeRecursive" />

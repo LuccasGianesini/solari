@@ -29,7 +29,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solari.Deimos.Jaeger", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solari.Deimos.Elastic", "src\Solari.Deimos.Elastic\Solari.Deimos.Elastic.csproj", "{993AAD2B-F5C7-4BF3-95A1-28DAA42D86C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solari.Deimos.Elastic.RabbitMq", "src\Solari.Deimos.Elastic.RabbitMq\Solari.Deimos.Elastic.RabbitMq.csproj", "{D3C078A9-A912-4E61-AF4E-3AD4BE55B675}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solari.Miranda.Tracer", "src\Solari.Miranda.Tracer\Solari.Miranda.Tracer.csproj", "{D3C078A9-A912-4E61-AF4E-3AD4BE55B675}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solari.Deimos", "src\Solari.Deimos\Solari.Deimos.csproj", "{84B47FD9-D738-483E-8E29-490239AB4C69}"
 EndProject

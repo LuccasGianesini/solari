@@ -43,7 +43,7 @@ jobs:
           command: 'build'
           projects: |
             $(solution)
-          arguments: '--configuration $(BuildConfiguration)  /p:Version=$(Build.BuildNumber)'
+          arguments: '--configuration $(BuildConfiguration)  -v n /p:Version=$(Build.BuildNumber)'
           versioningScheme: byBuildNumber
     
       - task: DotNetCoreCLI@2
