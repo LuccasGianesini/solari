@@ -9,7 +9,7 @@
         <LangVersion>8</LangVersion>
         <RootNamespace>Solari.Deimos.Elastic.RabbitMq</RootNamespace>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-        <repositoryUrl>https://github.com/LuccasGianesini/solari-deimos</repositoryUrl>
+        <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
         <Product>Solari.Deimos.Elastic.RabbitMq</Product>
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>

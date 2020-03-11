@@ -8,7 +8,7 @@
         <PackageTags>C#; DotnetCore; Bootstrapper</PackageTags>
         <LangVersion>8</LangVersion>
         <RootNamespace>Solari.Sol</RootNamespace>
-        <repositoryUrl>https://github.com/LuccasGianesini/solari-sol</repositoryUrl>
+         <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
