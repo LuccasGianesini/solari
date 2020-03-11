@@ -16,7 +16,7 @@ namespace Solari.Deimos.Elastic
 {
     public static class ElasticTracerConfiguration
     {
-        public static ISolariBuilder AddElasticApm(this ISolariBuilder solariBuilder, DeimosOptions options)
+        public static ISolariBuilder AddElasticApm(ISolariBuilder solariBuilder, DeimosOptions options)
         {
             solariBuilder.AddBuildAction(provider =>
             {

@@ -20,7 +20,7 @@ namespace Solari.Deimos.Jaeger
 {
     public static class JaegerTracerConfiguration
     {
-        public static ISolariBuilder AddDeimosJaeger(ISolariBuilder solariBuilder, DeimosOptions options, Action<ITracerPluginManager> action = null)
+        public static ISolariBuilder AddJaeger(ISolariBuilder solariBuilder, DeimosOptions options)
         {
             solariBuilder.Services.AddSingleton<IDeimosJaegerTracer, DeimosJaegerTracer>();
             ConfigureHttpOut(solariBuilder);

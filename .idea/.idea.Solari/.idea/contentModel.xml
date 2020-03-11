@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\Lucca\.nuget\packages\microsoft.net.test.sdk\16.2.0\build\netcoreapp1.0" t="Include">
-      <e p="Microsoft.NET.Test.Sdk.Program.cs" t="Include" />
-    </e>
-    <e p="C:\Users\Lucca\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.reporters.netcoreapp10.dll" t="Include" />
-    <e p="C:\Users\Lucca\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.utility.netcoreapp10.dll" t="Include" />
-    <e p="C:\Users\Lucca\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
-    <e p="C:\Users\Lucca\.Rider2019.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\Lucca\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_Solari.1240444223.00" t="ExcludeRecursive" />
-    <e p="K:\git\solari" t="IncludeFlat">
-      <e p=".git\info\exclude" t="IncludeRecursive" />
+    <e p="C:\git\solari" t="IncludeFlat">
       <e p="LICENSE.txt" t="Include" />
       <e p="packages" t="ExcludeRecursive" />
       <e p="samples" t="Include">
@@ -40,6 +31,7 @@
         </e>
         <e p="Solari.Samples.Domain" t="IncludeRecursive">
           <e p="bin" t="ExcludeRecursive" />
+          <e p="InsertPersonDTo.cs" t="Include" />
           <e p="obj" t="ExcludeRecursive">
             <e p="Debug" t="Include">
               <e p="netcoreapp3.1" t="Include">
@@ -47,8 +39,10 @@
               </e>
             </e>
           </e>
+          <e p="Person" t="Include" />
           <e p="Person.cs" t="Include" />
           <e p="PersonAttribute.cs" t="Include" />
+          <e p="PersonAttributeDto.cs" t="Include" />
           <e p="Solari.Samples.Domain.csproj" t="IncludeRecursive" />
         </e>
         <e p="Solari.Samples.Infrastructure" t="IncludeRecursive">
@@ -60,6 +54,7 @@
               </e>
             </e>
           </e>
+          <e p="PersonOperations.cs" t="Include" />
           <e p="PersonRepository.cs" t="Include" />
           <e p="Solari.Samples.Infrastructure.csproj" t="IncludeRecursive" />
         </e>
@@ -489,7 +484,6 @@
           <e p="IEventFilter.cs" t="Include" />
           <e p="Maybe.cs" t="Include" />
           <e p="MaybeExtensions.cs" t="Include" />
-          <e p="Null.cs" t="Include" />
           <e p="obj" t="ExcludeRecursive">
             <e p="Debug" t="Include">
               <e p="netcoreapp3.1" t="Include">
@@ -512,6 +506,7 @@
         <e p="Solari.Sol" t="IncludeRecursive">
           <e p="ApplicationOptions.cs" t="Include" />
           <e p="bin" t="ExcludeRecursive" />
+          <e p="Empty.cs" t="Include" />
           <e p="Framework" t="Include">
             <e p="SolariBuilder.cs" t="Include" />
             <e p="SolariMarshal.cs" t="Include" />
@@ -620,5 +615,17 @@
         </e>
       </e>
     </e>
+    <e p="C:\Users\75453\.nuget\packages\microsoft.net.test.sdk\16.2.0\build\netcoreapp1.0" t="Include">
+      <e p="Microsoft.NET.Test.Sdk.Program.cs" t="Include" />
+    </e>
+    <e p="C:\Users\75453\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.reporters.netcoreapp10.dll" t="Include" />
+    <e p="C:\Users\75453\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.utility.netcoreapp10.dll" t="Include" />
+    <e p="C:\Users\75453\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
+    <e p="C:\Users\75453\Documents\gitignore_global.txt" t="IncludeRecursive" />
+    <e p="C:\Users\75453\rider_logs\config\consoles\db" t="IncludeRecursive" />
+    <e p="C:\Users\75453\rider_logs\config\Extensions" t="IncludeRecursive" />
+    <e p="C:\Users\75453\rider_logs\config\scratches" t="IncludeRecursive" />
+    <e p="C:\Users\75453\rider_logs\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\75453\rider_logs\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_Solari.1776498247.00" t="ExcludeRecursive" />
   </component>
 </project>

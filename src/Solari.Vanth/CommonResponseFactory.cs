@@ -1,4 +1,5 @@
 ﻿using System;
+using Solari.Sol;
 using Solari.Vanth.Builders;
 
 namespace Solari.Vanth
@@ -13,7 +14,25 @@ namespace Solari.Vanth
         public CommonResponse<TModel> CreateError<TModel>(Func<ICommonErrorResponseBuilder, CommonErrorResponse> builder) =>
             new CommonResponseBuilder<TModel>().WithError(builder).Build();
 
-        public CommonResponse<TModel> CreateEmpty<TModel>() => new CommonResponseBuilder<TModel>().Build();
-        
+        public CommonResponse<Empty> CreateEmpty() => new CommonResponseBuilder<Empty>().WithResult(new Empty()).Build();
+
+        public CommonResponse<TModel> CreateErrorFromException<TModel>(Exception exception, bool includeException = true, 
+                                                                       string errorCode = "", string message = null, string detailMessage = null)
+        {
+            if (exception == null) throw new ArgumentNullException(nameof(exception), "Cannot create exception error from a null exception object");
+            ICommonDetailedErrorResponseBuilder detailedErrorResponseBuilder = new CommonDetailedErrorResponseBuilder()
+                                                                               .WithMessage(detailMessage ?? exception.Message)
+                                                                               .WithSource(exception.Source)
+                                                                               .WithTarget(exception.TargetSite.Name);
+            if (includeException)
+            {
+                detailedErrorResponseBuilder.WithException(exception);
+            }
+            ICommonErrorResponseBuilder error = new CommonErrorResponseBuilder()
+                                                .WithCode(errorCode)
+                                                .WithMessage(message ?? exception.Message)
+                                                .WithDetail(detailedErrorResponseBuilder.Build());
+            return new CommonResponse<TModel>().AddError(error.Build());
+        }
     }
 }

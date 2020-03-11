@@ -8,6 +8,7 @@ using Solari.Ganymede.Domain.Options;
 using Solari.Ganymede.Extensions;
 using Solari.Ganymede.Framework;
 using Solari.Rhea;
+using Solari.Sol;
 using Solari.Vanth;
 using Solari.Vanth.Builders;
 
@@ -84,8 +85,8 @@ namespace Solari.Ganymede.Pipeline
             return this;
         }
 
-        public async Task<CommonResponse<GanymedeHttpResponse<Null>>> Send(bool stringifyResponseContent = false, bool stringifyRequestContent = false)
-            => await ExecuteRequest<Null>(stringifyResponseContent, stringifyRequestContent);
+        public async Task<CommonResponse<GanymedeHttpResponse<Empty>>> Send(bool stringifyResponseContent = false, bool stringifyRequestContent = false)
+            => await ExecuteRequest<Empty>(stringifyResponseContent, stringifyRequestContent);
 
 
         public async Task<CommonResponse<GanymedeHttpResponse<T>>> Send<T>(bool stringifyResponseContent = false, bool stringifyRequestContent = false)

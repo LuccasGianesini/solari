@@ -11,5 +11,6 @@ namespace Solari.Vanth.Builders
         ICommonDetailedErrorResponseBuilder WithMessage(StringBuilder stringBuilder);
         ICommonDetailedErrorResponseBuilder WithTarget(string target);
         CommonDetailedErrorResponse Build();
+        ICommonDetailedErrorResponseBuilder WithSource(string source);
     }
 }

@@ -11,16 +11,12 @@ namespace Solari.Deimos
     {
         public static ISolariBuilder AddDeimos(this ISolariBuilder solariBuilder, Action<ITracerPluginManager> action = null)
         {
-            if (action != null)
-            {
-                var manager = new TracerPluginManager(solariBuilder);
-                action(manager);
-            }
-            
             var options = solariBuilder.AppConfiguration.GetOptions<DeimosOptions>(DeimosConstants.TracingAppSettingsSection);
             solariBuilder.Services.Configure<DeimosOptions>(solariBuilder.AppConfiguration.GetSection(DeimosConstants.TracingAppSettingsSection));
             ConfigureTracing(solariBuilder, options);
-
+            if (action == null) return solariBuilder;
+            var manager = new TracerPluginManager(solariBuilder);
+            action(manager);
             return solariBuilder;
         }
 
@@ -33,7 +29,7 @@ namespace Solari.Deimos
 
             if (options.UseJaeger && !options.UseElasticApm)
             {
-                Solari.Deimos.Jaeger.JaegerTracerConfiguration.AddDeimosJaeger(solariBuilder, options);
+                Solari.Deimos.Jaeger.JaegerTracerConfiguration.AddJaeger(solariBuilder, options);
             }
 
             if (options.UseElasticApm && !options.UseJaeger)

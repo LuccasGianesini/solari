@@ -9,6 +9,7 @@ namespace Solari.Vanth.Builders
         private Exception _exception;
         private string _message;
         private string _target;
+        private string _source;
 
 
         public ICommonDetailedErrorResponseBuilder WithErrorCode(string code)
@@ -44,11 +45,18 @@ namespace Solari.Vanth.Builders
             _target = target;
             return this;
         }
+        
+        public ICommonDetailedErrorResponseBuilder WithSource(string source)
+        {
+            if (string.IsNullOrEmpty(source)) throw new ArgumentException("Value cannot be null or empty.", nameof(source));
+            _source = source;
+            return this;
+        }
 
         public CommonDetailedErrorResponse Build()
         {
             if (_message == null) throw new ArgumentNullException(nameof(_message) ,"Error message cannot be null");
-            return new CommonDetailedErrorResponse(_code, _message, _target, _exception);
+            return new CommonDetailedErrorResponse(_code, _message, _target, _source, _exception);
         }
     }
 }
