@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Elastic.CommonSchema;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using Solari.Callisto;
 using Solari.Callisto.Abstractions.CQR;
-using Solari.Rhea;
-using Solari.Samples.Domain;
 using Solari.Samples.Domain.Person;
 using Solari.Samples.Domain.Person.Dtos;
-using Solari.Sol;
+using Solari.Samples.Domain.Person.Exceptions;
+using Solari.Samples.Domain.Person.Results;
 using Solari.Vanth;
 
 namespace Solari.Samples.Infrastructure
@@ -19,30 +16,29 @@ namespace Solari.Samples.Infrastructure
         private readonly ICommonResponseFactory _factory;
 
         public PersonRepository(ICallistoContext context, ICommonResponseFactory factory) : base(context) { _factory = factory; }
-        public async Task<CommonResponse<PersonInsertedDto>> InsertPerson(ICallistoInsert<Person> insert)
+        public async Task<InsertPersonResult> InsertPerson(ICallistoInsert<Person> insert)
         {
             try
             {
                 await Insert.One(insert);
-                return _factory.CreateResult(PersonInsertedDto.Create(insert.Value.Id));
+                return InsertPersonResult.Create(insert.Value.Id);
             }
             catch (MongoWriteException e)
             {
-                return _factory.CreateErrorFromException<PersonInsertedDto>(e, errorCode: "002", message: "Error while insert a new person into the database");
+                throw new InsertPersonException("Error while writing a new person", e);
             }
             
         }
 
-        public async Task<CommonResponse<UpdateResult>> AddAttribute(ICallistoUpdate<Person> update)
+        public async Task<UpdateResult> AddAttribute(ICallistoUpdate<Person> update)
         {
             try
             {
-                UpdateResult result = await Update.One(update);
-                return _factory.CreateResult(result);
+                return await Update.One(update);
             }
             catch (MongoWriteException e)
             {
-                return _factory.CreateErrorFromException<UpdateResult>(e, errorCode: "003", message: "Error while adding an attribute to person");
+                throw new AddPersonAttributeException("Error while writing attribute to person", e);
             }
         }
 

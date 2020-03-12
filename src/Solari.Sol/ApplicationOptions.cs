@@ -30,6 +30,7 @@ namespace Solari.Sol
         /// </summary>
         public string ApplicationEnvironment => GetEnvironment();
 
+        public bool IsInDevelopment() { return ApplicationEnvironment.ToLowerInvariant().Equals("development"); }
         private string AspNetCoreEnvironment { get; } = Environment.GetEnvironmentVariable(SolariConstants.ASPNETCORE_ENVIRONMENT);
         private string DotNetEnvironment { get; } = Environment.GetEnvironmentVariable(SolariConstants.DOTNET_ENVIRONMENT);
 
@@ -39,7 +40,9 @@ namespace Solari.Sol
         {
             if (!string.IsNullOrEmpty(AspNetCoreEnvironment))
                 return AspNetCoreEnvironment;
-            return !string.IsNullOrEmpty(DotNetEnvironment) ? DotNetEnvironment : "";
+            return !string.IsNullOrEmpty(DotNetEnvironment) ? DotNetEnvironment : "Production";
         }
+
+     
     }
 }

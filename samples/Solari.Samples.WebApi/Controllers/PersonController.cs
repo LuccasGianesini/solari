@@ -1,7 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 using Solari.Samples.Domain.Person;
 using Solari.Samples.Domain.Person.Dtos;
+using Solari.Samples.Domain.Person.Exceptions;
+using Solari.Samples.Domain.Person.Results;
+using Solari.Samples.Domain.Person.Validators;
 using Solari.Sol;
 using Solari.Vanth;
 
@@ -23,18 +30,28 @@ namespace Solari.Samples.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert(InsertPersonDto dto)
         {
-            if (dto == null)
+            try
             {
-                return BadRequest(_factory.CreateError<Empty>(builder => builder
-                                                                         .WithCode("005")
-                                                                         .WithMessage("Provided object in null.")
-                                                                         .Build()));
+               ValidationResult validationResult = new InsertPersonDtoValidator().Validate(dto);
+               if (!validationResult.IsValid)
+               {
+                   return BadRequest(_factory.CreateError<InsertPersonResult>(validationResult));
+               }
+               return Ok(await _application.InsertPerson(dto));
+
+
+            }
+            catch (InsertPersonException insertPersonException)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, _factory
+                                      .CreateErrorFromException<InsertPersonResult>(insertPersonException))
+            }
+            catch (ArgumentNullException ag)
+            {
+                
             }
 
-            CommonResponse<PersonInsertedDto> result = await _application.InsertPerson(dto);
-            if (result.HasResult)
-                return Ok(result);
-            return BadRequest(result);
+          
         }
     }
 }

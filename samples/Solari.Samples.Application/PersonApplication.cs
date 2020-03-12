@@ -4,6 +4,7 @@ using MongoDB.Driver;
 using Solari.Callisto.Abstractions.CQR;
 using Solari.Samples.Domain.Person;
 using Solari.Samples.Domain.Person.Dtos;
+using Solari.Samples.Domain.Person.Results;
 using Solari.Titan;
 using Solari.Vanth;
 
@@ -23,17 +24,10 @@ namespace Solari.Samples.Application
             _factory = factory;
         }
 
-        public async Task<CommonResponse<PersonInsertedDto>> InsertPerson(InsertPersonDto dto)
+        public async Task<InsertPersonResult> InsertPerson(InsertPersonDto dto)
         {
-            try
-            {
-                ICallistoInsert<Person> op = _operations.CreateInsertOperation(dto);
-                return await _repository.InsertPerson(op);
-            }
-            catch (ArgumentNullException ag)
-            {
-                return _factory.CreateErrorFromException<PersonInsertedDto>(ag, false, errorCode: "001");
-            }
+            ICallistoInsert<Person> op = _operations.CreateInsertOperation(dto);
+            return await _repository.InsertPerson(op);
         }
 
         public async Task<CommonResponse<long>> AddAttributeToPerson(PersonAddAttributeDto dto)
@@ -42,8 +36,8 @@ namespace Solari.Samples.Application
             {
                 ICallistoUpdate<Person> op = _operations.CreateAddAttributeOperation(dto);
                 CommonResponse<UpdateResult> result = await _repository.AddAttribute(op);
-                return result.HasResult 
-                           ? result.Transform(result.Result.ModifiedCount, false) 
+                return result.HasResult
+                           ? result.Transform(result.Result.ModifiedCount, false)
                            : result.Transform(long.MinValue, true);
             }
             catch (ArgumentNullException ag)
