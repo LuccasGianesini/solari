@@ -7,6 +7,7 @@ using Solari.Samples.Application;
 using Solari.Samples.Domain.Person;
 using Solari.Samples.Infrastructure;
 using Solari.Sol;
+using Solari.Titan.DependencyInjection;
 using Solari.Vanth.DependencyInjection;
 
 namespace Solari.Samples.Di
@@ -17,6 +18,7 @@ namespace Solari.Samples.Di
         {
             services.AddSol(configuration)
                     .AddVanth()
+                    .AddTitan()
                     .AddCallistoConnector()
                     .AddCallisto(callistoConfiguration => callistoConfiguration
                                                           .RegisterDefaultConventionPack()

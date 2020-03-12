@@ -11,7 +11,6 @@ namespace Solari.Vanth.Builders
 
         public ICommonResponseBuilder<TResult> WithResult(TResult model)
         {
-            if (model == null) throw new ArgumentNullException(nameof(model));
             _model = model;
             return this;
         }
@@ -24,15 +23,13 @@ namespace Solari.Vanth.Builders
 
         public ICommonResponseBuilder<TResult> WithError(Func<ICommonErrorResponseBuilder, CommonErrorResponse> builder)
         {
-            if (builder == null) throw new ArgumentNullException(nameof(builder));
+            if (builder == null) throw new ArgumentNullException(nameof(builder), "Cannot invoke a null func");
             _errors.Push(builder(new CommonErrorResponseBuilder()));
             return this;
         }
 
         public ICommonResponseBuilder<TResult> WithErrors(Stack<CommonErrorResponse> errors)
         {
-            if (errors.Count == 0) throw new ArgumentException("Value cannot be an empty collection.", nameof(errors));
-
             foreach (CommonErrorResponse commonErrorResponse in errors)
             {
                 _errors.Push(commonErrorResponse);

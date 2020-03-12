@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using Solari.Vanth.Exceptions;
 
 namespace Solari.Vanth.Builders
 {
@@ -14,20 +15,17 @@ namespace Solari.Vanth.Builders
 
         public ICommonDetailedErrorResponseBuilder WithErrorCode(string code)
         {
-            if (string.IsNullOrEmpty(code)) throw new ArgumentException("Value cannot be null or empty.", nameof(code));
             _code = code;
             return this;
         }
 
         public ICommonDetailedErrorResponseBuilder WithException(Exception exception)
         {
-            _exception = exception ?? throw new ArgumentNullException(nameof(exception));
             return this;
         }
 
         public ICommonDetailedErrorResponseBuilder WithMessage(string message)
         {
-            if (string.IsNullOrEmpty(message)) throw new ArgumentException("Value cannot be null or empty.", nameof(message));
             _message = message;
             return this;
         }
@@ -41,21 +39,19 @@ namespace Solari.Vanth.Builders
 
         public ICommonDetailedErrorResponseBuilder WithTarget(string target)
         {
-            if (string.IsNullOrEmpty(target)) throw new ArgumentException("Value cannot be null or empty.", nameof(target));
             _target = target;
             return this;
         }
         
         public ICommonDetailedErrorResponseBuilder WithSource(string source)
         {
-            if (string.IsNullOrEmpty(source)) throw new ArgumentException("Value cannot be null or empty.", nameof(source));
             _source = source;
             return this;
         }
 
         public CommonDetailedErrorResponse Build()
         {
-            if (_message == null) throw new ArgumentNullException(nameof(_message) ,"Error message cannot be null");
+            if (string.IsNullOrEmpty(_message)) throw new NullOrEmptyErrorMessageException();
             return new CommonDetailedErrorResponse(_code, _message, _target, _source, _exception);
         }
     }

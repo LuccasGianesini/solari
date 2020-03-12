@@ -6,19 +6,15 @@ namespace Solari.Vanth
 {
     public static class ExceptionHelper
     {
-        public static IEnumerable<CommonDetailedErrorResponse> ExtractDetailsFromException(this Exception ex, bool addException)
+        public static IEnumerable<CommonDetailedErrorResponse> ExtractDetailsFromException(this Exception ex)
         {
             if (ex == null)
             {
                 yield break;
             }
-
-            if (addException)
-            {
-                yield return new CommonDetailedErrorResponse("", ex.Message, ex.TargetSite.Name, ex.Source, ex);
-            }
             yield return new CommonDetailedErrorResponse("", ex.Message, ex.TargetSite.Name, ex.Source, null);
-            
+
+
             IEnumerable<Exception> innerExceptions = Enumerable.Empty<Exception>();
 
             if (ex is AggregateException exception && exception.InnerExceptions.Any())
@@ -27,7 +23,7 @@ namespace Solari.Vanth
             }
             else if (ex.InnerException != null)
             {
-                innerExceptions = new[] { ex.InnerException };
+                innerExceptions = new[] {ex.InnerException};
             }
 
             foreach (Exception innerEx in innerExceptions)

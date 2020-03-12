@@ -2,7 +2,7 @@
 
 namespace Solari.Samples.Domain.Person.Dtos
 {
-    public class PersonAddAttributeDto
+    public class AddPersonAddAttributeDto
     {
         public ObjectId PersonId { get; set; }
         public string AttributeName { get; set; }

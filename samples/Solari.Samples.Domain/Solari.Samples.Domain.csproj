@@ -25,4 +25,8 @@
     <ProjectReference Include="..\..\src\Solari.Vanth\Solari.Vanth.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.1.0" />
+  </ItemGroup>
+
 </Project>

@@ -22,11 +22,9 @@ namespace Solari.Samples.Domain.Person
 
         public List<PersonAttribute> Attributes { get; set; }
 
-        public Person AddAttributes(List<PersonAttribute> attributes)
+        public Person AddAttributes(IEnumerable<PersonAttribute> attributes)
         {
-            if (!attributes.Any())
-                return this;
-            attributes.ForEach(a => AddAttribute(a));
+            Attributes.AddRange(attributes);
             return this;
         }
 
@@ -37,10 +35,13 @@ namespace Solari.Samples.Domain.Person
         }
         public static explicit operator Person(InsertPersonDto dto)
         {
-            if (string.IsNullOrEmpty(dto.Name))
-                throw new ArgumentNullException(nameof(dto.Name), "Name of the person cannot be null!");
+            var person = new Person(dto.Name);
+            if (dto.Attributes != null)
+            {
+                person.AddAttributes(dto.Attributes?.Select(a => (PersonAttribute) a));
+            }
 
-            return new Person(dto.Name).AddAttributes(dto.Attributes.Select(a => (PersonAttribute) a).ToList());
+            return person;
         }
     }
 }

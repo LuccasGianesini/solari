@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Solari.Vanth.Exceptions;
 
 namespace Solari.Vanth.Builders
 {
@@ -13,6 +14,11 @@ namespace Solari.Vanth.Builders
         ICommonErrorResponseBuilder WithDetail(CommonDetailedErrorResponse detail);
         ICommonErrorResponseBuilder WithDetail(IEnumerable<CommonDetailedErrorResponse> details);
         ICommonErrorResponseBuilder WithDetail(Func<ICommonDetailedErrorResponseBuilder, CommonDetailedErrorResponse> builder);
+        /// <summary>
+        /// Build the response.
+        /// </summary>
+        /// <exception cref="NullOrEmptyErrorMessageException">When the error message is null or empty</exception>
+        /// <returns><see cref="CommonErrorResponse"/></returns>
         CommonErrorResponse Build();
     }
 }

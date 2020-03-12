@@ -61,6 +61,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solari.Samples.Infrastructu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solari.Samples.Di", "samples\Solari.Samples.Di\Solari.Samples.Di\Solari.Samples.Di.csproj", "{0BDE48EA-150A-41DB-90B2-9DCB975B8F8C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "requests", "requests", "{AF1AC1AF-84B6-45A3-AF38-ED9AE7FB72EC}"
+ProjectSection(SolutionItems) = preProject
+	requests\personController.http = requests\personController.http
+EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

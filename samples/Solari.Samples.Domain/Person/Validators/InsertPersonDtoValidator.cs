@@ -15,12 +15,7 @@ namespace Solari.Samples.Domain.Person.Validators
             RuleFor(a => a.Name).NotEmpty()
                                 .WithErrorCode(Constants.EmptyPropertyErrorCode)
                                 .WithName(Constants.EmptyPropertyName)
-                                .WithMessage("Person name cannot be empty!")
-                                .NotNull()
-                                .WithErrorCode(Constants.NullPropertyErrorCode)
-                                .WithName(Constants.NullObjectErrorName)
                                 .WithMessage("Person name cannot be empty!");
         }
-
     }
 }

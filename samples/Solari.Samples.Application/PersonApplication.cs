@@ -30,19 +30,18 @@ namespace Solari.Samples.Application
             return await _repository.InsertPerson(op);
         }
 
-        public async Task<CommonResponse<long>> AddAttributeToPerson(PersonAddAttributeDto dto)
+        public async Task<CommonResponse<long>> AddAttributeToPerson(AddPersonAddAttributeDto dto)
         {
             try
             {
-                ICallistoUpdate<Person> op = _operations.CreateAddAttributeOperation(dto);
-                CommonResponse<UpdateResult> result = await _repository.AddAttribute(op);
-                return result.HasResult
-                           ? result.Transform(result.Result.ModifiedCount, false)
-                           : result.Transform(long.MinValue, true);
+                // ICallistoUpdate<Person> op = _operations.CreateAddAttributeOperation(dto);
+                // CommonResponse<InsertPersonResult> result = await _repository.AddAttribute(op);
+
+                return new CommonResponse<long>().AddResult(long. MaxValue);
             }
             catch (ArgumentNullException ag)
             {
-                return _factory.CreateErrorFromException<long>(ag, false, errorCode: "003");
+                return _factory.CreateErrorFromException<long>(ag, "003");
             }
         }
     }

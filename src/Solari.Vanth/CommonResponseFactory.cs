@@ -44,23 +44,15 @@ namespace Solari.Vanth
         public CommonResponse<Empty> CreateEmpty() => new CommonResponseBuilder<Empty>().WithResult(new Empty()).Build();
         public CommonResponse<TResult> CreateEmpty<TResult>() => new CommonResponseBuilder<TResult>().Build();
 
-        public CommonResponse<TResult> CreateErrorFromException<TResult>(Exception exception, bool includeException = false,
-                                                                         string errorCode = "", string errorMessage = null, string detailMessage = null)
+        public CommonResponse<TResult> CreateErrorFromException<TResult>(Exception exception, string errorCode = "", string errorMessage = "")
         {
             if (exception == null) throw new ArgumentNullException(nameof(exception), "Cannot create exception error from a null exception object");
-
-            // ICommonDetailedErrorResponseBuilder detailedErrorResponseBuilder = new CommonDetailedErrorResponseBuilder()
-            //                                                                    .WithMessage(detailMessage ?? exception.Message)
-            //                                                                    .WithSource(exception.Source)
-            //                                                                    .WithTarget(exception.TargetSite.Name);
-            // if (includeException || !_application.IsInDevelopment())
-            // {
-            //     detailedErrorResponseBuilder.WithException(exception);
-            // }
+            
             ICommonErrorResponseBuilder error = new CommonErrorResponseBuilder()
                                                 .WithCode(errorCode)
-                                                .WithMessage(errorMessage ?? exception.Message)
-                                                .WithDetail(exception.ExtractDetailsFromException(includeException || !_application.IsInDevelopment()));
+                                                .WithErrorType(CommonErrorType.Exception)
+                                                .WithMessage(string.IsNullOrEmpty(errorMessage) ? exception.Message: errorMessage)
+                                                .WithDetail(exception.ExtractDetailsFromException());
             return new CommonResponse<TResult>().AddError(error.Build());
         }
     }

@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Text;
 using Elastic.Apm.SerilogEnricher;
 using Elastic.CommonSchema.Serilog;
@@ -60,10 +61,22 @@ namespace Solari.Titan.Framework
             if (!options.UseElk || options.Elk == null) return configuration;
             var elastic = new ElasticsearchSinkOptions(new Uri(options.Elk.Url))
             {
+                EmitEventFailure = EmitEventFailureHandling.RaiseCallback,
+                FailureCallback = e => Log.Error("Error submitting events to elasticsearch sink:" + e.MessageTemplate),
+                
                 MinimumLogEventLevel = TitanLibHelper.GetLogLevel(options.LogLevelRestriction),
                 AutoRegisterTemplate = options.Elk.AutoRegisterTemplate,
                 AutoRegisterTemplateVersion = options.Elk.GetAutoRegisterTemplateVersion(),
-                
+                BufferFileCountLimit = options.Elk.BufferFileCountLimit,
+                Period = options.Elk.GetPeriod(),
+                BatchPostingLimit = options.Elk.BatchPostingLimit,
+                QueueSizeLimit = options.Elk.QueueSizeLimit,
+                BufferCleanPayload = (failingEvent, statuscode, exception) =>
+                {
+                    Log.Error($"Error while sending payload to server. Code: {statuscode}  Message: {exception}");
+                    return exception;
+                },
+                BufferLogShippingInterval = options.Elk.GetBufferLogShippingInterval(),
                 IndexFormat = string.IsNullOrWhiteSpace(options.Elk.IndexFormat)
                                   ? $"{applicationOptions.ApplicationName}-{DateTime.Now:dd-MM-yyyy}"
                                   : options.Elk.IndexFormat,

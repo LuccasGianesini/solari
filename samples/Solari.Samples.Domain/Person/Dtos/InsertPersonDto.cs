@@ -6,6 +6,6 @@ namespace Solari.Samples.Domain.Person.Dtos
     public class InsertPersonDto
     {
         public string Name { get; set; }
-        public List<PersonAddAttributeDto> Attributes { get; set; }
+        public List<AddPersonAddAttributeDto> Attributes { get; set; }
     }
 }

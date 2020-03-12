@@ -17,7 +17,7 @@ namespace Solari.Samples.Infrastructure
             return _operationFactory.CreateInsert("insert-person", (Person) insertPersonDto);
         }
 
-        public ICallistoUpdate<Person> CreateAddAttributeOperation(PersonAddAttributeDto dto)
+        public ICallistoUpdate<Person> CreateAddAttributeOperation(AddPersonAddAttributeDto dto)
         {
             UpdateDefinition<Person> update = Builders<Person>.Update.Push(a => a.Attributes, (PersonAttribute) dto);
             return _operationFactory.CreateUpdateById("add-person-attribute", dto.PersonId, update);

@@ -16,18 +16,11 @@ namespace Solari.Samples.Infrastructure
         private readonly ICommonResponseFactory _factory;
 
         public PersonRepository(ICallistoContext context, ICommonResponseFactory factory) : base(context) { _factory = factory; }
+
         public async Task<InsertPersonResult> InsertPerson(ICallistoInsert<Person> insert)
         {
-            try
-            {
-                await Insert.One(insert);
-                return InsertPersonResult.Create(insert.Value.Id);
-            }
-            catch (MongoWriteException e)
-            {
-                throw new InsertPersonException("Error while writing a new person", e);
-            }
-            
+            await Insert.One(insert);
+            return InsertPersonResult.Create(insert.Value.Id);
         }
 
         public async Task<UpdateResult> AddAttribute(ICallistoUpdate<Person> update)
@@ -41,7 +34,5 @@ namespace Solari.Samples.Infrastructure
                 throw new AddPersonAttributeException("Error while writing attribute to person", e);
             }
         }
-
-        
     }
 }

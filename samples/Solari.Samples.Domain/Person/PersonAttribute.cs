@@ -16,12 +16,8 @@ namespace Solari.Samples.Domain.Person
 
         public string AttributeValue { get; set; }
 
-        public static explicit operator PersonAttribute(PersonAddAttributeDto dto)
+        public static explicit operator PersonAttribute(AddPersonAddAttributeDto dto)
         {
-            if (string.IsNullOrEmpty(dto.AttributeName))
-                throw new ArgumentNullException(nameof(dto.AttributeName), "Attribute name cannot be null or empty");
-            if (string.IsNullOrEmpty(dto.AttributeValue))
-                throw new ArgumentNullException(nameof(dto.AttributeValue), "Attribute value cannot be null or empty");
             return new PersonAttribute(dto.AttributeName, dto.AttributeValue);
         }
     }
