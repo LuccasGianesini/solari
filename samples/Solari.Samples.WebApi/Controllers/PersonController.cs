@@ -22,10 +22,10 @@ namespace Solari.Samples.WebApi.Controllers
     {
         private readonly IPersonApplication _application;
         private readonly ICommonResponseFactory _factory;
-        private readonly ILogger<PersonController> _logger;
+        private readonly ITitanLogger<PersonController> _logger;
 
 
-        public PersonController(IPersonApplication application, ICommonResponseFactory factory, ILogger<PersonController> logger)
+        public PersonController(IPersonApplication application, ICommonResponseFactory factory, ITitanLogger<PersonController> logger)
         {
             _application = application;
             _factory = factory;
@@ -48,24 +48,17 @@ namespace Solari.Samples.WebApi.Controllers
             }
             catch (MongoWriteException writeException)
             {
-                _logger.LogError("Error writing to database", writeException);
+                _logger.Error("Error writing to database", writeException);
                 return StatusCode(StatusCodes.Status500InternalServerError, _factory
                                       .CreateErrorFromException<InsertPersonResult>(writeException, "1001", "Error writing new person"));
             }
             catch (ArgumentNullException ag)
             {
-                _logger.LogError("Argument error", ag);
+                _logger.Error("Argument error", ag);
                 return StatusCode(StatusCodes.Status500InternalServerError, _factory
                                       .CreateErrorFromException<InsertPersonResult>(ag, "1000", "A null argument was provided"));
             }
-            catch (Exception te)
-            {
-                _logger.LogError("Timed out while waiting for database operation to finish!", te);
-                return StatusCode(StatusCodes.Status500InternalServerError, _factory
-                                      .CreateErrorFromException<InsertPersonResult>(te, "9999", "A timeout occured while writing to the database"));
-            }
 
-          
         }
     }
 }

@@ -111,7 +111,6 @@
           </e>
           <e p="Solari.Samples.WebApi.csproj" t="IncludeRecursive" />
           <e p="Startup.cs" t="Include" />
-          <e p="WeatherForecast.cs" t="Include" />
         </e>
         <e p="Solari.Samples.WorkerService" t="IncludeRecursive">
           <e p="appsettings.Development.json" t="Include" />

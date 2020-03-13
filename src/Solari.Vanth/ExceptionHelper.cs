@@ -12,7 +12,7 @@ namespace Solari.Vanth
             {
                 yield break;
             }
-            yield return new CommonDetailedErrorResponse("", ex.Message, ex.TargetSite.Name, ex.Source, null);
+            yield return new CommonDetailedErrorResponse("", ex.Message, ex.TargetSite?.Name, ex.Source, null);
 
 
             IEnumerable<Exception> innerExceptions = Enumerable.Empty<Exception>();
@@ -28,7 +28,7 @@ namespace Solari.Vanth
 
             foreach (Exception innerEx in innerExceptions)
             {
-                yield return new CommonDetailedErrorResponse("", innerEx.Message, innerEx.TargetSite.Name, innerEx.Source, null);
+                yield return new CommonDetailedErrorResponse("", innerEx.Message, innerEx.TargetSite?.Name, innerEx.Source, null);
             }
         }
     }

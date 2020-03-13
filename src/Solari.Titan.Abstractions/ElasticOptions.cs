@@ -14,7 +14,7 @@ namespace Solari.Titan.Abstractions
         public string Password { get; set; }
         public string IndexFormat { get; set; }
         public int BufferFileCountLimit { get; set; } = 30;
-        public string BufferLogShippingInterval { get; set; } = "s10";
+        public string BufferLogShippingInterval { get; set; } = "s20";
         public string Period { get; set; } = "s2";
         public int QueueSizeLimit { get; set; } = 20;
         public int BatchPostingLimit { get; set; } = 100;

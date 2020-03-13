@@ -36,10 +36,12 @@ namespace Solari.Titan.Framework
         private static void ConfigureEnrich(LoggerConfiguration config, ApplicationOptions appOptions)
         {
             config.Enrich.FromLogContext()
+                  .Enrich.WithExceptionDetails()
+                  .Enrich.WithThreadId()
+                  .Enrich.WithThreadName()
                   .Enrich.WithProperty("Application", appOptions.ApplicationName)
                   .Enrich.WithProperty("Application Version", appOptions.ApplicationVersion)
-                  .Enrich.WithProperty("Application Environment", appOptions.ApplicationEnvironment)
-                  .Enrich.WithExceptionDetails();
+                  .Enrich.WithProperty("Application Environment", appOptions.ApplicationEnvironment);
         }
 
         private static void ConfigureMinimumLevels(LoggerConfiguration config, SerilogOptions options)
