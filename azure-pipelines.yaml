@@ -57,9 +57,8 @@ jobs:
           versioningScheme: byBuildNumber
 
       - task: NuGetCommand@2
-        condition: and(succeeded(), eq('${{ variables.push1 }}', true))
         continueOnError: false
-        displayName: 'Push project $(prj1)'
+        displayName: 'Push Nuget Packages'
         inputs:
           command: 'push'
           packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build
