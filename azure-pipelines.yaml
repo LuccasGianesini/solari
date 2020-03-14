@@ -15,7 +15,6 @@ jobs:
   - job: Build
     variables:
       solution: '**/*.sln'
-      src: '**/src/**/*.csproj'
       buildPlatform: 'Any CPU'
       buildConfiguration: 'Release'
     displayName: 'Build solution and create NuGet packages'
@@ -36,25 +35,19 @@ jobs:
           command: 'custom'
           custom: 'gitversion'
           arguments: '/output buildserver'
-  
+
       - task: DotNetCoreCLI@2
         displayName: 'Build solution'
         inputs:
           command: 'build'
           projects: |
             $(solution)
-          arguments: '--configuration $(BuildConfiguration)  -v n /p:Version=$(Build.BuildNumber)'
+          arguments: '--configuration $(BuildConfiguration) /p:Version=$(Build.BuildNumber)'
           versioningScheme: byBuildNumber
-    
-      - task: DotNetCoreCLI@2
-        displayName: 'Create NuGet packages for solution'
-        continueOnError: false
+      - task: PowerShell@2
         inputs:
-          command: 'pack'
-          nobuild: true
-          projects: |
-            $(src)
-          versioningScheme: byBuildNumber
+          filePath: 'packall.ps1'
+          arguments: '-BUILD_NUMBER $(Build.BuildNumber) -BUILD_ARTIFACT_DIR $(Build.ArtifactStagingDirectory)'
 
       - task: NuGetCommand@2
         continueOnError: false
@@ -65,7 +58,7 @@ jobs:
       .ArtifactStagingDirectory)/**/$(prj1).$(Build.BuildNumber).symbols.nupkg'
           nuGetFeedType: 'external'
           publishFeedCredentials: 'Nuget.org'
-      
+
       - task: GitHubRelease@1
         displayName: 'Create GitHub release'
         inputs:
