@@ -1,0 +1,18 @@
+# Add person with invalid Name
+POST http://localhost:5000/person
+content-type: application/json
+
+{
+  "Name": ""
+}
+###
+
+# Add person with valid Name
+POST http://localhost:5000/person
+content-type: application/json
+
+{
+  "Name": "Teste"
+}
+
+###

@@ -4,5 +4,20 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Solari.Samples.Application\Solari.Samples.Application.csproj" />
+    <ProjectReference Include="..\Solari.Samples.Di\Solari.Samples.Di\Solari.Samples.Di.csproj" />
+    <ProjectReference Include="..\Solari.Samples.Domain\Solari.Samples.Domain.csproj" />
+    <ProjectReference Include="..\Solari.Samples.Infrastructure\Solari.Samples.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.Development.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 
 </Project>

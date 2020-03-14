@@ -2,15 +2,15 @@
 
     <PropertyGroup>
         <Authors>Lauth</Authors>
-        <Title>Solari.Deimos.Elastic.RabbitMq</Title>
-        <PackageId>Solari.Deimos.Elastic.RabbitMq</PackageId>
+        <Title>Solari.Miranda.Tracer</Title>
+        <PackageId>Solari.Miranda.Tracer</PackageId>
         <PackageDescription>Convey RabbitMQ ElasticApm plugin</PackageDescription>
-        <PackageTags>C#; DotnetCore; RabbitMq; Deimos</PackageTags>
+        <PackageTags>C#; DotnetCore; RabbitMq; Tracing; ElasticApm; Miranda</PackageTags>
         <LangVersion>8</LangVersion>
-        <RootNamespace>Solari.Deimos.Elastic.RabbitMq</RootNamespace>
+        <RootNamespace>Solari.Miranda.Tracer</RootNamespace>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
-        <Product>Solari.Deimos.Elastic.RabbitMq</Product>
+        <Product>Solari.Miranda.Tracer</Product>
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
     <ItemGroup>

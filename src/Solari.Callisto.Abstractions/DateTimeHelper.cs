@@ -15,7 +15,8 @@ namespace Solari.Callisto.Abstractions
         /// <returns></returns>
         public static DateTimeOffset BuildDateTimeOffset(DateTimeOffset value)
         {
-            DateTimeOffset? dateTimeOffset = new DateTimeOffset(new DateTime(value.Ticks, DateTimeKind.Utc), value.Offset);
+
+            DateTimeOffset? dateTimeOffset = value;
             if (dateTimeOffset == DateTimeOffset.MinValue)
                 dateTimeOffset = DefaultDateTimeOffsetValue;
 

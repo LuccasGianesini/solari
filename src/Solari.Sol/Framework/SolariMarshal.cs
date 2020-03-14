@@ -2,7 +2,9 @@ using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using Solari.Io;
+using Solari.Sol.Framework.Exceptions;
 
 namespace Solari.Sol.Framework
 {
@@ -26,9 +28,13 @@ namespace Solari.Sol.Framework
         public ISolariMarshal ExecuteBuildActions()
         {
             if (Provider == null)
-                throw new Exception("IServiceProvider is null. Please build the service provider or set the value using the SetServiceProvider() method.");
+                throw new Exception("IServiceProvider is null. Please build the service provider or set the value using the ConfigureApplication() method.");
 
-            _builder.BuildActions.ExecuteAction(Provider);
+            foreach (BuildAction action in _builder.BuildActions)
+            {
+                SolLogger.MarshalLogger.ExecutingBuildAction(action.Name);
+                action.Action.Invoke(Provider);
+            }
 
             return this;
         }
@@ -51,32 +57,21 @@ namespace Solari.Sol.Framework
 
             return this;
         }
-
-        public ISolariMarshal SetApplicationBuilder(IApplicationBuilder applicationBuilder)
+        
+        public ISolariMarshal ConfigureApplication(IServiceProvider provider,IApplicationBuilder applicationBuilder, IHost host)
         {
-            if (ApplicationBuilder != null) return this;
+            Provider = provider ?? throw new NullServiceProviderException();
+            if (ApplicationBuilder != null)
+            {
+                ApplicationBuilder = applicationBuilder;
+                return this;
+            }
 
-            ApplicationBuilder = applicationBuilder;
-
-            return this;
-        }
-
-        public ISolariMarshal SetHost(IHost host)
-        {
-            if (Host != null) return this;
-
+            if (host == null) return this;
             Host = host;
-
             return this;
-        }
 
-        public ISolariMarshal SetServiceProvider(IServiceProvider serviceProvider)
-        {
-            if (Provider != null) return this;
-
-            Provider = serviceProvider ?? throw new ArgumentNullException(nameof(Provider), "A null instance of IServiceProvider was provided.");
-
-            return this;
+            ;
         }
     }
 }

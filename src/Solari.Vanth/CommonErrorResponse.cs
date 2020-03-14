@@ -64,7 +64,7 @@ namespace Solari.Vanth
         /// <returns><see cref="CommonErrorResponse"/></returns>
         public CommonErrorResponse AddDetailedError(Func<ICommonDetailedErrorResponseBuilder, CommonDetailedErrorResponse> detailedErrors)
         {
-            Details.Add(detailedErrors(new CommonDetailedErrorResponseBuilder()));
+            AddDetailedError(detailedErrors(new CommonDetailedErrorResponseBuilder()));
             return this;
         }
 

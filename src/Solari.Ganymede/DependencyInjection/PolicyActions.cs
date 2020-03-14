@@ -16,10 +16,13 @@ namespace Solari.Ganymede.DependencyInjection
 
         public ISolariBuilder ConfigureRegistry(Action<GanymedePolicyRegistry> configureRegistry)
         {
-            _builder.AddBuildAction(provider =>
+            _builder.AddBuildAction(new BuildAction("Ganymede Policy Registry")
             {
-                var registry = provider.GetService<GanymedePolicyRegistry>();
-                configureRegistry(registry);
+                Action = provider =>
+                {
+                    var registry = provider.GetService<GanymedePolicyRegistry>();
+                    configureRegistry(registry);
+                }
             });
 
             return _builder;

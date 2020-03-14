@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Serilog;
 using Serilog.Events;
+using Serilog.Exceptions;
 using Solari.Sol;
 using Solari.Titan.Abstractions;
 
@@ -10,11 +11,12 @@ namespace Solari.Titan.Framework
     internal static class LoggingDefaultConfig
     {
         private const LogEventLevel OverrideDefault = LogEventLevel.Warning;
+
         internal static LoggerConfiguration BuildDefaultConfig(LoggerConfiguration config,
                                                                SerilogOptions options, ApplicationOptions appOptions, string contentRootPath)
         {
             if (options == null) throw new ArgumentException("Serilog options cannot be null. Check your AppSettings.json and your hosting environment");
-            
+
             ConfigureMinimumLevels(config, options);
             ConfigureEnrich(config, appOptions);
             AddSinks(config, options, appOptions, contentRootPath);
@@ -34,6 +36,9 @@ namespace Solari.Titan.Framework
         private static void ConfigureEnrich(LoggerConfiguration config, ApplicationOptions appOptions)
         {
             config.Enrich.FromLogContext()
+                  .Enrich.WithExceptionDetails()
+                  .Enrich.WithThreadId()
+                  .Enrich.WithThreadName()
                   .Enrich.WithProperty("Application", appOptions.ApplicationName)
                   .Enrich.WithProperty("Application Version", appOptions.ApplicationVersion)
                   .Enrich.WithProperty("Application Environment", appOptions.ApplicationEnvironment);

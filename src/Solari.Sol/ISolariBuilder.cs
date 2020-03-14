@@ -15,7 +15,7 @@ namespace Solari.Sol
         /// <summary>
         /// Stored build actions to be executed when UseSol is called.
         /// </summary>
-        Queue<Action<IServiceProvider>> BuildActions { get; }
+        Queue<BuildAction> BuildActions { get; }
         
         /// <summary>
         /// Dotnet core DI container.
@@ -26,11 +26,13 @@ namespace Solari.Sol
         /// Adds a build action into the build action queue.
         /// </summary>
         /// <param name="action"></param>
-        void AddBuildAction(Action<IServiceProvider> action);
+        void AddBuildAction(BuildAction action);
 
         /// <summary>
         /// Application host environment.
         /// </summary>
         IHostEnvironment HostEnvironment { get; }
+        
+        
     }
 }

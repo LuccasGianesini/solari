@@ -15,24 +15,22 @@ namespace Solari.Callisto.Connector
                                                                        .GetSection(CallistoConstants.ConnectorAppSettingsSection));
             solariBuilder.Services.AddSingleton<ICallistoConnectionFactory, CallistoConnectionFactory>();
             solariBuilder.Services.AddSingleton<ICallistoConnection, CallistoConnection>();
-            // solariBuilder.Services.AddSingleton<ICallistoConnection, CallistoConnection>(provider =>
-            // {
-            //     var factory = provider.GetService<ICallistoConnectionFactory>();
-            //     var appOptions = provider.GetService<IOptions<ApplicationOptions>>();
-            //     var callistoOptions = provider.GetService<IOptions<CallistoConnectorOptions>>();
-            //     return factory.Make(callistoOptions.Value, appOptions.Value);
-            // });
-            solariBuilder.AddBuildAction(provider =>
-            {
-                var factory = provider.GetService<ICallistoConnectionFactory>();
-                var appOptions = provider.GetService<IOptions<ApplicationOptions>>();
-                var callistoOptions = provider.GetService<IOptions<CallistoConnectorOptions>>();
-                var mde = factory.Make(callistoOptions.Value, appOptions.Value);
-                var connection = provider.GetService<ICallistoConnection>();
-                connection.AddClient(mde.GetClient());
-                connection.AddDataBase(callistoOptions.Value.Database);
-                connection.IsConnected().GetAwaiter().GetResult();
-            });
+            solariBuilder.AddBuildAction(
+                                         new BuildAction("Callisto Connector")
+                                         {
+                                             
+                                             Action = provider =>
+                                             {
+                                                 var factory = provider.GetService<ICallistoConnectionFactory>();
+                                                 var appOptions = provider.GetService<IOptions<ApplicationOptions>>();
+                                                 var callistoOptions = provider.GetService<IOptions<CallistoConnectorOptions>>();
+                                                 ICallistoConnection connection = provider.GetService<ICallistoConnection>()
+                                                                                          .AddClient(factory.Make(callistoOptions.Value, 
+                                                                                                                  appOptions.Value).GetClient())
+                                                                                          .AddDataBase(callistoOptions.Value.Database);
+                                                 connection.IsConnected().GetAwaiter().GetResult();
+                                             }
+                                         });
 
             return solariBuilder;
         }

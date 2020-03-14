@@ -27,18 +27,19 @@ namespace Solari.Callisto.Tracer
                 var callistoTracerOptions = provider.GetService<IOptions<CallistoTracerOptions>>();
                 if (options.UseJaeger)
                 {
-                    // Log.Information("Configuring callisto to use Jaeger tracer");
                     return new CallistoJaegerEventListener(provider.GetService<ITracer>(), eventFilter, callistoTracerOptions);
                 }
 
                 if (!options.UseElasticApm) throw new ApplicationException("The application cannot be started because no tracer is available.");
-                // Log.Information("Configuring callisto to use ElasticApm tracer");
                 return new CallistoElasticEventListener(eventFilter, callistoTracerOptions);
             });
-            Builder.AddBuildAction(provider =>
+            Builder.AddBuildAction(new BuildAction("Deimos MongoDb Hook")
             {
-                var hook = provider.GetRequiredService<ICallistoClientHook>();
-                hook.AddHook();
+                Action = provider =>
+                {
+                    var hook = provider.GetRequiredService<ICallistoClientHook>();
+                    hook.AddHook();
+                }
             });
         }
 

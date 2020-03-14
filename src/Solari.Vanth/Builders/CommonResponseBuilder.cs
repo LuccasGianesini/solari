@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Solari.Vanth.Builders
 {
@@ -10,7 +11,6 @@ namespace Solari.Vanth.Builders
 
         public ICommonResponseBuilder<TResult> WithResult(TResult model)
         {
-            if (model == null) throw new ArgumentNullException(nameof(model));
             _model = model;
             return this;
         }
@@ -23,15 +23,13 @@ namespace Solari.Vanth.Builders
 
         public ICommonResponseBuilder<TResult> WithError(Func<ICommonErrorResponseBuilder, CommonErrorResponse> builder)
         {
-            if (builder == null) throw new ArgumentNullException(nameof(builder));
+            if (builder == null) throw new ArgumentNullException(nameof(builder), "Cannot invoke a null func");
             _errors.Push(builder(new CommonErrorResponseBuilder()));
             return this;
         }
 
         public ICommonResponseBuilder<TResult> WithErrors(Stack<CommonErrorResponse> errors)
         {
-            if (errors.Count == 0) throw new ArgumentException("Value cannot be an empty collection.", nameof(errors));
-
             foreach (CommonErrorResponse commonErrorResponse in errors)
             {
                 _errors.Push(commonErrorResponse);
@@ -43,7 +41,7 @@ namespace Solari.Vanth.Builders
         public CommonResponse<TResult> Build()
         {
             if (_model == null && _errors == null) return new CommonResponse<TResult>();
-            return new CommonResponse<TResult>().AddErrors(_errors).AddResult(_model);
+            return _errors.Any() ? new CommonResponse<TResult>().AddErrors(_errors) : new CommonResponse<TResult>().AddResult(_model);
         }
     }
 }

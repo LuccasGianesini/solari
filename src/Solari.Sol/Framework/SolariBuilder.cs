@@ -12,17 +12,17 @@ namespace Solari.Sol.Framework
         {
             Services = services;
             AppConfiguration = configuration;
-            BuildActions = new Queue<Action<IServiceProvider>>(5);
+            BuildActions = new Queue<BuildAction>(5);
             HostEnvironment = GetHostEnvironment();
         }
 
 
         public IConfiguration AppConfiguration { get; }
-        public Queue<Action<IServiceProvider>> BuildActions { get; }
+        public Queue<BuildAction> BuildActions { get; }
 
         public IServiceCollection Services { get; }
 
-        public void AddBuildAction(Action<IServiceProvider> action)
+        public void AddBuildAction(BuildAction action)
         {
             if (action == null) throw new ArgumentNullException(nameof(action));
 

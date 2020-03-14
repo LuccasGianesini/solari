@@ -3,11 +3,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Convey.MessageBrokers.RabbitMQ;
 using Elastic.Apm.Api;
-using Elastic.CommonSchema;
 using RabbitMQ.Client.Events;
 using Agent = Elastic.Apm.Agent;
 
-namespace Solari.Deimos.Elastic.RabbitMq
+namespace Solari.Miranda.Tracer
 {
     public class ElasticPlugin : RabbitMqPlugin
     {

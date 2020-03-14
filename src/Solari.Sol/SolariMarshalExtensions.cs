@@ -22,21 +22,6 @@ namespace Solari.Sol
         {
             return host.Services.UseSol(func);
         }
-
-        private static ISolariMarshal UseSol(this IServiceProvider provider, IApplicationBuilder applicationBuilder = null, IHost host = null)
-        {
-            return provider.UseSol(sp =>
-                                      {
-                                          var marshal = sp.GetRequiredService<ISolariMarshal>();
-                                          marshal.SetServiceProvider(sp);
-                                          marshal.SetApplicationBuilder(applicationBuilder);
-                                          marshal.SetHost(host);
-                                          marshal.ExecuteBuildActions();
-
-                                          return marshal;
-                                      });
-        }
-
         public static ISolariMarshal UseSol(this IApplicationBuilder app)
         {
             return app.ApplicationServices.UseSol(app);
@@ -46,5 +31,14 @@ namespace Solari.Sol
         {
             return host.Services.UseSol(host: host);
         }
+
+        private static ISolariMarshal UseSol(this IServiceProvider provider, IApplicationBuilder applicationBuilder = null, IHost host = null)
+        {
+            return provider.UseSol(sp => sp.GetRequiredService<ISolariMarshal>()
+                                           .ConfigureApplication(provider, applicationBuilder, host)
+                                           .ExecuteBuildActions());
+        }
+
+      
     }
 }

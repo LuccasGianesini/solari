@@ -7,18 +7,20 @@ namespace Solari.Vanth
     [Serializable]
     public class CommonDetailedErrorResponse
     {
-        public CommonDetailedErrorResponse(string code, string message, string target, Exception exception)
+        public CommonDetailedErrorResponse(string code, string message, string target, string source, Exception exception)
         {
             Code = code;
             Message = message;
             Target = target;
             Exception = exception;
+            Source = source;
         }
 
         public string Code { get; }
         public Exception Exception { get; }
         public string Message { get; }
         public string Target { get; }
+        public string Source { get; }
 
         /// <summary>
         /// Indicates if the Exception is different the null.
@@ -32,7 +34,8 @@ namespace Solari.Vanth
                                .Append($"Detail:").AppendLine()
                                .Append($"{nameof(Code)}: {Code}").AppendLine()
                                .Append($"{nameof(Message)}: {Message}").AppendLine()
-                               .Append($"{nameof(Target)}: {Target}").AppendLine();
+                               .Append($"{nameof(Target)}: {Target}").AppendLine()
+                               .Append($"{nameof(Source)}: {Source}").AppendLine();
             if (Exception != null)
             {
                 sb.Append("Exception:").AppendLine()

@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using Elastic.Apm.SerilogEnricher;
 using Elastic.CommonSchema.Serilog;
 using Microsoft.VisualBasic.CompilerServices;
 using Serilog;
+using Serilog.Events;
 using Serilog.Formatting.Json;
 using Serilog.Sinks.Elasticsearch;
 using Serilog.Sinks.Graylog;
@@ -19,7 +22,7 @@ namespace Solari.Titan.Framework
         {
             if (!useConsole) return configuration;
 
-            configuration.WriteTo.Console();
+            configuration.WriteTo.Console(outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss}][{Level:u3}][{ElasticApmTraceId} {ElasticApmTransactionId}] {Message:lj} {NewLine}{Exception}");
 
             return configuration;
         }
@@ -60,10 +63,39 @@ namespace Solari.Titan.Framework
             if (!options.UseElk || options.Elk == null) return configuration;
             var elastic = new ElasticsearchSinkOptions(new Uri(options.Elk.Url))
             {
+                EmitEventFailure = EmitEventFailureHandling.RaiseCallback,
+                FailureCallback = e =>
+                {
+                    StringBuilder message = new StringBuilder()
+                                            .Append("Error submitting events to elasticsearch sink: ")
+                                            .Append("Template: ").Append(e.MessageTemplate).AppendLine()
+                                            .Append("Timestamp: ").Append(e.Timestamp).AppendLine()
+                                            .Append("Level: ").Append(e.Level).AppendLine()
+                                            .Append("Exception: ").Append(e.Exception).AppendLine()
+                                            .Append("Properties: ").AppendLine();
+
+
+                    foreach (KeyValuePair<string,LogEventPropertyValue> keyValuePair in e.Properties)
+                    {
+                        message.Append(keyValuePair.Key).Append(":").Append(keyValuePair.Value).AppendLine();
+                    }
+                        
+                    Log.Error(message.ToString());
+                },
+                
                 MinimumLogEventLevel = TitanLibHelper.GetLogLevel(options.LogLevelRestriction),
                 AutoRegisterTemplate = options.Elk.AutoRegisterTemplate,
                 AutoRegisterTemplateVersion = options.Elk.GetAutoRegisterTemplateVersion(),
-                
+                BufferFileCountLimit = options.Elk.BufferFileCountLimit,
+                Period = options.Elk.GetPeriod(),
+                BatchPostingLimit = options.Elk.BatchPostingLimit,
+                QueueSizeLimit = options.Elk.QueueSizeLimit,
+                BufferCleanPayload = (failingEvent, statuscode, exception) =>
+                {
+                    Log.Error($"Error while sending payload to server. Code: {statuscode}  Message: {exception}");
+                    return exception;
+                },
+                BufferLogShippingInterval = options.Elk.GetBufferLogShippingInterval(),
                 IndexFormat = string.IsNullOrWhiteSpace(options.Elk.IndexFormat)
                                   ? $"{applicationOptions.ApplicationName}-{DateTime.Now:dd-MM-yyyy}"
                                   : options.Elk.IndexFormat,

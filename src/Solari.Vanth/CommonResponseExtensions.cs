@@ -16,7 +16,7 @@ namespace Solari.Vanth
         /// <typeparam name="TOldGenericType">The old generic Type</typeparam>
         /// <returns>The <see cref="CommonResponse{TModel}"/> complete with errors and model in the new generic type</returns>
         /// <exception cref="ArgumentNullException">When commonResponse is null</exception>
-        public static CommonResponse<TNewGenericType> ToNewGenericType<TNewGenericType, TOldGenericType>
+        public static CommonResponse<TNewGenericType> Transform<TNewGenericType, TOldGenericType>
             (this CommonResponse<TOldGenericType> commonResponse, TNewGenericType newTypeValue, bool addErrors)
         {
             if (commonResponse == null) throw new ArgumentNullException(nameof(commonResponse));
@@ -29,20 +29,5 @@ namespace Solari.Vanth
             return builder.Build();
         }
 
-        /// <summary>
-        /// Creates a new <see cref="CommonResponse{TModel}"/> with a different generic type. 
-        /// </summary>
-        /// <param name="commonResponse">CommonResponse object to be cloned.</param>
-        /// <typeparam name="TNewGenericType">The new generic type</typeparam>
-        /// <typeparam name="TOldGenericType">The old generic Type</typeparam>
-        /// <returns>The <see cref="CommonResponse{TModel}"/> complete with only the errors</returns>
-        /// <exception cref="ArgumentNullException">When commonResponse is null</exception>
-        public static CommonResponse<TNewGenericType> ToNewGenericTypeWithErrorsOnly<TNewGenericType, TOldGenericType>
-        (this CommonResponse<TOldGenericType> commonResponse)
-        {
-            if (commonResponse == null) throw new ArgumentNullException(nameof(commonResponse));
-            return new CommonResponseBuilder<TNewGenericType>().WithErrors(commonResponse.Errors).Build();
-        }
-        
     }
 }

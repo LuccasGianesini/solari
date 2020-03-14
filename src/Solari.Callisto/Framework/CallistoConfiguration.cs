@@ -26,7 +26,10 @@ namespace Solari.Callisto.Framework
         public ICallistoConfiguration ConfigureConventionPack(Func<IConventionPackBuilder, IConventionPack> builder)
         {
             if (builder == null) throw new ArgumentNullException(nameof(builder));
-            _solariBuilder.AddBuildAction(provider => { builder(new ConventionPackBuilder()); });
+            _solariBuilder.AddBuildAction(new BuildAction("Callisto ConventionPack")
+            {
+                Action = provider => { builder(new ConventionPackBuilder()); }
+            });
             return this;
         }
 
@@ -63,7 +66,10 @@ namespace Solari.Callisto.Framework
         public ICallistoConfiguration RegisterClassMaps(Action<ICallistoClassMapper> classMapper)
         {
             if (classMapper == null) throw new ArgumentNullException(nameof(classMapper));
-            _solariBuilder.AddBuildAction(provider => { classMapper(new CallistoClassMapper()); });
+            _solariBuilder.AddBuildAction(new BuildAction("Callisto ClassMaps")
+            {
+                Action = provider => { classMapper(new CallistoClassMapper()); }
+            });
 
             return this;
         }
