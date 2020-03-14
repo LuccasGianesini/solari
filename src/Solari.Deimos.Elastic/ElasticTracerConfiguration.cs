@@ -18,15 +18,18 @@ namespace Solari.Deimos.Elastic
     {
         public static ISolariBuilder AddElasticApm(ISolariBuilder solariBuilder, DeimosOptions options)
         {
-            solariBuilder.AddBuildAction(provider =>
+            solariBuilder.AddBuildAction(new BuildAction("Deimos ElasticApm")
             {
-                var marshal = provider.GetRequiredService<ISolariMarshal>();
-                ApplicationOptions appOptions = provider.GetRequiredService<IOptions<ApplicationOptions>>().Value;
-                ElasticApmOptions opt = provider.GetRequiredService<IOptions<DeimosOptions>>().Value.Elastic;
-                ConfigureViaEnvironmentVariables(opt, appOptions);
-                marshal.ApplicationBuilder?.UseElasticApm(subscribers: ConfigureSubs(options));
-                DeimosLogger.ElasticLogger.ApmServerAddress(opt.Url);
-                DeimosLogger.ElasticLogger.UsingElasticApmTracer();
+                Action = provider =>
+                {
+                    var marshal = provider.GetRequiredService<ISolariMarshal>();
+                    ApplicationOptions appOptions = provider.GetRequiredService<IOptions<ApplicationOptions>>().Value;
+                    ElasticApmOptions opt = provider.GetRequiredService<IOptions<DeimosOptions>>().Value.Elastic;
+                    ConfigureViaEnvironmentVariables(opt, appOptions);
+                    marshal.ApplicationBuilder?.UseElasticApm(subscribers: ConfigureSubs(options));
+                    DeimosLogger.ElasticLogger.ApmServerAddress(opt.Url);
+                    DeimosLogger.ElasticLogger.UsingElasticApmTracer();
+                }
             });
             solariBuilder.Services.AddSingleton<IDeimosElasticTracer, DeimosElasticTracer>(provider => new DeimosElasticTracer(Agent.Tracer));
             return solariBuilder;

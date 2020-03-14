@@ -28,30 +28,7 @@ namespace Solari.Sol
         /// <param name="action">Action to be executed</param>
         /// <returns></returns>
         ISolariMarshal PostConfigureServices(Action<ISolariPostConfigure> action);
-        // /// <summary>
-        // /// Executes a post configuration action based upon the <see cref="IServiceProvider"/> interface.
-        // /// </summary>
-        // /// <param name="action">Action to be executed</param>
-        // /// <returns></returns>
-        // ISolariMarshal PostConfigureServices(Action<IServiceProvider> action);
-        /// <summary>
-        /// Set the <see cref="IApplicationBuilder"/>r property value.
-        /// </summary>
-        /// <param name="applicationBuilder"><see cref="IApplicationBuilder"/></param>
-        /// <returns></returns>
-        ISolariMarshal SetApplicationBuilder(IApplicationBuilder applicationBuilder);
-        /// <summary>
-        /// Set the <see cref="IHost"/> property value.
-        /// </summary>
-        /// <param name="host"><see cref="IHost"/></param>
-        /// <returns></returns>
-        ISolariMarshal SetHost(IHost host);
 
-        /// <summary>
-        /// Set the <see cref="IServiceProvider"/> property value.
-        /// </summary>
-        /// <param name="serviceProvider"></param>
-        /// <returns></returns>
-        ISolariMarshal SetServiceProvider(IServiceProvider serviceProvider);
+        ISolariMarshal ConfigureApplication(IServiceProvider provider, IApplicationBuilder applicationBuilder, IHost host);
     }
 }

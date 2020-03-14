@@ -19,11 +19,14 @@ namespace Solari.Deimos.CorrelationId
             solariBuilder.Services.AddSingleton<ICorrelationContextHandler, CorrelationContextHandler>();
             if (useMiddleware)
             {
-                solariBuilder.AddBuildAction(provider =>
+                solariBuilder.AddBuildAction(new BuildAction("Deimos CorrelationId")
                 {
-                    var marshal = provider.GetRequiredService<ISolariMarshal>();
-                    marshal.ApplicationBuilder?.UseMiddleware<CorrelationIdMiddleware>();
-                    DeimosLogger.CorrelationIdLogger.UsingCorrelationIdMiddleware();
+                    Action = provider =>
+                    {
+                        var marshal = provider.GetRequiredService<ISolariMarshal>();
+                        marshal.ApplicationBuilder?.UseMiddleware<CorrelationIdMiddleware>();
+                        DeimosLogger.CorrelationIdLogger.UsingCorrelationIdMiddleware();
+                    }
                 });    
             }
             
