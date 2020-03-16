@@ -1,10 +1,12 @@
-﻿using MongoDB.Bson;
+﻿using System;
+using MongoDB.Bson;
+using Solari.Titan;
 
 namespace Solari.Samples.Domain.Person.Results
 {
-    public class InsertPersonResult
+    public class CreatePersonResult
     {
-        public InsertPersonResult(bool success, string id)
+        public CreatePersonResult(bool success, string id)
         {
             Success = success;
             Id = id;
@@ -13,12 +15,12 @@ namespace Solari.Samples.Domain.Person.Results
         public bool Success { get; }
         public string Id { get; }
 
-        public static InsertPersonResult Create(ObjectId objectId)
+        public static CreatePersonResult Create(ObjectId objectId)
         {
             var id = objectId.ToString(); 
             return id.Equals(Callisto.Abstractions.CallistoConstants.ObjectIdDefaultValueAsString)
-                       ? new InsertPersonResult(false, string.Empty)
-                       : new InsertPersonResult(true, id);
+                       ? new CreatePersonResult(false, string.Empty)
+                       : new CreatePersonResult(true, id);
         }
     }
 }

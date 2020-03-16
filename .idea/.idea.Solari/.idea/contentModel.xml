@@ -17,7 +17,6 @@
               </e>
             </e>
           </e>
-          <e p="PersonApplication.cs" t="Include" />
           <e p="Solari.Samples.Application.csproj" t="IncludeRecursive" />
         </e>
         <e p="Solari.Samples.Console" t="IncludeRecursive">
@@ -55,9 +54,16 @@
             </e>
           </e>
           <e p="Person" t="Include">
+            <e p="Commands" t="Include">
+              <e p="AddPersonAttributeCommand.cs" t="Include" />
+              <e p="CreatePersonCommand.cs" t="Include" />
+            </e>
+            <e p="CreatePersonCommandHandler.cs" t="Include" />
             <e p="Dtos" t="Include">
-              <e p="AddPersonAttributeDto.cs" t="Include" />
-              <e p="InsertPersonDTo.cs" t="Include" />
+              <e p="CreatePersonRestIn.cs" t="Include" />
+            </e>
+            <e p="Events" t="Include">
+              <e p="PersonCreatedEvent.cs" t="Include" />
             </e>
             <e p="Exceptions" t="Include">
               <e p="AddPersonAttributeException.cs" t="Include" />
@@ -68,8 +74,10 @@
             <e p="IPersonRepository.cs" t="Include" />
             <e p="Person.cs" t="Include" />
             <e p="PersonAttribute.cs" t="Include" />
+            <e p="PersonConstants.cs" t="Include" />
+            <e p="PersonCreatedEventHandler.cs" t="Include" />
             <e p="Results" t="Include">
-              <e p="InsertPersonResult.cs" t="Include" />
+              <e p="CreatePersonResult.cs" t="Include" />
             </e>
             <e p="Validators" t="Include">
               <e p="AddPersonAttributeDtoValidator.cs" t="Include" />

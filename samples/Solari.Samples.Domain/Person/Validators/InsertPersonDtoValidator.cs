@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using Solari.Samples.Domain.Person.Dtos;
+using Solari.Samples.Domain.Person.Commands;
 
 namespace Solari.Samples.Domain.Person.Validators
 {
-    public class InsertPersonDtoValidator : AbstractValidator<InsertPersonDto>
+    public class InsertPersonDtoValidator : AbstractValidator<CreatePersonCommand>
     {
         public InsertPersonDtoValidator()
         {

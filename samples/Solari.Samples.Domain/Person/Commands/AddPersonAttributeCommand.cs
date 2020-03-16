@@ -1,8 +1,8 @@
 ﻿using MongoDB.Bson;
 
-namespace Solari.Samples.Domain.Person.Dtos
+namespace Solari.Samples.Domain.Person.Commands
 {
-    public class AddPersonAddAttributeDto
+    public class AddPersonAttributeCommand
     {
         public ObjectId PersonId { get; set; }
         public string AttributeName { get; set; }

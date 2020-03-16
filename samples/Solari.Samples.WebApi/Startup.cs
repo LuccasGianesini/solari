@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Convey;
+using Convey.MessageBrokers.RabbitMQ;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -55,6 +57,8 @@ namespace Solari.Samples.WebApi
 
             app.UseRouting();
             app.UseSol();
+            app.UseConvey()
+               .UseRabbitMq();
             app.UseSwaggerUI(options =>
             {
                 options.RoutePrefix = "swagger";

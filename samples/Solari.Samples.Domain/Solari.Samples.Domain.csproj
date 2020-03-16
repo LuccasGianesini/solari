@@ -26,6 +26,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Convey.CQRS.Commands" Version="0.4.273" />
+    <PackageReference Include="Convey.CQRS.Events" Version="0.4.273" />
+    <PackageReference Include="Convey.CQRS.Queries" Version="0.4.273" />
+    <PackageReference Include="Convey.MessageBrokers" Version="0.4.273" />
+    <PackageReference Include="Convey.MessageBrokers.CQRS" Version="0.4.273" />
+    <PackageReference Include="Convey.MessageBrokers.RabbitMQ" Version="0.4.273" />
+    <PackageReference Include="Convey.Persistence.Redis" Version="0.4.273" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.1.0" />
   </ItemGroup>
 

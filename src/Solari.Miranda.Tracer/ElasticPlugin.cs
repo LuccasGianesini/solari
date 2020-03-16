@@ -12,7 +12,7 @@ namespace Solari.Miranda.Tracer
     {
         public override async Task HandleAsync(object message, object correlationContext, BasicDeliverEventArgs args)
         {
-            bool createdTransaction = false;
+            var createdTransaction = false;
             string messageName = message.GetType().Name;
             string messageId = args.BasicProperties.MessageId;
             var spanContext = string.Empty;

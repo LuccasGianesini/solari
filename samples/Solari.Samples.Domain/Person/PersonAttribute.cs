@@ -1,6 +1,6 @@
 ﻿using System;
 using Solari.Callisto.Abstractions;
-using Solari.Samples.Domain.Person.Dtos;
+using Solari.Samples.Domain.Person.Commands;
 
 namespace Solari.Samples.Domain.Person
 {
@@ -16,9 +16,9 @@ namespace Solari.Samples.Domain.Person
 
         public string AttributeValue { get; set; }
 
-        public static explicit operator PersonAttribute(AddPersonAddAttributeDto dto)
+        public static explicit operator PersonAttribute(AddPersonAttributeCommand command)
         {
-            return new PersonAttribute(dto.AttributeName, dto.AttributeValue);
+            return new PersonAttribute(command.AttributeName, command.AttributeValue);
         }
     }
 }
