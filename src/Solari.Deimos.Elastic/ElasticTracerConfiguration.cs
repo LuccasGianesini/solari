@@ -69,7 +69,7 @@ namespace Solari.Deimos.Elastic
             EnvVarHelper.TrySetValue(ConfigConsts.EnvVarNames.MaxQueueEventCount, opt.MaxQueueEventCount.ToString());
             EnvVarHelper.TrySetValue(ConfigConsts.EnvVarNames.MetricsInterval, opt.MetricsInterval);
             EnvVarHelper.TrySetValue(ConfigConsts.EnvVarNames.CaptureBody, opt.CaptureBody);
-            EnvVarHelper.TrySetValue(ConfigConsts.EnvVarNames.LogLevel, opt.LogLevel);
+            EnvVarHelper.TrySetValue(ConfigConsts.EnvVarNames.LogLevel, opt.LogLevelRestriction);
             EnvVarHelper.TrySetValue(ConfigConsts.EnvVarNames.Environment, appOptions.ApplicationEnvironment);
             EnvVarHelper.TrySetValue(ConfigConsts.EnvVarNames.TransactionSampleRate, opt.TransactionSampleRate.ToString(CultureInfo.InvariantCulture));
             EnvVarHelper.TrySetValue(ConfigConsts.EnvVarNames.TransactionMaxSpans, opt.TransactionMaxSpans.ToString());

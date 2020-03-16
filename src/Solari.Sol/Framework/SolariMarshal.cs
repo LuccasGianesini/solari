@@ -61,7 +61,7 @@ namespace Solari.Sol.Framework
         public ISolariMarshal ConfigureApplication(IServiceProvider provider,IApplicationBuilder applicationBuilder, IHost host)
         {
             Provider = provider ?? throw new NullServiceProviderException();
-            if (ApplicationBuilder != null)
+            if (applicationBuilder != null)
             {
                 ApplicationBuilder = applicationBuilder;
                 return this;

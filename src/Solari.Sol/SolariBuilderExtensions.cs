@@ -27,8 +27,7 @@ namespace Solari.Sol
         {
             serviceCollection.AddOptions();
             serviceCollection.AddLogging();
-
-            serviceCollection.AddSingleton(configuration.GetOptions<ApplicationOptions>(SolariConstants.ApplicationAppSettingsSection));
+            serviceCollection.Configure<ApplicationOptions>(configuration.GetSection(SolariConstants.ApplicationAppSettingsSection));
             var instance = new SolariBuilder(serviceCollection, configuration);
             serviceCollection.AddSingleton<ISolariBuilder, SolariBuilder>(sp => instance);
 

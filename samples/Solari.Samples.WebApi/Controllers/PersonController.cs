@@ -42,9 +42,10 @@ namespace Solari.Samples.WebApi.Controllers
                 {
                     return BadRequest(_factory.CreateError<InsertPersonResult>(validationResult));
                 }
-
+                
                 InsertPersonResult result = await _application.InsertPerson(dto);
                 return Ok(_factory.CreateResult(result));
+                
             }
             catch (MongoWriteException writeException)
             {

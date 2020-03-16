@@ -7,7 +7,7 @@ namespace Solari.Deimos.Abstractions
     {
         public string Url { get; set; }
         public ElasticApmSubscribers Subscribers { get; set; } = new ElasticApmSubscribers();
-        public string LogLevel { get; set; } = "Warning";
+        public string LogLevelRestriction { get; set; } = "Warning";
         public double TransactionSampleRate { get; set; } = 1.0;
         public int TransactionMaxSpans { get; set; } = 500;
         public string SecretToken { get; set; } 
