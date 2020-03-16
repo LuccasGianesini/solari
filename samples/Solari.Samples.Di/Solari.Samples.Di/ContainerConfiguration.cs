@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Solari.Callisto;
 using Solari.Callisto.Connector;
+using Solari.Callisto.Tracer;
+using Solari.Deimos;
 using Solari.Deimos.Elastic;
 using Solari.Samples.Application;
 using Solari.Samples.Domain.Person;
@@ -23,7 +25,8 @@ namespace Solari.Samples.Di
                     .AddCallisto(callistoConfiguration => callistoConfiguration
                                                           .RegisterDefaultConventionPack()
                                                           .RegisterDefaultClassMaps()
-                                                          .RegisterCollection<IPersonRepository, PersonRepository, Person>("person", ServiceLifetime.Scoped));
+                                                          .RegisterCollection<IPersonRepository, PersonRepository, Person>("person", ServiceLifetime.Scoped))
+                    .AddDeimos(manager => manager.Register(new CallistoTracerPlugin()));
             services.AddScoped<IPersonOperations, PersonOperations>();
             services.AddScoped<IPersonApplication, PersonApplication>();
             
