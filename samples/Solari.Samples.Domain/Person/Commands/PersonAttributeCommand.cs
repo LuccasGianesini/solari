@@ -9,8 +9,6 @@ namespace Solari.Samples.Domain.Person.Commands
         public string PersonId { get; set; }
         public string AttributeName { get; set; }
         public string AttributeValue { get; set; }
-        
-        public bool UpdateIfPresent { get; set; }
         public AddPersonAttributeResult Result { get; set; }
         
         public ObjectId ObjectId => MongoDB.Bson.ObjectId.Parse(PersonId);

@@ -37,7 +37,7 @@ namespace Solari.Samples.Domain.Person.Commands.Handlers
                 throw new InvalidOperationException("The provided person id did not match any record in the database");
             }
 
-            if (personFromDb.Attributes.Any(a => a.AttributeName == command.AttributeName) && command.UpdateIfPresent)
+            if (personFromDb.Attributes.Any(a => a.AttributeName == command.AttributeName))
             {
                 throw new InvalidOperationException("Person already contains the provided attribute. To update use the PATCH endpoint");
             }
