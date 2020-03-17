@@ -26,7 +26,8 @@ namespace Solari.Samples.Domain.Person.Commands.Handlers
 
         public async Task HandleAsync(CreatePersonCommand command)
         {
-            _logger.Information($"Received {PersonConstants.CreatePersonOperationName} command");
+            Helper.DefaultCommandLogMessage(_logger, PersonConstants.CreatePersonOperationName);
+            
             ICallistoInsert<Person> operation = _operations.CreateInsertOperation(command);
             CreatePersonResult repositoryResult = await _repository.InsertPerson(operation);
             if (repositoryResult.Success)

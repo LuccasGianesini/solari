@@ -12,5 +12,6 @@ namespace Solari.Samples.Domain.Person
         Task<CreatePersonResult> InsertPerson(ICallistoInsert<Person> insert);
         Task<AddPersonAttributeResult> AddAttribute(ICallistoUpdate<Person> update);
         Task<bool> Exists(ObjectId id);
+        Task<Person> Get(ObjectId id);
     }
 }

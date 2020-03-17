@@ -7,7 +7,7 @@ namespace Solari.Samples.Domain.Person.Commands
 {
     public class CreatePersonCommand : ICommand
     {
-        public CreatePersonCommand(string name, List<AddPersonAttributeCommand> attributes)
+        public CreatePersonCommand(string name, List<PersonAttributeCommand> attributes)
         {
             Name = name;
             Attributes = attributes;
@@ -18,7 +18,7 @@ namespace Solari.Samples.Domain.Person.Commands
             
         }
         public string Name { get; set; }
-        public List<AddPersonAttributeCommand> Attributes { get; set; }
+        public List<PersonAttributeCommand> Attributes { get; set; }
         
         public CreatePersonResult Result { get; set; }
 

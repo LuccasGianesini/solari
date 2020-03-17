@@ -6,6 +6,7 @@ namespace Solari.Samples.Domain.Person
     public interface IPersonOperations
     {
         ICallistoInsert<Person> CreateInsertOperation(CreatePersonCommand createPersonCommand);
-        ICallistoUpdate<Person> CreateAddAttributeOperation(AddPersonAttributeCommand command);
+        ICallistoUpdate<Person> CreateAddAttributeOperation(PersonAttributeCommand command);
+        ICallistoUpdate<Person> CreateUpdateAttributeOperation(PersonAttributeCommand command);
     }
 }

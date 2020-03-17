@@ -25,21 +25,16 @@ namespace Solari.Samples.Infrastructure
         }
 
         public async Task<bool> Exists(ObjectId id) { return await Query.Exists(a => a.Id == id); }
+        public async Task<Person> Get(ObjectId id) => await Query.FindById(id);
         public async Task<AddPersonAttributeResult> AddAttribute(ICallistoUpdate<Person> update)
         {
-            try
+            UpdateResult updateResult = await Update.One(update);
+            if (updateResult.IsAcknowledged && updateResult.IsModifiedCountAvailable && updateResult.ModifiedCount == 1)
             {
-                UpdateResult updateResult = await Update.One(update);
-                if (updateResult.IsAcknowledged && updateResult.IsModifiedCountAvailable && updateResult.ModifiedCount == 1)
-                {
-                    return new AddPersonAttributeResult(true);
-                }
-                return new AddPersonAttributeResult(false);
+                return new AddPersonAttributeResult(true);
             }
-            catch (MongoWriteException e)
-            {
-                throw new AddPersonAttributeException("Error while writing attribute to person", e);
-            }
+
+            return new AddPersonAttributeResult(false);
         }
     }
 }

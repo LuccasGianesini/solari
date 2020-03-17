@@ -47,6 +47,7 @@
         <e p="Solari.Samples.Domain" t="IncludeRecursive">
           <e p="bin" t="ExcludeRecursive" />
           <e p="Constants.cs" t="Include" />
+          <e p="Helper.cs" t="Include" />
           <e p="obj" t="ExcludeRecursive">
             <e p="Debug" t="Include">
               <e p="netcoreapp3.1" t="Include">
@@ -56,12 +57,12 @@
           </e>
           <e p="Person" t="Include">
             <e p="Commands" t="Include">
-              <e p="AddPersonAttributeCommand.cs" t="Include" />
               <e p="CreatePersonCommand.cs" t="Include" />
               <e p="Handlers" t="Include">
                 <e p="AddPersonAttributeCommandHandler.cs" t="Include" />
                 <e p="CreatePersonCommandHandler.cs" t="Include" />
               </e>
+              <e p="PersonAttributeCommand.cs" t="Include" />
             </e>
             <e p="Dtos" t="Include" />
             <e p="Events" t="Include">
@@ -87,8 +88,8 @@
               <e p="CreatePersonResult.cs" t="Include" />
             </e>
             <e p="Validators" t="Include">
-              <e p="AddPersonAttributeDtoValidator.cs" t="Include" />
               <e p="CreatePersonCommandValidator.cs" t="Include" />
+              <e p="PersonAttributeCommandValidator.cs" t="Include" />
             </e>
           </e>
           <e p="Solari.Samples.Domain.csproj" t="IncludeRecursive" />

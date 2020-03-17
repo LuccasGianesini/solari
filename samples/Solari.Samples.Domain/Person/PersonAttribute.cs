@@ -16,7 +16,7 @@ namespace Solari.Samples.Domain.Person
 
         public string AttributeValue { get; set; }
 
-        public static explicit operator PersonAttribute(AddPersonAttributeCommand command)
+        public static explicit operator PersonAttribute(PersonAttributeCommand command)
         {
             return new PersonAttribute(command.AttributeName, command.AttributeValue);
         }
