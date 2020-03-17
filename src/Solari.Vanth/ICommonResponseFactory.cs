@@ -1,5 +1,6 @@
 using System;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc.Abstractions;
 using Solari.Sol;
 using Solari.Vanth.Builders;
 
@@ -12,7 +13,6 @@ namespace Solari.Vanth
         CommonResponse<TModel> CreateError<TModel>(Func<ICommonErrorResponseBuilder, CommonErrorResponse> builder);
         CommonResponse<Empty> CreateEmpty();
         CommonResponse<TModel> CreateErrorFromException<TModel>(Exception exception, string errorCode = "", string errorMessage = "");
-
         CommonResponse<TResult> CreateError<TResult>(ValidationResult result);
     }
 }

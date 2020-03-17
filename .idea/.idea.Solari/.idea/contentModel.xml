@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="C:\git\solari" t="IncludeFlat">
+      <e p=".git\info\exclude" t="IncludeRecursive" />
       <e p="LICENSE.txt" t="Include" />
       <e p="packages" t="ExcludeRecursive" />
       <e p="requests" t="Include">
@@ -57,12 +58,18 @@
             <e p="Commands" t="Include">
               <e p="AddPersonAttributeCommand.cs" t="Include" />
               <e p="CreatePersonCommand.cs" t="Include" />
+              <e p="Handlers" t="Include">
+                <e p="AddPersonAttributeCommandHandler.cs" t="Include" />
+                <e p="CreatePersonCommandHandler.cs" t="Include" />
+              </e>
             </e>
-            <e p="CreatePersonCommandHandler.cs" t="Include" />
-            <e p="Dtos" t="Include">
-              <e p="CreatePersonRestIn.cs" t="Include" />
-            </e>
+            <e p="Dtos" t="Include" />
             <e p="Events" t="Include">
+              <e p="AttributeAddedEvent.cs" t="Include" />
+              <e p="Handlers" t="Include">
+                <e p="AttributeAddedEventHandler.cs" t="Include" />
+                <e p="PersonCreatedEventHandler.cs" t="Include" />
+              </e>
               <e p="PersonCreatedEvent.cs" t="Include" />
             </e>
             <e p="Exceptions" t="Include">
@@ -75,13 +82,13 @@
             <e p="Person.cs" t="Include" />
             <e p="PersonAttribute.cs" t="Include" />
             <e p="PersonConstants.cs" t="Include" />
-            <e p="PersonCreatedEventHandler.cs" t="Include" />
             <e p="Results" t="Include">
+              <e p="AddPersonAttributeResult.cs" t="Include" />
               <e p="CreatePersonResult.cs" t="Include" />
             </e>
             <e p="Validators" t="Include">
               <e p="AddPersonAttributeDtoValidator.cs" t="Include" />
-              <e p="InsertPersonDtoValidator.cs" t="Include" />
+              <e p="CreatePersonCommandValidator.cs" t="Include" />
             </e>
           </e>
           <e p="Solari.Samples.Domain.csproj" t="IncludeRecursive" />
@@ -638,6 +645,7 @@
           <e p="Exceptions" t="Include">
             <e p="NullOrEmptyErrorMessageException.cs" t="Include" />
           </e>
+          <e p="Framework" t="Include" />
           <e p="ICommonResponseFactory.cs" t="Include" />
           <e p="obj" t="ExcludeRecursive">
             <e p="Debug" t="Include">
@@ -647,6 +655,14 @@
             </e>
           </e>
           <e p="Solari.Vanth.csproj" t="IncludeRecursive" />
+          <e p="Validation" t="Include">
+            <e p="IVanthValidationService.cs" t="Include" />
+            <e p="VanthValidationService.cs" t="Include" />
+            <e p="VanthValidatorAttribute.cs" t="Include" />
+            <e p="VanthValidatorFactory.cs" t="Include" />
+          </e>
+          <e p="VanthLibConstants.cs" t="Include" />
+          <e p="VanthOptions.cs" t="Include" />
         </e>
       </e>
       <e p="tests" t="Include">

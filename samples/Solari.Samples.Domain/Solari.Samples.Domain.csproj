@@ -36,4 +36,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Person\Dtos" />
+  </ItemGroup>
+
 </Project>

@@ -1,17 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Convey.CQRS.Commands;
 using Convey.CQRS.Events;
-using Convey.MessageBrokers;
-using Elastic.Apm;
-using Elastic.Apm.Api;
 using Solari.Callisto.Abstractions.CQR;
-using Solari.Samples.Domain.Person.Commands;
 using Solari.Samples.Domain.Person.Events;
 using Solari.Samples.Domain.Person.Results;
 using Solari.Titan;
 
-namespace Solari.Samples.Domain.Person
+namespace Solari.Samples.Domain.Person.Commands.Handlers
 {
     public class CreatePersonCommandHandler : ICommandHandler<CreatePersonCommand>
     {
@@ -31,20 +26,20 @@ namespace Solari.Samples.Domain.Person
 
         public async Task HandleAsync(CreatePersonCommand command)
         {
-            _logger.Information("Creating a new person....");
+            _logger.Information($"Received {PersonConstants.CreatePersonOperationName} command");
             ICallistoInsert<Person> operation = _operations.CreateInsertOperation(command);
-            _logger.Information($"Successfully created {PersonConstants.CreateOperationName} operation.");
-            CreatePersonResult dataBaseResult = await _repository.InsertPerson(operation);
-            if (dataBaseResult.Success)
+            CreatePersonResult repositoryResult = await _repository.InsertPerson(operation);
+            if (repositoryResult.Success)
             {
-                _logger.Information($"A new database registry was created. id: '{dataBaseResult.Id}'");
+                _logger.Information($"A new database registry was created. id: '{repositoryResult.Id}'");
+                await _dispatcher.PublishAsync(new PersonCreatedEvent(repositoryResult));
             }
             else
             {
                 _logger.Error($"Error while trying to save person into the database");
             }
-            await _dispatcher.PublishAsync(new PersonCreatedEvent(dataBaseResult));
-            command.Result = dataBaseResult;
+            
+            command.Result = repositoryResult;
 
         }
     }

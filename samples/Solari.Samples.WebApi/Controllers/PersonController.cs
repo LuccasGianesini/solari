@@ -8,13 +8,13 @@ using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using Solari.Samples.Domain.Person;
 using Solari.Samples.Domain.Person.Commands;
-using Solari.Samples.Domain.Person.Dtos;
 using Solari.Samples.Domain.Person.Exceptions;
 using Solari.Samples.Domain.Person.Results;
 using Solari.Samples.Domain.Person.Validators;
 using Solari.Sol;
 using Solari.Titan;
 using Solari.Vanth;
+using Solari.Vanth.Validation;
 
 namespace Solari.Samples.WebApi.Controllers
 {
@@ -35,16 +35,17 @@ namespace Solari.Samples.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Insert([FromBody]CreatePersonRestIn input)
+        [VanthValidator]
+        public async Task<IActionResult> Insert([FromBody]CreatePersonCommand command)
         {
             try
             {
-                var command = new CreatePersonCommand(input.Name, input.Attributes);
-                ValidationResult validationResult = new InsertPersonDtoValidator().Validate(command);
-                if (!validationResult.IsValid)
-                {
-                    return BadRequest(_factory.CreateError<CreatePersonResult>(validationResult));
-                }
+                
+                // ValidationResult validationResult = new InsertPersonDtoValidator().Validate(command);
+                // if (!validationResult.IsValid)
+                // {
+                //     return BadRequest(_factory.CreateError<CreatePersonResult>(validationResult));
+                // }
 
                 await _commandDispatcher.SendAsync(command);
                 

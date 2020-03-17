@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using System.Threading.Tasks;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
 using Solari.Callisto.Connector;
 using Solari.Callisto.Framework.Operators;
@@ -30,9 +32,5 @@ namespace Solari.Callisto
             Replace = new ReplaceOperator<TEntity>(Collection, OperationFactory);
             Query = new QueryOperator<TEntity>(Collection, OperationFactory);
         }
-
-
-       
-        
     }
 }

@@ -1,20 +1,17 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Convey;
 using Convey.MessageBrokers.RabbitMQ;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Solari.Samples.Di;
+using Solari.Samples.Domain.Person.Validators;
 using Solari.Sol;
+using Solari.Vanth.Validation;
 
 namespace Solari.Samples.WebApi
 {
@@ -54,7 +51,6 @@ namespace Solari.Samples.WebApi
             }
 
             // app.UseHttpsRedirection();
-
             app.UseRouting();
             app.UseSol();
             app.UseConvey()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using Solari.Callisto;
 using Solari.Callisto.Abstractions.CQR;
@@ -23,11 +24,17 @@ namespace Solari.Samples.Infrastructure
             return CreatePersonResult.Create(insert.Value.Id);
         }
 
-        public async Task<UpdateResult> AddAttribute(ICallistoUpdate<Person> update)
+        public async Task<bool> Exists(ObjectId id) { return await Query.Exists(a => a.Id == id); }
+        public async Task<AddPersonAttributeResult> AddAttribute(ICallistoUpdate<Person> update)
         {
             try
             {
-                return await Update.One(update);
+                UpdateResult updateResult = await Update.One(update);
+                if (updateResult.IsAcknowledged && updateResult.IsModifiedCountAvailable && updateResult.ModifiedCount == 1)
+                {
+                    return new AddPersonAttributeResult(true);
+                }
+                return new AddPersonAttributeResult(false);
             }
             catch (MongoWriteException e)
             {

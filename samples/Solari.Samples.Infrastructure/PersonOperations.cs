@@ -20,14 +20,15 @@ namespace Solari.Samples.Infrastructure
         
         public ICallistoInsert<Person> CreateInsertOperation(CreatePersonCommand createPersonCommand)
         {
-            _logger.Information($"Creating operation: {PersonConstants.CreateOperationName}");
-            return _operationFactory.CreateInsert(PersonConstants.CreateOperationName, (Person) createPersonCommand);
+            _logger.Information("Creating callisto operation object");
+            return _operationFactory.CreateInsert(PersonConstants.CreatePersonOperationName, (Person) createPersonCommand);
         }
 
         public ICallistoUpdate<Person> CreateAddAttributeOperation(AddPersonAttributeCommand command)
         {
+            _logger.Information("Creating callisto operation object");
             UpdateDefinition<Person> update = Builders<Person>.Update.Push(a => a.Attributes, (PersonAttribute) command);
-            return _operationFactory.CreateUpdateById("add-person-attribute", command.PersonId, update);
+            return _operationFactory.CreateUpdateById(PersonConstants.AddAttributeToPersonOperationName, command.PersonId, update);
         }
         
     }

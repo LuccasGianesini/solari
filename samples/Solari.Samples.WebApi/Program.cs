@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Solari.Titan.DependencyInjection;
+using Solari.Vanth.DependencyInjection;
 
 namespace Solari.Samples.WebApi
 {
@@ -19,9 +20,7 @@ namespace Solari.Samples.WebApi
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                }).UseTitan();
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
+                .UseTitan();
     }
 }

@@ -3,10 +3,9 @@ using Convey.CQRS.Events;
 using Convey.MessageBrokers;
 using Elastic.Apm;
 using Elastic.Apm.Api;
-using Solari.Samples.Domain.Person.Events;
 using Solari.Titan;
 
-namespace Solari.Samples.Domain.Person
+namespace Solari.Samples.Domain.Person.Events.Handlers
 {
     public class PersonCreatedEventHandler : IEventHandler<PersonCreatedEvent>
     {
@@ -23,7 +22,7 @@ namespace Solari.Samples.Domain.Person
         {
             string spanContext = _tracer.CurrentTransaction.OutgoingDistributedTracingData.SerializeToString();
             await _publisher.PublishAsync(@event, spanContext: spanContext);
-            _logger.Information("Published PersonCreatedEvent");
+            _logger.Information($"Published '{PersonConstants.CreatePersonOperationName}'");
         }
     }
 }
