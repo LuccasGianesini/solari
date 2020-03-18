@@ -42,8 +42,8 @@ namespace Solari.Samples.Di
                     .AddInMemoryCommandDispatcher()
                     .AddInMemoryEventDispatcher()
                     .AddInMemoryQueryDispatcher()
-                    .AddRedis()
-                    .AddRabbitMq(plugins: p => p.AddElasticApm()).Build();
+                    // .AddRedis()
+                    .AddRabbitMq();
             
             services.AddScoped<IPersonOperations, PersonOperations>();
 

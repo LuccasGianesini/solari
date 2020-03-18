@@ -10,7 +10,7 @@ namespace Solari.Callisto
     public abstract class CallistoRepository<TEntity> where TEntity : class, IDocumentRoot
     {
         protected IMongoCollection<TEntity> Collection { get; }
-
+        protected ICallistoContext Context { get; }
         protected ICallistoOperationFactory OperationFactory { get; }
         protected InsertOperator<TEntity> Insert { get; }
 
@@ -24,7 +24,8 @@ namespace Solari.Callisto
 
         protected CallistoRepository(ICallistoContext context)
         {
-            Collection = context.Connection.GetDataBase().GetCollection<TEntity>(context.CollectionName);
+            Context = context;
+            Collection = Context.Connection.GetDataBase().GetCollection<TEntity>(context.CollectionName);
             OperationFactory = context.OperationFactory;
             Insert = new InsertOperator<TEntity>(Collection, OperationFactory);
             Update = new UpdateOperator<TEntity>(Collection, OperationFactory);

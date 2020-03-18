@@ -22,7 +22,7 @@ namespace Solari.Samples.Domain.Person.Events.Handlers
         {
             string spanContext = _tracer.CurrentTransaction.OutgoingDistributedTracingData.SerializeToString();
             await _publisher.PublishAsync(@event, spanContext: spanContext);
-            _logger.Information($"Published '{PersonConstants.CreatePersonOperationName}'");
+            _logger.Information($"Published '{PersonConstants.CreatePersonOperationName} event'");
         }
     }
 }

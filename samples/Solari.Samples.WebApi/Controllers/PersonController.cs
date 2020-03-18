@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Convey.CQRS.Commands;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
@@ -60,16 +61,15 @@ namespace Solari.Samples.WebApi.Controllers
             }
         }
 
-       
 
-        [HttpPost("attributes")]
+        [HttpPatch("attributes")]
         [VanthValidator]
-        public async Task<IActionResult> AddAttribute([FromBody] PersonAttributeCommand command)
+        public async Task<IActionResult> PatchAttributes([FromBody] PersonAttributeCommand command)
         {
             try
             {
                 await _commandDispatcher.SendAsync(command);
-                return Ok(_factory.CreateResult(command.Result));
+                return Ok(command.Result);
             }
             catch (MongoWriteException exception)
             {
@@ -79,8 +79,12 @@ namespace Solari.Samples.WebApi.Controllers
             {
                 return CreateExceptionError(exception, "1002", "Error writing person attributes", exception.GetType());
             }
+            catch (ArgumentOutOfRangeException exception)
+            {
+                return CreateExceptionError(exception, "1002", "Error writing person attributes", exception.GetType());
+            }
         }
-        
+
         private IActionResult CreateExceptionError(Exception exception, string code, string message, MemberInfo exceptionType)
         {
             Helper.DefaultExceptionLogMessage(_logger, exception.GetType(), exception);

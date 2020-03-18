@@ -1,6 +1,6 @@
 namespace Solari.Eris
 {
-    public interface ICommand
+    public interface ICommand : Convey.CQRS.Commands.ICommand
     {
     }
 }

@@ -55,22 +55,25 @@
               </e>
             </e>
           </e>
+          <e p="PatchOperation.cs" t="Include" />
           <e p="Person" t="Include">
             <e p="Commands" t="Include">
               <e p="CreatePersonCommand.cs" t="Include" />
               <e p="Handlers" t="Include">
-                <e p="AddPersonAttributeCommandHandler.cs" t="Include" />
                 <e p="CreatePersonCommandHandler.cs" t="Include" />
+                <e p="PatchPersonAttributeCommandHandler.cs" t="Include" />
               </e>
               <e p="PersonAttributeCommand.cs" t="Include" />
             </e>
-            <e p="Dtos" t="Include" />
+            <e p="Dtos" t="Include">
+              <e p="PersonAttributeDto.cs" t="Include" />
+            </e>
             <e p="Events" t="Include">
-              <e p="AttributeAddedEvent.cs" t="Include" />
               <e p="Handlers" t="Include">
-                <e p="AttributeAddedEventHandler.cs" t="Include" />
+                <e p="PersonAttributesPatchedEventHandler.cs" t="Include" />
                 <e p="PersonCreatedEventHandler.cs" t="Include" />
               </e>
+              <e p="PersonAttributesPatchedEvent.cs" t="Include" />
               <e p="PersonCreatedEvent.cs" t="Include" />
             </e>
             <e p="Exceptions" t="Include">
@@ -84,8 +87,8 @@
             <e p="PersonAttribute.cs" t="Include" />
             <e p="PersonConstants.cs" t="Include" />
             <e p="Results" t="Include">
-              <e p="AddPersonAttributeResult.cs" t="Include" />
               <e p="CreatePersonResult.cs" t="Include" />
+              <e p="PersonAttributeResult.cs" t="Include" />
             </e>
             <e p="Validators" t="Include">
               <e p="CreatePersonCommandValidator.cs" t="Include" />

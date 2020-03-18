@@ -1,6 +1,6 @@
 namespace Solari.Eris
 {
-    public interface IEvent
+    public interface IEvent : Convey.CQRS.Events.IEvent
     {
     }
 }

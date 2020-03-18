@@ -14,7 +14,6 @@
     <ProjectReference Include="..\..\src\Solari.Deimos.Elastic\Solari.Deimos.Elastic.csproj" />
     <ProjectReference Include="..\..\src\Solari.Deimos.Jaeger\Solari.Deimos.Jaeger.csproj" />
     <ProjectReference Include="..\..\src\Solari.Deimos\Solari.Deimos.csproj" />
-    <ProjectReference Include="..\..\src\Solari.Eris\Solari.Eris.csproj" />
     <ProjectReference Include="..\..\src\Solari.Ganymede\Solari.Ganymede.csproj" />
     <ProjectReference Include="..\..\src\Solari.Io\Solari.Io.csproj" />
     <ProjectReference Include="..\..\src\Solari.Miranda.Tracer\Solari.Miranda.Tracer.csproj" />
@@ -34,10 +33,6 @@
     <PackageReference Include="Convey.MessageBrokers.RabbitMQ" Version="0.4.273" />
     <PackageReference Include="Convey.Persistence.Redis" Version="0.4.273" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.1.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Person\Dtos" />
   </ItemGroup>
 
 </Project>

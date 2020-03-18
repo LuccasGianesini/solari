@@ -18,13 +18,16 @@ content-type: application/json
 ###
 
 # Add attribute to person
-POST http://localhost:5000/api/person/attributes
+PATCH http://localhost:5000/api/person/attributes
 Content-Type: application/json
 
 {
   "PersonId" : "5e6a8c494c889034f87ad71d",
-  "AttributeName": "Stas",
-  "AttributeValue": "true"
+  "Operation": "Add",
+  "Values": [
+    {"AttributeName":"FSDA", "AttributeValue": "992sxlsad"},
+    {"AttributeName":"Stas", "AttributeValue": "OPS"}
+  ]
 }
 
 ###

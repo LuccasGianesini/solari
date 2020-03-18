@@ -22,11 +22,12 @@ namespace Solari.Callisto.Abstractions.CQR
 
         public string OperationName { get; }
         public CallistoOperation OperationType { get; }
-        public CancellationToken CancellationToken { get; }
+        public CancellationToken CancellationToken { get; private set; }
         public UpdateDefinition<T> UpdateDefinition { get; }
         public FilterDefinition<T> FilterDefinition { get; }
         public UpdateOptions UpdateOptions { get; }
-
+        public IClientSessionHandle ClientSessionHandle { get; private set; }
+        public bool UseSessionHandle { get; private set; }
 
         public void ValidateOperation()
         {
@@ -36,9 +37,23 @@ namespace Solari.Callisto.Abstractions.CQR
                 throw new NullFilterDefinitionException(CallistoOperationHelper.NullDefinitionMessage("update", OperationName, "filter"));
         }
 
-        public IClientSessionHandle ClientSessionHandle { get; }
-        public bool UseSessionHandle { get; }
+        public ICallistoOperation<T> AddSessionHandle(IClientSessionHandle sessionHandle)
+        {
+            if (sessionHandle == null)
+                return this;
+            ClientSessionHandle = sessionHandle;
+            UseSessionHandle = true;
+            return this;
+        }
 
-        public static DefaultCallistoUpdate<T> Null() => new DefaultCallistoUpdate<T>("", null, null, null, null);
+        public ICallistoOperation<T> AddCancellationToken(CancellationToken cancellationToken)
+        {
+            if (cancellationToken == CancellationToken.None)
+                return this;
+            CancellationToken = cancellationToken;
+            return this;
+        }
+
+        public static DefaultCallistoUpdate<T> Null() { return new DefaultCallistoUpdate<T>("", null, null); }
     }
 }

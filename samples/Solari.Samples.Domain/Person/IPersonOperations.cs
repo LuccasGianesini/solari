@@ -1,12 +1,15 @@
-﻿using Solari.Callisto.Abstractions.CQR;
+﻿using MongoDB.Bson;
+using Solari.Callisto.Abstractions.CQR;
 using Solari.Samples.Domain.Person.Commands;
+using Solari.Samples.Domain.Person.Dtos;
 
 namespace Solari.Samples.Domain.Person
 {
     public interface IPersonOperations
     {
         ICallistoInsert<Person> CreateInsertOperation(CreatePersonCommand createPersonCommand);
-        ICallistoUpdate<Person> CreateAddAttributeOperation(PersonAttributeCommand command);
-        ICallistoUpdate<Person> CreateUpdateAttributeOperation(PersonAttributeCommand command);
+        ICallistoUpdate<Person> CreateRemoveAttributeOperation(ObjectId id, PersonAttributeDto command);
+        ICallistoUpdate<Person> CreateUpdateAttributeOperation(ObjectId id, PersonAttributeDto command);
+        ICallistoUpdate<Person> CreateAddAttributeOperation(ObjectId id,PersonAttributeDto command);
     }
 }

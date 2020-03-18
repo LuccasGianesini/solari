@@ -25,16 +25,19 @@ namespace Solari.Samples.Infrastructure
         }
 
         public async Task<bool> Exists(ObjectId id) { return await Query.Exists(a => a.Id == id); }
-        public async Task<Person> Get(ObjectId id) => await Query.FindById(id);
-        public async Task<AddPersonAttributeResult> AddAttribute(ICallistoUpdate<Person> update)
-        {
-            UpdateResult updateResult = await Update.One(update);
-            if (updateResult.IsAcknowledged && updateResult.IsModifiedCountAvailable && updateResult.ModifiedCount == 1)
-            {
-                return new AddPersonAttributeResult(true);
-            }
 
-            return new AddPersonAttributeResult(false);
+        public async Task<Person> Get(ObjectId id) => await Query.FindById(id);
+
+        public async Task<UpdateResult> PatchAttribute(ICallistoUpdate<Person> update)
+        {
+            using (IClientSessionHandle session = await Context.Connection.GetClient().StartSessionAsync())
+            {
+                session.StartTransaction();
+                update.AddSessionHandle(session);
+                UpdateResult result = await Update.One(update);
+                await session.CommitTransactionAsync();
+                return result;
+            }
         }
     }
 }

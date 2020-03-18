@@ -17,17 +17,23 @@ namespace Solari.Samples.Domain.Person.Validators
                 .WithMessage("The provided PersonId is invalid")
                 .WithErrorCode(Constants.InvalidObjectIdErrorCode)
                 .WithName(Constants.InvalidObjectIdErrorName);
-
-            RuleFor(a => a.AttributeName)
+            RuleFor(a => a.Values)
                 .NotEmpty()
-                .WithMessage("AttributeValue cannot be empty")
+                .WithMessage("The values collection cannot be empty")
                 .WithErrorCode(Constants.EmptyPropertyErrorCode)
                 .WithName(Constants.EmptyPropertyErrorName);
-            RuleFor(a => a.AttributeValue)
+            RuleFor(a => a.Operation)
                 .NotEmpty()
-                .WithMessage("AttributeValue cannot be empty")
+                .WithMessage("The patch operation cannot be empty or null")
                 .WithErrorCode(Constants.EmptyPropertyErrorCode)
-                .WithName(Constants.EmptyPropertyErrorName);
+                .WithName(Constants.EmptyPropertyErrorName)
+                .Equal(PatchOperation.Add)
+                .Equal(PatchOperation.Remove)
+                .Equal(PatchOperation.Update)
+                .WithMessage("Operation must be 'Add' or 'Remove' or 'Update'")
+                .WithErrorCode("ERR-023")
+                .WithName("Invalid operation name");
+            
         }
         
     }

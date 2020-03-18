@@ -10,7 +10,7 @@ namespace Solari.Samples.Domain.Person
     public interface IPersonRepository
     {
         Task<CreatePersonResult> InsertPerson(ICallistoInsert<Person> insert);
-        Task<AddPersonAttributeResult> AddAttribute(ICallistoUpdate<Person> update);
+        Task<UpdateResult> PatchAttribute(ICallistoUpdate<Person> update);
         Task<bool> Exists(ObjectId id);
         Task<Person> Get(ObjectId id);
     }
