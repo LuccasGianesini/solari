@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,9 +16,11 @@ namespace Solari.Sol.Framework
             AppConfiguration = configuration;
             BuildActions = new Queue<BuildAction>(5);
             HostEnvironment = GetHostEnvironment();
+            ApplicationAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
         }
 
 
+        public List<Assembly> ApplicationAssemblies { get; }
         public IConfiguration AppConfiguration { get; }
         public Queue<BuildAction> BuildActions { get; }
 

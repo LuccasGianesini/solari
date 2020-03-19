@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using Convey.CQRS.Commands;
-using Microsoft.AspNetCore.Mvc;
+using Solari.Eris;
 using Solari.Samples.Domain.Person.Dtos;
 using Solari.Samples.Domain.Person.Results;
 

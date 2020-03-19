@@ -1,12 +1,18 @@
 ﻿using System;
-using Convey.CQRS.Events;
-using Convey.MessageBrokers;
-using MongoDB.Bson;
+using EasyNetQ;
+using Solari.Eris;
+using Solari.Miranda;
 using Solari.Samples.Domain.Person.Results;
 
 namespace Solari.Samples.Domain.Person.Events
 {
-    [Message(queue: "person-created")]
+    public class PersonCreatedEventMessage : IMessage
+    {
+        public object GetBody() { throw new NotImplementedException(); }
+
+        public MessageProperties Properties { get; }
+        public Type MessageType { get; }
+    }
     public class PersonCreatedEvent : IEvent
     {
         public CreatePersonResult Result { get; }

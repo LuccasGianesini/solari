@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Convey.CQRS.Commands;
 using MongoDB.Bson;
+using Solari.Eris;
 using Solari.Samples.Domain.Person.Dtos;
-using Solari.Samples.Domain.Person.Results;
 using Solari.Vanth;
 
 namespace Solari.Samples.Domain.Person.Commands

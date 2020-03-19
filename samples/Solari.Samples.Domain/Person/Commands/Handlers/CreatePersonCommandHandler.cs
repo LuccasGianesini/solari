@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Convey.CQRS.Commands;
-using Convey.CQRS.Events;
 using Solari.Callisto.Abstractions.CQR;
+using Solari.Eris;
 using Solari.Samples.Domain.Person.Events;
 using Solari.Samples.Domain.Person.Results;
 using Solari.Titan;
@@ -11,11 +10,11 @@ namespace Solari.Samples.Domain.Person.Commands.Handlers
     public class CreatePersonCommandHandler : ICommandHandler<CreatePersonCommand>
     {
         private readonly ITitanLogger<CreatePersonCommandHandler> _logger;
-        private readonly IEventDispatcher _dispatcher;
+        private readonly IDispatcher _dispatcher;
         private readonly IPersonRepository _repository;
         private readonly IPersonOperations _operations;
 
-        public CreatePersonCommandHandler(ITitanLogger<CreatePersonCommandHandler> logger, IEventDispatcher dispatcher,
+        public CreatePersonCommandHandler(ITitanLogger<CreatePersonCommandHandler> logger, IDispatcher dispatcher,
                                           IPersonRepository repository, IPersonOperations operations)
         {
             _logger = logger;
@@ -24,7 +23,7 @@ namespace Solari.Samples.Domain.Person.Commands.Handlers
             _operations = operations;
         }
 
-        public async Task HandleAsync(CreatePersonCommand command)
+        public async Task HandleCommandAsync(CreatePersonCommand command)
         {
             Helper.DefaultCommandLogMessage(_logger, PersonConstants.CreatePersonOperationName);
             
@@ -33,7 +32,7 @@ namespace Solari.Samples.Domain.Person.Commands.Handlers
             if (repositoryResult.Success)
             {
                 _logger.Information($"A new database registry was created. id: '{repositoryResult.Id}'");
-                await _dispatcher.PublishAsync(new PersonCreatedEvent(repositoryResult));
+                await _dispatcher.DispatchEvent(new PersonCreatedEvent(repositoryResult));
             }
             else
             {

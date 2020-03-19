@@ -9,11 +9,6 @@ namespace Solari.Deimos.CorrelationId
             DeimosLogger.CorrelationIdLogger.CreatedHttpCorrelationContext(correlationId);
             return new HttpCorrelationContext(correlationId, headerKey);
         }
-
-        public ICorrelationContext CreateBrokerContext(string headerKey, string correlationId, string messageBroker)
-        {
-            DeimosLogger.CorrelationIdLogger.CreatedBrokerCorrelationContext(correlationId);
-            return new DefaultCorrelationContext(correlationId, headerKey, messageBroker);
-        }
+        
     }
 }

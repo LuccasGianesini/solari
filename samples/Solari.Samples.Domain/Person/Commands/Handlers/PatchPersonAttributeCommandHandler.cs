@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Convey.CQRS.Commands;
-using Convey.CQRS.Events;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Solari.Callisto.Abstractions.CQR;
+using Solari.Eris;
 using Solari.Samples.Domain.Person.Dtos;
-using Solari.Samples.Domain.Person.Events;
 using Solari.Titan;
 using Solari.Vanth;
 using Solari.Vanth.Builders;
@@ -15,12 +13,12 @@ namespace Solari.Samples.Domain.Person.Commands.Handlers
 {
     public class AddPersonAttributeCommandHandler : ICommandHandler<PersonAttributeCommand>
     {
-        private readonly IEventDispatcher _dispatcher;
+        private readonly IDispatcher _dispatcher;
         private readonly ITitanLogger<AddPersonAttributeCommandHandler> _logger;
         private readonly IPersonOperations _operations;
         private readonly IPersonRepository _repository;
 
-        public AddPersonAttributeCommandHandler(ITitanLogger<AddPersonAttributeCommandHandler> logger, IEventDispatcher dispatcher,
+        public AddPersonAttributeCommandHandler(ITitanLogger<AddPersonAttributeCommandHandler> logger, IDispatcher dispatcher,
                                                 IPersonRepository repository, IPersonOperations operations)
         {
             _logger = logger;
@@ -29,7 +27,7 @@ namespace Solari.Samples.Domain.Person.Commands.Handlers
             _operations = operations;
         }
 
-        public async Task HandleAsync(PersonAttributeCommand command)
+        public async Task HandleCommandAsync(PersonAttributeCommand command)
         {
             Helper.DefaultCommandLogMessage(_logger, PersonConstants.AddAttributeToPersonOperationName, $" with person id: {command.PersonId}");
             Person personFromDb = await _repository.Get(command.ObjectId);
@@ -44,7 +42,7 @@ namespace Solari.Samples.Domain.Person.Commands.Handlers
 
         private async Task FinalActions(PersonAttributeCommand command, CommonResponse<object> response)
         {
-            if (response.HasResult) await _dispatcher.PublishAsync(new PersonAttributesPatchedEvent(command.PersonId));
+            // if (response.HasResult) await _dispatcher.PublishAsync(new PersonAttributesPatchedEvent(command.PersonId));
 
             if (response.HasErrors) _logger.Warning($"Error while patching person attributes. Person id: {command.PersonId}");
         }

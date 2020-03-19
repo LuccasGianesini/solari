@@ -1,7 +1,4 @@
 using System;
-using Convey;
-using Convey.MessageBrokers.RabbitMQ;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -46,15 +43,15 @@ namespace Solari.Samples.WebApi
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
-                // app.UseDeveloperExceptionPage();
+            { 
+                app.UseDeveloperExceptionPage();
             }
 
             // app.UseHttpsRedirection();
             app.UseRouting();
             app.UseSol();
-            app.UseConvey()
-               .UseRabbitMq();
+            // app.UseConvey()
+            //    .UseRabbitMq();
             app.UseSwaggerUI(options =>
             {
                 options.RoutePrefix = "swagger";

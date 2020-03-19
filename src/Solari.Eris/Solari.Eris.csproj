@@ -16,10 +16,10 @@
     <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Convey.CQRS.Commands" Version="0.4.273" />
-    <PackageReference Include="Convey.CQRS.Events" Version="0.4.273" />
-    <PackageReference Include="Convey.CQRS.Queries" Version="0.4.273" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
   </ItemGroup>
 
 </Project>

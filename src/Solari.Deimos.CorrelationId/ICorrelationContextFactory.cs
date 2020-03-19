@@ -10,12 +10,12 @@
         /// <returns></returns>
         ICorrelationContext CreateHttpContext(string headerKey, string correlationId);
         /// <summary>
-        /// Create an <see cref="DefaultCorrelationContext"/>.
+        /// Create an <see cref="BrokerCorrelationContext"/>.
         /// </summary>
         /// <param name="headerKey">The header key</param>
         /// <param name="correlationId">The header value</param>
         /// <param name="messageBroker">The message broker</param>
         /// <returns></returns>
-        ICorrelationContext CreateBrokerContext(string headerKey, string correlationId, string messageBroker);
+        // ICorrelationContext CreateBrokerContext(string headerKey, string correlationId, string messageBroker);
     }
 }

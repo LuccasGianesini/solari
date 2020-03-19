@@ -2,18 +2,15 @@
 {
     public class HttpCorrelationContext : ICorrelationContext
     {
-        public HttpCorrelationContext(string correlationId, string headerKey)
+        public HttpCorrelationContext(string correlationId, string headerKey, string spanContext = null)
         {
             CorrelationId = correlationId;
             Header = headerKey;
-            Http = true;
-            MessageBrokerName = string.Empty;
+            SpanContext = spanContext;
         }
 
-        public string CorrelationId { get; }
-        public string Header { get; }
-        public bool Http { get; }
-        public string MessageBrokerName { get; }
-        
+        public string CorrelationId { get; set;}
+        public string Header { get; set;}
+        public string SpanContext { get; set;}
     }
 }
