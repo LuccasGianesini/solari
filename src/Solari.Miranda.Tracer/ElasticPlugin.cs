@@ -57,8 +57,7 @@ namespace Solari.Miranda.Tracer
 
         private static void CreateTransaction(string messageName, string spanContext, string messageId)
         {
-            ITransaction transaction = Agent.Tracer.StartTransaction($"processing-{messageName}",
-                                                                     "RabbitMq",
+            ITransaction transaction = Agent.Tracer.StartTransaction($"processing-{messageName}", "RabbitMq",
                                                                      DistributedTracingData.TryDeserializeFromString(spanContext));
             transaction.Labels["message.type"] = messageName;
             transaction.Labels["message.id"] = messageId;

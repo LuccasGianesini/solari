@@ -4,13 +4,14 @@ using RabbitMQ.Client;
 using RawRabbit.Configuration;
 using Solari.Io;
 
-namespace Solari.Miranda.Options
+namespace Solari.Miranda.Abstractions.Options
 {
     public class MirandaOptions
     {
+        public bool EnableTitan { get; set; }
         public bool AutoCloseConnection { get; set; }
         public bool AutomaticRecovery { get; set; } = true;
-        public MirandaExchangeOptions Exchange { get; set; }
+        public MirandaExchangeOptions Exchange { get; set; } = new MirandaExchangeOptions();
         public string GracefulShutdownPeriod { get; set; }
         public List<string> Hostnames { get; set; } = new List<string>(5);
         public string Namespace { get; set; }
@@ -18,7 +19,7 @@ namespace Solari.Miranda.Options
         public bool PersistentDeliveryMode { get; set; }
         public int Port { get; set; }
         public string PublishConfirmTimeout { get; set; }
-        public MirandaQueueOptions Queue { get; set; }
+        public MirandaQueueOptions Queue { get; set; } = new MirandaQueueOptions();
         public string RequestTimeout { get; set; }
         public int Retries { get; set; }
         public string RetryInterval { get; set; }
@@ -28,10 +29,10 @@ namespace Solari.Miranda.Options
         public string Username { get; set; }
         public string VirtualHost { get; set; }
         
-        public MirandaPluginsOptions Plugins { get; set; }
-        public MirandaPolicyOptions Policies { get; set; }
-        
-        public MirandaMessageProcessorOptions MessageProcessor { get; set; }
+        public MirandaPluginsOptions Plugins { get; set; } = new MirandaPluginsOptions();
+        public MirandaPolicyOptions Policies { get; set; } = new MirandaPolicyOptions();
+        public MirandaQosOptions Qos { get; set; } = new MirandaQosOptions();
+        public MirandaMessageProcessorOptions MessageProcessor { get; set; } =  new MirandaMessageProcessorOptions();
         
         public GeneralExchangeConfiguration GetExchangeConfiguration()
         {

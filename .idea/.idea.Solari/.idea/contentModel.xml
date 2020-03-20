@@ -326,7 +326,6 @@
           <e p="CorrelationContextFactory.cs" t="Include" />
           <e p="CorrelationContextHandler.cs" t="Include" />
           <e p="CorrelationIdMiddleware.cs" t="Include" />
-          <e p="DefaultCorrelationContext.cs" t="Include" />
           <e p="DeimosCorrelationIdExtensions.cs" t="Include" />
           <e p="DeimosCorrelationIdOptions.cs" t="Include" />
           <e p="HttpCorrelationContext.cs" t="Include" />
@@ -378,8 +377,10 @@
         </e>
         <e p="Solari.Eris" t="IncludeRecursive">
           <e p="bin" t="ExcludeRecursive" />
+          <e p="Dispatcher.cs" t="Include" />
           <e p="ICommand.cs" t="Include" />
           <e p="ICommandHandler.cs" t="Include" />
+          <e p="IDispatcher.cs" t="Include" />
           <e p="IEvent.cs" t="Include" />
           <e p="IEventHandler.cs" t="Include" />
           <e p="IQuery.cs" t="Include" />
@@ -392,6 +393,7 @@
             </e>
           </e>
           <e p="Solari.Eris.csproj" t="IncludeRecursive" />
+          <e p="SolariBuilderExtensions.cs" t="Include" />
         </e>
         <e p="Solari.Ganymede" t="IncludeRecursive">
           <e p="bin" t="ExcludeRecursive" />
@@ -516,9 +518,60 @@
           <e p="Solari.Io.csproj" t="IncludeRecursive" />
           <e p="StringExtensions.cs" t="Include" />
         </e>
+        <e p="Solari.Miranda" t="IncludeRecursive">
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="BrokerCorrelationContext.cs" t="Include" />
+          <e p="DependencyInjection" t="Include">
+            <e p="SolariBuilderExtensions.cs" t="Include" />
+          </e>
+          <e p="Framework" t="Include">
+            <e p="AttributeHelper.cs" t="Include" />
+            <e p="CustomNamingConventions.cs" t="Include" />
+            <e p="EmptyMessageProcessor.cs" t="Include" />
+            <e p="IMessageProcessor.cs" t="Include" />
+            <e p="InMemoryMessageProcessor.cs" t="Include" />
+            <e p="IRabbitMqPluginRegister.cs" t="Include" />
+            <e p="ProcessUniqueMessagesMiddleware.cs" t="Include" />
+            <e p="RabbitMqPluginRegister.cs" t="Include" />
+            <e p="RedisMessageProcessor.cs" t="Include" />
+          </e>
+          <e p="MessageAttribute.cs" t="Include" />
+          <e p="MirandaClient.cs" t="Include" />
+          <e p="MirandaLibConstants.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive">
+            <e p="Debug" t="Include">
+              <e p="netcoreapp3.1" t="Include">
+                <e p="Solari.Miranda.AssemblyInfo.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Solari.Miranda.csproj" t="IncludeRecursive" />
+        </e>
+        <e p="Solari.Miranda.Abstractions" t="IncludeRecursive">
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="IMirandaMessageContext.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive">
+            <e p="Debug" t="Include">
+              <e p="netcoreapp3.1" t="Include">
+                <e p="Solari.Miranda.Abstractions.AssemblyInfo.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Options" t="Include">
+            <e p="MirandaExchangeOptions.cs" t="Include" />
+            <e p="MirandaMessageProcessorOptions.cs" t="Include" />
+            <e p="MirandaOptions.cs" t="Include" />
+            <e p="MirandaPluginsOptions.cs" t="Include" />
+            <e p="MirandaPolicyOptions.cs" t="Include" />
+            <e p="MirandaQosOptions.cs" t="Include" />
+            <e p="MirandaQueueOptions.cs" t="Include" />
+          </e>
+          <e p="Solari.Miranda.Abstractions.csproj" t="IncludeRecursive" />
+        </e>
         <e p="Solari.Miranda.Tracer" t="IncludeRecursive">
           <e p="bin" t="ExcludeRecursive" />
           <e p="ElasticPlugin.cs" t="Include" />
+          <e p="ElasticPluginMiddleware.cs" t="Include" />
           <e p="obj" t="ExcludeRecursive">
             <e p="Debug" t="Include">
               <e p="netcoreapp3.1" t="Include">
@@ -528,6 +581,24 @@
           </e>
           <e p="RabbitPluginRegistryExtensions.cs" t="Include" />
           <e p="Solari.Miranda.Tracer.csproj" t="IncludeRecursive" />
+        </e>
+        <e p="Solari.Oberon" t="IncludeRecursive">
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="CacheSaveException.cs" t="Include" />
+          <e p="IOberon.cs" t="Include" />
+          <e p="Oberon.cs" t="Include" />
+          <e p="OberonLibConstants.cs" t="Include" />
+          <e p="OberonOptions.cs" t="Include" />
+          <e p="obj" t="ExcludeRecursive">
+            <e p="Debug" t="Include">
+              <e p="netcoreapp3.1" t="Include">
+                <e p="Solari.Oberon.AssemblyInfo.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="SerializationHelper.cs" t="Include" />
+          <e p="Solari.Oberon.csproj" t="IncludeRecursive" />
+          <e p="SolariBuilderExtensions.cs" t="Include" />
         </e>
         <e p="Solari.Rhea" t="IncludeRecursive">
           <e p="bin" t="ExcludeRecursive" />

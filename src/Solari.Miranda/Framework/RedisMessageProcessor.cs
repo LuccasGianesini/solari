@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
-using Solari.Miranda.Options;
+using Solari.Miranda.Abstractions.Options;
 using Solari.Oberon;
 
 namespace Solari.Miranda.Framework

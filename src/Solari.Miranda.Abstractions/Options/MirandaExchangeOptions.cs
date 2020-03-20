@@ -1,6 +1,6 @@
 ﻿using RawRabbit.Configuration.Exchange;
 
-namespace Solari.Miranda.Options
+namespace Solari.Miranda.Abstractions.Options
 {
     public class MirandaExchangeOptions
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Solari.Miranda.Options
+namespace Solari.Miranda.Abstractions.Options
 {
     public class MirandaPolicyOptions
     {

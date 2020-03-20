@@ -6,7 +6,7 @@
         <Title>Solari.Oberon</Title>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <PackageId>Solari.Oberon</PackageId>
-        <PackageDescription>Http library</PackageDescription>
+        <PackageDescription>Ridis</PackageDescription>
         <PackageTags>C#; DotnetCore; Redis</PackageTags>
         <LangVersion>8</LangVersion>
         <RootNamespace>Solari.Oberon</RootNamespace>

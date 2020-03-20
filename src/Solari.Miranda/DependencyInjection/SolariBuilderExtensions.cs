@@ -1,18 +1,24 @@
 ﻿using System;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using RawRabbit;
 using RawRabbit.Channel;
 using RawRabbit.Common;
 using RawRabbit.Configuration;
 using RawRabbit.Enrichers.MessageContext;
+using RawRabbit.Enrichers.Polly.Services;
 using RawRabbit.Instantiation;
 using RawRabbit.Operations;
 using RawRabbit.vNext;
 using Solari.Deimos.CorrelationId;
 using Solari.Io;
+using Solari.Miranda.Abstractions.Options;
 using Solari.Miranda.Framework;
-using Solari.Miranda.Options;
+using Solari.Oberon;
 using Solari.Sol;
+using ILogger = Serilog.ILogger;
 
 namespace Solari.Miranda.DependencyInjection
 {
@@ -28,29 +34,17 @@ namespace Solari.Miranda.DependencyInjection
                                                           Func<IRabbitMqPluginRegister, IRabbitMqPluginRegister> plugins = null) 
             where TContext : class,new()
         {
-            var options = builder.AppConfiguration.GetOptions<MirandaOptions>(MirandaLibConstants.AppSettingsSection);
-            if(options == null)
-                throw new InvalidOperationException("Unable to load Miranda options");
-            var config = new RawRabbitConfiguration
+            builder.Services.Configure<MirandaOptions>(builder.AppConfiguration.GetSection(MirandaLibConstants.AppSettingsSection));
+            builder.Services.AddSingleton(provider =>
             {
-                Exchange = options.GetExchangeConfiguration(),
-                Hostnames = options.Hostnames,
-                Password = options.Password,
-                Port = options.Port,
-                Queue = options.GetQueueConfiguration(),
-                Ssl = options.Ssl,
-                Username = options.Username,
-                AutomaticRecovery = options.AutomaticRecovery,
-                GracefulShutdown = options.GetGracefulShutdownPeriod(),
-                RecoveryInterval = options.GetRetryInterval(),
-                RequestTimeout = options.GetRequestTimeout(),
-                TopologyRecovery = options.TopologyRecovery,
-                VirtualHost = options.VirtualHost,
-                AutoCloseConnection = options.AutoCloseConnection,
-                PersistentDeliveryMode = options.PersistentDeliveryMode,
-                PublishConfirmTimeout = options.GetPublishConfirmTimeout(),
-                RouteWithGlobalId = options.RouteWithGlobalId
-            };
+                MirandaOptions options = provider.GetService<IOptions<MirandaOptions>>().Value;
+                return options.MessageProcessor.Type switch
+                       {
+                           "redis"  => (IMessageProcessor) new RedisMessageProcessor(provider.GetService<IOberon>(), options),
+                           "memory" => new InMemoryMessageProcessor(provider.GetService<IMemoryCache>(), options),
+                           _        => new EmptyMessageProcessor()
+                       };
+            });
             ConfigureBus<TContext>(builder, plugins);
             return builder;
         }
@@ -58,10 +52,11 @@ namespace Solari.Miranda.DependencyInjection
         private static void ConfigureBus<TContext>(ISolariBuilder builder, Func<IRabbitMqPluginRegister, IRabbitMqPluginRegister> plugins = null)
             where TContext : class, new()
         {
+           
             builder.Services.AddSingleton<IInstanceFactory>(serviceProvider =>
             {
                 IRabbitMqPluginRegister register = plugins?.Invoke(new RabbitMqPluginRegister(serviceProvider));
-                var options = serviceProvider.GetService<MirandaOptions>();
+                var options = serviceProvider.GetService<IOptions<MirandaOptions>>().Value;
                 var configuration = serviceProvider.GetService<RawRabbitConfiguration>();
                 var namingConventions = new CustomNamingConventions(options.Namespace);
 
@@ -70,10 +65,10 @@ namespace Solari.Miranda.DependencyInjection
                     DependencyInjection = ioc =>
                     {
                         register?.Register(ioc);
-                        ioc.AddSingleton(options);
-                        ioc.AddSingleton(configuration);
                         ioc.AddSingleton(serviceProvider);
+                        ioc.AddSingleton(configuration);
                         ioc.AddSingleton<INamingConventions>(namingConventions);
+
                     },
                     Plugins = p =>
                     {
@@ -82,6 +77,12 @@ namespace Solari.Miranda.DependencyInjection
                          .UseRetryLater()
                          .UseMessageContext<TContext>()
                          .UseContextForwarding();
+                         
+                        if(options.Plugins.UseProtoBuf)
+                        {
+                            p.UseProtobuf();
+                        }
+                        
 
                         if (options.MessageProcessor?.Enabled == true)
                         {
