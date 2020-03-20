@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using Solari.Io;
+using Solari.Miranda.Abstractions;
 
 namespace Solari.Miranda.Framework
 {
@@ -21,15 +22,15 @@ namespace Solari.Miranda.Framework
             return $"{separatedNamespace}{key}".ToLowerInvariant();
         }
 
-        public static int GetRetries(Type type)
+        public static string GetMessageName(Type type)
         {
             MessageAttribute? attr = GetMessageAttribute(type);
-            return attr?.Retries ?? 1;
-        }
-        public static double GetInterval(Type type)
-        {
-            MessageAttribute? attr = GetMessageAttribute(type);
-            return attr?.Interval ?? 1;
+            if (attr == null)
+            {
+                return type.Name;
+            }
+
+            return string.IsNullOrEmpty(attr.Name) ? type.Name : attr.Name;
         }
         public static string GetQueueName(string assemblyName, Type type, string defaultNamespace)
         {

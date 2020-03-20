@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Solari.Miranda
+namespace Solari.Miranda.Abstractions
 {
     /// <summary>
     /// FROM CONVEY
@@ -12,21 +12,15 @@ namespace Solari.Miranda
         public string RoutingKey { get; }
         public string Queue { get; }
         public bool External { get; }
+        
+        public string Name { get; }
 
-        public int Retries { get; }
-
-        public double Interval { get; }
-
-
-        public MessageAttribute(string exchange = null, string routingKey = null, string queue = null, bool external = false, int retries = 1,
-                                double interval = 1)
+        public MessageAttribute(string name = null,string exchange = null, string routingKey = null, string queue = null, bool external = false)
         {
             Exchange = exchange;
             RoutingKey = routingKey;
             Queue = queue;
             External = external;
-            Retries = retries;
-            Interval = interval;
         }
     }
 }
