@@ -5,9 +5,20 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Solari.Callisto;
+using Solari.Callisto.Connector;
+using Solari.Callisto.Tracer;
+using Solari.Deimos;
+using Solari.Eris;
+using Solari.Miranda.DependencyInjection;
+using Solari.Oberon;
 using Solari.Samples.Di;
+using Solari.Samples.Domain.Person;
 using Solari.Samples.Domain.Person.Validators;
+using Solari.Samples.Infrastructure;
 using Solari.Sol;
+using Solari.Titan.DependencyInjection;
+using Solari.Vanth.DependencyInjection;
 using Solari.Vanth.Validation;
 
 namespace Solari.Samples.WebApi
@@ -25,7 +36,21 @@ namespace Solari.Samples.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.RegisterApplicationServices(Configuration);
+            
+            services.AddSol(Configuration)
+                    .AddVanth()
+                    .AddTitan()
+                    .AddEris()
+                    .AddOberon()
+                    .AddMiranda()
+                    .AddCallistoConnector()
+                    .AddCallisto(callistoConfiguration => callistoConfiguration
+                                                          .RegisterDefaultConventionPack()
+                                                          .RegisterDefaultClassMaps()
+                                                          .RegisterCollection<IPersonRepository, PersonRepository, Person>("person", ServiceLifetime.Scoped))
+                    .AddDeimos(manager => manager.Register(new CallistoTracerPlugin()));
+
+            services.AddScoped<IPersonOperations, PersonOperations>();
             services.AddSwaggerGen(a => a.SwaggerDoc("v1", new OpenApiInfo
             {
                 Description = "Solari Sample WebApi;",

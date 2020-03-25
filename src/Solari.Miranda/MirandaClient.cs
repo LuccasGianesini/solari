@@ -18,7 +18,7 @@ using Solari.Titan;
 
 namespace Solari.Miranda
 {
-    public class MirandaClient
+    public class MirandaClient : IMirandaClient
     {
         private readonly IBusClient _client;
         private readonly ITitanLogger<MirandaClient> _logger;
@@ -37,7 +37,7 @@ namespace Solari.Miranda
             if (messageContext == null)
             {
                 _logger.Information("Message context not provided. Creating one.");
-                messageContext = BrokerCorrelationContext.Create();
+                
             }
             _logger.Information($"Publishing message with id {messageContext?.MessageId}");
             await _client.PublishAsync(message, context => context.UseMessageContext(messageContext));
@@ -136,20 +136,20 @@ namespace Solari.Miranda
         private static string PostLogMessage(string messageName, IMirandaMessageContext correlationContext, int currentRetry)
         {
             return $"Handled: '{messageName}' " +
-                   $"with correlation id: '{correlationContext.CorrelationId}'. {RetryMessage(currentRetry)}";
+                   $"with request id: '{correlationContext?.EnvoyCorrelationContext.RequestId}'. {RetryMessage(currentRetry)}";
         }
 
 
         private static string PreLogMessage(string messageName, IMirandaMessageContext correlationContext, int currentRetry)
         {
             return $"Handling: '{messageName}' " +
-                   $"with correlation id: '{correlationContext.CorrelationId}'. {RetryMessage(currentRetry)}";
+                   $"with request id: '{correlationContext?.EnvoyCorrelationContext.RequestId}'. {RetryMessage(currentRetry)}";
         }
 
         private static string RejectedLogMessage(string messageName, string rejectedEventMessage, IMirandaMessageContext correlationContext)
         {
             return $"Published a rejected event: '{rejectedEventMessage}' " +
-                   $"for the message: '{messageName}' with correlation id: '{correlationContext.CorrelationId}'.";
+                   $"for the message: '{messageName}' with request id: '{correlationContext?.EnvoyCorrelationContext.RequestId}'.";
         }
 
         private static string RetryMessage(int currentRetry) { return currentRetry == 0 ? string.Empty : $"Retry: {currentRetry}'."; }

@@ -21,6 +21,7 @@ namespace Solari.Vanth.Builders
 
         public ICommonDetailedErrorResponseBuilder WithException(Exception exception)
         {
+            _exception = exception;
             return this;
         }
 

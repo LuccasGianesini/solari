@@ -24,16 +24,16 @@ namespace Solari.Miranda.DependencyInjection
 {
     public static class SolariBuilderExtensions
     {
-
         public static ISolariBuilder AddMiranda(this ISolariBuilder builder, Func<IRabbitMqPluginRegister, IRabbitMqPluginRegister> plugins = null)
         {
             return AddMiranda<BrokerCorrelationContext>(builder, plugins);
         }
-        
-        public static ISolariBuilder AddMiranda<TContext>(this ISolariBuilder builder, 
-                                                          Func<IRabbitMqPluginRegister, IRabbitMqPluginRegister> plugins = null) 
-            where TContext : class,new()
+
+        public static ISolariBuilder AddMiranda<TContext>(this ISolariBuilder builder,
+                                                          Func<IRabbitMqPluginRegister, IRabbitMqPluginRegister> plugins = null)
+            where TContext : class, new()
         {
+            builder.Services.AddSingleton<IMirandaClient, MirandaClient>();
             builder.Services.Configure<MirandaOptions>(builder.AppConfiguration.GetSection(MirandaLibConstants.AppSettingsSection));
             builder.Services.AddSingleton(provider =>
             {
@@ -48,11 +48,10 @@ namespace Solari.Miranda.DependencyInjection
             ConfigureBus<TContext>(builder, plugins);
             return builder;
         }
-        
+
         private static void ConfigureBus<TContext>(ISolariBuilder builder, Func<IRabbitMqPluginRegister, IRabbitMqPluginRegister> plugins = null)
             where TContext : class, new()
         {
-           
             builder.Services.AddSingleton<IInstanceFactory>(serviceProvider =>
             {
                 IRabbitMqPluginRegister register = plugins?.Invoke(new RabbitMqPluginRegister(serviceProvider));
@@ -62,13 +61,32 @@ namespace Solari.Miranda.DependencyInjection
 
                 return RawRabbitFactory.CreateInstanceFactory(new RawRabbitOptions
                 {
+                    ClientConfiguration = new RawRabbitConfiguration
+                    {
+                        Exchange = options.GetExchangeConfiguration(),
+                        Hostnames = options.Hostnames,
+                        Password = options.Password,
+                        Port = options.Port,
+                        Queue = options.GetQueueConfiguration(),
+                        Ssl = options.Ssl,
+                        Username = options.Username,
+                        AutomaticRecovery = options.AutomaticRecovery,
+                        GracefulShutdown = options.GetGracefulShutdownPeriod(),
+                        RecoveryInterval = options.GetRetryInterval(),
+                        RequestTimeout = options.GetRequestTimeout(),
+                        TopologyRecovery = options.TopologyRecovery,
+                        VirtualHost = options.VirtualHost,
+                        AutoCloseConnection = options.AutoCloseConnection,
+                        PersistentDeliveryMode = options.PersistentDeliveryMode,
+                        PublishConfirmTimeout = options.GetPublishConfirmTimeout(),
+                        RouteWithGlobalId = options.RouteWithGlobalId
+                    },
                     DependencyInjection = ioc =>
                     {
                         register?.Register(ioc);
                         ioc.AddSingleton(serviceProvider);
                         ioc.AddSingleton(configuration);
                         ioc.AddSingleton<INamingConventions>(namingConventions);
-
                     },
                     Plugins = p =>
                     {
@@ -77,12 +95,12 @@ namespace Solari.Miranda.DependencyInjection
                          .UseRetryLater()
                          .UseMessageContext<TContext>()
                          .UseContextForwarding();
-                         
-                        if(options.Plugins.UseProtoBuf)
+
+                        if (options.Plugins.UseProtoBuf)
                         {
                             p.UseProtobuf();
                         }
-                        
+
 
                         if (options.MessageProcessor?.Enabled == true)
                         {

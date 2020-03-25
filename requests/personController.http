@@ -31,3 +31,13 @@ Content-Type: application/json
 }
 
 ###
+
+# Test b3-headers
+
+POST http://localhost:5000/api/person
+content-type: application/json
+{
+  "Name": "Teste"
+}
+
+###

@@ -16,7 +16,7 @@ namespace Solari.Miranda.Abstractions.Options
         public List<string> Hostnames { get; set; } = new List<string>(5);
         public string Namespace { get; set; }
         public string Password { get; set; }
-        public bool PersistentDeliveryMode { get; set; }
+        public bool PersistentDeliveryMode { get; set; } = true;
         public int Port { get; set; }
         public string PublishConfirmTimeout { get; set; }
         public MirandaQueueOptions Queue { get; set; } = new MirandaQueueOptions();
@@ -25,7 +25,7 @@ namespace Solari.Miranda.Abstractions.Options
         public string RetryInterval { get; set; }
         public bool RouteWithGlobalId { get; set; }
         public SslOption Ssl { get; set; } = new SslOption();
-        public bool TopologyRecovery { get; set; }
+        public bool TopologyRecovery { get; set; } = true;
         public string Username { get; set; }
         public string VirtualHost { get; set; }
         

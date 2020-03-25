@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Solari.Deimos.Abstractions;
+using Solari.Deimos.CorrelationId.Framework;
 using Solari.Sol;
 
 namespace Solari.Deimos.CorrelationId

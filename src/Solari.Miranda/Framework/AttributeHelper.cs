@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Reflection;
 using Solari.Io;
 using Solari.Miranda.Abstractions;

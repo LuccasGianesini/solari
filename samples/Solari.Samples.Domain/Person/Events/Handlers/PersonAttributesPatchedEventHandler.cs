@@ -9,11 +9,11 @@ namespace Solari.Samples.Domain.Person.Events.Handlers
 {
     public class PersonAttributesPatchedEventHandler : IEventHandler<PersonAttributesPatchedEvent>
     {
-        private readonly MirandaClient _publisher;
+        private readonly IMirandaClient _publisher;
         private readonly ITitanLogger<PersonAttributesPatchedEventHandler> _logger;
         private readonly ITracer _tracer;
 
-        public PersonAttributesPatchedEventHandler(MirandaClient publisher, ITitanLogger<PersonAttributesPatchedEventHandler> logger)
+        public PersonAttributesPatchedEventHandler(IMirandaClient publisher, ITitanLogger<PersonAttributesPatchedEventHandler> logger)
         {
             _publisher = publisher;
             _logger = logger;

@@ -118,6 +118,8 @@
           <e p="Solari.Samples.Infrastructure.csproj" t="IncludeRecursive" />
         </e>
         <e p="Solari.Samples.WebApi" t="IncludeRecursive">
+          <e p="appsettings.Development-Docker.json" t="Include" />
+          <e p="appsettings.Development-Havan.json" t="Include" />
           <e p="appsettings.Development.json" t="Include" />
           <e p="appsettings.json" t="Include" />
           <e p="bin" t="ExcludeRecursive" />
@@ -295,6 +297,8 @@
         </e>
         <e p="Solari.Deimos" t="IncludeRecursive">
           <e p="bin" t="ExcludeRecursive" />
+          <e p="DeimosTracer.cs" t="Include" />
+          <e p="IDeimosTracer.cs" t="Include" />
           <e p="obj" t="ExcludeRecursive">
             <e p="Debug" t="Include">
               <e p="netcoreapp3.1" t="Include">
@@ -330,15 +334,19 @@
         </e>
         <e p="Solari.Deimos.CorrelationId" t="IncludeRecursive">
           <e p="bin" t="ExcludeRecursive" />
-          <e p="CorrelationContextFactory.cs" t="Include" />
-          <e p="CorrelationContextHandler.cs" t="Include" />
-          <e p="CorrelationIdMiddleware.cs" t="Include" />
+          <e p="DefaultCorrelationContext.cs" t="Include" />
+          <e p="DefaultEnvoyCorrelationContextContext.cs" t="Include" />
           <e p="DeimosCorrelationIdExtensions.cs" t="Include" />
           <e p="DeimosCorrelationIdOptions.cs" t="Include" />
-          <e p="HttpCorrelationContext.cs" t="Include" />
+          <e p="Framework" t="Include">
+            <e p="CorrelationContextFactory.cs" t="Include" />
+            <e p="CorrelationContextHandler.cs" t="Include" />
+            <e p="CorrelationContextMiddleware.cs" t="Include" />
+          </e>
           <e p="ICorrelationContext.cs" t="Include" />
           <e p="ICorrelationContextFactory.cs" t="Include" />
           <e p="ICorrelationContextHandler.cs" t="Include" />
+          <e p="IEnvoyCorrelationContext.cs" t="Include" />
           <e p="obj" t="ExcludeRecursive">
             <e p="Debug" t="Include">
               <e p="netcoreapp3.1" t="Include">
@@ -366,10 +374,7 @@
         </e>
         <e p="Solari.Deimos.Jaeger" t="IncludeRecursive">
           <e p="bin" t="ExcludeRecursive" />
-          <e p="DeimosJaegerDescriptor.cs" t="Include" />
           <e p="DeimosJaegerExtensions.cs" t="Include" />
-          <e p="DeimosJaegerTracer.cs" t="Include" />
-          <e p="IDeimosJaegerTracer.cs" t="Include" />
           <e p="ISpanEnricher.cs" t="Include" />
           <e p="JaegerTracerConfiguration.cs" t="Include" />
           <e p="obj" t="ExcludeRecursive">
@@ -542,6 +547,7 @@
             <e p="RabbitMqPluginRegister.cs" t="Include" />
             <e p="RedisMessageProcessor.cs" t="Include" />
           </e>
+          <e p="IMirandaClient.cs" t="Include" />
           <e p="MirandaClient.cs" t="Include" />
           <e p="MirandaLibConstants.cs" t="Include" />
           <e p="obj" t="ExcludeRecursive">

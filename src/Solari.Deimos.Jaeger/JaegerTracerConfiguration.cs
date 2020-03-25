@@ -22,7 +22,7 @@ namespace Solari.Deimos.Jaeger
     {
         public static ISolariBuilder AddJaeger(ISolariBuilder solariBuilder, DeimosOptions options)
         {
-            solariBuilder.Services.AddSingleton<IDeimosJaegerTracer, DeimosJaegerTracer>();
+            // solariBuilder.Services.AddSingleton<IDeimosJaegerTracer, DeimosJaegerTracer>();
             ConfigureHttpOut(solariBuilder);
             ConfigureHttpIn(solariBuilder, options);
             ConfigureTracer(solariBuilder, options);
@@ -35,10 +35,6 @@ namespace Solari.Deimos.Jaeger
             {
                 ConfigureHttpInRequestFiltering(diagnosticOptions, options);
 
-                diagnosticOptions.Hosting.OnRequest = (span, context) =>
-                {
-                    span.SetTag(DeimosConstants.DefaultCorrelationIdHeader, context.TraceIdentifier);
-                };
                 diagnosticOptions.Hosting.ExtractEnabled = message => true;
                 DeimosLogger.JaegerLogger.ConfiguredHttpIn();
             }));
@@ -59,7 +55,7 @@ namespace Solari.Deimos.Jaeger
 
         private static ISolariBuilder ConfigureTracer(ISolariBuilder builder, DeimosOptions options)
         {
-            if (!options.TracingEnabled && !options.Jaeger.Enabled) return builder;
+            if (!options.TracingEnabled) return builder;
 
             builder.Services.AddSingleton(sp =>
             {
@@ -108,14 +104,15 @@ namespace Solari.Deimos.Jaeger
                        _               => new ConstSampler(true)
                    };
         }
-
+        
+        
         private static void ConfigureHttpOut(ISolariBuilder builder)
         {
             builder.Services.PostConfigure<HttpHandlerDiagnosticOptions>(conf =>
             {
                 DeimosLogger.JaegerLogger.ConfiguredHttpOut();
-                conf.OnRequest = (span, message)
-                    => span.SetTag(DeimosConstants.DefaultCorrelationIdHeader, message.GetCorrelationIdHeaderValue());
+
+
                 conf.InjectEnabled = message => true;
             });
         }

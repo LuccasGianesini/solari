@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace Solari.Deimos.CorrelationId
+namespace Solari.Deimos.CorrelationId.Framework
 {
     public class CorrelationContextHandler : ICorrelationContextHandler
     {

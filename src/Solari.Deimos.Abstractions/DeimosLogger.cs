@@ -37,8 +37,8 @@ namespace Solari.Deimos.Abstractions
         public static class JaegerLogger
         {
             private const string Prefix = "Solari.Deimos (Jaeger): ";
-            public static void ConfiguredHttpOut() => Log.Debug("Configured Jaeger outgoing http tracing");
-            public static void ConfiguredHttpIn() => Log.Debug("Configured Jaeger incoming http tracing");
+            public static void ConfiguredHttpOut() => Log.Debug($"{Prefix}Configured Jaeger outbound http tracing");
+            public static void ConfiguredHttpIn() => Log.Debug($"{Prefix}Configured Jaeger inbound http tracing");
             public static void UdpRemoteReporter(string host, int port) => Log.Debug($"{Prefix}Udp remote reporter is listening on {host}:{port}");
             public static void ConfiguredTracer() => Log.Debug($"{Prefix}Configured Jaeger tracer using app-settings");
 

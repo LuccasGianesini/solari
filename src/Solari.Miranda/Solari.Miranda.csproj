@@ -12,6 +12,7 @@
         <RootNamespace>Solari.Miranda</RootNamespace>
         <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <Nullable>disable</Nullable>
     </PropertyGroup>
     <ItemGroup>
         <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />

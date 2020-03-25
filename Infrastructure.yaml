@@ -66,119 +66,99 @@ services:
     volumes:
       - mongo_data:/data/db
 
-  # elasticsearch:
-  #   image: docker.elastic.co/elasticsearch/elasticsearch:7.6.0
-  #   ports:
-  #     - 9200:9200
-  #     - 9300:9300
-  #   environment:
-  #     - discovery.type=single-node
-  #     - http.host=0.0.0.0
-  #     - transport.host=localhost
-  #     - network.host=0.0.0.0
-  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-  #     - xpack.security.enabled=false
-  #     - ES_TAGS_AS_FIELDS_ALL=true
-  #   ulimits:
-  #     memlock:
-  #       soft: -1
-  #       hard: -1
-  #   networks:
-  #     - solari
-  #   volumes:
-  #     - es_data:/usr/share/elasticsearch/data
-  #   # healthcheck:
-  #   #   test: ["CMD", "curl","-s" ,"-f", "-u", "elastic:${ES_PASSWORD}", "http://localhost:9200/_cat/health"]
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.0
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      - discovery.type=single-node
+      - http.host=0.0.0.0
+      - transport.host=localhost
+      - network.host=0.0.0.0
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - solari
+    #volumes:
+    # - es_data:/usr/share/elasticsearch/data
 
-  # kibana:
-  #   image: docker.elastic.co/kibana/kibana:7.6.0
-  #   environment:
-  #     - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-  #   ports:
-  #     - 5601:5601
-  #   networks:
-  #     - solari
-  #   depends_on:
-  #     - elasticsearch
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.6.0
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - 5601:5601
+    networks:
+      - solari
+    depends_on:
+      - elasticsearch
   # apm:
-  #   image: docker.elastic.co/apm/apm-server:7.6.0
-  #   environment:
-  #     -  output.elasticsearch.hosts=["elasticsearch:9200"]
-  #     -  apm-server.kibana.host="http://kibana:5601"
-  #   networks:
-  #     - solari
-  #   ports:
-  #     - 8200:8200
-  # heartbeat:
-  #   image: docker.elastic.co/beats/heartbeat:7.6.1
-  #   environment:
-  #     - setup.kibana.host=kibana:5601
-  #     - output.elasticsearch.hosts=["elasticsearch:9200"]
-  #   networks:
-  #     - solari
-  # metricbeat:
-  #   image: docker.elastic.co/beats/metricbeat:7.6.1
-  #   environment:
-  #     - setup.kibana.host=kibana:5601
-  #     - output.elasticsearch.hosts=["elasticsearch:9200"]
-  #   networks:
-  #     - solari
-  # jaeger-collector:
-  #  image: jaegertracing/jaeger-collector
-  #  ports:
-  #    - "14269:14269"
-  #    - "14268:14268"
-  #    - "14267:14267"
-  #    - "9411:9411"
-  #  networks:
-  #    - solari
-  #  restart: on-failure
-  #  environment:
-  #    - SPAN_STORAGE_TYPE=elasticsearch
-  #  command: [
-  #    "--es.server-urls=http://elasticsearch:9200",
-  #    "--es.num-shards=1",
-  #    "--es.num-replicas=0",
-  #    "--log-level=error"
-  #  ]
-  #  depends_on:
-  #    - elasticsearch
+    # image: docker.elastic.co/apm/apm-server:7.6.0
+    # environment:
+      # -  output.elasticsearch.hosts=["elasticsearch:9200"]
+    # networks:
+      # - solari
+  jaeger-collector:
+   image: jaegertracing/jaeger-collector
+   ports:
+     - "14269:14269"
+     - "14268:14268"
+     - "14267:14267"
+     - "9411:9411"
+   networks:
+     - solari
+   restart: on-failure
+   environment:
+     - SPAN_STORAGE_TYPE=elasticsearch
+   command: [
+     "--es.server-urls=http://elasticsearch:9200",
+     "--es.num-shards=1",
+     "--es.num-replicas=0",
+     "--log-level=error"
+   ]
+   depends_on:
+     - elasticsearch
 
-  # jaeger-agent:
-  #   image: jaegertracing/jaeger-agent
-  #   hostname: jaeger-agent
-  #   command: ["--collector.host-port=jaeger-collector:14267"]
-  #   ports:
-  #     - "5775:5775/udp"
-  #     - "6831:6831/udp"
-  #     - "6832:6832/udp"
-  #     - "5778:5778"
-  #   networks:
-  #     - solari
-  #   restart: on-failure
-  #   environment:
-  #     - SPAN_STORAGE_TYPE=elasticsearch
-  #   depends_on:
-  #     - jaeger-collector
+  jaeger-agent:
+    image: jaegertracing/jaeger-agent
+    hostname: jaeger-agent
+    command: ["--collector.host-port=jaeger-collector:14267"]
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+    networks:
+      - solari
+    restart: on-failure
+    environment:
+      - SPAN_STORAGE_TYPE=elasticsearch
+    depends_on:
+      - jaeger-collector
 
-  # jaeger-query:
-  #   image: jaegertracing/jaeger-query
-  #   environment:
-  #     - SPAN_STORAGE_TYPE=elasticsearch
-  #     - no_proxy=localhost
-  #   ports:
-  #     - "16686:16686"
-  #     - "16687:16687"
-  #   networks:
-  #     - solari
-  #   restart: on-failure
-  #   command: [
-  #     "--es.server-urls=http://elasticsearch:9200",
-  #     "--span-storage.type=elasticsearch",
-  #     "--log-level=debug"
-  #   ]
-  #   depends_on:
-  #     - jaeger-agent
+  jaeger-query:
+    image: jaegertracing/jaeger-query
+    environment:
+      - SPAN_STORAGE_TYPE=elasticsearch
+      - no_proxy=localhost
+    ports:
+      - "16686:16686"
+      - "16687:16687"
+    networks:
+      - solari
+    restart: on-failure
+    command: [
+      "--es.server-urls=http://elasticsearch:9200",
+      "--span-storage.type=elasticsearch",
+      "--log-level=debug"
+    ]
+    depends_on:
+      - jaeger-agent
 
   # grafana:
   #   hostname: 'grafana'
@@ -210,17 +190,18 @@ services:
       - solari
     ports:
       - 6379:6379
-    volumes:
-      - redis:/data
+    #volumes:
+     # - redis:/data
+
   rabbitmq:
     hostname: 'rabbitmq'
     image: rabbitmq:3-management
     ports:
-      - 25676:25676
-      - 5672:5672
-      - 15672:15672
-    volumes:
-      - rabbit_data:/var/lib/rabbitmq
+        - 25676:25676
+        - 5672:5672
+        - 15672:15672
+    # volumes:
+        # - rabbit_data:/var/lib/rabbitmq
 
 networks:
   solari:
@@ -230,15 +211,5 @@ volumes:
     driver: local
   es_data:
     driver: local
-  graylog_journal:
-    driver: local
   consul_data:
-    driver: local
-  grafana:
-    driver: local
-  prometheus:
-    driver: local
-  redis:
-    driver: local
-  rabbit_data:
     driver: local

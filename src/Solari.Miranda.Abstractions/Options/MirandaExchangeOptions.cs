@@ -5,7 +5,7 @@ namespace Solari.Miranda.Abstractions.Options
     public class MirandaExchangeOptions
     {
         public bool AutoDelete { get; set; }
-        public bool Durable { get; set; }
+        public bool Durable { get; set; } = true;
         public string Type { get; set; }
 
         public ExchangeType GetExchangeType()

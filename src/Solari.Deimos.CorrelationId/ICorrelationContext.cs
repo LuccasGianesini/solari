@@ -1,15 +1,16 @@
-﻿namespace Solari.Deimos.CorrelationId
+﻿using Solari.Deimos.Abstractions;
+
+namespace Solari.Deimos.CorrelationId
 {
     public interface ICorrelationContext
     {
-        /// <summary>
-        /// The correlation id of the request.
-        /// </summary>
-        string CorrelationId { get; set; }
-        /// <summary>
-        /// The Header key. E.g.: X-Correlation-ID.
-        /// </summary>
-        string Header { get; set;}
-        string SpanContext { get; set;}
+       IEnvoyCorrelationContext EnvoyCorrelationContext { get; set; }
+        
+        string MessageId { get; set; }
+        
+        string MessageIdHeader { get; }
+
+
+
     }
 }

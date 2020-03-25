@@ -2,20 +2,8 @@
 {
     public interface ICorrelationContextFactory
     {
-        /// <summary>
-        /// Create an <see cref="HttpCorrelationContext"/>.
-        /// </summary>
-        /// <param name="headerKey">The header key</param>
-        /// <param name="correlationId">The header value</param>
-        /// <returns></returns>
-        ICorrelationContext CreateHttpContext(string headerKey, string correlationId);
-        /// <summary>
-        /// Create an <see cref="BrokerCorrelationContext"/>.
-        /// </summary>
-        /// <param name="headerKey">The header key</param>
-        /// <param name="correlationId">The header value</param>
-        /// <param name="messageBroker">The message broker</param>
-        /// <returns></returns>
-        // ICorrelationContext CreateBrokerContext(string headerKey, string correlationId, string messageBroker);
+        ICorrelationContext Create(IEnvoyCorrelationContext envoyCorrelationContext);
+        ICorrelationContext Create(string messageId, IEnvoyCorrelationContext envoyCorrelationContext);
+        ICorrelationContext Create_Root_From_System_Diagnostics_Activity_And_Tracers(string messageId = "");
     }
 }
