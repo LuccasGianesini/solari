@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\git\solari" t="IncludeFlat">
+    <e p="C:\Users\Lucca\.nuget\packages\microsoft.net.test.sdk\16.2.0\build\netcoreapp1.0" t="Include">
+      <e p="Microsoft.NET.Test.Sdk.Program.cs" t="Include" />
+    </e>
+    <e p="C:\Users\Lucca\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.reporters.netcoreapp10.dll" t="Include" />
+    <e p="C:\Users\Lucca\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.utility.netcoreapp10.dll" t="Include" />
+    <e p="C:\Users\Lucca\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
+    <e p="C:\Users\Lucca\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Lucca\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_Solari.1240444223.00" t="ExcludeRecursive" />
+    <e p="K:\git\solari" t="IncludeFlat">
       <e p="LICENSE.txt" t="Include" />
       <e p="packages" t="ExcludeRecursive" />
       <e p="requests" t="Include">
@@ -57,7 +65,7 @@
           <e p="Person" t="Include">
             <e p="Dtos" t="Include">
               <e p="AddPersonAttributeDto.cs" t="Include" />
-              <e p="InsertPersonDTo.cs" t="Include" />
+              <e p="InsertPersonDto.cs" t="Include" />
             </e>
             <e p="Exceptions" t="Include">
               <e p="AddPersonAttributeException.cs" t="Include" />
@@ -656,17 +664,5 @@
         </e>
       </e>
     </e>
-    <e p="C:\Users\75453\.nuget\packages\microsoft.net.test.sdk\16.2.0\build\netcoreapp1.0" t="Include">
-      <e p="Microsoft.NET.Test.Sdk.Program.cs" t="Include" />
-    </e>
-    <e p="C:\Users\75453\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.reporters.netcoreapp10.dll" t="Include" />
-    <e p="C:\Users\75453\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.utility.netcoreapp10.dll" t="Include" />
-    <e p="C:\Users\75453\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
-    <e p="C:\Users\75453\Documents\gitignore_global.txt" t="IncludeRecursive" />
-    <e p="C:\Users\75453\rider_logs\config\consoles\db" t="IncludeRecursive" />
-    <e p="C:\Users\75453\rider_logs\config\Extensions" t="IncludeRecursive" />
-    <e p="C:\Users\75453\rider_logs\config\scratches" t="IncludeRecursive" />
-    <e p="C:\Users\75453\rider_logs\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\75453\rider_logs\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_Solari.1776498247.00" t="ExcludeRecursive" />
   </component>
 </project>
