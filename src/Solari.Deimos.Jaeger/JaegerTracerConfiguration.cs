@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using Jaeger;
 using Jaeger.Reporters;
 using Jaeger.Samplers;
@@ -47,9 +48,8 @@ namespace Solari.Deimos.Jaeger
             foreach (string httpIgnoredEndpoint in options.Http.IgnoredEndpoints)
             {
                 DeimosLogger.JaegerLogger.ConfigureRequestFiltering(httpIgnoredEndpoint);
-                diagnosticOptions.Hosting.IgnorePatterns.Add(context => context.Request.Path == PathString.FromUriComponent(httpIgnoredEndpoint));   
+                diagnosticOptions.Hosting.IgnorePatterns.Add(context => context.Request.Path == PathString.FromUriComponent(httpIgnoredEndpoint));
             }
-                
         }
 
 
@@ -71,21 +71,36 @@ namespace Solari.Deimos.Jaeger
             return builder;
         }
 
-        private static ITracer BuildTracer(DeimosOptions options, ApplicationOptions appOptions, ILoggerFactory loggerFactory)
-            => new Tracer.Builder(string.IsNullOrEmpty(options.Jaeger.ServiceName)
-                                      ? appOptions.ApplicationName
-                                      : options.Jaeger.ServiceName)
-               .WithLoggerFactory(loggerFactory)
-               .WithReporter(BuildRemoteReporter(options, appOptions, loggerFactory))
-               .WithSampler(GetSampler(options.Jaeger))
-               .WithTag("app.instance.id", appOptions.ApplicationInstanceId)
-               .WithTag("app.name", appOptions.ApplicationName)
-               .WithTag("environment", "")
-               .Build();
+        private static string BuildServiceName(ApplicationOptions applicationOptions, DeimosOptions deimosOptions)
+        {
+            string name = string.IsNullOrEmpty(deimosOptions.Jaeger.ServiceName)
+                              ? applicationOptions.ApplicationName
+                              : deimosOptions.Jaeger.ServiceName;
+            return name + "." + applicationOptions.ApplicationEnvironment;
+        }
+
+        private static ITracer BuildTracer(DeimosOptions options, ApplicationOptions appOptions, ILoggerFactory loggerFactory) =>
+            new Tracer.Builder(BuildServiceName(appOptions, options))
+                .WithLoggerFactory(loggerFactory)
+                .WithReporter(BuildRemoteReporter(options, appOptions, loggerFactory))
+                .WithSampler(GetSampler(options.Jaeger))
+                .WithTag("app.instance.id", appOptions.ApplicationInstanceId)
+                .WithTag("app.name", appOptions.ApplicationName)
+                .Build();
 
         private static RemoteReporter BuildRemoteReporter(DeimosOptions options, ApplicationOptions appOptions, ILoggerFactory loggerFactory)
         {
-            string host = string.IsNullOrEmpty(options.Jaeger.UdpHost) ? appOptions.KubernetesNodeIp : options.Jaeger.UdpHost;
+            string host;
+            if (string.IsNullOrEmpty(options.Jaeger.KubernetesHeadlessService))
+            {
+                host = string.IsNullOrEmpty(options.Jaeger.UdpHost) ? appOptions.KUBERNETES_NODE_IP : options.Jaeger.UdpHost;
+            }
+            else
+            {
+                IPHostEntry ip = Dns.GetHostEntry(options.Jaeger.KubernetesHeadlessService);
+                host = ip.AddressList[0].ToString();
+            }
+
             int port = options.Jaeger.UdpPort;
             DeimosLogger.JaegerLogger.UdpRemoteReporter(host, port);
             return new RemoteReporter.Builder()
@@ -104,16 +119,14 @@ namespace Solari.Deimos.Jaeger
                        _               => new ConstSampler(true)
                    };
         }
-        
-        
+
+
         private static void ConfigureHttpOut(ISolariBuilder builder)
         {
             builder.Services.PostConfigure<HttpHandlerDiagnosticOptions>(conf =>
             {
-                DeimosLogger.JaegerLogger.ConfiguredHttpOut();
-
-
                 conf.InjectEnabled = message => true;
+                DeimosLogger.JaegerLogger.ConfiguredHttpOut();
             });
         }
     }

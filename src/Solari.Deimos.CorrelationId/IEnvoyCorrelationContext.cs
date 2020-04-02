@@ -2,7 +2,6 @@
 {
     public interface IEnvoyCorrelationContext
     {
-        bool IsValidEnvoyContext();
         string RequestId { get; set; }
         string RequestIdHeader { get; }
         string SpanId { get; set; }
@@ -17,5 +16,6 @@
         string FlagsHeader { get; }
         string OtSpanContext { get; set; }
         string OtSpanContextHeader { get; }
+        bool IsValidEnvoyContext();
     }
 }

@@ -339,12 +339,12 @@
           <e p="DeimosCorrelationIdExtensions.cs" t="Include" />
           <e p="DeimosCorrelationIdOptions.cs" t="Include" />
           <e p="Framework" t="Include">
-            <e p="CorrelationContextFactory.cs" t="Include" />
+            <e p="CorrelationContextAccessor.cs" t="Include" />
             <e p="CorrelationContextHandler.cs" t="Include" />
             <e p="CorrelationContextMiddleware.cs" t="Include" />
           </e>
           <e p="ICorrelationContext.cs" t="Include" />
-          <e p="ICorrelationContextFactory.cs" t="Include" />
+          <e p="ICorrelationContextAccessor.cs" t="Include" />
           <e p="ICorrelationContextHandler.cs" t="Include" />
           <e p="IEnvoyCorrelationContext.cs" t="Include" />
           <e p="obj" t="ExcludeRecursive">
@@ -733,7 +733,6 @@
           <e p="Exceptions" t="Include">
             <e p="NullOrEmptyErrorMessageException.cs" t="Include" />
           </e>
-          <e p="Framework" t="Include" />
           <e p="ICommonResponseFactory.cs" t="Include" />
           <e p="obj" t="ExcludeRecursive">
             <e p="Debug" t="Include">

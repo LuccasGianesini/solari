@@ -49,7 +49,7 @@ namespace Solari.Miranda
             {
                 try
                 {
-                    var handler = _provider.GetService<ICorrelationContextHandler>();
+                    var handler = _provider.GetService<ICorrelationContextAccessor>();
                     handler.Current = context;
 
                     Exception exception =
@@ -115,15 +115,15 @@ namespace Solari.Miranda
             await _client.PublishAsync(rejectedEvent, ctx => ctx.UseMessageContext(correlationContext));
         }
 
-        public bool TyrGetContext(ICorrelationContextHandler handler, out ICorrelationContext context)
+        public bool TyrGetContext(ICorrelationContextAccessor accessor, out ICorrelationContext context)
         {
-            if (handler == null)
+            if (accessor == null)
             {
                 context = null;
                 return false;
             }
 
-            context = handler.Current;
+            context = accessor.Current;
             return true;
         }
 

@@ -3,14 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using Solari.Deimos.Abstractions;
-using Solari.Sol;
 
 namespace Solari.Deimos.CorrelationId
 {
     public static class DeimosCorrelationIdExtensions
     {
+        public static HttpResponse AddCorrelationContext(this HttpResponse response,
+                                                         IServiceProvider provider)
+        {
+            var handler = provider.GetService<ICorrelationContextAccessor>();
+            var factory = provider.GetService<ICorrelationContextHandler>();
+            if (handler == null || factory == null) throw new ArgumentException("CorrelationContext or CorrelationContextFactory has a null value. FIX IT!!!!");
+            ICorrelationContext context = handler.Current;
+            if (context == null) context = factory.Create_Root_From_System_Diagnostics_Activity_And_Tracers();
+            ICorrelationContext updated = factory.UpdateCurrent(context);
+            response.Headers.Add(updated.EnvoyCorrelationContext.FlagsHeader, updated.EnvoyCorrelationContext.Flags);
+            response.Headers.Add(updated.EnvoyCorrelationContext.SampledHeader, updated.EnvoyCorrelationContext.Sampled);
+            response.Headers.Add(updated.EnvoyCorrelationContext.RequestIdHeader, updated.EnvoyCorrelationContext.RequestId);
+            response.Headers.Add(updated.EnvoyCorrelationContext.SpanIdHeader, updated.EnvoyCorrelationContext.SpanId);
+            response.Headers.Add(updated.EnvoyCorrelationContext.ParentSpanIdHeader, updated.EnvoyCorrelationContext.ParentSpanId);
+            response.Headers.Add(updated.EnvoyCorrelationContext.TraceIdHeader, updated.EnvoyCorrelationContext.TraceId);
+            response.Headers.Add(updated.EnvoyCorrelationContext.OtSpanContextHeader, updated.EnvoyCorrelationContext.OtSpanContext);
+            return response;
+        }
+
         public static bool TryExtractCorrelationContext(this HttpRequest request, out ICorrelationContext correlationContext)
         {
             if (request == null)
@@ -54,7 +73,7 @@ namespace Solari.Deimos.CorrelationId
 
             if (context.EnvoyCorrelationContext == null)
                 throw new ArgumentNullException(nameof(context.EnvoyCorrelationContext),
-                                                "The envoy context is used to provide tracing in kubernetes. Please provide one ");
+                                                "The envoy context is used to provide tracing in kubernetes. Please provide one");
             if (!string.IsNullOrEmpty(context.MessageId))
                 message.Headers.Add(context.MessageIdHeader, context.MessageId);
             IEnvoyCorrelationContext envoy = context.EnvoyCorrelationContext;
@@ -64,6 +83,7 @@ namespace Solari.Deimos.CorrelationId
             message.Headers.Add(envoy.RequestIdHeader, envoy.RequestId);
             message.Headers.Add(envoy.SpanIdHeader, envoy.SpanId);
             message.Headers.Add(envoy.ParentSpanIdHeader, envoy.ParentSpanId);
+            message.Headers.Add(envoy.TraceIdHeader, envoy.TraceId);
             message.Headers.Add(envoy.OtSpanContextHeader, envoy.OtSpanContext);
             return message;
         }
@@ -92,53 +112,8 @@ namespace Solari.Deimos.CorrelationId
             };
             return true;
         }
-
-        /// <summary>
-        ///     Add CorrelationId header with default trace identifier generator.
-        /// </summary>
-        /// <param name="requestMessage">Request message</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public static HttpRequestMessage AddCorrelationIdHeader(this HttpRequestMessage requestMessage)
-        {
-            if (requestMessage == null) throw new ArgumentNullException(nameof(requestMessage));
-
-            requestMessage.Headers.Add(DeimosConstants.RequestIdHeader, TraceIdGenerator.Create());
-
-            return requestMessage;
-        }
-
-        /// <summary>
-        ///     Add CorrelationId header.
-        /// </summary>
-        /// <param name="requestMessage">Request message</param>
-        /// <param name="value">CorrelationId value</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public static HttpRequestMessage AddCorrelationIdHeader(this HttpRequestMessage requestMessage, string value)
-        {
-            if (requestMessage == null) throw new ArgumentNullException(nameof(requestMessage));
-
-            requestMessage.Headers.Add(DeimosConstants.RequestIdHeader, value);
-
-            return requestMessage;
-        }
-
-        /// <summary>
-        ///     Checks if the request message contains the CorrelationId header and if the value is valid.
-        /// </summary>
-        /// <param name="requestMessage"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public static bool ContainsCorrelationIdHeader(this HttpRequestMessage requestMessage)
-        {
-            if (requestMessage == null) throw new ArgumentNullException(nameof(requestMessage));
-
-            bool exists = requestMessage.Headers.TryGetValues(DeimosConstants.RequestIdHeader, out IEnumerable<string> values);
-
-            return exists && !string.IsNullOrEmpty(values.FirstOrDefault());
-        }
-
+        
+        
         /// <summary>
         ///     Gets the request message CorrelationId header value.
         /// </summary>

@@ -77,20 +77,13 @@ namespace Solari.Ganymede.Builders
 
         public override void CorrelationId(string value)
         {
-            if (RequestMessage.ContainsCorrelationIdHeader())
-                return;
-        
-        
-            RequestMessage.AddCorrelationIdHeader(value);
+            throw new NotImplementedException();
         }
         
+        //TODO Implement method
         public override void CorrelationId()
         {
-            if (RequestMessage.ContainsCorrelationIdHeader())
-                return;
-        
-        
-            RequestMessage.AddCorrelationIdHeader();
+            throw new NotImplementedException();
         }
 
         public override void CustomHeader(string key, string value)

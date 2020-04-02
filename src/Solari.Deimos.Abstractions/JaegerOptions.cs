@@ -2,6 +2,7 @@
 {
     public class JaegerOptions
     {
+        public string KubernetesHeadlessService { get; set; }
         public int MaxPacketSize { get; set; } = 0;
         public double MaxTracesPerSecond { get; set; } = 7;
         public string Sampler { get; set; }

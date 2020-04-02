@@ -24,7 +24,7 @@ namespace Solari.Sol
         /// <summary>
         /// The HostIp of the application. If it's running in a k8s environment.
         /// </summary>
-        public string KubernetesNodeIp { get; } = Environment.GetEnvironmentVariable(SolariConstants.K8S_NODE_HOSTIP);
+        public string KUBERNETES_NODE_IP { get; } = Environment.GetEnvironmentVariable(SolariConstants.K8S_NODE_IP_ADDR);
         /// <summary>
         /// The environment that the application is running.
         /// </summary>

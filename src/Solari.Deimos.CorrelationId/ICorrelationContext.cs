@@ -1,16 +1,11 @@
-﻿using Solari.Deimos.Abstractions;
-
-namespace Solari.Deimos.CorrelationId
+﻿namespace Solari.Deimos.CorrelationId
 {
     public interface ICorrelationContext
     {
-       IEnvoyCorrelationContext EnvoyCorrelationContext { get; set; }
-        
+        IEnvoyCorrelationContext EnvoyCorrelationContext { get; set; }
+
         string MessageId { get; set; }
-        
+
         string MessageIdHeader { get; }
-
-
-
     }
 }
