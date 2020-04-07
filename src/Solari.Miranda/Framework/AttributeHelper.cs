@@ -1,4 +1,4 @@
-﻿#nullable enable
+﻿﻿#nullable enable
 using System;
 using System.Reflection;
 using Solari.Io;
