@@ -11,15 +11,10 @@
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
         <Product>Solari.Miranda.Tracer</Product>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFrameworks>netcoreapp2.2;netcoreapp3.0;netcoreapp3.1</TargetFrameworks>
     </PropertyGroup>
     <ItemGroup>
         <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
-    </ItemGroup>
-
-
-    <ItemGroup>
-      <PackageReference Include="Convey.MessageBrokers.RabbitMQ" Version="0.4.273" />
     </ItemGroup>
 
 

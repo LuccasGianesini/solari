@@ -4,7 +4,6 @@
         <AssemblyName>Solari.Ganymede</AssemblyName>
         <Authors>Lauth</Authors>
         <Title>Solari.Ganymede</Title>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
         <PackageId>Solari.Ganymede</PackageId>
         <PackageDescription>Http library</PackageDescription>
         <PackageTags>C#; DotnetCore; Http</PackageTags>
@@ -12,6 +11,7 @@
         <RootNamespace>Solari.Ganymede</RootNamespace>
         <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
       <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+      <TargetFrameworks>netcoreapp2.2;netcoreapp3.0;netcoreapp3.1</TargetFrameworks>
     </PropertyGroup>
     <ItemGroup>
         <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />

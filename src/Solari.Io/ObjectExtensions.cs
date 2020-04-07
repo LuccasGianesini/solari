@@ -2,8 +2,8 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Solari.Io
 {
@@ -16,7 +16,7 @@ namespace Solari.Io
         /// <returns>Array of bytes</returns>
         public static byte[] ToJsonByteArray(this object @object)
         {
-            return @object == null ? new byte[0] : Encoding.UTF8.GetBytes(JsonSerializer.Serialize(@object));
+            return @object == null ? new byte[0] : Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(@object));
         }
 
       /// <summary>
@@ -27,7 +27,7 @@ namespace Solari.Io
       /// <returns>T</returns>
         public static T JsonByteArrayToObject<T>(this byte[] bytes)
         {
-            return bytes.Length == 0 ? default : JsonSerializer.Deserialize<T>(Encoding.UTF8.GetString(bytes));
+            return bytes.Length == 0 ? default : JsonConvert.DeserializeObject<T>(Encoding.UTF8.GetString(bytes));
         }
 
 

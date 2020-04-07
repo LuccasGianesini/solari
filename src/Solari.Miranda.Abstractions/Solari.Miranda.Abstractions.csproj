@@ -4,7 +4,6 @@
         <AssemblyName>Solari.Miranda.Abstractions</AssemblyName>
         <Authors>Lauth</Authors>
         <Title>Solari.Miranda.Abstractions</Title>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
         <PackageId>Solari.Miranda.Abstractions</PackageId>
         <PackageDescription>RabbitMq; RawRabbit; Abstractions</PackageDescription>
         <PackageTags>C#; DotnetCore; RabbitMq, RawRabbit</PackageTags>
@@ -12,6 +11,7 @@
         <RootNamespace>Solari.Miranda.Abstractions</RootNamespace>
         <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <TargetFrameworks>netcoreapp2.2;netcoreapp3.0;netcoreapp3.1</TargetFrameworks>
     </PropertyGroup>
     <ItemGroup>
         <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
