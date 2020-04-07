@@ -59,17 +59,3 @@ jobs:
       .ArtifactStagingDirectory)/**/$(prj1).$(Build.BuildNumber).symbols.nupkg'
           nuGetFeedType: 'external'
           publishFeedCredentials: 'Nuget.org'
-
-      - task: GitHubRelease@1
-        displayName: 'Create GitHub release'
-        inputs:
-          gitHubConnection: 'github.com_azpipelines'
-          repositoryName: '$(Build.Repository.Name)'
-          action: 'create'
-          target: '$(Build.SourceVersion)'
-          tagSource: 'userSpecifiedTag'
-          tag: '$(Build.BuildNumber)'
-          title: 'Version $(Build.BuildNumber)'
-          isPreRelease: true
-          assets:
-          addChangeLog: false
