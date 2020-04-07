@@ -1,0 +1,77 @@
+﻿trigger:
+  branches:
+    include:
+      - beta
+    exclude:
+      - alpha
+      - develop   
+      - master
+pr:
+  branches:
+    exclude:
+      - alpha
+      - beta
+      - master
+      - develop
+pool:
+  vmImage: 'Windows-2019'
+jobs:
+  - job: Build
+    variables:
+      solution: '**/*.sln'
+      buildPlatform: 'Any CPU'
+      buildConfiguration: 'Release'
+    displayName: 'Build solution and create NuGet packages'
+    continueOnError: false
+    workspace:
+      clean: resources
+    cancelTimeoutInMinutes: 5
+    steps:
+      - task: DotNetCoreCLI@2
+        displayName: 'Install GitVersion'
+        inputs:
+          command: 'custom'
+          custom: 'tool'
+          arguments: 'install -g gitversion.tool'
+      - task: DotNetCoreCLI@2
+        displayName: 'GitVersion setup'
+        inputs:
+          command: 'custom'
+          custom: 'gitversion'
+          arguments: '/output buildserver'
+
+      - task: DotNetCoreCLI@2
+        displayName: 'Build solution'
+        inputs:
+          command: 'build'
+          projects: |
+            $(solution)
+          arguments: '--configuration $(BuildConfiguration) /p:Version=$(Build.BuildNumber)'
+          versioningScheme: byBuildNumber
+      - task: PowerShell@2
+        inputs:
+          filePath: 'packall.ps1'
+          arguments: '-BUILD_NUMBER $(Build.BuildNumber) -BUILD_ARTIFACT_DIR $(Build.ArtifactStagingDirectory)'
+
+      - task: NuGetCommand@2
+        continueOnError: false
+        displayName: 'Push Nuget Packages'
+        inputs:
+          command: 'push'
+          packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build
+      .ArtifactStagingDirectory)/**/$(prj1).$(Build.BuildNumber).symbols.nupkg'
+          nuGetFeedType: 'external'
+          publishFeedCredentials: 'Nuget.org'
+
+      - task: GitHubRelease@1
+        displayName: 'Create GitHub release'
+        inputs:
+          gitHubConnection: 'github.com_azpipelines'
+          repositoryName: '$(Build.Repository.Name)'
+          action: 'create'
+          target: '$(Build.SourceVersion)'
+          tagSource: 'userSpecifiedTag'
+          tag: '$(Build.BuildNumber)'
+          title: 'Version $(Build.BuildNumber)'
+          assets:
+          addChangeLog: false

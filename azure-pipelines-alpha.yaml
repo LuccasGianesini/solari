@@ -1,5 +1,7 @@
 trigger:
   branches:
+    include:
+      - alpha
     exclude:
       - develop   
       - master
@@ -68,5 +70,6 @@ jobs:
           tagSource: 'userSpecifiedTag'
           tag: '$(Build.BuildNumber)'
           title: 'Version $(Build.BuildNumber)'
+          isPreRelease: true
           assets:
           addChangeLog: false
