@@ -7,6 +7,7 @@ using RawRabbit;
 using RawRabbit.Channel;
 using RawRabbit.Common;
 using RawRabbit.Configuration;
+using RawRabbit.Enrichers.GlobalExecutionId;
 using RawRabbit.Enrichers.MessageContext;
 using RawRabbit.Enrichers.Polly.Services;
 using RawRabbit.Instantiation;
@@ -55,46 +56,46 @@ namespace Solari.Miranda.DependencyInjection
             builder.Services.AddSingleton<IInstanceFactory>(serviceProvider =>
             {
                 IRabbitMqPluginRegister register = plugins?.Invoke(new RabbitMqPluginRegister(serviceProvider));
-                var options = serviceProvider.GetService<IOptions<MirandaOptions>>().Value;
-                var configuration = serviceProvider.GetService<RawRabbitConfiguration>();
+                MirandaOptions options = serviceProvider.GetService<IOptions<MirandaOptions>>().Value;
+                var config = new RawRabbitConfiguration
+                {
+                    Exchange = options.GetExchangeConfiguration(),
+                    Hostnames = options.Hostnames,
+                    Password = options.Password,
+                    Port = options.Port,
+                    Queue = options.GetQueueConfiguration(),
+                    Ssl = options.GetSslOption(),
+                    Username = options.Username,
+                    AutomaticRecovery = options.AutomaticRecovery,
+                    GracefulShutdown = options.GetGracefulShutdownPeriod(),
+                    RecoveryInterval = options.GetRetryInterval(),
+                    RequestTimeout = options.GetRequestTimeout(),
+                    TopologyRecovery = options.TopologyRecovery,
+                    VirtualHost = options.VirtualHost,
+                    AutoCloseConnection = options.AutoCloseConnection,
+                    PersistentDeliveryMode = options.PersistentDeliveryMode,
+                    PublishConfirmTimeout = options.GetPublishConfirmTimeout(),
+                    RouteWithGlobalId = options.RouteWithGlobalId
+                };
+                
                 var namingConventions = new CustomNamingConventions(options.Namespace);
 
                 return RawRabbitFactory.CreateInstanceFactory(new RawRabbitOptions
                 {
-                    ClientConfiguration = new RawRabbitConfiguration
-                    {
-                        Exchange = options.GetExchangeConfiguration(),
-                        Hostnames = options.Hostnames,
-                        Password = options.Password,
-                        Port = options.Port,
-                        Queue = options.GetQueueConfiguration(),
-                        Ssl = options.Ssl,
-                        Username = options.Username,
-                        AutomaticRecovery = options.AutomaticRecovery,
-                        GracefulShutdown = options.GetGracefulShutdownPeriod(),
-                        RecoveryInterval = options.GetRetryInterval(),
-                        RequestTimeout = options.GetRequestTimeout(),
-                        TopologyRecovery = options.TopologyRecovery,
-                        VirtualHost = options.VirtualHost,
-                        AutoCloseConnection = options.AutoCloseConnection,
-                        PersistentDeliveryMode = options.PersistentDeliveryMode,
-                        PublishConfirmTimeout = options.GetPublishConfirmTimeout(),
-                        RouteWithGlobalId = options.RouteWithGlobalId
-                    },
                     DependencyInjection = ioc =>
                     {
                         register?.Register(ioc);
                         ioc.AddSingleton(serviceProvider);
-                        ioc.AddSingleton(configuration);
+                        ioc.AddSingleton(config);
                         ioc.AddSingleton<INamingConventions>(namingConventions);
                     },
                     Plugins = p =>
                     {
                         register?.Register(p);
                         p.UseAttributeRouting()
-                         .UseRetryLater()
                          .UseMessageContext<TContext>()
-                         .UseContextForwarding();
+                         .UseContextForwarding()
+                         .UseGlobalExecutionId();
 
                         if (options.Plugins.UseProtoBuf)
                         {

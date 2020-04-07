@@ -2,6 +2,6 @@
 {
     public class DeimosKubernetesOptions
     {
-        
+        public string KubernetesService { get; set; }
     }
 }

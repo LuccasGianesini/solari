@@ -64,6 +64,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "requests", "requests", "{AF1AC1AF-84B6-45A3-AF38-ED9AE7FB72EC}"
 ProjectSection(SolutionItems) = preProject
 	requests\personController.http = requests\personController.http
+	requests\testController.http = requests\testController.http
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solari.Miranda", "src\Solari.Miranda\Solari.Miranda.csproj", "{9483134F-16B6-4514-B815-B2DB7608B2AD}"

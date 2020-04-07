@@ -91,13 +91,13 @@ namespace Solari.Deimos.Jaeger
         private static RemoteReporter BuildRemoteReporter(DeimosOptions options, ApplicationOptions appOptions, ILoggerFactory loggerFactory)
         {
             string host;
-            if (string.IsNullOrEmpty(options.Jaeger.KubernetesHeadlessService))
+            if (string.IsNullOrEmpty(options.Jaeger.KubernetesService))
             {
                 host = string.IsNullOrEmpty(options.Jaeger.UdpHost) ? appOptions.KUBERNETES_NODE_IP : options.Jaeger.UdpHost;
             }
             else
             {
-                IPHostEntry ip = Dns.GetHostEntry(options.Jaeger.KubernetesHeadlessService);
+                IPHostEntry ip = Dns.GetHostEntry(options.Jaeger.KubernetesService);
                 host = ip.AddressList[0].ToString();
             }
 

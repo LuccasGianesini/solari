@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using RabbitMQ.Client;
+using RawRabbit.Common;
 using RawRabbit.Configuration;
 using Solari.Io;
 
@@ -24,16 +25,21 @@ namespace Solari.Miranda.Abstractions.Options
         public int Retries { get; set; }
         public string RetryInterval { get; set; }
         public bool RouteWithGlobalId { get; set; }
-        public SslOption Ssl { get; set; } = new SslOption();
+        public MirandaSslOptions Ssl { get; set; } = new MirandaSslOptions();
         public bool TopologyRecovery { get; set; } = true;
         public string Username { get; set; }
         public string VirtualHost { get; set; }
-        
+
         public MirandaPluginsOptions Plugins { get; set; } = new MirandaPluginsOptions();
         public MirandaPolicyOptions Policies { get; set; } = new MirandaPolicyOptions();
         public MirandaQosOptions Qos { get; set; } = new MirandaQosOptions();
-        public MirandaMessageProcessorOptions MessageProcessor { get; set; } =  new MirandaMessageProcessorOptions();
-        
+        public MirandaMessageProcessorOptions MessageProcessor { get; set; } = new MirandaMessageProcessorOptions();
+
+        public SslOption GetSslOption()
+        {
+            return Ssl == null ? null : new SslOption(Ssl.ServerName, Ssl.CertificatePath, Ssl.Enabled);
+        }
+
         public GeneralExchangeConfiguration GetExchangeConfiguration()
         {
             return Exchange == null
@@ -45,7 +51,7 @@ namespace Solari.Miranda.Abstractions.Options
                            AutoDelete = Exchange.AutoDelete
                        };
         }
-        
+
         public TimeSpan GetGracefulShutdownPeriod()
         {
             return string.IsNullOrEmpty(GracefulShutdownPeriod) ? TimeSpan.FromSeconds(5) : GracefulShutdownPeriod.ToTimeSpan();
@@ -68,15 +74,8 @@ namespace Solari.Miranda.Abstractions.Options
                        };
         }
 
-        public TimeSpan GetRequestTimeout()
-        {
-            return string.IsNullOrEmpty(RequestTimeout) ? TimeSpan.FromSeconds(5) : RequestTimeout.ToTimeSpan();
-        }
+        public TimeSpan GetRequestTimeout() { return string.IsNullOrEmpty(RequestTimeout) ? TimeSpan.FromSeconds(5) : RequestTimeout.ToTimeSpan(); }
 
-        public TimeSpan GetRetryInterval()
-        {
-            return string.IsNullOrEmpty(RetryInterval) ? TimeSpan.FromSeconds(5) : RetryInterval.ToTimeSpan();
-        }
-
+        public TimeSpan GetRetryInterval() { return string.IsNullOrEmpty(RetryInterval) ? TimeSpan.FromSeconds(5) : RetryInterval.ToTimeSpan(); }
     }
 }
