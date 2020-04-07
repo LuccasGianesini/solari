@@ -3,6 +3,8 @@ trigger:
     include:
       - master   
     exclude:
+      - alpha
+      - beta
       - develop
 pr:
   branches:
