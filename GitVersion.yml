@@ -1,4 +1,4 @@
-next-version: 1.1.0
+next-version: 1.5.10
 mode: Mainline
 legacy-semver-padding: 0
 build-metadata-padding: 0
@@ -15,20 +15,3 @@ branches:
     track-merge-target: false
     tracks-release-branches: false
     is-release-branch: false
-  develop:
-    regex: develop
-    source-branches: ['develop']
-    prevent-increment-of-merged-branch-version: true
-    tag: alpha
-    track-merge-target: false
-    tracks-release-branches: false
-    is-release-branch:  true
-  release:
-    regex: vNext
-    source-branches: ['master']
-    increment: Patch
-    prevent-increment-of-merged-branch-version: true
-    tag: beta
-    track-merge-target: false
-    tracks-release-branches: false
-    is-release-branch:  true

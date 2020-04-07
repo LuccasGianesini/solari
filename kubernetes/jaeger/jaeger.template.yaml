@@ -14,7 +14,6 @@ metadata:
     iconClass: icon-go-gopher
     openshift.io/display-name: Jaeger (production)
     tags: instant-app,tracing,opentracing,jaeger
-  creationTimestamp: 2019-12-05T20:03:17Z
   labels:
     app: jaeger
     jaeger-infra: template-production

@@ -76,7 +76,10 @@ namespace Solari.Deimos.Jaeger
             string name = string.IsNullOrEmpty(deimosOptions.Jaeger.ServiceName)
                               ? applicationOptions.ApplicationName
                               : deimosOptions.Jaeger.ServiceName;
-            return name + "." + applicationOptions.ApplicationEnvironment;
+
+            return name.Contains("[env]") 
+                       ? name.Replace("[env]", applicationOptions.ApplicationEnvironment).ToLowerInvariant() 
+                       : (name + "." + applicationOptions.ApplicationEnvironment).ToLowerInvariant();
         }
 
         private static ITracer BuildTracer(DeimosOptions options, ApplicationOptions appOptions, ILoggerFactory loggerFactory) =>
@@ -90,16 +93,9 @@ namespace Solari.Deimos.Jaeger
 
         private static RemoteReporter BuildRemoteReporter(DeimosOptions options, ApplicationOptions appOptions, ILoggerFactory loggerFactory)
         {
-            string host;
-            if (string.IsNullOrEmpty(options.Jaeger.KubernetesService))
-            {
-                host = string.IsNullOrEmpty(options.Jaeger.UdpHost) ? appOptions.KUBERNETES_NODE_IP : options.Jaeger.UdpHost;
-            }
-            else
-            {
-                IPHostEntry ip = Dns.GetHostEntry(options.Jaeger.KubernetesService);
-                host = ip.AddressList[0].ToString();
-            }
+            
+
+            string host = string.IsNullOrEmpty(options.Jaeger.UdpHost) ? appOptions.KUBERNETES_NODE_IP : options.Jaeger.UdpHost;
 
             int port = options.Jaeger.UdpPort;
             DeimosLogger.JaegerLogger.UdpRemoteReporter(host, port);

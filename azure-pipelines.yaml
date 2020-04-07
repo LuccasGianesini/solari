@@ -1,9 +1,11 @@
 trigger:
   branches:
     include:
-      - develop   
+      - master   
     exclude:
-      - master
+      - alpha
+      - beta
+      - develop
 pr:
   branches:
     exclude:
@@ -69,6 +71,5 @@ jobs:
           tagSource: 'userSpecifiedTag'
           tag: '$(Build.BuildNumber)'
           title: 'Version $(Build.BuildNumber)'
-          isPreRelease: true
           assets:
           addChangeLog: false
