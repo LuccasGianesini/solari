@@ -1,5 +1,5 @@
 # Add person with invalid Name
-POST http://localhost:5000/person
+POST http://localhost:5000/api/person
 content-type: application/json
 
 {
@@ -8,9 +8,34 @@ content-type: application/json
 ###
 
 # Add person with valid Name
-POST http://localhost:5000/person
+POST http://localhost:5000/api/person
 content-type: application/json
 
+{
+  "Name": "Teste"
+}
+
+###
+
+# Add attribute to person
+PATCH http://localhost:5000/api/person/attributes
+Content-Type: application/json
+
+{
+  "PersonId" : "5e6a8c494c889034f87ad71d",
+  "Operation": "Add",
+  "Values": [
+    {"AttributeName":"FSDA", "AttributeValue": "992sxlsad"},
+    {"AttributeName":"Stas", "AttributeValue": "OPS"}
+  ]
+}
+
+###
+
+# Test b3-headers
+
+POST http://localhost:5000/api/person
+content-type: application/json
 {
   "Name": "Teste"
 }

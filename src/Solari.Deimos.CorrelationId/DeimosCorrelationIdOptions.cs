@@ -2,8 +2,6 @@
 {
     public class DeimosCorrelationIdOptions
     {
-        
-        
         /// <summary>
         ///     <para>
         ///         Controls whether a GUID will be used in cases where no correlation ID is retrieved from the request header.

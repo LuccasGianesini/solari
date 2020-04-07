@@ -20,7 +20,7 @@ namespace Solari.Callisto.Abstractions.CQR
 
         public string OperationName { get; }
         public CallistoOperation OperationType { get; }
-        public CancellationToken CancellationToken { get; }
+        public CancellationToken CancellationToken { get; private set; }
 
         public void ValidateOperation()
         {
@@ -28,12 +28,29 @@ namespace Solari.Callisto.Abstractions.CQR
                 throw new NullFilterDefinitionException(CallistoOperationHelper.NullDefinitionMessage("delete", OperationName, "filter"));
         }
 
-        public IClientSessionHandle ClientSessionHandle { get; }
-        public bool UseSessionHandle { get; }
+        public IClientSessionHandle ClientSessionHandle { get; private set; }
+        public bool UseSessionHandle { get; private set; }
 
         public FilterDefinition<T> FilterDefinition { get; }
         public DeleteOptions DeleteOptions { get; }
 
-        public static ICallistoDelete<T> Null() => new DefaultCallistoDelete<T>("", null);
+        public ICallistoOperation<T> AddSessionHandle(IClientSessionHandle sessionHandle)
+        {
+            if (sessionHandle == null)
+                return this;
+            ClientSessionHandle = sessionHandle;
+            UseSessionHandle = true;
+            return this;
+        }
+
+        public ICallistoOperation<T> AddCancellationToken(CancellationToken cancellationToken)
+        {
+            if (cancellationToken == CancellationToken.None)
+                return this;
+            CancellationToken = cancellationToken;
+            return this;
+        }
+
+        public static ICallistoDelete<T> Null() { return new DefaultCallistoDelete<T>("", null); }
     }
 }

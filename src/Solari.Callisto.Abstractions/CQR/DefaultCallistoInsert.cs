@@ -20,18 +20,34 @@ namespace Solari.Callisto.Abstractions.CQR
 
         public string OperationName { get; }
         public CallistoOperation OperationType { get; }
-        public CancellationToken CancellationToken { get; }
+        public CancellationToken CancellationToken { get; private set; }
 
-        public void 
-            ValidateOperation()
+        public void ValidateOperation()
         {
             if (Value == null)
                 throw new NullOrEmptyValueException($"The value property of the {OperationName} is null.");
         }
 
         public T Value { get; }
-        public IClientSessionHandle ClientSessionHandle { get; }
+        public IClientSessionHandle ClientSessionHandle { get; private set; }
         public InsertOneOptions InsertOneOptions { get; }
-        public bool UseSessionHandle { get; }
+        public bool UseSessionHandle { get; private set; }
+
+        public ICallistoOperation<T> AddSessionHandle(IClientSessionHandle sessionHandle)
+        {
+            if (sessionHandle == null)
+                return this;
+            ClientSessionHandle = sessionHandle;
+            UseSessionHandle = true;
+            return this;
+        }
+
+        public ICallistoOperation<T> AddCancellationToken(CancellationToken cancellationToken)
+        {
+            if (cancellationToken == CancellationToken.None)
+                return this;
+            CancellationToken = cancellationToken;
+            return this;
+        }
     }
 }

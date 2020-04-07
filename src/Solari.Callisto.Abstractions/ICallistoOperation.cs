@@ -3,7 +3,7 @@ using MongoDB.Driver;
 
 namespace Solari.Callisto.Abstractions
 {
-    public interface ICallistoOperation<T> where T: class, IDocumentRoot
+    public interface ICallistoOperation<T> where T : class, IDocumentRoot
     {
         string OperationName { get; }
         CallistoOperation OperationType { get; }
@@ -11,5 +11,7 @@ namespace Solari.Callisto.Abstractions
         void ValidateOperation();
         IClientSessionHandle ClientSessionHandle { get; }
         bool UseSessionHandle { get; }
+        ICallistoOperation<T> AddSessionHandle(IClientSessionHandle sessionHandle);
+        ICallistoOperation<T> AddCancellationToken(CancellationToken cancellationToken);
     }
 }

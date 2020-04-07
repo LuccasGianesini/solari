@@ -18,6 +18,13 @@
         <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
     </ItemGroup>
     <ItemGroup>
+        <PackageReference Include="Elastic.Apm.NetCoreAll" Version="1.3.1" />
+        <PackageReference Include="Jaeger" Version="0.3.7" />
+        <PackageReference Include="OpenTracing" Version="0.12.1" />
+        <PackageReference Include="OpenTracing.Contrib.NetCore" Version="0.6.2" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
       <ProjectReference Include="..\Solari.Titan.Abstractions\Solari.Titan.Abstractions.csproj" />
     </ItemGroup>

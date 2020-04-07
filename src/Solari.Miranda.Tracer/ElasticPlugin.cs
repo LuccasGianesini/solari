@@ -12,7 +12,7 @@ namespace Solari.Miranda.Tracer
     {
         public override async Task HandleAsync(object message, object correlationContext, BasicDeliverEventArgs args)
         {
-            bool createdTransaction = false;
+            var createdTransaction = false;
             string messageName = message.GetType().Name;
             string messageId = args.BasicProperties.MessageId;
             var spanContext = string.Empty;
@@ -57,8 +57,7 @@ namespace Solari.Miranda.Tracer
 
         private static void CreateTransaction(string messageName, string spanContext, string messageId)
         {
-            ITransaction transaction = Agent.Tracer.StartTransaction($"processing-{messageName}",
-                                                                     "RabbitMq",
+            ITransaction transaction = Agent.Tracer.StartTransaction($"processing-{messageName}", "RabbitMq",
                                                                      DistributedTracingData.TryDeserializeFromString(spanContext));
             transaction.Labels["message.type"] = messageName;
             transaction.Labels["message.id"] = messageId;

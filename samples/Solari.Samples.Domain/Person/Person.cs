@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Bson;
 using Solari.Callisto.Abstractions;
-using Solari.Samples.Domain.Person.Dtos;
+using Solari.Samples.Domain.Person.Commands;
 
 namespace Solari.Samples.Domain.Person
 {
@@ -33,12 +33,12 @@ namespace Solari.Samples.Domain.Person
             Attributes.Add(attribute);
             return this;
         }
-        public static explicit operator Person(InsertPersonDto dto)
+        public static explicit operator Person(CreatePersonCommand command)
         {
-            var person = new Person(dto.Name);
-            if (dto.Attributes != null)
+            var person = new Person(command.Name);
+            if (command.Attributes != null)
             {
-                person.AddAttributes(dto.Attributes?.Select(a => (PersonAttribute) a));
+                person.AddAttributes(command.Attributes?.Select(a => (PersonAttribute) a));
             }
 
             return person;

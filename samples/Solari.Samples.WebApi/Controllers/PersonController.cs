@@ -1,65 +1,91 @@
 ﻿using System;
+using System.Reflection;
 using System.Threading.Tasks;
-using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
+
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+
 using MongoDB.Driver;
-using Solari.Samples.Domain.Person;
-using Solari.Samples.Domain.Person.Dtos;
-using Solari.Samples.Domain.Person.Exceptions;
+using Solari.Eris;
+using Solari.Samples.Domain;
+
+using Solari.Samples.Domain.Person.Commands;
 using Solari.Samples.Domain.Person.Results;
-using Solari.Samples.Domain.Person.Validators;
-using Solari.Sol;
 using Solari.Titan;
 using Solari.Vanth;
+using Solari.Vanth.Validation;
 
 namespace Solari.Samples.WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
+    [Produces("application/json")]
     public class PersonController : ControllerBase
     {
-        private readonly IPersonApplication _application;
+        private readonly IDispatcher _commandDispatcher;
         private readonly ICommonResponseFactory _factory;
         private readonly ITitanLogger<PersonController> _logger;
 
 
-        public PersonController(IPersonApplication application, ICommonResponseFactory factory, ITitanLogger<PersonController> logger)
+        public PersonController(IDispatcher commandDispatcher, ICommonResponseFactory factory, ITitanLogger<PersonController> logger)
         {
-            _application = application;
+            _commandDispatcher = commandDispatcher;
             _factory = factory;
             _logger = logger;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Insert([FromBody]InsertPersonDto dto)
+        [VanthValidator]
+        [ProducesResponseType(typeof(CommonResponse<CreatePersonResult>), 200)]
+        [ProducesResponseType(typeof(CommonResponse<object>), 400)]
+        [ProducesResponseType(typeof(CommonResponse<CreatePersonResult>), 500)]
+        public async Task<IActionResult> Insert([FromBody] CreatePersonCommand command)
         {
             try
             {
-                ValidationResult validationResult = new InsertPersonDtoValidator().Validate(dto);
-                if (!validationResult.IsValid)
-                {
-                    return BadRequest(_factory.CreateError<InsertPersonResult>(validationResult));
-                }
-                
-                InsertPersonResult result = await _application.InsertPerson(dto);
-                return Ok(_factory.CreateResult(result));
-                
-            }
-            catch (MongoWriteException writeException)
-            {
-                _logger.Error("Error writing to database", writeException);
-                return StatusCode(StatusCodes.Status500InternalServerError, _factory
-                                      .CreateErrorFromException<InsertPersonResult>(writeException, "1001", "Error writing new person"));
-            }
-            catch (ArgumentNullException ag)
-            {
-                _logger.Error("Argument error", ag);
-                return StatusCode(StatusCodes.Status500InternalServerError, _factory
-                                      .CreateErrorFromException<InsertPersonResult>(ag, "1000", "A null argument was provided"));
-            }
+                await _commandDispatcher.DispatchCommand(command);
 
+                return Ok(_factory.CreateResult(command.Result));
+            }
+            catch (MongoWriteException exception)
+            {
+                return CreateExceptionError(exception, "1001", "Error writing new person", exception.GetType());
+            }
+            catch (ArgumentNullException exception)
+            {
+                return CreateExceptionError(exception, "1001", "Error writing new person", exception.GetType());
+            }
+        }
+
+
+        [HttpPatch("attributes")]
+        [VanthValidator]
+        public async Task<IActionResult> PatchAttributes([FromBody] PersonAttributeCommand command)
+        {
+            try
+            {
+                await _commandDispatcher.DispatchCommand(command);
+                return Ok(command.Result);
+            }
+            catch (MongoWriteException exception)
+            {
+                return CreateExceptionError(exception, "1002", "Error writing person attributes", exception.GetType());
+            }
+            catch (InvalidOperationException exception)
+            {
+                return CreateExceptionError(exception, "1002", "Error writing person attributes", exception.GetType());
+            }
+            catch (ArgumentOutOfRangeException exception)
+            {
+                return CreateExceptionError(exception, "1002", "Error writing person attributes", exception.GetType());
+            }
+        }
+
+        private IActionResult CreateExceptionError(Exception exception, string code, string message, MemberInfo exceptionType)
+        {
+            Helper.DefaultExceptionLogMessage(_logger, exception.GetType(), exception);
+            return StatusCode(StatusCodes.Status500InternalServerError, _factory
+                                  .CreateErrorFromException<CreatePersonResult>(exception, code, message));
         }
     }
 }

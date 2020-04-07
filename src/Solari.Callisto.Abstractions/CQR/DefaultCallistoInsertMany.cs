@@ -23,7 +23,7 @@ namespace Solari.Callisto.Abstractions.CQR
 
         public string OperationName { get; }
         public CallistoOperation OperationType { get; }
-        public CancellationToken CancellationToken { get; }
+        public CancellationToken CancellationToken { get; private set; }
 
         public void ValidateOperation()
         {
@@ -33,9 +33,26 @@ namespace Solari.Callisto.Abstractions.CQR
 
         public IEnumerable<T> Values { get; }
         public InsertManyOptions InsertManyOptions { get; }
-        public IClientSessionHandle ClientSessionHandle { get; }
-        public bool UseSessionHandle { get; }
+        public IClientSessionHandle ClientSessionHandle { get; private set; }
+        public bool UseSessionHandle { get; private set; }
 
-        public static ICallistoInsertMany<T> Null() => new DefaultCallistoInsertMany<T>("", null, null, null);
+        public ICallistoOperation<T> AddSessionHandle(IClientSessionHandle sessionHandle)
+        {
+            if (sessionHandle == null)
+                return this;
+            ClientSessionHandle = sessionHandle;
+            UseSessionHandle = true;
+            return this;
+        }
+
+        public ICallistoOperation<T> AddCancellationToken(CancellationToken cancellationToken)
+        {
+            if (cancellationToken == CancellationToken.None)
+                return this;
+            CancellationToken = cancellationToken;
+            return this;
+        }
+
+        public static ICallistoInsertMany<T> Null() { return new DefaultCallistoInsertMany<T>("", null); }
     }
 }

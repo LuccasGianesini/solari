@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <AssemblyName>Solari.Miranda</AssemblyName>
+        <Authors>Lauth</Authors>
+        <Title>Solari.Miranda</Title>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <PackageId>Solari.Miranda</PackageId>
+        <PackageDescription>RabbitMq; RawRabbit</PackageDescription>
+        <PackageTags>C#; DotnetCore; RabbitMq, RawRabbit</PackageTags>
+        <LangVersion>8</LangVersion>
+        <RootNamespace>Solari.Miranda</RootNamespace>
+        <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
+        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <Nullable>disable</Nullable>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Solari.Miranda.Abstractions\Solari.Miranda.Abstractions.csproj" />
+    </ItemGroup>
+</Project>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -109,5 +110,8 @@ namespace Solari.Io
                 return TimeSpan.FromMilliseconds(ToLong(value));
             return lowered.StartsWith("d") ? TimeSpan.FromMilliseconds(ToLong(value)) : TimeSpan.MinValue;
         }
+        
+        public static string Underscore(this string value)
+            => string.Concat(value.Select((x, i) => i > 0 && char.IsUpper(x) ? "_" + x : x.ToString()));
     }
 }
