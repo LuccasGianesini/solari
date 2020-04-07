@@ -3,7 +3,6 @@
     <PropertyGroup>
         <Authors>Lauth</Authors>
         <Title>Solari.Deimos.Elastic</Title>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
         <PackageId>Solari.Deimos.Elastic</PackageId>
         <PackageDescription>Elastic apm tracing library for dotnet</PackageDescription>
         <PackageTags>C#; DotnetCore; Abstractions; Deimos</PackageTags>
@@ -12,6 +11,7 @@
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
         <Product>Solari.Deimos.Elastic</Product>
+        <TargetFrameworks>netcoreapp2.2;netcoreapp3.0;netcoreapp3.1</TargetFrameworks>
     </PropertyGroup>
     <ItemGroup>
         <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />

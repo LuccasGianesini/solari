@@ -4,7 +4,6 @@
   <AssemblyName>Solari.Titan</AssemblyName>
   <Authors>Lauth</Authors>
   <Title>Solari.Titan</Title>
-  <TargetFramework>netcoreapp3.1</TargetFramework>
   <PackageId>Solari.Titan</PackageId>
   <PackageDescription>Loggin library</PackageDescription>
   <PackageTags>C#; DotnetCore; Logging; Serilog</PackageTags>
@@ -12,6 +11,7 @@
   <RootNamespace>Solari.Titan</RootNamespace>
   <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
+  <TargetFrameworks>netcoreapp2.2;netcoreapp3.0;netcoreapp3.1</TargetFrameworks>
 </PropertyGroup>
 <ItemGroup>
   <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
