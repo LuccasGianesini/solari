@@ -19,9 +19,5 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="3.1.2" />
-  </ItemGroup>
-
 
 </Project>
