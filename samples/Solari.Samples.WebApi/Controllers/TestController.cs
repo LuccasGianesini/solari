@@ -25,17 +25,10 @@ namespace Solari.Samples.WebApi.Controllers
         }
 
         [HttpGet]
-        public async  Task<IActionResult> Get()
+        public async Task<IActionResult> Get()
         {
-            _tracer.TraceOperation("test-operation");
-            _logger.Information("Teste");
-            _tracer.FinalizeTrace(new Dictionary<string, object>
-            {
-                {"Log", "jdalksndaljhdjlasjdlhasldkalhdlasjld"}
-            });
-            var prof = await _hubClient.GetUserProfile("LuccasGianesini");
-          return  Ok(prof);
-        } 
-
+            string prof = await _hubClient.GetUserProfile("LuccasGianesini");
+            return Ok(prof);
+        }
     }
 }
