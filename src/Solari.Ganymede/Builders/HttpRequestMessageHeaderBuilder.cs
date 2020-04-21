@@ -74,18 +74,6 @@ namespace Solari.Ganymede.Builders
                 .Headers
                 .CacheControl = CacheControlHeaderValue.Parse(value);
         }
-
-        public override void CorrelationId(string value)
-        {
-            throw new NotImplementedException();
-        }
-        
-        //TODO Implement method
-        public override void CorrelationId()
-        {
-            throw new NotImplementedException();
-        }
-
         public override void CustomHeader(string key, string value)
         {
             RequestMessage

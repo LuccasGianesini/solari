@@ -15,8 +15,10 @@ using RawRabbit.Operations;
 using RawRabbit.vNext;
 using Solari.Deimos.CorrelationId;
 using Solari.Io;
+using Solari.Miranda.Abstractions;
 using Solari.Miranda.Abstractions.Options;
 using Solari.Miranda.Framework;
+using Solari.Miranda.Tracer;
 using Solari.Oberon;
 using Solari.Sol;
 using ILogger = Serilog.ILogger;
@@ -25,13 +27,8 @@ namespace Solari.Miranda.DependencyInjection
 {
     public static class SolariBuilderExtensions
     {
-        public static ISolariBuilder AddMiranda(this ISolariBuilder builder, Func<IRabbitMqPluginRegister, IRabbitMqPluginRegister> plugins = null)
-        {
-            return AddMiranda<BrokerCorrelationContext>(builder, plugins);
-        }
-
-        public static ISolariBuilder AddMiranda<TContext>(this ISolariBuilder builder,
-                                                          Func<IRabbitMqPluginRegister, IRabbitMqPluginRegister> plugins = null)
+        public static ISolariBuilder AddMiranda(this ISolariBuilder builder) { return AddMiranda<MirandaMessageContext>(builder); }
+        public static ISolariBuilder AddMiranda<TContext>(this ISolariBuilder builder)
             where TContext : class, new()
         {
             builder.Services.AddSingleton<IMirandaClient, MirandaClient>();
@@ -46,16 +43,15 @@ namespace Solari.Miranda.DependencyInjection
                            _        => new EmptyMessageProcessor()
                        };
             });
-            ConfigureBus<TContext>(builder, plugins);
+            ConfigureBus<TContext>(builder);
             return builder;
         }
 
-        private static void ConfigureBus<TContext>(ISolariBuilder builder, Func<IRabbitMqPluginRegister, IRabbitMqPluginRegister> plugins = null)
+        private static void ConfigureBus<TContext>(ISolariBuilder builder)
             where TContext : class, new()
         {
             builder.Services.AddSingleton<IInstanceFactory>(serviceProvider =>
             {
-                IRabbitMqPluginRegister register = plugins?.Invoke(new RabbitMqPluginRegister(serviceProvider));
                 MirandaOptions options = serviceProvider.GetService<IOptions<MirandaOptions>>().Value;
                 var config = new RawRabbitConfiguration
                 {
@@ -77,21 +73,19 @@ namespace Solari.Miranda.DependencyInjection
                     PublishConfirmTimeout = options.GetPublishConfirmTimeout(),
                     RouteWithGlobalId = options.RouteWithGlobalId
                 };
-                
+
                 var namingConventions = new CustomNamingConventions(options.Namespace);
 
                 return RawRabbitFactory.CreateInstanceFactory(new RawRabbitOptions
                 {
                     DependencyInjection = ioc =>
                     {
-                        register?.Register(ioc);
                         ioc.AddSingleton(serviceProvider);
                         ioc.AddSingleton(config);
                         ioc.AddSingleton<INamingConventions>(namingConventions);
                     },
                     Plugins = p =>
                     {
-                        register?.Register(p);
                         p.UseAttributeRouting()
                          .UseMessageContext<TContext>()
                          .UseContextForwarding()
@@ -102,6 +96,10 @@ namespace Solari.Miranda.DependencyInjection
                             p.UseProtobuf();
                         }
 
+                        if (options.Plugins.UseTracing)
+                        {
+                            p.Register(c => c.Use<JaegerTracingPlugin>());
+                        }
 
                         if (options.MessageProcessor?.Enabled == true)
                         {

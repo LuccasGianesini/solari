@@ -23,12 +23,14 @@ namespace Solari.Miranda
         private readonly IBusClient _client;
         private readonly ITitanLogger<MirandaClient> _logger;
         private readonly IServiceProvider _provider;
+        private readonly ICorrelationContextManager _manager;
 
         public MirandaClient(IBusClient client, ITitanLogger<MirandaClient> logger, IServiceProvider provider)
         {
             _client = client;
             _logger = logger;
             _provider = provider;
+            _manager = _provider.GetService<ICorrelationContextManager>();
         }
 
 
@@ -36,12 +38,31 @@ namespace Solari.Miranda
         {
             if (messageContext == null)
             {
-                _logger.Information("Message context not provided. Creating one.");
-                messageContext = new BrokerCorrelationContext();
-                
+                _logger.Information("Message context not provided.");
+                messageContext = CreateMirandaMessageContext();
             }
+
             _logger.Information($"Publishing message with id {messageContext?.MessageId}");
             await _client.PublishAsync(message, context => context.UseMessageContext(messageContext));
+        }
+
+        private IMirandaMessageContext CreateMirandaMessageContext()
+        {
+            if (_manager != null)
+            {
+                ICorrelationContext c = _manager.GetOrCreateAndSet();
+                return new MirandaMessageContext
+                {
+                    Interval = 5,
+                    Retries = 3,
+                    EnvoyCorrelationContext = c.EnvoyCorrelationContext
+                };
+            }
+
+            return new MirandaMessageContext
+            {
+                Empty = true
+            };
         }
 
         public async Task SubscribeAsync<TMessage>(Func<IServiceProvider, TMessage, IMirandaMessageContext, Task> handle)

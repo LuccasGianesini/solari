@@ -23,10 +23,7 @@ namespace Solari.Deimos
 
         private static void ConfigureTracing(ISolariBuilder solariBuilder, DeimosOptions options)
         {
-            if (options.UseCorrelationId)
-            {
-                solariBuilder.AddDeimosCorrelationId(options.Http.UseMiddleware);
-            }
+            solariBuilder.AddDeimosCorrelationId(options.Http.UseMiddleware);
             JaegerTracerConfiguration.AddJaeger(solariBuilder, options);
             
         }

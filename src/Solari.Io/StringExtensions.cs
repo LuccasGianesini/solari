@@ -101,13 +101,13 @@ namespace Solari.Io
             if (lowered.StartsWith("ms"))
                 return TimeSpan.FromMilliseconds(ToLong(value));
             if (lowered.StartsWith("s"))
-                return TimeSpan.FromMilliseconds(ToLong(value));
+                return TimeSpan.FromSeconds(ToLong(value));
             if (lowered.StartsWith("m"))
-                return TimeSpan.FromMilliseconds(ToLong(value));
+                return TimeSpan.FromMinutes(ToLong(value));
             if (lowered.StartsWith("h"))
-                return TimeSpan.FromMilliseconds(ToLong(value));
+                return TimeSpan.FromHours(ToLong(value));
             if (lowered.StartsWith("t"))
-                return TimeSpan.FromMilliseconds(ToLong(value));
+                return TimeSpan.FromTicks(ToLong(value));
             return lowered.StartsWith("d") ? TimeSpan.FromMilliseconds(ToLong(value)) : TimeSpan.MinValue;
         }
         

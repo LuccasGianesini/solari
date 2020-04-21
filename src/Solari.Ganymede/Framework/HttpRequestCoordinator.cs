@@ -21,7 +21,7 @@ namespace Solari.Ganymede.Framework
             _descriptor = descriptor;
         }
 
-        public async Task<GanymedeHttpResponse<T>> Send<T>(HttpRequestMessage requestMessage)
+        public async Task<GanymedeHttpResponse> Send(HttpRequestMessage requestMessage)
         {
             if (!CanMessageBeSent(requestMessage)) throw new MessageValidationException("Required headers are not present in the current HttpRequestMessage");
 
@@ -29,13 +29,12 @@ namespace Solari.Ganymede.Framework
             HttpResponseMessage response = await _client.SendAsync(requestMessage);
             DateTimeOffset ended = DateTimeOffset.UtcNow;
 
-            return new GanymedeHttpResponse<T>(response, started, ended);
+            return new GanymedeHttpResponse(response, started, ended);
         }
 
         private bool CanMessageBeSent(HttpRequestMessage requestMessage)
         {
             return requestMessage.Headers.All(requestMessageHeader => _descriptor.Resource.RequiredHeaders.Contains(requestMessageHeader.Key));
-            // return requestMessage.RequestUri != null && headersOk;
         }
     }
 }

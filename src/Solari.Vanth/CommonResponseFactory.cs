@@ -10,9 +10,6 @@ namespace Solari.Vanth
 {
     public class CommonResponseFactory : ICommonResponseFactory
     {
-        private readonly ApplicationOptions _application;
-        public CommonResponseFactory(IOptions<ApplicationOptions> appOptions) { _application = appOptions.Value; }
-
         public CommonResponse<TResult> CreateResult<TResult>(TResult model) => new CommonResponseBuilder<TResult>().WithResult(model).Build();
 
         public CommonResponse<TResult> CreateError<TResult>(CommonErrorResponse errorResponse) =>

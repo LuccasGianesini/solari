@@ -40,10 +40,12 @@ namespace Solari.Deimos
         {
             if (options == null) return;
 
-            foreach (string httpIgnoredEndpoint in options.Http.IgnoredEndpoints)
+            foreach (string httpIgnoredEndpoint in options.Http.IgnoredInEndpoints)
             {
                 DeimosLogger.JaegerLogger.ConfigureRequestFiltering(httpIgnoredEndpoint);
-                diagnosticOptions.Hosting.IgnorePatterns.Add(context => context.Request.Path == PathString.FromUriComponent(httpIgnoredEndpoint));
+                diagnosticOptions.Hosting.IgnorePatterns.Add(context =>context.Request.Path
+                                                                              .ToUriComponent()
+                                                                              .Contains(PathString.FromUriComponent(httpIgnoredEndpoint)));
             }
         }
 
@@ -115,7 +117,7 @@ namespace Solari.Deimos
             builder.Services.PostConfigure<HttpHandlerDiagnosticOptions>(conf =>
             {
                 conf.InjectEnabled = message => true;
-                foreach (string httpIgnoredEndpoint in options.Http.IgnoredEndpoints)
+                foreach (string httpIgnoredEndpoint in options.Http.IgnoredOutEndpoints)
                 {
                     conf.IgnorePatterns.Add(context => context.RequestUri.OriginalString.Contains(httpIgnoredEndpoint));
                 }
