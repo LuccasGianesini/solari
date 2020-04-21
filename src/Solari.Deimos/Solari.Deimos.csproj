@@ -19,7 +19,5 @@
     <ItemGroup>
       <ProjectReference Include="..\Solari.Deimos.Abstractions\Solari.Deimos.Abstractions.csproj" />
       <ProjectReference Include="..\Solari.Deimos.CorrelationId\Solari.Deimos.CorrelationId.csproj" />
-      <ProjectReference Include="..\Solari.Deimos.Elastic\Solari.Deimos.Elastic.csproj" />
-      <ProjectReference Include="..\Solari.Deimos.Jaeger\Solari.Deimos.Jaeger.csproj" />
     </ItemGroup>
 </Project>

@@ -17,9 +17,4 @@
         <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
     </ItemGroup>
 
-
-    <ItemGroup>
-      <ProjectReference Include="..\Solari.Deimos.Elastic\Solari.Deimos.Elastic.csproj" />
-    </ItemGroup>
-
 </Project>

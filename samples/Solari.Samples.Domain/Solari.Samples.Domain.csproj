@@ -11,8 +11,6 @@
     <ProjectReference Include="..\..\src\Solari.Callisto\Solari.Callisto.csproj" />
     <ProjectReference Include="..\..\src\Solari.Deimos.Abstractions\Solari.Deimos.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\Solari.Deimos.CorrelationId\Solari.Deimos.CorrelationId.csproj" />
-    <ProjectReference Include="..\..\src\Solari.Deimos.Elastic\Solari.Deimos.Elastic.csproj" />
-    <ProjectReference Include="..\..\src\Solari.Deimos.Jaeger\Solari.Deimos.Jaeger.csproj" />
     <ProjectReference Include="..\..\src\Solari.Deimos\Solari.Deimos.csproj" />
     <ProjectReference Include="..\..\src\Solari.Eris\Solari.Eris.csproj" />
     <ProjectReference Include="..\..\src\Solari.Ganymede\Solari.Ganymede.csproj" />
