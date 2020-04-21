@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security;
 using System.Text;
+using Solari.Deimos.CorrelationId;
 using Solari.Ganymede.Builders;
 using Solari.Ganymede.Domain;
 using Solari.Ganymede.Domain.Options;
@@ -18,7 +19,6 @@ namespace Solari.Ganymede.Pipeline
         {
             PipelineDescriptor = pipeline;
             _headerBuilder = new HttpRequestMessageHeaderBuilder(pipeline.RequestMessage);
-            CorrelationId();
         }
 
         public PipelineDescriptor PipelineDescriptor { get; }
@@ -70,6 +70,13 @@ namespace Solari.Ganymede.Pipeline
             return this;
         }
 
+        public HeaderStage CorrelationContext(ICorrelationContextManager manager, string messageId = "")
+        {
+            PipelineDescriptor.RequestMessage.AddCorrelationContext(manager.GetOrCreateAndSet(messageId));
+            return this;
+
+        }
+
         public HeaderStage BearerAuthorization(string value)
         {
             Authorization(GanymedeConstants.BearerAuth, value);
@@ -87,13 +94,6 @@ namespace Solari.Ganymede.Pipeline
         public HeaderStage CorrelationId(string value)
         {
             _headerBuilder.CorrelationId(value);
-
-            return this;
-        }
-
-        public HeaderStage CorrelationId()
-        {
-            _headerBuilder.CorrelationId();
 
             return this;
         }

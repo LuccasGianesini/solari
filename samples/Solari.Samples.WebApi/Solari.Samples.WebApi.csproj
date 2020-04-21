@@ -19,5 +19,11 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="HttpRequestsDefinition.Development.yaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 
 </Project>

@@ -16,8 +16,9 @@ namespace Solari.Deimos.CorrelationId
         /// <returns></returns>
         public static ISolariBuilder AddDeimosCorrelationId(this ISolariBuilder solariBuilder, bool useMiddleware)
         {
-            solariBuilder.Services.AddSingleton<ICorrelationContextHandler, CorrelationContextHandler>();
+            solariBuilder.Services.AddSingleton<ICorrelationContextFactory, CorrelationContextFactory>();
             solariBuilder.Services.AddSingleton<ICorrelationContextAccessor, CorrelationContextAccessor>();
+            solariBuilder.Services.AddSingleton<ICorrelationContextManager, CorrelationContextManager>();
             if (useMiddleware)
                 solariBuilder.AddBuildAction(new BuildAction("Deimos CorrelationId")
                 {

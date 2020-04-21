@@ -34,7 +34,9 @@ namespace Solari.Sol
         /// Application host environment.
         /// </summary>
         IHostEnvironment HostEnvironment { get; }
-        
-        
+
+        ApplicationOptions GetAppOptions();
+
+
     }
 }

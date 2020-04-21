@@ -1,13 +1,11 @@
 ﻿using System;
-using RawRabbit.Enrichers.MessageContext.Context;
-using Solari.Deimos.Abstractions;
 using Solari.Deimos.CorrelationId;
-using Solari.Miranda.Abstractions;
 
-namespace Solari.Miranda
+namespace Solari.Miranda.Abstractions
 {
-    public class BrokerCorrelationContext : IMirandaMessageContext
+    public class MirandaMessageContext : IMirandaMessageContext
     {
+        public bool Empty { get; set; }
         public int Retries { get; set; }
         public double Interval { get; set; }
         public Guid GlobalRequestId { get; set; }

@@ -7,65 +7,33 @@ using Solari.Vanth;
 
 namespace Solari.Ganymede.Pipeline
 {
-    public class DeserializationStage<T>
+    public static class DeserializationStage
     {
-        private CommonResponse<GanymedeHttpResponse<T>> _commonResponse;
-        private readonly GanymedeHttpResponse<T> _httpResponse;
-
-        public DeserializationStage(CommonResponse<GanymedeHttpResponse<T>> commonResponse, GanymedeHttpResponse<T> httpResponse)
+        public static async Task<string> AsString(this Task<GanymedeHttpResponse> httpResponse)
         {
-            _commonResponse = commonResponse;
-            _httpResponse = httpResponse;
+            GanymedeHttpResponse response = await httpResponse;
+            return await response.AsString();
         }
 
-
-        public async Task<CommonResponse<GanymedeHttpResponse<T>>> AsString(bool stringifyRequestBody = false)
+        public static async Task<string> AsString(this GanymedeHttpResponse httpResponse)
         {
-            await _httpResponse.StringifyResponseBody();
-            if (stringifyRequestBody)
-            {
-                await _httpResponse.StringifyRequestBody();
-            }
-
-            _commonResponse.AddResult(_httpResponse);
-            return _commonResponse;
+            return await httpResponse.ResponseMessage.Content.ReadAsStringAsync();
         }
 
-        public async Task<CommonResponse<GanymedeHttpResponse<T>>> AsModel()
+        public static async Task<T> AsModel<T>(this Task<GanymedeHttpResponse> httpResponse)
         {
-            try
-            {
-                Maybe<T> deserialized = await _httpResponse
-                                              .ResponseMessage
-                                              .RequestMessage.GetContentDeserializer()
-                                              .Deserialize<T>(_httpResponse.ResponseMessage.Content);
-                if (deserialized.HasValue)
-                {
-                    _httpResponse.AddDeserializedContent(deserialized.Value);
-                    _commonResponse.AddResult(_httpResponse);
-                    return _commonResponse;
-                }
-
-                _commonResponse.AddError(builder => builder.WithMessage("The Maybe object is empty. " +
-                                                                        "An error may occurred while deserializing the object." +
-                                                                        "Does the response body contains any data?")
-                                                           .Build());
-                return _commonResponse;
-            }
-            catch (Exception e)
-            {
-                _commonResponse.AddError(builder => builder.WithDetail(detail => detail.WithException(e).Build())
-                                                           .WithMessage(e.Message)
-                                                           .WithErrorType(CommonErrorType.Exception)
-                                                           .Build());
-                return _commonResponse;
-            }
+            GanymedeHttpResponse response = await httpResponse;
+            return await response.AsModel<T>();
         }
 
-        public CommonResponse<GanymedeHttpResponse<T>> AsRaw()
+        public static async Task<T> AsModel<T>(this GanymedeHttpResponse httpResponse)
         {
-            _commonResponse.AddResult(_httpResponse);
-            return _commonResponse;
+            Maybe<T> deserialized = await httpResponse
+                                          .ResponseMessage
+                                          .RequestMessage.GetContentDeserializer()
+                                          .Deserialize<T>(httpResponse.ResponseMessage.Content);
+
+            return deserialized.Value;
         }
     }
 }

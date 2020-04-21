@@ -5,6 +5,7 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Solari.Io;
 
 namespace Solari.Sol.Framework
 {
@@ -37,6 +38,11 @@ namespace Solari.Sol.Framework
         /// Get the <see cref="IHostEnvironment"/>. This property requires the <see cref="IServiceProvider"/> to be built.
         /// </summary>
         public IHostEnvironment HostEnvironment { get; }
+
+        public ApplicationOptions GetAppOptions()
+        {
+            return AppConfiguration.GetOptions<ApplicationOptions>(SolariConstants.ApplicationAppSettingsSection);
+        }
 
         private IHostEnvironment GetHostEnvironment()
         {

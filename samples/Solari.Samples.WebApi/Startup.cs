@@ -10,9 +10,11 @@ using Solari.Callisto.Connector;
 using Solari.Callisto.Tracer;
 using Solari.Deimos;
 using Solari.Eris;
+using Solari.Ganymede.DependencyInjection;
 using Solari.Miranda.DependencyInjection;
 using Solari.Oberon;
 using Solari.Samples.Di;
+using Solari.Samples.Domain;
 using Solari.Samples.Domain.Person;
 using Solari.Samples.Domain.Person.Validators;
 using Solari.Samples.Infrastructure;
@@ -25,10 +27,7 @@ namespace Solari.Samples.WebApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) { Configuration = configuration; }
 
         public IConfiguration Configuration { get; }
 
@@ -36,13 +35,14 @@ namespace Solari.Samples.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
+
             services.AddSol(Configuration)
                     .AddVanth()
                     .AddTitan()
                     .AddEris()
-                    .AddOberon()
                     .AddMiranda()
+                    .AddOberon() 
+                    .AddGanymede(requests => requests.AddGanymedeClient<IGitHubClient, GitHubClient>("GitHub"))
                     .AddCallistoConnector()
                     .AddCallisto(callistoConfiguration => callistoConfiguration
                                                           .RegisterDefaultConventionPack()
@@ -68,7 +68,7 @@ namespace Solari.Samples.WebApi
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            { 
+            {
                 app.UseDeveloperExceptionPage();
             }
 
@@ -81,14 +81,11 @@ namespace Solari.Samples.WebApi
             {
                 options.RoutePrefix = "swagger";
                 options.SwaggerEndpoint("./v1/swagger.json", "Solari Samples WebApi");
-            });    
+            });
 
             // app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

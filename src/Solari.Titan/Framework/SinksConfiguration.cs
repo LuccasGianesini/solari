@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Text;
-using Elastic.Apm.SerilogEnricher;
 using Elastic.CommonSchema.Serilog;
-using Microsoft.VisualBasic.CompilerServices;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
@@ -106,7 +103,6 @@ namespace Solari.Titan.Framework
                 CustomFormatter = new EcsTextFormatter()
             };
             configuration.WriteTo.Elasticsearch(elastic);
-            configuration.Enrich.WithElasticApmCorrelationInfo();
 
             return configuration;
         }

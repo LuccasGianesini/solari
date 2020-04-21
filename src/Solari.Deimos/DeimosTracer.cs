@@ -2,10 +2,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Elastic.Apm;
-using Jaeger;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using OpenTracing;
 using OpenTracing.Tag;
 using Solari.Deimos.Abstractions;

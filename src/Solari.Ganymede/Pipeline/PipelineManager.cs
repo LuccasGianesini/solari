@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Elastic.CommonSchema;
+using Solari.Deimos.CorrelationId;
 using Solari.Ganymede.ContentSerializers;
 using Solari.Ganymede.Domain;
 using Solari.Ganymede.Domain.Exceptions;
@@ -85,74 +87,11 @@ namespace Solari.Ganymede.Pipeline
             return this;
         }
 
-        public async Task<CommonResponse<GanymedeHttpResponse<Empty>>> Send(bool stringifyResponseContent = false, bool stringifyRequestContent = false)
-            => await ExecuteRequest<Empty>(stringifyResponseContent, stringifyRequestContent);
-
-
-        public async Task<CommonResponse<GanymedeHttpResponse<T>>> Send<T>(bool stringifyResponseContent = false, bool stringifyRequestContent = false)
-        {
-            CommonResponse<GanymedeHttpResponse<T>> commonResponse = await ExecuteRequest<T>(stringifyResponseContent, stringifyRequestContent);
-
-            if (commonResponse.HasErrors) return commonResponse;
-
-            IContentDeserializer deserializer = commonResponse.Result.ResponseMessage.RequestMessage.GetContentDeserializer();
-
-            try
-            {
-                Maybe<T> maybe = await deserializer.Deserialize<T>(commonResponse.Result.ResponseMessage.Content);
-                if (maybe.HasValue)
-                    commonResponse.Result.AddDeserializedContent(maybe.Value);
-                return commonResponse;
-            }
-            catch (Exception e)
-            {
-                commonResponse.AddError(builder => builder
-                                                   .WithMessage("Error while deserializing response")
-                                                   .WithErrorType("Deserialization Error")
-                                                   .WithDetail(detail => detail
-                                                                         .WithMessage(e.Message)
-                                                                         .WithTarget(nameof(T))
-                                                                         .WithException(e)
-                                                                         .Build())
-                                                   .Build());
-                return commonResponse;
-            }
-        }
-
-
-        private async Task<CommonResponse<GanymedeHttpResponse<T>>> ExecuteRequest<T>(bool stringifyResponseContent, bool stringifyRequestContent)
+        public Task<GanymedeHttpResponse> Send()
         {
             _executeDefaultActions();
-            var commonResponse = new CommonResponse<GanymedeHttpResponse<T>>();
-            try
-            {
-                commonResponse.AddResult(await new HttpRequestCoordinator(_client, _currentDescriptor).Send<T>(_currentDescriptor.RequestMessage));
-                if (stringifyResponseContent)
-                {
-                    await commonResponse.Result.StringifyResponseBody();
-                }
-
-                if (stringifyRequestContent)
-                {
-                    await commonResponse.Result.StringifyRequestBody();
-                }
-
-                return commonResponse;
-            }
-            catch (HttpRequestException httpRequestException)
-            {
-                return CreateExceptionError(commonResponse, httpRequestException, "An HttpRequestException happened while sending the request!");
-            }
-            catch (MessageValidationException argument)
-            {
-                return CreateExceptionError(commonResponse, argument, "An MessageValidationException happened. The current message could not be sent out!");
-            }
-            catch (NullReferenceException nullReferenceException)
-            {
-                return CreateExceptionError(commonResponse, nullReferenceException, "An NullReferenceException happened. The current message could not be sent out");
-            }
+            return new HttpRequestCoordinator(_client, _currentDescriptor).Send(_currentDescriptor.RequestMessage);
         }
-
 
         private void _executeDefaultActions()
         {
@@ -161,18 +100,6 @@ namespace Solari.Ganymede.Pipeline
             if (!_messageConfigured) ConfigureHttpMessage(message => message.UseGanymedeEndpointOptions());
         }
 
-        private CommonResponse<T> CreateExceptionError<T>(CommonResponse<T> response, Exception exception, string message)
-        {
-            response.AddError(builder => builder
-                                         .WithMessage(message)
-                                         .WithTarget(nameof(GanymedeHttpResponse<T>))
-                                         .WithErrorType(CommonErrorType.Exception)
-                                         .WithDetail(detail => detail.WithException(exception)
-                                                                     .WithMessage(exception.Message)
-                                                                     .WithTarget(exception.Source)
-                                                                     .Build())
-                                         .Build());
-            return response;
-        }
+      
     }
 }

@@ -20,8 +20,7 @@ namespace Solari.Miranda.Framework
             _logger = serviceProvider.GetRequiredService<ILogger<ProcessUniqueMessagesMiddleware>>();
         }
 
-        public override async Task InvokeAsync(IPipeContext context,
-                                               CancellationToken token = new CancellationToken())
+        public override async Task InvokeAsync(IPipeContext context, CancellationToken token = new CancellationToken())
         {
             using (var scope = _serviceProvider.CreateScope())
             {

@@ -19,7 +19,7 @@ namespace Solari.Miranda.Abstractions.Options
         public string Password { get; set; }
         public bool PersistentDeliveryMode { get; set; } = true;
         public int Port { get; set; }
-        public string PublishConfirmTimeout { get; set; }
+        public string PublishConfirmTimeout { get; set; } = "s10";
         public MirandaQueueOptions Queue { get; set; } = new MirandaQueueOptions();
         public string RequestTimeout { get; set; }
         public int Retries { get; set; }
