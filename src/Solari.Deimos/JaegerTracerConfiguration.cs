@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net;
-using Jaeger;
+﻿using Jaeger;
 using Jaeger.Reporters;
 using Jaeger.Samplers;
 using Jaeger.Senders;
@@ -13,18 +11,15 @@ using OpenTracing.Contrib.NetCore.Configuration;
 using OpenTracing.Contrib.NetCore.CoreFx;
 using OpenTracing.Util;
 using Solari.Deimos.Abstractions;
-using Solari.Deimos.CorrelationId;
-using Solari.Io;
 using Solari.Sol;
 
-namespace Solari.Deimos.Jaeger
+namespace Solari.Deimos
 {
     public static class JaegerTracerConfiguration
     {
         public static ISolariBuilder AddJaeger(ISolariBuilder solariBuilder, DeimosOptions options)
         {
-            // solariBuilder.Services.AddSingleton<IDeimosJaegerTracer, DeimosJaegerTracer>();
-            ConfigureHttpOut(solariBuilder);
+            ConfigureHttpOut(solariBuilder, options);
             ConfigureHttpIn(solariBuilder, options);
             ConfigureTracer(solariBuilder, options);
             return solariBuilder;
@@ -77,8 +72,8 @@ namespace Solari.Deimos.Jaeger
                               ? applicationOptions.ApplicationName
                               : deimosOptions.Jaeger.ServiceName;
 
-            return name.Contains("[env]") 
-                       ? name.Replace("[env]", applicationOptions.ApplicationEnvironment).ToLowerInvariant() 
+            return name.Contains("[env]")
+                       ? name.Replace("[env]", applicationOptions.ApplicationEnvironment).ToLowerInvariant()
                        : (name + "." + applicationOptions.ApplicationEnvironment).ToLowerInvariant();
         }
 
@@ -93,8 +88,6 @@ namespace Solari.Deimos.Jaeger
 
         private static RemoteReporter BuildRemoteReporter(DeimosOptions options, ApplicationOptions appOptions, ILoggerFactory loggerFactory)
         {
-            
-
             string host = string.IsNullOrEmpty(options.Jaeger.UdpHost) ? appOptions.KUBERNETES_NODE_IP : options.Jaeger.UdpHost;
 
             int port = options.Jaeger.UdpPort;
@@ -117,11 +110,16 @@ namespace Solari.Deimos.Jaeger
         }
 
 
-        private static void ConfigureHttpOut(ISolariBuilder builder)
+        private static void ConfigureHttpOut(ISolariBuilder builder, DeimosOptions options)
         {
             builder.Services.PostConfigure<HttpHandlerDiagnosticOptions>(conf =>
             {
                 conf.InjectEnabled = message => true;
+                foreach (string httpIgnoredEndpoint in options.Http.IgnoredEndpoints)
+                {
+                    conf.IgnorePatterns.Add(context => context.RequestUri.OriginalString.Contains(httpIgnoredEndpoint));
+                }
+
                 DeimosLogger.JaegerLogger.ConfiguredHttpOut();
             });
         }

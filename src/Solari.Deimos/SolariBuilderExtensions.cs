@@ -26,16 +26,17 @@ namespace Solari.Deimos
             {
                 solariBuilder.AddDeimosCorrelationId(options.Http.UseMiddleware);
             }
+            JaegerTracerConfiguration.AddJaeger(solariBuilder, options);
 
-            if (options.UseJaeger && !options.UseElasticApm)
-            {
-                Solari.Deimos.Jaeger.JaegerTracerConfiguration.AddJaeger(solariBuilder, options);
-            }
+            // if (options.UseJaeger && !options.UseElasticApm)
+            // {
+            //     
+            // }
 
-            if (options.UseElasticApm && !options.UseJaeger)
-            {
-                Solari.Deimos.Elastic.ElasticTracerConfiguration.AddElasticApm(solariBuilder, options);
-            }
+            // if (options.UseElasticApm && !options.UseJaeger)
+            // {
+            //     Solari.Deimos.Elastic.ElasticTracerConfiguration.AddElasticApm(solariBuilder, options);
+            // }
         }
     }
 }

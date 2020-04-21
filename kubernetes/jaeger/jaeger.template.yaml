@@ -20,9 +20,6 @@ metadata:
     name: jaeger-infra
   name: jaeger-template
   namespace: jaeger
-  resourceVersion: "84086779"
-  selfLink: /apis/template.openshift.io/v1/namespaces/jaeger/templates/jaeger-template
-  uid: 476258e9-179a-11ea-8ab6-0050569e9d8f
 objects:
 - apiVersion: extensions/v1beta1
   kind: Deployment

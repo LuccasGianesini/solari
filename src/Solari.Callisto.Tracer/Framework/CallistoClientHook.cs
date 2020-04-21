@@ -20,10 +20,10 @@ namespace Solari.Callisto.Tracer.Framework
         private readonly IOptions<CallistoTracerOptions> _options;
         private readonly IOptions<DeimosOptions> _deimosOptions;
         private readonly ICallistoEventListener _callistoEventListener;
-        
-        public CallistoClientHook(ICallistoConnection connection, 
-                                  ICallistoConnectionFactory factory, 
-                                  IOptions<CallistoTracerOptions> options, 
+
+        public CallistoClientHook(ICallistoConnection connection,
+                                  ICallistoConnectionFactory factory,
+                                  IOptions<CallistoTracerOptions> options,
                                   IOptions<DeimosOptions> deimosOptions,
                                   ICallistoEventListener callistoEventListener)
         {
@@ -36,13 +36,11 @@ namespace Solari.Callisto.Tracer.Framework
 
         public void AddHook()
         {
-            // Log.Information("Configuring callisto hook!");
             if (!_deimosOptions.Value.TracingEnabled || !_options.Value.Enabled) return;
             MongoClientSettings currentSettings = _connection.GetClient().Settings.Clone();
-            
+
             currentSettings.ClusterConfigurator = builder =>
             {
-                // Log.Debug("Subscribing to mongodb events");
                 builder.Subscribe<CommandStartedEvent>(_callistoEventListener.StartEventHandler)
                        .Subscribe<CommandSucceededEvent>(_callistoEventListener.SuccessEventHandler)
                        .Subscribe<CommandFailedEvent>(_callistoEventListener.ErrorEventHandler);

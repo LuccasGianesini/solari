@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using OpenTracing;
 using OpenTracing.Tag;
+using Solari.Deimos.Abstractions;
 
-namespace Solari.Deimos.Jaeger
+namespace Solari.Deimos
 {
     public sealed class SpanEnricher : ISpanEnricher
     {

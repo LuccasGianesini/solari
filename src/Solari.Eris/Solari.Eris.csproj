@@ -10,7 +10,7 @@
     <LangVersion>8</LangVersion>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <RootNamespace>Solari.Eris</RootNamespace>
-    <TargetFrameworks>netcoreapp2.2;netcoreapp3.0;netcoreapp3.1</TargetFrameworks>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />

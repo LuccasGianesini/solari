@@ -12,19 +12,16 @@ namespace Solari.Deimos
         public ITracer JaegerTracer { get; }
         public global::Elastic.Apm.Api.ITracer ElasticTracer { get; }
 
-        public DeimosTracer(IServiceProvider provider, IOptions<DeimosOptions> options)
-        {
-            if (options.Value.UseElasticApm)
-            {
-                ElasticTracer = Agent.Tracer;
-            }
-
-            if (options.Value.UseJaeger)
-            {
-                JaegerTracer = provider.GetService<ITracer>();
-            }
-            
-        }
-        
+        // public DeimosTracer(IServiceProvider provider, IOptions<DeimosOptions> options)
+        // {
+        //     if (options.Value.UseElasticApm)
+        //     {
+        //         ElasticTracer = Agent.Tracer;
+        //     }
+        //
+        //     if (options.Value.UseJaeger)
+        //     {
+        // -   JaegerTracer = provider.GetService<ITracer>();
+        // }
     }
 }

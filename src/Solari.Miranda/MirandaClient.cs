@@ -37,6 +37,7 @@ namespace Solari.Miranda
             if (messageContext == null)
             {
                 _logger.Information("Message context not provided. Creating one.");
+                messageContext = new BrokerCorrelationContext();
                 
             }
             _logger.Information($"Publishing message with id {messageContext?.MessageId}");

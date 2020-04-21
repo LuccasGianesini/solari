@@ -51,7 +51,7 @@ namespace Solari.Deimos.CorrelationId.Framework
             DeimosOptions opt = _provider.GetService<IOptions<DeimosOptions>>().Value;
             Activity currentActivity = Activity.Current;
 
-            if (!opt.UseJaeger) return Create(messageId, null);
+            // if (!opt.UseJaeger) return Create(messageId, null);
             
             var tracer = _provider.GetService<ITracer>();
             ISpanContext spanCtx = tracer.ActiveSpan.Context;
@@ -82,7 +82,7 @@ namespace Solari.Deimos.CorrelationId.Framework
         public ICorrelationContext UpdateCurrent(ICorrelationContext current)
         {
             DeimosOptions opt = _provider.GetService<IOptions<DeimosOptions>>().Value;
-            if (!opt.UseJaeger) return current;
+            // if (!opt.UseJaeger) return current;
             var tracer = _provider.GetService<ITracer>();
             ISpanContext spanCtx = tracer.ActiveSpan.Context;
             IEnvoyCorrelationContext envoy = ExtractFromJaegerContext(spanCtx.ToString());

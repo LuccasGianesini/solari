@@ -11,7 +11,7 @@
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
         <Product>Solari.Miranda.Tracer</Product>
-        <TargetFrameworks>netcoreapp2.2;netcoreapp3.0;netcoreapp3.1</TargetFrameworks>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
         <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />

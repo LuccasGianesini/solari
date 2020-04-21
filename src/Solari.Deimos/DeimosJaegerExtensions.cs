@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using OpenTracing;
 using OpenTracing.Propagation;
 
-namespace Solari.Deimos.Jaeger
+namespace Solari.Deimos
 {
     public static class DeimosJaegerExtensions
     {

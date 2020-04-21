@@ -24,10 +24,10 @@ namespace Solari.Deimos.Elastic
                 {
                     var marshal = provider.GetRequiredService<ISolariMarshal>();
                     ApplicationOptions appOptions = provider.GetRequiredService<IOptions<ApplicationOptions>>().Value;
-                    ElasticApmOptions opt = provider.GetRequiredService<IOptions<DeimosOptions>>().Value.Elastic;
-                    ConfigureViaEnvironmentVariables(opt, appOptions);
-                    marshal.ApplicationBuilder?.UseElasticApm(subscribers: ConfigureSubs(options));
-                    DeimosLogger.ElasticLogger.ApmServerAddress(opt.Url);
+                    // ElasticApmOptions opt = provider.GetRequiredService<IOptions<DeimosOptions>>().Value.Elastic;
+                    // ConfigureViaEnvironmentVariables(opt, appOptions);
+                    // marshal.ApplicationBuilder?.UseElasticApm(subscribers: ConfigureSubs(options));
+                    // DeimosLogger.ElasticLogger.ApmServerAddress(opt.Url);
                     DeimosLogger.ElasticLogger.UsingElasticApmTracer();
                 }
             });
@@ -39,23 +39,23 @@ namespace Solari.Deimos.Elastic
         {
             var subscribers = new List<IDiagnosticsSubscriber>();
 
-            if (options.Elastic.Subscribers.Http)
-            {
-                DeimosLogger.ElasticLogger.UsingHttpSubscriber();
-                subscribers.Add(new HttpDiagnosticsSubscriber());
-            }
-
-            if (options.Elastic.Subscribers.EfCore)
-            {
-                DeimosLogger.ElasticLogger.UsingEfCoreSubscriber();
-                subscribers.Add(new EfCoreDiagnosticsSubscriber());
-            }
-
-            if (options.Elastic.Subscribers.AspNetCore)
-            {
-                DeimosLogger.ElasticLogger.UsingAspNetCoreSubscriber();
-                subscribers.Add(new AspNetCoreDiagnosticsSubscriber());
-            }
+            // if (options.Elastic.Subscribers.Http)
+            // {
+            //     DeimosLogger.ElasticLogger.UsingHttpSubscriber();
+            //     subscribers.Add(new HttpDiagnosticsSubscriber());
+            // }
+            //
+            // if (options.Elastic.Subscribers.EfCore)
+            // {
+            //     DeimosLogger.ElasticLogger.UsingEfCoreSubscriber();
+            //     subscribers.Add(new EfCoreDiagnosticsSubscriber());
+            // }
+            //
+            // if (options.Elastic.Subscribers.AspNetCore)
+            // {
+            //     DeimosLogger.ElasticLogger.UsingAspNetCoreSubscriber();
+            //     subscribers.Add(new AspNetCoreDiagnosticsSubscriber());
+            // }
             
             return subscribers.ToArray();
         }
