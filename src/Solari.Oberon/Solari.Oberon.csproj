@@ -11,13 +11,13 @@
         <RootNamespace>Solari.Oberon</RootNamespace>
         <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-        <TargetFrameworks>netcoreapp2.2;netcoreapp3.0;netcoreapp3.1</TargetFrameworks>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
         <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.1" />
+      <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.2" />
       <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
     </ItemGroup>
     <ItemGroup>

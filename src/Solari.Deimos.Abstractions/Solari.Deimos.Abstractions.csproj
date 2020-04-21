@@ -12,13 +12,12 @@
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <TargetFrameworks>netcoreapp2.2;netcoreapp3.0;netcoreapp3.1</TargetFrameworks>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
         <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Elastic.Apm.NetCoreAll" Version="1.3.1" />
         <PackageReference Include="Jaeger" Version="0.3.7" />
         <PackageReference Include="OpenTracing" Version="0.12.1" />
         <PackageReference Include="OpenTracing.Contrib.NetCore" Version="0.6.2" />

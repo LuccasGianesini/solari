@@ -49,11 +49,11 @@ namespace Solari.Samples.WebApi.Controllers
             }
             catch (MongoWriteException exception)
             {
-                return CreateExceptionError(exception, "1001", "Error writing new person", exception.GetType());
+                return CreateExceptionError(exception, "1001", "Error writing new person");
             }
             catch (ArgumentNullException exception)
             {
-                return CreateExceptionError(exception, "1001", "Error writing new person", exception.GetType());
+                return CreateExceptionError(exception, "1001", "Error writing new person");
             }
         }
 
@@ -69,19 +69,19 @@ namespace Solari.Samples.WebApi.Controllers
             }
             catch (MongoWriteException exception)
             {
-                return CreateExceptionError(exception, "1002", "Error writing person attributes", exception.GetType());
+                return CreateExceptionError(exception, "1002", "Error writing person attributes");
             }
             catch (InvalidOperationException exception)
             {
-                return CreateExceptionError(exception, "1002", "Error writing person attributes", exception.GetType());
+                return CreateExceptionError(exception, "1002", "Error writing person attributes");
             }
             catch (ArgumentOutOfRangeException exception)
             {
-                return CreateExceptionError(exception, "1002", "Error writing person attributes", exception.GetType());
+                return CreateExceptionError(exception, "1002", "Error writing person attributes");
             }
         }
 
-        private IActionResult CreateExceptionError(Exception exception, string code, string message, MemberInfo exceptionType)
+        private IActionResult CreateExceptionError(Exception exception, string code, string message)
         {
             Helper.DefaultExceptionLogMessage(_logger, exception.GetType(), exception);
             return StatusCode(StatusCodes.Status500InternalServerError, _factory

@@ -26,8 +26,8 @@ objects:
     name: jaeger-agent
     namespace: jaeger
     labels:
-      app: jaeger-agent
-      jaeger-infra: agent-daemonset
+      app: jaeger
+      jaeger-infra: agent-service
   spec:
     ports:
      - name: thrift-compact
@@ -51,14 +51,14 @@ objects:
        protocol: TCP
        targetPort: 14271
     selector:
-      jaeger-infra: agent-daemonset
+      jaeger-infra: agent-instance
     type: ClusterIP
 - apiVersion: extensions/v1beta1
   kind: DaemonSet
   metadata:
     labels:
-      app: jaeger-agent
-      jaeger-infra: agent-daemonset
+      app: jaeger
+      jaeger-infra: agent-instance
     name: jaeger-agent
   spec:
     replicas: 1
@@ -67,7 +67,7 @@ objects:
     template:
       metadata:
         labels:
-          app: jaeger-agent
+          app: jaeger
           jaeger-infra: agent-instance
       spec:
         containers:
@@ -90,7 +90,7 @@ objects:
           resources:
             limits:
               cpu: 200m
-              memory: 200M
+              memory: 500M
             requests:
               cpu: 200m
-              memory: 200M
+              memory: 500M

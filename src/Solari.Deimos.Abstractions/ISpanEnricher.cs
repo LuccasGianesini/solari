@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using OpenTracing.Tag;
 
-namespace Solari.Deimos.Jaeger
+namespace Solari.Deimos.Abstractions
 {
     public interface ISpanEnricher
     {
