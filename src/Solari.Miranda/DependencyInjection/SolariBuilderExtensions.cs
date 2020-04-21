@@ -3,12 +3,14 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Polly;
 using RawRabbit;
 using RawRabbit.Channel;
 using RawRabbit.Common;
 using RawRabbit.Configuration;
 using RawRabbit.Enrichers.GlobalExecutionId;
 using RawRabbit.Enrichers.MessageContext;
+using RawRabbit.Enrichers.Polly;
 using RawRabbit.Enrichers.Polly.Services;
 using RawRabbit.Instantiation;
 using RawRabbit.Operations;
@@ -87,6 +89,7 @@ namespace Solari.Miranda.DependencyInjection
                     Plugins = p =>
                     {
                         p.UseAttributeRouting()
+                         // .UseStateMachine()
                          .UseMessageContext<TContext>()
                          .UseContextForwarding()
                          .UseGlobalExecutionId();

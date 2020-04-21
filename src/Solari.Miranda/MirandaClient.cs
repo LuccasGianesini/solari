@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -6,15 +7,20 @@ using Microsoft.Extensions.Options;
 using Polly;
 using Polly.Retry;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using RawRabbit;
 using RawRabbit.Common;
+using RawRabbit.Configuration.BasicPublish;
+using RawRabbit.Configuration.Get;
 using RawRabbit.Enrichers.MessageContext;
+using RawRabbit.Enrichers.Polly;
 using RawRabbit.Pipe;
 using Solari.Deimos.CorrelationId;
 using Solari.Miranda.Abstractions;
 using Solari.Miranda.Abstractions.Options;
 using Solari.Miranda.Framework;
 using Solari.Titan;
+using Thrift.Protocols.Entities;
 
 namespace Solari.Miranda
 {
@@ -65,9 +71,9 @@ namespace Solari.Miranda
             };
         }
 
-        public async Task SubscribeAsync<TMessage>(Func<IServiceProvider, TMessage, IMirandaMessageContext, Task> handle)
+        public async Task SubscribeAsync<T>(Func<IServiceProvider, T, IMirandaMessageContext, Task> handle)
         {
-            await _client.SubscribeAsync<TMessage, IMirandaMessageContext>(async (message, context) =>
+            await _client.SubscribeAsync<T, IMirandaMessageContext>(async (message, context) =>
             {
                 try
                 {
@@ -91,11 +97,11 @@ namespace Solari.Miranda
             });
         }
 
-        private Task<Exception> TryHandleAsync<TMessage>(TMessage message, IMirandaMessageContext correlationContext,
-                                                         Func<IServiceProvider, TMessage, IMirandaMessageContext, Task> handle, int retries, double interval)
+        private Task<Exception> TryHandleAsync<T>(T message, IMirandaMessageContext correlationContext,
+                                                  Func<IServiceProvider, T, IMirandaMessageContext, Task> handle, int retries, double interval)
         {
             var currentRetry = 0;
-            string messageName = AttributeHelper.GetMessageName(typeof(TMessage));
+            string messageName = AttributeHelper.GetMessageName(typeof(T));
 
             AsyncRetryPolicy retryPolicy = Policy
                                            .Handle<Exception>()
@@ -121,7 +127,7 @@ namespace Solari.Miranda
             });
         }
 
-        private async Task<Exception> HandleException<TMessage>(TMessage message, IMirandaMessageContext correlationContext, Exception ex, string messageName)
+        private async Task<Exception> HandleException<T>(T message, IMirandaMessageContext correlationContext, Exception ex, string messageName)
         {
             _logger.Error(ex.Message, ex);
 

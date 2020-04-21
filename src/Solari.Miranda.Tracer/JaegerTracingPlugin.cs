@@ -10,12 +10,13 @@ using RawRabbit.Enrichers.GlobalExecutionId;
 using RawRabbit.Enrichers.MessageContext;
 using RawRabbit.Pipe;
 using RawRabbit.Pipe.Middleware;
+using Serilog;
 using Solari.Deimos.CorrelationId;
 using Solari.Miranda.Abstractions;
 
 namespace Solari.Miranda.Tracer
 {
-    public class JaegerTracingPlugin : Middleware
+    public class JaegerTracingPlugin : StagedMiddleware
     {
         private readonly ITracer _tracer;
         private readonly ICorrelationContextManager _contextManager;
@@ -50,6 +51,7 @@ namespace Solari.Miranda.Tracer
         {
             using (IScope scope = BuildScope(messageName, ctx.EnvoyCorrelationContext.OtSpanContext))
             {
+                Log.Debug($"Build scope with span context {ctx.EnvoyCorrelationContext.OtSpanContext}");
                 ISpan span = scope.Span;
                 span.Log($"Started processing: {messageName} [id: {ctx.MessageId}]");
                 try
@@ -103,5 +105,7 @@ namespace Solari.Miranda.Tracer
                    .AddReference(References.FollowsFrom, spanContext)
                    .StartActive(true);
         }
+
+        public override string StageMarker { get; } = "JaegerTracerPlugin";
     }
 }
