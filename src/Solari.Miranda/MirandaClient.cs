@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+
 using Polly;
 using Polly.Retry;
 using RabbitMQ.Client;
@@ -71,9 +70,9 @@ namespace Solari.Miranda
             };
         }
 
-        public async Task SubscribeAsync<T>(Func<IServiceProvider, T, IMirandaMessageContext, Task> handle)
+        public async Task SubscribeAsync<T>(Func<IServiceProvider, T, MirandaMessageContext, Task> handle)
         {
-            await _client.SubscribeAsync<T, IMirandaMessageContext>(async (message, context) =>
+            await _client.SubscribeAsync<T, MirandaMessageContext>(async (message, context) =>
             {
                 try
                 {
@@ -97,8 +96,8 @@ namespace Solari.Miranda
             });
         }
 
-        private Task<Exception> TryHandleAsync<T>(T message, IMirandaMessageContext correlationContext,
-                                                  Func<IServiceProvider, T, IMirandaMessageContext, Task> handle, int retries, double interval)
+        private Task<Exception> TryHandleAsync<T>(T message, MirandaMessageContext correlationContext,
+                                                  Func<IServiceProvider, T, MirandaMessageContext, Task> handle, int retries, double interval)
         {
             var currentRetry = 0;
             string messageName = AttributeHelper.GetMessageName(typeof(T));
@@ -127,7 +126,7 @@ namespace Solari.Miranda
             });
         }
 
-        private async Task<Exception> HandleException<T>(T message, IMirandaMessageContext correlationContext, Exception ex, string messageName)
+        private async Task<Exception> HandleException<T>(T message, MirandaMessageContext correlationContext, Exception ex, string messageName)
         {
             _logger.Error(ex.Message, ex);
 
@@ -138,7 +137,7 @@ namespace Solari.Miranda
             return FiledMessageException(messageName, ex.Message, ex);
         }
 
-        private async Task PublishRejectedEventMessage(object rejectedEvent, IMirandaMessageContext correlationContext)
+        private async Task PublishRejectedEventMessage(object rejectedEvent, MirandaMessageContext correlationContext)
         {
             await _client.PublishAsync(rejectedEvent, ctx => ctx.UseMessageContext(correlationContext));
         }
@@ -161,20 +160,20 @@ namespace Solari.Miranda
                                  $"'{rejectedEventMessage}' was published.", exception);
         }
 
-        private static string PostLogMessage(string messageName, IMirandaMessageContext correlationContext, int currentRetry)
+        private static string PostLogMessage(string messageName, MirandaMessageContext correlationContext, int currentRetry)
         {
             return $"Handled: '{messageName}' " +
                    $"with request id: '{correlationContext?.EnvoyCorrelationContext.RequestId}'. {RetryMessage(currentRetry)}";
         }
 
 
-        private static string PreLogMessage(string messageName, IMirandaMessageContext correlationContext, int currentRetry)
+        private static string PreLogMessage(string messageName, MirandaMessageContext correlationContext, int currentRetry)
         {
             return $"Handling: '{messageName}' " +
                    $"with request id: '{correlationContext?.EnvoyCorrelationContext.RequestId}'. {RetryMessage(currentRetry)}";
         }
 
-        private static string RejectedLogMessage(string messageName, string rejectedEventMessage, IMirandaMessageContext correlationContext)
+        private static string RejectedLogMessage(string messageName, string rejectedEventMessage, MirandaMessageContext correlationContext)
         {
             return $"Published a rejected event: '{rejectedEventMessage}' " +
                    $"for the message: '{messageName}' with request id: '{correlationContext?.EnvoyCorrelationContext.RequestId}'.";

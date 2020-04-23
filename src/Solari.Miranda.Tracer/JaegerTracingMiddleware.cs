@@ -16,13 +16,14 @@ using Solari.Miranda.Abstractions;
 
 namespace Solari.Miranda.Tracer
 {
-    public class JaegerTracingPlugin : StagedMiddleware
+    public class JaegerTracingMiddleware : StagedMiddleware
     {
         private readonly ITracer _tracer;
         private readonly ICorrelationContextManager _contextManager;
         private bool _canTrace;
+        public override string StageMarker { get; } = global::RawRabbit.Pipe.StageMarker.MessageDeserialized;
 
-        public JaegerTracingPlugin(IServiceProvider provider)
+        public JaegerTracingMiddleware(IServiceProvider provider)
         {
             _tracer = provider.GetService<ITracer>();
             _contextManager = provider.GetService<ICorrelationContextManager>();
@@ -34,8 +35,14 @@ namespace Solari.Miranda.Tracer
 
         public override async Task InvokeAsync(IPipeContext context, CancellationToken token = new CancellationToken())
         {
-            if (!_canTrace)
+            string messageId = context.GetDeliveryEventArgs().BasicProperties.MessageId;
+            if (!_canTrace || context.GetMessage() == null)
             {
+                MirandaLogger.JaegerTracingPlugin.LogSkippingMessage(messageId);
+                if (context == null)
+                {
+                    
+                }
                 await Next.InvokeAsync(context, token);
             }
             else
@@ -43,56 +50,40 @@ namespace Solari.Miranda.Tracer
                 string messageName = context.GetMessage().GetType().Name;
                 IMirandaMessageContext ctx = context.GetMessageContext() as IMirandaMessageContext;
 
-                await Trace(context, token, messageName, ctx);
+                await Trace(context, token, messageName, messageId, ctx);
             }
         }
 
-        private async Task Trace(IPipeContext context, CancellationToken token, string messageName, IMirandaMessageContext ctx)
+        private async Task Trace(IPipeContext context, CancellationToken token, string messageName, string messageId, IMirandaMessageContext ctx)
         {
             using (IScope scope = BuildScope(messageName, ctx.EnvoyCorrelationContext.OtSpanContext))
             {
-                Log.Debug($"Build scope with span context {ctx.EnvoyCorrelationContext.OtSpanContext}");
+                MirandaLogger.JaegerTracingPlugin.LogMessageContext(ctx.EnvoyCorrelationContext.OtSpanContext);
                 ISpan span = scope.Span;
-                span.Log($"Started processing: {messageName} [id: {ctx.MessageId}]");
+                span.Log($"Started processing: {messageName} [id: {messageId}]");
+                MirandaLogger.JaegerTracingPlugin.LogPrecessingMessage(messageName, messageId);
                 try
                 {
+                    _contextManager.CreateAndSet();
                     await Next.InvokeAsync(context, token);
                 }
                 catch (Exception ex)
                 {
                     span.SetTag(Tags.Error, true);
                     span.Log(ex.Message);
+                    MirandaLogger.JaegerTracingPlugin.LogExceptionWhileCreatingScope(ex.Message);
                 }
 
-                span.Log($"Finished processing: {messageName} [id: {ctx.MessageId}]");
+                span.Log($"Finished processing: {messageName} [id: {messageId}]");
+                MirandaLogger.JaegerTracingPlugin.LogFinishedProcessingMessage(messageName, messageId);
             }
         }
 
-        // private IMirandaMessageContext GetMirandaMessageContext(IPipeContext context)
-        // {
-        //     if (!(context.GetMessageContext() is IMirandaMessageContext ctx))
-        //     {
-        //         if (ctx == null)
-        //         {
-        //             ctx = new MirandaMessageContext
-        //             {
-        //                 Empty = true,
-        //                 EnvoyCorrelationContext = new DefaultEnvoyCorrelationContextContext
-        //                 {
-        //                     OtSpanContext = ""
-        //                 }
-        //             };
-        //         }
-        //     }
-
-        //     return ctx;
-        // }
-
         private IScope BuildScope(string messageName, string serializedSpanContext)
         {
-            var spanBuilder = _tracer
-                              .BuildSpan($"processing-{messageName}")
-                              .WithTag("message-type", messageName);
+            ISpanBuilder spanBuilder = _tracer
+                                       .BuildSpan($"processing-{messageName}")
+                                       .WithTag("message-type", messageName);
 
             if (string.IsNullOrEmpty(serializedSpanContext))
             {
@@ -105,7 +96,5 @@ namespace Solari.Miranda.Tracer
                    .AddReference(References.FollowsFrom, spanContext)
                    .StartActive(true);
         }
-
-        public override string StageMarker { get; } = "JaegerTracerPlugin";
     }
 }

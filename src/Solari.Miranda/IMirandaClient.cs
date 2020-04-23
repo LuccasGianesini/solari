@@ -13,6 +13,6 @@ namespace Solari.Miranda
     public interface IMirandaClient
     {
         Task PublishAsync<T>(T message, IMirandaMessageContext messageContext = null);
-        Task SubscribeAsync<T>(Func<IServiceProvider, T, IMirandaMessageContext, Task> handle);
+        Task SubscribeAsync<T>(Func<IServiceProvider, T, MirandaMessageContext, Task> handle);
     }
 }

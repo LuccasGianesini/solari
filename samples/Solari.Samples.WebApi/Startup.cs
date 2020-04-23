@@ -13,6 +13,7 @@ using Solari.Eris;
 using Solari.Ganymede.DependencyInjection;
 using Solari.Miranda.DependencyInjection;
 using Solari.Oberon;
+using Solari.Samples.Application;
 using Solari.Samples.Di;
 using Solari.Samples.Domain;
 using Solari.Samples.Domain.Person;
@@ -51,17 +52,18 @@ namespace Solari.Samples.WebApi
                     .AddDeimos(manager => manager.Register(new CallistoTracerPlugin()));
 
             services.AddScoped<IPersonOperations, PersonOperations>();
-            services.AddSwaggerGen(a => a.SwaggerDoc("v1", new OpenApiInfo
-            {
-                Description = "Solari Sample WebApi;",
-                License = new OpenApiLicense
-                {
-                    Name = "GNU General Public License v3.0",
-                    Url = new Uri("https://www.gnu.org/licenses/gpl-3.0.en.html")
-                },
-                Title = "Solari Sample WebApi",
-                Version = "v1",
-            }));
+            services.AddTransient<IMirandaSubscriber, MirandaSubscriber>();
+            // services.AddSwaggerGen(a => a.SwaggerDoc("v1", new OpenApiInfo
+            // {
+            //     Description = "Solari Sample WebApi;",
+            //     License = new OpenApiLicense
+            //     {
+            //         Name = "GNU General Public License v3.0",
+            //         Url = new Uri("https://www.gnu.org/licenses/gpl-3.0.en.html")
+            //     },
+            //     Title = "Solari Sample WebApi",
+            //     Version = "v1",
+            // }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,19 +73,14 @@ namespace Solari.Samples.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            // app.UseHttpsRedirection();
             app.UseRouting();
             app.UseSol();
-            // app.UseConvey()
-            //    .UseRabbitMq();
-            app.UseSwaggerUI(options =>
-            {
-                options.RoutePrefix = "swagger";
-                options.SwaggerEndpoint("./v1/swagger.json", "Solari Samples WebApi");
-            });
-
-            // app.UseAuthorization();
+            // app.UseSwaggerUI(options =>
+            // {
+            //     options.RoutePrefix = "swagger";
+            //     options.SwaggerEndpoint("./v1/swagger.json", "Solari Samples WebApi");
+            // });
+            
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

@@ -30,6 +30,7 @@ namespace Solari.Miranda.DependencyInjection
     public static class SolariBuilderExtensions
     {
         public static ISolariBuilder AddMiranda(this ISolariBuilder builder) { return AddMiranda<MirandaMessageContext>(builder); }
+
         public static ISolariBuilder AddMiranda<TContext>(this ISolariBuilder builder)
             where TContext : class, new()
         {
@@ -38,6 +39,7 @@ namespace Solari.Miranda.DependencyInjection
             builder.Services.AddSingleton(provider =>
             {
                 MirandaOptions options = provider.GetService<IOptions<MirandaOptions>>().Value;
+                MirandaLogger.DependencyInjection.LogMessageProcessorSelector(options.MessageProcessor.Type);
                 return options.MessageProcessor.Type switch
                        {
                            "redis"  => (IMessageProcessor) new RedisMessageProcessor(provider.GetService<IOberon>(), options),
@@ -96,16 +98,19 @@ namespace Solari.Miranda.DependencyInjection
 
                         if (options.Plugins.UseProtoBuf)
                         {
+                            MirandaLogger.DependencyInjection.LogRegisteringProtobufMiddleware();
                             p.UseProtobuf();
                         }
 
                         if (options.Plugins.UseTracing)
                         {
-                            p.Register(c => c.Use<JaegerTracingPlugin>());
+                            MirandaLogger.DependencyInjection.LogRegisteringJaegerMiddleware();
+                            p.Register(c => c.Use<JaegerTracingMiddleware>());
                         }
 
                         if (options.MessageProcessor?.Enabled == true)
                         {
+                            MirandaLogger.DependencyInjection.LogRegisteringMessageProcessorMiddleware();
                             p.Register(c => c.Use<ProcessUniqueMessagesMiddleware>());
                         }
                     }

@@ -15,7 +15,7 @@ namespace Solari.Deimos.CorrelationId
         {
             var manager = provider.GetService<ICorrelationContextManager>();
             ICorrelationContext current = manager.GetOrCreateAndSet();
-            if (current.EnvoyCorrelationContext == null)
+            if (current?.EnvoyCorrelationContext == null)
             {
                 return response;
             }

@@ -36,15 +36,10 @@ namespace Solari.Deimos.CorrelationId.Framework
         public ICorrelationContext CreateFromJaegerTracer(string messageId = "")
         {
             var tracer = _provider.GetService<ITracer>();
-
-            if (tracer.ActiveSpan == null)
+            
+            if (tracer?.ActiveSpan?.Context == null)
             {
-                return new DefaultCorrelationContext();
-            }
-
-            if (tracer.ActiveSpan.Context == null)
-            {
-                return new DefaultCorrelationContext();
+                return null;
             }
 
             var ctx = tracer.ActiveSpan.Context.ToString();

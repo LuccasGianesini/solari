@@ -5,12 +5,12 @@ using Solari.Titan;
 
 namespace Solari.Samples.Application
 {
-    public class TestClass
+    public class MirandaSubscriber : IMirandaSubscriber
     {
-        private readonly ITitanLogger<TestClass> _logger;
+        private readonly ITitanLogger<MirandaSubscriber> _logger;
         private readonly IMirandaClient _client;
 
-        public TestClass(ITitanLogger<TestClass> logger, IMirandaClient client)
+        public MirandaSubscriber(ITitanLogger<MirandaSubscriber> logger, IMirandaClient client)
         {
             _logger = logger;
             _client = client;
@@ -24,5 +24,6 @@ namespace Solari.Samples.Application
                 return Task.CompletedTask;
             });
         }
+        
     }
 }

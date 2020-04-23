@@ -10,23 +10,34 @@ namespace Solari.Deimos
 {
     public class DeimosTracer : IDeimosTracer
     {
-        private readonly ITracer _tracer;
         private ConcurrentDictionary<string, ISpan> _spanCache;
 
         public DeimosTracer(ITracer tracer)
         {
-            _tracer = tracer;
+            OpenTracer = tracer;
             _spanCache = new ConcurrentDictionary<string, ISpan>();
         }
 
-        public ISpan TraceOperation(string operationName, Action<ISpanEnricher> enrich = null)
+        public ITracer OpenTracer { get; }
+
+        public ISpan TraceOperation(string operationName, Action<ISpanEnricher> enrich = null, bool createNewActivity = false)
         {
-            IScope activeScope = _tracer.ScopeManager.Active;
-            ISpanBuilder spanBuilder = _tracer.BuildSpan(operationName);
-            ISpan span = activeScope?.Span == null ? spanBuilder.Start() : spanBuilder.AsChildOf(_tracer.ScopeManager.Active.Span).Start();
+            var activeScope = OpenTracer.ScopeManager.Active;
+            ISpanBuilder spanBuilder = OpenTracer.BuildSpan(operationName);
+            ISpan span = activeScope?.Span == null ? spanBuilder.Start() : spanBuilder.AsChildOf(OpenTracer.ScopeManager.Active.Span).Start();
             enrich?.Invoke(new SpanEnricher(span));
-            _spanCache.TryAdd(Activity.Current.Id, span);
+            _spanCache.TryAdd(StartActivity(operationName, createNewActivity).Id, span);
             return span;
+        }
+
+        private Activity StartActivity(string op, bool startNew)
+        {
+            if (Activity.Current == null || startNew)
+            {
+                return new Activity(op).Start();
+            }
+
+            return Activity.Current;
         }
 
         public void FinalizeTrace(IDictionary<string, object> log = null)

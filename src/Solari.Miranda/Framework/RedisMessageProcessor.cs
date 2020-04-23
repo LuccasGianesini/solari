@@ -1,6 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
+using Serilog;
+using Solari.Miranda.Abstractions;
 using Solari.Miranda.Abstractions.Options;
 using Solari.Oberon;
 
@@ -20,26 +22,30 @@ namespace Solari.Miranda.Framework
             _cache = cache;
             _options = options;
             _service = string.IsNullOrWhiteSpace(options.Namespace)
-                ? Guid.NewGuid().ToString("N")
-                : options.Namespace;
+                           ? Guid.NewGuid().ToString("N")
+                           : options.Namespace;
         }
 
         public async Task<bool> TryProcessAsync(string id)
         {
             string key = GetKey(id);
-            string message = await _cache.Cache.GetStringAsync(key);
+            string message;
+            message = await _cache.Cache.GetStringAsync(key);
             if (!string.IsNullOrWhiteSpace(message))
             {
+                MirandaLogger.RedisMessageProcessor.LogMessageNotInCache(key);
                 return false;
             }
 
             int expiry = _options.MessageProcessor?.MessageExpirySeconds ?? 0;
             if (expiry <= 0)
             {
+                MirandaLogger.RedisMessageProcessor.LogMessageNotInCache(key);
                 await _cache.Cache.SetStringAsync(key, id);
             }
             else
             {
+                MirandaLogger.RedisMessageProcessor.LogMessageWithExpiry(key, expiry);
                 await _cache.Cache.SetStringAsync(key, id, new DistributedCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(expiry)

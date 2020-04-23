@@ -1,0 +1,10 @@
+﻿- Name: "Solari-Samples"
+  BaseAddress: "http://localhost:5000"
+  Timeout: "m60"
+  Resources:
+    - Description: "Get"
+      Deserializer: "JSON"
+      Name: "Get"
+      Timeout: "m60"
+      Uri: "/api/test"
+      Verb: "GET"

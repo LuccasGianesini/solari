@@ -4,20 +4,47 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Solari.Deimos;
+using Solari.Ganymede.DependencyInjection;
+using Solari.Miranda.DependencyInjection;
+using Solari.Oberon;
+using Solari.Samples.Application;
+using Solari.Sol;
+using Solari.Titan.DependencyInjection;
 
 namespace Solari.Samples.WorkerService
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            IHost host = CreateHostBuilder(args)
+                         .UseTitan()
+                         .Build();
+            try
+            {
+                host.UseSol();
+                await host.StartAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
+                    services.AddSol(hostContext.Configuration)
+                            .AddDeimos()
+                            .AddTitan()
+                            .AddMiranda()
+                            .AddOberon()
+                            .AddGanymede(actions => actions.AddGanymedeClient<ITestClient, TestClient>("Solari-Samples"));
+
+                    services.AddSingleton<IMirandaPublisher, MirandaPublisher>();
                     services.AddHostedService<Worker>();
                 });
     }

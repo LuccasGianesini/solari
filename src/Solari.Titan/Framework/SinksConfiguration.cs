@@ -7,6 +7,7 @@ using Serilog.Events;
 using Serilog.Formatting.Json;
 using Serilog.Sinks.Elasticsearch;
 using Serilog.Sinks.Graylog;
+using Serilog.Sinks.SystemConsole.Themes;
 using Solari.Io;
 using Solari.Sol;
 using Solari.Titan.Abstractions;
@@ -19,7 +20,8 @@ namespace Solari.Titan.Framework
         {
             if (!useConsole) return configuration;
 
-            configuration.WriteTo.Console(outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss}][{Level:u3}][{ElasticApmTraceId} {ElasticApmTransactionId}] {Message:lj} {NewLine}{Exception}");
+            configuration.WriteTo
+                         .Console(outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss}][{Level:u3}]{Message:lj} {NewLine}{Exception}",theme: AnsiConsoleTheme.Code);
 
             return configuration;
         }
