@@ -6,9 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Solari.Deimos;
 using Solari.Ganymede.DependencyInjection;
-using Solari.Miranda.DependencyInjection;
 using Solari.Oberon;
-using Solari.Samples.Application;
 using Solari.Sol;
 using Solari.Titan.DependencyInjection;
 
@@ -39,12 +37,9 @@ namespace Solari.Samples.WorkerService
                 {
                     services.AddSol(hostContext.Configuration)
                             .AddDeimos()
-                            .AddTitan()
-                            .AddMiranda()
                             .AddOberon()
                             .AddGanymede(actions => actions.AddGanymedeClient<ITestClient, TestClient>("Solari-Samples"));
-
-                    services.AddSingleton<IMirandaPublisher, MirandaPublisher>();
+                    
                     services.AddHostedService<Worker>();
                 });
     }

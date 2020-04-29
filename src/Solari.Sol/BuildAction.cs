@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Solari.Sol
 {
@@ -8,5 +9,7 @@ namespace Solari.Sol
         public string Name { get;}
 
         public Action<IServiceProvider> Action { get; set; }
+        
+        public Task<Action<IServiceProvider>> AsyncAction { get; set; }
     }
 }

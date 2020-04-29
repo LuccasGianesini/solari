@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -36,6 +37,15 @@ namespace Solari.Sol.Framework
                 action.Action.Invoke(Provider);
             }
 
+            return this;
+        }
+
+        public ISolariMarshal ExecuteBuildAsyncActions()
+        {
+            foreach (BuildAction builderBuildAction in _builder.BuildActions)
+            {
+                Task.Run(async () => await builderBuildAction.AsyncAction);
+            }
             return this;
         }
 

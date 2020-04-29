@@ -4,25 +4,23 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
+using App.Metrics.Scheduling;
+using Microsoft.AspNetCore.Mvc;
 using Solari.Callisto;
 using Solari.Callisto.Connector;
 using Solari.Callisto.Tracer;
+using Solari.Ceres;
 using Solari.Deimos;
 using Solari.Eris;
 using Solari.Ganymede.DependencyInjection;
-using Solari.Miranda.DependencyInjection;
+using Solari.Hyperion;
 using Solari.Oberon;
-using Solari.Samples.Application;
-using Solari.Samples.Di;
 using Solari.Samples.Domain;
 using Solari.Samples.Domain.Person;
-using Solari.Samples.Domain.Person.Validators;
 using Solari.Samples.Infrastructure;
 using Solari.Sol;
 using Solari.Titan.DependencyInjection;
 using Solari.Vanth.DependencyInjection;
-using Solari.Vanth.Validation;
 
 namespace Solari.Samples.WebApi
 {
@@ -35,15 +33,15 @@ namespace Solari.Samples.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddMetrics();
 
             services.AddSol(Configuration)
-                    .AddVanth()
-                    .AddTitan()
+                    // .AddVanth()
                     .AddEris()
-                    .AddMiranda()
-                    .AddOberon() 
+                    .AddOberon()
                     .AddGanymede(requests => requests.AddGanymedeClient<IGitHubClient, GitHubClient>("GitHub"))
+                    .AddCeres()
+                    .AddHyperion()
                     .AddCallistoConnector()
                     .AddCallisto(callistoConfiguration => callistoConfiguration
                                                           .RegisterDefaultConventionPack()
@@ -52,18 +50,7 @@ namespace Solari.Samples.WebApi
                     .AddDeimos(manager => manager.Register(new CallistoTracerPlugin()));
 
             services.AddScoped<IPersonOperations, PersonOperations>();
-            services.AddTransient<IMirandaSubscriber, MirandaSubscriber>();
-            // services.AddSwaggerGen(a => a.SwaggerDoc("v1", new OpenApiInfo
-            // {
-            //     Description = "Solari Sample WebApi;",
-            //     License = new OpenApiLicense
-            //     {
-            //         Name = "GNU General Public License v3.0",
-            //         Url = new Uri("https://www.gnu.org/licenses/gpl-3.0.en.html")
-            //     },
-            //     Title = "Solari Sample WebApi",
-            //     Version = "v1",
-            // }));
+            services.AddOpenApiDocument(cfg => cfg.PostProcess = d => d.Info.Title = "Solari Sample Api");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,16 +60,12 @@ namespace Solari.Samples.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseRouting();
-            app.UseSol();
-            // app.UseSwaggerUI(options =>
-            // {
-            //     options.RoutePrefix = "swagger";
-            //     options.SwaggerEndpoint("./v1/swagger.json", "Solari Samples WebApi");
-            // });
             
-
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
+            app.UseRouting();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseSol();
         }
     }
 }

@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <AssemblyName>Solari.Ceres.Abstractions</AssemblyName>
+        <Authors>Lauth</Authors>
+        <Title>Solari.Ceres.Abstractions</Title>
+        <PackageId>Solari.Ceres.Abstractions</PackageId>
+        <PackageDescription>Abstractions of ceres library. Uses App.Metrics</PackageDescription>
+        <PackageTags>C#; DotnetCore; App.Metrics</PackageTags>
+        <LangVersion>8</LangVersion>
+        <RootNamespace>Solari.Ceres.Abstractions</RootNamespace>
+        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="App.Metrics" Version="4.0.0-preview1.0.9" />
+      <PackageReference Include="App.Metrics.AspNetCore.Endpoints" Version="4.0.0-preview1.0.9" />
+      <PackageReference Include="App.Metrics.AspNetCore.Hosting" Version="4.0.0-preview1.0.9" />
+      <PackageReference Include="App.Metrics.AspNetCore.Mvc" Version="4.0.0-preview1.0.9" />
+      <PackageReference Include="App.Metrics.AspNetCore.Reporting" Version="4.0.0-preview1.0.9" />
+      <PackageReference Include="App.Metrics.AspNetCore.Tracking" Version="4.0.0-preview1.0.9" />
+      <PackageReference Include="App.Metrics.Extensions.DependencyInjection" Version="4.0.0-preview1.0.9" />
+      <PackageReference Include="App.Metrics.Extensions.Hosting" Version="4.0.0-preview1.0.9" />
+      <PackageReference Include="App.Metrics.Formatters.InfluxDB" Version="4.0.0-preview1.0.9" />
+      <PackageReference Include="App.Metrics.Formatters.Prometheus" Version="4.0.0-preview1.0.9" />
+      <PackageReference Include="App.Metrics.Reporting.InfluxDB" Version="4.0.0-preview1.0.9" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
+    </ItemGroup>
+
+</Project>

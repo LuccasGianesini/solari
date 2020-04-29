@@ -15,6 +15,8 @@ namespace Solari.Sol
         /// </summary>
         /// <returns></returns>
         ISolariMarshal ExecuteBuildActions();
+        ISolariMarshal ExecuteBuildAsyncActions();
+        
         /// <summary>
         /// Returns a service from the <see cref="IServiceProvider"/>.
         /// </summary>

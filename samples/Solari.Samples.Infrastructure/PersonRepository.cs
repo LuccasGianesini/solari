@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Elastic.CommonSchema;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Solari.Callisto;
@@ -38,6 +39,11 @@ namespace Solari.Samples.Infrastructure
                 await session.CommitTransactionAsync();
                 return result;
             }
+        }
+
+        public async Task<UpdateResult> UpdatePerson(ICallistoUpdate<Person> update)
+        {
+            return await Update.One(update);
         }
     }
 }

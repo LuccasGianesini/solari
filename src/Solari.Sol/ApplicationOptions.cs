@@ -1,6 +1,8 @@
 using System;
 using System.Buffers;
+using System.Collections.Generic;
 using System.Reflection;
+using MassTransit;
 
 namespace Solari.Sol
 {
@@ -9,7 +11,7 @@ namespace Solari.Sol
         /// <summary>
         /// The instance id of the application.
         /// </summary>
-        public string ApplicationInstanceId { get; } = $"{Guid.NewGuid():N}";
+        public string ApplicationInstanceId { get; } = $"{NewId.Next()}";
 
         /// <summary>
         /// The application name.
@@ -30,12 +32,18 @@ namespace Solari.Sol
         /// </summary>
         public string ApplicationEnvironment => GetEnvironment();
 
+        public string ApplicationId => GetApplicationId();
+
+        public List<string> Tags { get; set; } = new List<string>();
+
         public bool IsInDevelopment() { return ApplicationEnvironment.ToLowerInvariant().Equals("development"); }
+        
+        private string GetApplicationId()
+        {
+            return ApplicationName + "-" + ApplicationInstanceId;
+        }
         private string AspNetCoreEnvironment { get; } = Environment.GetEnvironmentVariable(SolariConstants.ASPNETCORE_ENVIRONMENT);
         private string DotNetEnvironment { get; } = Environment.GetEnvironmentVariable(SolariConstants.DOTNET_ENVIRONMENT);
-
-
-
         private string GetEnvironment()
         {
             if (!string.IsNullOrEmpty(AspNetCoreEnvironment))

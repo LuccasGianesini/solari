@@ -1,6 +1,8 @@
 using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Solari.Io;
@@ -14,22 +16,32 @@ namespace Solari.Titan.DependencyInjection
     {
         public static IWebHostBuilder UseTitan(this IWebHostBuilder webHostBuilder)
         {
-            return webHostBuilder.UseSerilog((context, config) =>
-            {
-                LoggingDefaultAction(config, GetOptions(context.Configuration),
-                                     GetApplicationOptions(context.Configuration),
-                                     context.HostingEnvironment.ContentRootPath);
-            });
+            return webHostBuilder.ConfigureServices((collection =>
+                                                        {
+                                                            collection.TryAdd(ServiceDescriptor.Singleton(typeof(ILogEnricher<>), typeof(LogEnricher<>)));
+                                                            collection.TryAdd(ServiceDescriptor.Singleton(typeof(ITitanLogger<>), typeof(TitanLogger<>)));
+                                                        }))
+                                 .UseSerilog((context, config) =>
+                                 {
+                                     LoggingDefaultAction(config, GetOptions(context.Configuration),
+                                                          GetApplicationOptions(context.Configuration),
+                                                          context.HostingEnvironment.ContentRootPath);
+                                 });
         }
 
         public static IHostBuilder UseTitan(this IHostBuilder hostBuilder)
         {
-            return hostBuilder.UseSerilog((context, config) =>
-            {
-                LoggingDefaultAction(config, GetOptions(context.Configuration),
-                                     GetApplicationOptions(context.Configuration),
-                                     context.HostingEnvironment.ContentRootPath);
-            });
+            return hostBuilder.ConfigureServices((collection =>
+                                                     {
+                                                         collection.TryAdd(ServiceDescriptor.Singleton(typeof(ILogEnricher<>), typeof(LogEnricher<>)));
+                                                         collection.TryAdd(ServiceDescriptor.Singleton(typeof(ITitanLogger<>), typeof(TitanLogger<>)));
+                                                     }))
+                              .UseSerilog((context, config) =>
+                              {
+                                  LoggingDefaultAction(config, GetOptions(context.Configuration),
+                                                       GetApplicationOptions(context.Configuration),
+                                                       context.HostingEnvironment.ContentRootPath);
+                              });
         }
 
         private static ApplicationOptions GetApplicationOptions(IConfiguration configuration)

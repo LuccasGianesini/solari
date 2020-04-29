@@ -5,8 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Solari.Ceres.Abstractions\Solari.Ceres.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\Solari.Ceres\Solari.Ceres.csproj" />
     <ProjectReference Include="..\Solari.Samples.Application\Solari.Samples.Application.csproj" />
-    <ProjectReference Include="..\Solari.Samples.Di\Solari.Samples.Di\Solari.Samples.Di.csproj" />
     <ProjectReference Include="..\Solari.Samples.Domain\Solari.Samples.Domain.csproj" />
     <ProjectReference Include="..\Solari.Samples.Infrastructure\Solari.Samples.Infrastructure.csproj" />
   </ItemGroup>
@@ -23,6 +24,10 @@
     <None Update="HttpRequestsDefinition.Development.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NSwag.AspNetCore" Version="13.4.2" />
   </ItemGroup>
 
 

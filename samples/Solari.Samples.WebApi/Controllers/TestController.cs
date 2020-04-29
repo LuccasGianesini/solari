@@ -1,10 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Elastic.CommonSchema;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OpenTracing.Tag;
 using Solari.Deimos.Abstractions;
-using Solari.Samples.Application;
+using Solari.Hyperion;
+using Solari.Hyperion.Abstractions;
 using Solari.Samples.Domain;
+using Solari.Samples.Domain.Person;
 using Solari.Titan;
 
 namespace Solari.Samples.WebApi.Controllers
@@ -16,26 +21,31 @@ namespace Solari.Samples.WebApi.Controllers
     {
         private readonly ITitanLogger<TestController> _logger;
         private readonly IDeimosTracer _tracer;
+        private readonly IPersonOperations _operations;
+        private readonly IHyperionClient _client;
         private readonly IGitHubClient _hubClient;
-        private readonly IMirandaSubscriber _subscriber;
-        private readonly IMirandaPublisher _publisher;
 
-        public TestController(ITitanLogger<TestController> logger, IDeimosTracer tracer, IGitHubClient hubClient, IMirandaSubscriber subscriber)
+        public TestController(ITitanLogger<TestController> logger, IDeimosTracer tracer, IPersonOperations operations, IHyperionClient client)
         {
             _logger = logger;
             _tracer = tracer;
-            _hubClient = hubClient;
-            _subscriber = subscriber;
-            
+            _operations = operations;
+            _client = client;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpPost]
+        public async Task<IActionResult> Get([FromBody] UpdatePersonDto dto)
         {
-            // string prof = await _hubClient.GetUserProfile("LuccasGianesini");
-            await _subscriber.TestSubscription();
-            // await _publisher.PublishTestMessage(new TestMessage{Value = "sadasdsadkasjdkals"});
-            return Ok("1112");
+            _operations.CreateUpdatePersonOperation(dto.Id, dto);
+            return Ok();
+        }
+
+        public async Task<IActionResult> Error()
+        {
+            await _client.Kv.SaveToKv("test-data", new Person("OP"));
+            IList<HyperionService> svc = await _client.Services.GetServiceAddresses("solari-samples-webapi");
+            return Ok(svc);
+
         }
     }
 }

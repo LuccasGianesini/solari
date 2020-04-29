@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Solari.Io
@@ -16,7 +15,7 @@ namespace Solari.Io
         /// <returns>Array of bytes</returns>
         public static byte[] ToJsonByteArray(this object @object)
         {
-            return @object == null ? new byte[0] : Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(@object));
+            return @object == null ? new byte[0] : Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(@object));
         }
 
       /// <summary>
@@ -27,7 +26,7 @@ namespace Solari.Io
       /// <returns>T</returns>
         public static T JsonByteArrayToObject<T>(this byte[] bytes)
         {
-            return bytes.Length == 0 ? default : JsonConvert.DeserializeObject<T>(Encoding.UTF8.GetString(bytes));
+            return bytes.Length == 0 ? default : System.Text.Json.JsonSerializer.Deserialize<T>(Encoding.UTF8.GetString(bytes));
         }
 
 
@@ -53,16 +52,12 @@ namespace Solari.Io
                 {
                     var contentData = new Dictionary<string, string>();
 
-                    foreach (JToken child in token.Children().ToList())
-                    {
-                        IDictionary<string, string> childContent = child.ToKeyValue();
-
-                        if (childContent != null)
-                            contentData = contentData.Concat(childContent)
-                                                     .ToDictionary(k => k.Key, v => v.Value);
-                    }
-
-                    return contentData;
+                    return token.Children()
+                                .ToList()
+                                .Select(child => child.ToKeyValue())
+                                .Where(childContent => childContent != null)
+                                .Aggregate(contentData, (current, childContent) => current.Concat(childContent)
+                                                                                          .ToDictionary(k => k.Key, v => v.Value));
                 }
 
                 var jValue = token as JValue;
