@@ -9,14 +9,13 @@ namespace Solari.Rhea
    //Credits goes to  .NET Foundation Team.
     //JSON parser is based on JsonConfigurationFileParser found in Microsoft.Extensions.Configuration.Json library.
     //https://github.com/aspnet/Configuration/blob/dev/src/Microsoft.Extensions.Configuration.Json/JsonConfigurationFileParser.cs
-    internal sealed class JsonParser
+    public sealed class JsonParser
     {
-        private readonly IDictionary<string, string> _mappings =
-            new SortedDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        private readonly IDictionary<string, string> _mappings = new SortedDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         private readonly Stack<string> _stack = new Stack<string>();
-        private string _currentPath;
-
+        private  string _currentPath;
+        
         public IDictionary<string, string> Parse(JObject jObject)
         {
             VisitJObject(jObject);

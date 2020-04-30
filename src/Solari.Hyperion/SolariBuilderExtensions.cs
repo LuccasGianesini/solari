@@ -22,19 +22,10 @@ namespace Solari.Hyperion
             builder.Services.AddSingleton<IHyperionClient, HyperionClient>();
             builder.Services.AddSingleton<IKvOperations, KvOperations>();
             builder.Services.AddSingleton<IServiceOperations, ServiceOperations>();
-            ConfigureClient(builder, options);
+            builder.Services.AddSingleton<IConsulClientFactory, ConsulClientFactory>();
+            builder.Services.AddSingleton(provider => provider.GetService<IConsulClientFactory>().Create(options));
             RegisterService(builder, options);
             return builder;
-        }
-
-        private static void ConfigureClient(ISolariBuilder builder, HyperionOptions options)
-        {
-            builder.Services.AddSingleton<IConsulClient>(provider => new ConsulClient(a =>
-            {
-                a.Address = new Uri(options.ConsulAddress);
-                a.Token = options.ConsulToken;
-                a.Datacenter = options.Datacenter;
-            }));
         }
 
         private static void RegisterService(ISolariBuilder builder, HyperionOptions hyperionOptions)

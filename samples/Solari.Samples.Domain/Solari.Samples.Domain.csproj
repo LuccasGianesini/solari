@@ -16,6 +16,7 @@
     <ProjectReference Include="..\..\src\Solari.Deimos\Solari.Deimos.csproj" />
     <ProjectReference Include="..\..\src\Solari.Eris\Solari.Eris.csproj" />
     <ProjectReference Include="..\..\src\Solari.Ganymede\Solari.Ganymede.csproj" />
+    <ProjectReference Include="..\..\src\Solari.Hyperion.ConfigurationProvider\Solari.Hyperion.ConfigurationProvider.csproj" />
     <ProjectReference Include="..\..\src\Solari.Hyperion\Solari.Hyperion.csproj" />
     <ProjectReference Include="..\..\src\Solari.Io\Solari.Io.csproj" />
     <ProjectReference Include="..\..\src\Solari.Oberon\Solari.Oberon.csproj" />

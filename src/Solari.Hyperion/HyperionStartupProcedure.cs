@@ -95,14 +95,14 @@ namespace Solari.Hyperion
 
         private AgentServiceCheck BuildServiceCheck(Uri appUri, IPAddress ip)
         {
-            if (_options.AddHealthCheck)
+            if (_options.HealthCheck.AddHealthCheck)
             {
                 return new AgentServiceCheck()
                 {
                     HTTP = $"{appUri.Scheme}://{ip}:{appUri.Port}/hc",
-                    Timeout = _options.CheckTimeout.ToTimeSpan(),
-                    Interval = _options.CheckInterval.ToTimeSpan(),
-                    TLSSkipVerify = _options.TlsSkipVerify,
+                    Timeout = _options.HealthCheck.CheckTimeout.ToTimeSpan(),
+                    Interval = _options.HealthCheck.CheckInterval.ToTimeSpan(),
+                    TLSSkipVerify = _options.HealthCheck.TlsSkipVerify,
                     DeregisterCriticalServiceAfter = TimeSpan.FromMinutes(5)
                 };
             }
