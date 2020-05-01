@@ -71,6 +71,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solari.Hyperion.Abstraction
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solari.Hyperion.ConfigurationProvider", "src\Solari.Hyperion.ConfigurationProvider\Solari.Hyperion.ConfigurationProvider.csproj", "{482BEDFD-FE3D-4CA2-A034-AB7EB1CDFF13}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solari.Io.Abstractions", "src\Solari.Io.Abstractions\Solari.Io.Abstractions.csproj", "{850E47AC-314C-412D-BEF0-0140B29E62C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -112,6 +114,7 @@ Global
 		{6D21545D-C616-4EE4-880F-E4F09CC50F2A} = {18CC488B-9DAD-4718-9A43-760FAD6069C4}
 		{051DFEF9-CF49-41C0-80E4-CEF760528AD7} = {18CC488B-9DAD-4718-9A43-760FAD6069C4}
 		{482BEDFD-FE3D-4CA2-A034-AB7EB1CDFF13} = {18CC488B-9DAD-4718-9A43-760FAD6069C4}
+		{850E47AC-314C-412D-BEF0-0140B29E62C5} = {18CC488B-9DAD-4718-9A43-760FAD6069C4}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{163111CC-C3C8-484E-AB73-2C99CFC37B4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -450,5 +453,17 @@ Global
 		{482BEDFD-FE3D-4CA2-A034-AB7EB1CDFF13}.Release|x64.Build.0 = Release|Any CPU
 		{482BEDFD-FE3D-4CA2-A034-AB7EB1CDFF13}.Release|x86.ActiveCfg = Release|Any CPU
 		{482BEDFD-FE3D-4CA2-A034-AB7EB1CDFF13}.Release|x86.Build.0 = Release|Any CPU
+		{850E47AC-314C-412D-BEF0-0140B29E62C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{850E47AC-314C-412D-BEF0-0140B29E62C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{850E47AC-314C-412D-BEF0-0140B29E62C5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{850E47AC-314C-412D-BEF0-0140B29E62C5}.Debug|x64.Build.0 = Debug|Any CPU
+		{850E47AC-314C-412D-BEF0-0140B29E62C5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{850E47AC-314C-412D-BEF0-0140B29E62C5}.Debug|x86.Build.0 = Debug|Any CPU
+		{850E47AC-314C-412D-BEF0-0140B29E62C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{850E47AC-314C-412D-BEF0-0140B29E62C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{850E47AC-314C-412D-BEF0-0140B29E62C5}.Release|x64.ActiveCfg = Release|Any CPU
+		{850E47AC-314C-412D-BEF0-0140B29E62C5}.Release|x64.Build.0 = Release|Any CPU
+		{850E47AC-314C-412D-BEF0-0140B29E62C5}.Release|x86.ActiveCfg = Release|Any CPU
+		{850E47AC-314C-412D-BEF0-0140B29E62C5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

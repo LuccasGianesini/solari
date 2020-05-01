@@ -1,26 +1,29 @@
 using System;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using App.Metrics.Scheduling;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
 using Solari.Callisto;
 using Solari.Callisto.Connector;
+using Solari.Callisto.Connector.DependencyInjection;
+using Solari.Callisto.DependencyInjection;
 using Solari.Callisto.Tracer;
 using Solari.Ceres;
+using Solari.Ceres.DependencyInjection;
 using Solari.Deimos;
 using Solari.Eris;
 using Solari.Ganymede.DependencyInjection;
 using Solari.Hyperion;
+using Solari.Io;
 using Solari.Oberon;
 using Solari.Samples.Domain;
 using Solari.Samples.Domain.Person;
 using Solari.Samples.Infrastructure;
 using Solari.Sol;
-using Solari.Titan.DependencyInjection;
-using Solari.Vanth.DependencyInjection;
 
 namespace Solari.Samples.WebApi
 {
@@ -35,8 +38,6 @@ namespace Solari.Samples.WebApi
         {
             services.AddControllers().AddMetrics();
 
-            services
-                .AddHealthChecksUI(a => a.AddHealthCheckEndpoint("health", "/health"));
 
             services.AddSol(Configuration)
                     // .AddVanth()
@@ -44,6 +45,9 @@ namespace Solari.Samples.WebApi
                     .AddOberon()
                     .AddGanymede(requests => requests.AddGanymedeClient<IGitHubClient, GitHubClient>("GitHub"))
                     .AddCeres()
+                    .AddIo(a => a.AddCallistoHealthCheck()
+                                 .AddPrivateMemoryHealthCheck(524288000)
+                                 .AddProcessAllocatedMemoryHealthCheck(209715200))
                     .AddHyperion()
                     .AddCallistoConnector()
                     .AddCallisto(callistoConfiguration => callistoConfiguration
@@ -63,11 +67,15 @@ namespace Solari.Samples.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseOpenApi();
             app.UseSwaggerUi3();
             app.UseRouting();
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapIo();
+                endpoints.MapControllers();
+            });
             app.UseSol();
         }
     }

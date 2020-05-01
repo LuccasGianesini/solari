@@ -50,13 +50,13 @@ namespace Solari.Titan.DependencyInjection
         }
 
 
-        private static SerilogOptions GetOptions(IConfiguration configuration)
+        private static TitanOptions GetOptions(IConfiguration configuration)
         {
-            return configuration.GetOptions<SerilogOptions>(TitanConstants.TitanAppSettingsSection);
+            return configuration.GetOptions<TitanOptions>(TitanConstants.TitanAppSettingsSection);
         }
 
 
-        private static LoggerConfiguration LoggingDefaultAction(LoggerConfiguration loggerConfiguration, SerilogOptions options, ApplicationOptions
+        private static LoggerConfiguration LoggingDefaultAction(LoggerConfiguration loggerConfiguration, TitanOptions options, ApplicationOptions
                                                                     appOptions, string contentRootPath)
         {
             return LoggingDefaultConfig.BuildDefaultConfig(loggerConfiguration, options, appOptions, contentRootPath);

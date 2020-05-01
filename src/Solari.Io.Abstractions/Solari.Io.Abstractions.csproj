@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AspNetCore.HealthChecks.Publisher.Prometheus" Version="3.1.1" />
+      <PackageReference Include="AspNetCore.HealthChecks.Publisher.Seq" Version="3.1.1" />
+      <PackageReference Include="AspNetCore.HealthChecks.System" Version="3.1.1" />
+      <PackageReference Include="AspNetCore.HealthChecks.UI" Version="3.1.1-preview4" />
+      <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="3.1.1-preview3" />
+      <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="3.1.1-preview3" />
+      <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="3.1.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
+      <ProjectReference Include="..\Solari.Titan.Abstractions\Solari.Titan.Abstractions.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,19 +1,24 @@
-﻿using System;
-using App.Metrics;
+﻿using App.Metrics;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Solari.Ceres.Abstractions;
+using Solari.Ceres.Framework;
 using Solari.Sol;
 using Solari.Sol.Extensions;
 
-namespace Solari.Ceres
+namespace Solari.Ceres.DependencyInjection
 {
     public static class SolariBuilderExtensions
     {
         public static ISolariBuilder AddCeres(this ISolariBuilder builder)
         {
-            var options = builder.AppConfiguration.GetOptions<CeresOptions>(CeresConstants.AppSettingsSection);
-            var appOptions = builder.GetAppOptions();
+            IConfigurationSection section = builder.AppConfiguration.GetSection(CeresConstants.AppSettingsSection);
+            if (!section.Exists())
+                return builder;
+            var options = builder.AppConfiguration.GetOptions<CeresOptions>(section);
+            
+            ApplicationOptions appOptions = builder.GetAppOptions();
             var metricsBuilder = new MetricsBuilder();
             if (!options.Enabled)
             {
@@ -25,7 +30,6 @@ namespace Solari.Ceres
             ConfigureMetricsBuilder(metricsBuilder, options, appOptions);
             builder.Services.AddMetrics(metricsBuilder.Build());
             builder.Services.AddMetricsEndpoints();
-
             ConfigureReporters.ConfigurePrometheus(options, metricsBuilder);
             ConfigureInfluxDb(builder, options, metricsBuilder);
             ConfigureEndpoints(builder, options);

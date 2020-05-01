@@ -26,23 +26,13 @@ namespace Solari.Deimos
             ISpanBuilder spanBuilder = OpenTracer.BuildSpan(operationName);
             ISpan span = activeScope?.Span == null ? spanBuilder.Start() : spanBuilder.AsChildOf(OpenTracer.ScopeManager.Active.Span).Start();
             enrich?.Invoke(new SpanEnricher(span));
-            _spanCache.TryAdd(StartActivity(operationName, createNewActivity).Id, span);
+            _spanCache.TryAdd(span.Context.SpanId, span);
             return span;
         }
-
-        private Activity StartActivity(string op, bool startNew)
+        
+        public void FinalizeTrace(ISpan spanToFinish , IDictionary<string, object> log = null)
         {
-            if (Activity.Current == null || startNew)
-            {
-                return new Activity(op).Start();
-            }
-
-            return Activity.Current;
-        }
-
-        public void FinalizeTrace(IDictionary<string, object> log = null)
-        {
-            if (!_spanCache.TryRemove(Activity.Current.Id, out ISpan span)) return;
+            if (!_spanCache.TryRemove(spanToFinish.Context.SpanId, out ISpan span)) return;
             if (log != null)
             {
                 span.Log(log);

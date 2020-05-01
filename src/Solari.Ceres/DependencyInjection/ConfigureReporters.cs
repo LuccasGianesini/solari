@@ -3,7 +3,7 @@ using App.Metrics;
 using App.Metrics.Formatters.InfluxDB;
 using Solari.Ceres.Abstractions;
 
-namespace Solari.Ceres
+namespace Solari.Ceres.DependencyInjection
 {
     public class ConfigureReporters
     {

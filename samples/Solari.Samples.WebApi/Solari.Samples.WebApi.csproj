@@ -5,8 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Solari.Ceres.Abstractions\Solari.Ceres.Abstractions.csproj" />
-    <ProjectReference Include="..\..\src\Solari.Ceres\Solari.Ceres.csproj" />
     <ProjectReference Include="..\Solari.Samples.Application\Solari.Samples.Application.csproj" />
     <ProjectReference Include="..\Solari.Samples.Domain\Solari.Samples.Domain.csproj" />
     <ProjectReference Include="..\Solari.Samples.Infrastructure\Solari.Samples.Infrastructure.csproj" />
@@ -27,9 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNetCore.HealthChecks.Publisher.Prometheus" Version="3.1.1" />
-    <PackageReference Include="AspNetCore.HealthChecks.Publisher.Seq" Version="3.1.1" />
-    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="3.1.1-preview4" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.4.2" />
   </ItemGroup>
 

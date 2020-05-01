@@ -2,7 +2,7 @@ using Serilog.Events;
 
 namespace Solari.Titan.Abstractions
 {
-    public class SerilogOptions
+    public class TitanOptions
     {
         /// <summary>
         /// Indicates if console logging is enabled.

@@ -26,7 +26,7 @@ namespace Solari.Titan.Framework
             return configuration;
         }
 
-        internal static LoggerConfiguration ConfigureFile(this LoggerConfiguration configuration, SerilogOptions options, string contentRootPath = "")
+        internal static LoggerConfiguration ConfigureFile(this LoggerConfiguration configuration, TitanOptions options, string contentRootPath = "")
         {
             if (!options.UseFile || options.File == null) return configuration;
 
@@ -42,7 +42,7 @@ namespace Solari.Titan.Framework
             return configuration;
         }
 
-        internal static LoggerConfiguration ConfigureSeq(this LoggerConfiguration configuration, SerilogOptions options)
+        internal static LoggerConfiguration ConfigureSeq(this LoggerConfiguration configuration, TitanOptions options)
         {
             if (!options.UseSeq || options.Seq == null) return configuration;
 
@@ -57,7 +57,7 @@ namespace Solari.Titan.Framework
             return configuration;
         }
 
-        internal static LoggerConfiguration ConfigureElasticSearch(this LoggerConfiguration configuration, SerilogOptions options, ApplicationOptions applicationOptions)
+        internal static LoggerConfiguration ConfigureElasticSearch(this LoggerConfiguration configuration, TitanOptions options, ApplicationOptions applicationOptions)
         {
             if (!options.UseElk || options.Elk == null) return configuration;
             var elastic = new ElasticsearchSinkOptions(new Uri(options.Elk.Url))
@@ -108,7 +108,7 @@ namespace Solari.Titan.Framework
 
             return configuration;
         }
-        internal static LoggerConfiguration ConfigureGreyLog(this LoggerConfiguration configuration, SerilogOptions options)
+        internal static LoggerConfiguration ConfigureGreyLog(this LoggerConfiguration configuration, TitanOptions options)
         {
             return !options.UseGreyLog || options.GreyLog == null ? configuration : configuration.WriteTo.Graylog(options.GreyLog);
         }

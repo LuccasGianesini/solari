@@ -13,7 +13,7 @@ namespace Solari.Titan.Framework
         private const LogEventLevel OverrideDefault = LogEventLevel.Warning;
 
         internal static LoggerConfiguration BuildDefaultConfig(LoggerConfiguration config,
-                                                               SerilogOptions options, ApplicationOptions appOptions, string contentRootPath)
+                                                               TitanOptions options, ApplicationOptions appOptions, string contentRootPath)
         {
             if (options == null) throw new ArgumentException("Serilog options cannot be null. Check your AppSettings.json and your hosting environment");
 
@@ -23,7 +23,7 @@ namespace Solari.Titan.Framework
             return config;
         }
 
-        private static void AddSinks(LoggerConfiguration config, SerilogOptions options, ApplicationOptions appOptions, string contentRootPath)
+        private static void AddSinks(LoggerConfiguration config, TitanOptions options, ApplicationOptions appOptions, string contentRootPath)
         {
             config
                 .ConfigureConsole(options.UseConsole)
@@ -44,7 +44,7 @@ namespace Solari.Titan.Framework
                   .Enrich.WithProperty("Application Environment", appOptions.ApplicationEnvironment);
         }
 
-        private static void ConfigureMinimumLevels(LoggerConfiguration config, SerilogOptions options)
+        private static void ConfigureMinimumLevels(LoggerConfiguration config, TitanOptions options)
         {
             config
                 .MinimumLevel.Is(TitanLibHelper.GetLogLevel(options.DefaultLevel))

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using Solari.Callisto.Abstractions;
-using Solari.Callisto.Connector;
 using Solari.Callisto.Framework;
 using Solari.Sol;
 
-namespace Solari.Callisto
+namespace Solari.Callisto.DependencyInjection
 {
     public static class SolariBuilderExtensions
     {

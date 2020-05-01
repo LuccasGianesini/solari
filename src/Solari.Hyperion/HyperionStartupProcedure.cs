@@ -26,7 +26,8 @@ namespace Solari.Hyperion
         private CancellationTokenSource _cts;
         private bool _disposed;
 
-        public HyperionStartupProcedure(IConsulClient client, IServiceProvider provider, IOptions<ApplicationOptions> app, IOptions<HyperionOptions> options,
+        public HyperionStartupProcedure(IConsulClient client, IServiceProvider provider, IOptions<ApplicationOptions> app,
+                                        IOptions<HyperionOptions> options,
                                         IHostApplicationLifetime applicationLifetime)
         {
             _client = client;
@@ -37,33 +38,53 @@ namespace Solari.Hyperion
         }
 
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        public Task StartAsync(CancellationToken cancellationToken)
         {
             _cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            _applicationLifetime.ApplicationStarted.Register(OnStarted);
-            _applicationLifetime.ApplicationStopping.Register(OnStopping);
+            _applicationLifetime.ApplicationStarted.Register(async () =>
+            {
+                try
+                {
+                    await OnStarted(cancellationToken);
+                }
+                catch (TaskCanceledException) when (cancellationToken.IsCancellationRequested)
+                {
+                    // Halt
+                }
+            });
+            _applicationLifetime.ApplicationStopping.Register(async () =>
+            {
+                try
+                {
+                    await OnStopping(cancellationToken);
+                }
+                catch (TaskCanceledException) when (cancellationToken.IsCancellationRequested)
+                {
+                    await OnStopping(CancellationToken.None);
+                }
+            });
+            return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            OnStopping();
+            _cts.Cancel();
             return Task.CompletedTask;
         }
 
-        private void OnStarted()
+        private async Task OnStarted(CancellationToken cancellationToken)
         {
             AgentServiceRegistration registration = BuildServiceRegistration();
-            OnStopping();
             HyperionLogger.HostedServiceLogger.LogRegisteringService(_app.ApplicationInstanceId);
-            Task.Run(async () => await _client.Agent.ServiceRegister(registration, _cts.Token));
+            await _client.Agent.ServiceRegister(registration, cancellationToken);
         }
 
-        private void OnStopping()
+        private async Task OnStopping(CancellationToken cancellationToken)
         {
             HyperionLogger.HostedServiceLogger.LogDeregistering(_app.ApplicationId);
             try
             {
-                Task.Run(async () => await _client.Agent.ServiceDeregister(_app.ApplicationId, _cts.Token));
+                await _client.Agent.ServiceDeregister(_app.ApplicationId, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -127,10 +148,8 @@ namespace Solari.Hyperion
 
         public void Dispose()
         {
-            if(_disposed)
+            if (_disposed)
                 return;
-            OnStopping();
-            _client?.Dispose();
             _cts?.Dispose();
             _disposed = true;
         }
