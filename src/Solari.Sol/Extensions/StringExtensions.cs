@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Solari.Io
+namespace Solari.Sol.Extensions
 {
     public static class StringExtensions
     {

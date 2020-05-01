@@ -4,8 +4,8 @@ using System.Net.Http;
 using System.Threading;
 using Solari.Ganymede.ContentSerializers;
 using Solari.Ganymede.Domain;
-using Solari.Io;
-using Solari.Rhea;
+using Solari.Sol.Extensions;
+using Solari.Sol.Utils;
 
 namespace Solari.Ganymede.Extensions
 {

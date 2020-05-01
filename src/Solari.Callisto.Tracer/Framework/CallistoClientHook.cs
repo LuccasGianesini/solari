@@ -4,7 +4,6 @@ using MongoDB.Driver;
 using MongoDB.Driver.Core.Events;
 using Solari.Callisto.Connector;
 using Solari.Deimos.Abstractions;
-using Solari.Rhea;
 
 namespace Solari.Callisto.Tracer.Framework
 {

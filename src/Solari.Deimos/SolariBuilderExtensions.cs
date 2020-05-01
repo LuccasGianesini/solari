@@ -2,8 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Solari.Deimos.Abstractions;
 using Solari.Deimos.CorrelationId;
-using Solari.Io;
 using Solari.Sol;
+using Solari.Sol.Extensions;
 
 namespace Solari.Deimos
 {

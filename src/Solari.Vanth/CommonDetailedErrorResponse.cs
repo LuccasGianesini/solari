@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text;
-using Solari.Rhea;
+using Solari.Sol.Utils;
 
 namespace Solari.Vanth
 {

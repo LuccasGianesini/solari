@@ -28,6 +28,12 @@ namespace Solari.Ceres
 
         public static IMetricsBuilder ConfigurePrometheus(CeresOptions options, IMetricsBuilder builder)
         {
+            if (options.Prometheus == null)
+            {
+                builder.OutputMetrics.AsPrometheusProtobuf();
+                builder.OutputMetrics.AsPrometheusPlainText();
+                return builder;
+            }
             switch (options.Prometheus.OutputFormat)
             {
                 case "proto":

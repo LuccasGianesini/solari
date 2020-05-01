@@ -8,7 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Security;
 using System.Text;
 
-namespace Solari.Io
+namespace Solari.Sol.Extensions
 {
     public static class Converters
     {

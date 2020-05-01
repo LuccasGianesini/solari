@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 
-namespace Solari.Rhea
+namespace Solari.Sol.Utils
 {
     // Copied from Microsoft code.
     public class RequestTraceIdGenerator

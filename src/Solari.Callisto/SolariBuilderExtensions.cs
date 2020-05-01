@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Solari.Callisto.Abstractions;
 using Solari.Callisto.Connector;
 using Solari.Callisto.Framework;
-using Solari.Rhea.Utils;
 using Solari.Sol;
 
 namespace Solari.Callisto

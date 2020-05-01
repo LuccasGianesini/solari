@@ -4,8 +4,8 @@ using OpenTracing;
 using Solari.Callisto.Abstractions;
 using Solari.Callisto.Tracer.Framework;
 using Solari.Deimos.Abstractions;
-using Solari.Rhea;
 using Solari.Sol;
+using Solari.Sol.Utils;
 
 namespace Solari.Callisto.Tracer
 {

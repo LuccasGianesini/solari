@@ -1,5 +1,5 @@
 ﻿using System;
-using Solari.Io;
+using Solari.Sol.Extensions;
 
 namespace Solari.Ceres.Abstractions
 {
@@ -23,7 +23,7 @@ namespace Solari.Ceres.Abstractions
         public TimeSpan GetFlushInterval() { return string.IsNullOrEmpty(FlushInterval) ? TimeSpan.FromSeconds(20) : FlushInterval.ToTimeSpan(); }
 
 
-        public TimeSpan GetTimeout() { return string.IsNullOrEmpty(Timeout) ? TimeSpan.FromSeconds(10) : Timeout.ToTimeSpan(); }
+        public TimeSpan GetTimeout() { return string.IsNullOrEmpty(Timeout) ? TimeSpan.FromSeconds(20) : Timeout.ToTimeSpan(); }
         public TimeSpan GetBackoffPeriod() { return string.IsNullOrEmpty(BackoffPeriod) ? TimeSpan.FromSeconds(30) : BackoffPeriod.ToTimeSpan(); }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 
-namespace Solari.Rhea.Utils
+namespace Solari.Sol.Utils
 {
     public static class ReflectionUtils
     {
@@ -14,6 +14,7 @@ namespace Solari.Rhea.Utils
         /// <returns><see cref="IEnumerable{T}"/>. T being <see cref="Assembly"/></returns>
         public static IEnumerable<Assembly> GetAssembliesFromAppDomain()
         {
+            //TODO Find a more efficient way
             return Assembly.GetEntryAssembly()
                            ?.GetReferencedAssemblies().AsEnumerable()
                            .Select(assemblyName => AssemblyLoadContext.Default.LoadFromAssemblyName(assemblyName)).ToList();

@@ -9,7 +9,6 @@ using Solari.Ganymede.Domain.Exceptions;
 using Solari.Ganymede.Domain.Options;
 using Solari.Ganymede.Extensions;
 using Solari.Ganymede.Framework;
-using Solari.Rhea;
 using Solari.Sol;
 using Solari.Vanth;
 using Solari.Vanth.Builders;

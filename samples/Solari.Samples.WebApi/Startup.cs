@@ -35,6 +35,9 @@ namespace Solari.Samples.WebApi
         {
             services.AddControllers().AddMetrics();
 
+            services
+                .AddHealthChecksUI(a => a.AddHealthCheckEndpoint("health", "/health"));
+
             services.AddSol(Configuration)
                     // .AddVanth()
                     .AddEris()

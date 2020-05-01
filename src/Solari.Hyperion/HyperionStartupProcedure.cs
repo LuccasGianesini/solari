@@ -11,12 +11,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Solari.Hyperion.Abstractions;
-using Solari.Io;
 using Solari.Sol;
+using Solari.Sol.Extensions;
 
 namespace Solari.Hyperion
 {
-    public class HyperionStartupProcedure : IHostedService
+    public class HyperionStartupProcedure : IHostedService, IDisposable
     {
         private readonly IConsulClient _client;
         private readonly IServiceProvider _provider;
@@ -24,6 +24,7 @@ namespace Solari.Hyperion
         private readonly HyperionOptions _options;
         private readonly ApplicationOptions _app;
         private CancellationTokenSource _cts;
+        private bool _disposed;
 
         public HyperionStartupProcedure(IConsulClient client, IServiceProvider provider, IOptions<ApplicationOptions> app, IOptions<HyperionOptions> options,
                                         IHostApplicationLifetime applicationLifetime)
@@ -123,5 +124,15 @@ namespace Solari.Hyperion
         }
 
         private Uri GetApplicationUri(string address) { return string.IsNullOrEmpty(address) ? null : new Uri(address.Replace("*", "localhost")); }
+
+        public void Dispose()
+        {
+            if(_disposed)
+                return;
+            OnStopping();
+            _client?.Dispose();
+            _cts?.Dispose();
+            _disposed = true;
+        }
     }
 }

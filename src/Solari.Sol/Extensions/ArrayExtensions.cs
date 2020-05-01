@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Solari.Io
+namespace Solari.Sol.Extensions
 {
     public static class ArrayExtensions
     {

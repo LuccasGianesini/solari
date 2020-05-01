@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Solari.Rhea
+namespace Solari.Sol
 {
     public interface IEventFilter
     {

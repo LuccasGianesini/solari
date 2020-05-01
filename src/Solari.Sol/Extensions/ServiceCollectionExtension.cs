@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Solari.Sol.Helpers;
 
-
-namespace Solari.Io
+namespace Solari.Sol.Extensions
 {
     public static class ServiceCollectionExtension
     {

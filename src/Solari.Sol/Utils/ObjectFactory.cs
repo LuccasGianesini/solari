@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace Solari.Rhea
+namespace Solari.Sol.Utils
 {
     /// <summary>
     ///     Creates instances of type <typeparamref name="T" />.

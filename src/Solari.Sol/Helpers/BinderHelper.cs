@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Solari.Io
+namespace Solari.Sol.Helpers
 {
     internal class BinderHelper
     {

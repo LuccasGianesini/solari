@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Solari.Rhea;
+using Solari.Sol.Utils;
 using Solari.Vanth.Builders;
 
 namespace Solari.Vanth

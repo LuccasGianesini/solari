@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Solari.Rhea
+namespace Solari.Sol.Utils
 {
     public class EventFilter : IEventFilter
     {

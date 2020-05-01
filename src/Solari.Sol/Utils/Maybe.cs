@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Solari.Rhea
+namespace Solari.Sol.Utils
 {
     /// <summary>
     /// Base on Eric Andres and Pluralsight code. Check him out at https://www.pluralsight.com/tech-blog/maybe/

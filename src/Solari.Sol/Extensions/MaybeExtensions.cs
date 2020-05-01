@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Solari.Sol.Utils;
 
-namespace Solari.Rhea
+namespace Solari.Sol.Extensions
 {
     public static class MaybeExtensions
     {
         /// <summary>
-        /// Gets the first element of and <see cref="IEnumerable{T}"/> and returns it as a <see cref="Maybe{T}"/>
+        /// Gets the first element of and <see cref="IEnumerable{T}"/> and returns it as a <see cref="Maybe"/>
         /// </summary>
         /// <param name="self"><see cref="IEnumerable{T}"/></param>
         /// <typeparam name="T"></typeparam>
-        /// <returns>First value of the <see cref="IEnumerable{T}"/> as a <see cref="Maybe{T}"/></returns>
+        /// <returns>First value of the <see cref="Maybe{T}"/> as a <see cref="Maybe"/></returns>
         public static Maybe<T> FirstOrNone<T>(this IEnumerable<T> self)
             where T : class
         {

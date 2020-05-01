@@ -1,6 +1,6 @@
 ﻿using System;
 using Serilog.Sinks.Elasticsearch;
-using Solari.Io;
+using Solari.Sol.Extensions;
 
 namespace Solari.Titan.Abstractions
 {

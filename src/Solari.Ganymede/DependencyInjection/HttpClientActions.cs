@@ -10,8 +10,8 @@ using Solari.Ganymede.Domain.Exceptions;
 using Solari.Ganymede.Domain.Options;
 using Solari.Ganymede.Extensions;
 using Solari.Ganymede.Framework.DelegatingHandlers;
-using Solari.Io;
 using Solari.Sol;
+using Solari.Sol.Extensions;
 
 namespace Solari.Ganymede.DependencyInjection
 {

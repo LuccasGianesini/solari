@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Solari.Ganymede.Domain;
 using Solari.Ganymede.Extensions;
-using Solari.Rhea;
+using Solari.Sol.Utils;
 using Solari.Vanth;
 
 namespace Solari.Ganymede.Pipeline

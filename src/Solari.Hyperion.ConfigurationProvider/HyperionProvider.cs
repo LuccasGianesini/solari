@@ -9,7 +9,7 @@ using Consul;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Solari.Hyperion.Abstractions;
-using Solari.Rhea;
+using Solari.Sol.Utils;
 
 namespace Solari.Hyperion.ConfigurationProvider
 {

@@ -4,7 +4,8 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Net.Http;
 using Solari.Ganymede.ContentSerializers;
-using Solari.Io;
+using Solari.Sol.Extensions;
+
 // ReSharper disable CollectionNeverUpdated.Global
 
 namespace Solari.Ganymede.Domain.Options

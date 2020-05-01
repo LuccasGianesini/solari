@@ -8,8 +8,8 @@ using Serilog.Formatting.Json;
 using Serilog.Sinks.Elasticsearch;
 using Serilog.Sinks.Graylog;
 using Serilog.Sinks.SystemConsole.Themes;
-using Solari.Io;
 using Solari.Sol;
+using Solari.Sol.Extensions;
 using Solari.Titan.Abstractions;
 
 namespace Solari.Titan.Framework

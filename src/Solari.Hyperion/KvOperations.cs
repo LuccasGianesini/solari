@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Consul;
 using Microsoft.Extensions.Options;
 using Solari.Hyperion.Abstractions;
-using Solari.Io;
 using Solari.Sol;
+using Solari.Sol.Extensions;
 
 namespace Solari.Hyperion
 {

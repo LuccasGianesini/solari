@@ -7,7 +7,6 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Configuration;
 using MongoDB.Driver.Encryption;
-using Solari.Io;
 
 // ReSharper disable IdentifierTypo
 

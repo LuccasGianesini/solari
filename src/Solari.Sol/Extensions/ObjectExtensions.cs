@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json.Linq;
 
-namespace Solari.Io
+namespace Solari.Sol.Extensions
 {
     public static class ObjectExtensions
     {

@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Solari.Ganymede.Extensions;
-using Solari.Rhea;
+using Solari.Sol.Utils;
 
 namespace Solari.Ganymede.Framework.DelegatingHandlers
 {

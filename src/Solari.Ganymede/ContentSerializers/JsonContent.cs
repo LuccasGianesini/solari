@@ -4,11 +4,12 @@ using System.Net.Http;
 using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
-using Solari.Rhea;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using Solari.Ganymede.Domain;
+using Solari.Sol.Utils;
+
 namespace Solari.Ganymede.ContentSerializers
 {
     public class JsonContentDeserializer : IContentDeserializer

@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 
-namespace Solari.Rhea
+namespace Solari.Sol.Utils
 {
    //Credits goes to  .NET Foundation Team.
     //JSON parser is based on JsonConfigurationFileParser found in Microsoft.Extensions.Configuration.Json library.

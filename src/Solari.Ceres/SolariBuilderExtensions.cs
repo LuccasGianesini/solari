@@ -3,8 +3,8 @@ using App.Metrics;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Solari.Ceres.Abstractions;
-using Solari.Io;
 using Solari.Sol;
+using Solari.Sol.Extensions;
 
 namespace Solari.Ceres
 {
@@ -15,30 +15,53 @@ namespace Solari.Ceres
             var options = builder.AppConfiguration.GetOptions<CeresOptions>(CeresConstants.AppSettingsSection);
             var appOptions = builder.GetAppOptions();
             var metricsBuilder = new MetricsBuilder();
-
-            options ??= new CeresOptions();
             if (!options.Enabled)
             {
                 return builder;
             }
+
+            builder.Services.Configure<CeresOptions>(builder.AppConfiguration.GetSection(CeresConstants.AppSettingsSection));
 
             ConfigureMetricsBuilder(metricsBuilder, options, appOptions);
             builder.Services.AddMetrics(metricsBuilder.Build());
             builder.Services.AddMetricsEndpoints();
 
             ConfigureReporters.ConfigurePrometheus(options, metricsBuilder);
-            if (options.InfluxDb.Enabled)
-            {
-                ConfigureReporters.ConfigureGraphiteReporter(options, metricsBuilder);
-                builder.Services.AddMetricsReportingHostedService();
-            }
+            ConfigureInfluxDb(builder, options, metricsBuilder);
             ConfigureEndpoints(builder, options);
             ConfigureMiddleware(builder, options);
-            
+            ConfigureCpuUsageMetric(builder, options);
+            ConfigureMemoryUsageMetric(builder, options);
             return builder;
         }
 
-        private static void ConfigureMetricsBuilder(MetricsBuilder metricsBuilder, CeresOptions options, ApplicationOptions appOptions)
+        private static void ConfigureInfluxDb(ISolariBuilder builder, CeresOptions options, IMetricsBuilder metricsBuilder)
+        {
+            if (options.InfluxDb == null || !options.InfluxDb.Enabled)
+                return;
+            ConfigureReporters.ConfigureGraphiteReporter(options, metricsBuilder);
+            builder.Services.AddMetricsReportingHostedService();
+        }
+
+        private static void ConfigureCpuUsageMetric(ISolariBuilder builder, CeresOptions options)
+        {
+            if (options.Cpu is null)
+                return;
+            if (!options.Cpu.Enabled)
+                return;
+            builder.Services.AddHostedService<CpuMeasurementHostedService>();
+        }
+
+        private static void ConfigureMemoryUsageMetric(ISolariBuilder builder, CeresOptions options)
+        {
+            if (options.Memory is null)
+                return;
+            if (!options.Memory.Enabled)
+                return;
+            builder.Services.AddHostedService<MemoryMeasurementHostedService>();
+        }
+
+        private static void ConfigureMetricsBuilder(IMetricsBuilder metricsBuilder, CeresOptions options, ApplicationOptions appOptions)
         {
             metricsBuilder.Configuration.Configure(a =>
             {
@@ -75,6 +98,9 @@ namespace Solari.Ceres
 
         private static void ConfigureMiddleware(ISolariBuilder builder, CeresOptions options)
         {
+            if (options.Middlewares == null)
+                return;
+
             builder.Services.AddMetricsTrackingMiddleware(a =>
             {
                 a.ApdexTrackingEnabled = options.Middlewares.ApdexTracking;
@@ -101,9 +127,9 @@ namespace Solari.Ceres
                         appBuilder.ApplicationBuilder.UseMetricsRequestTrackingMiddleware();
                     if (options.Middlewares.OAuth2Tracking)
                         appBuilder.ApplicationBuilder.UseMetricsOAuth2TrackingMiddleware();
-                    if (options.Middlewares.UseErrorTracking)
+                    if (options.Middlewares.ErrorTracking)
                         appBuilder.ApplicationBuilder.UseMetricsErrorTrackingMiddleware();
-                    if (options.Middlewares.UseActiveRequests)
+                    if (options.Middlewares.ActiveRequests)
                         appBuilder.ApplicationBuilder.UseMetricsActiveRequestMiddleware();
                     if (options.Middlewares.RequestTracking)
                         appBuilder.ApplicationBuilder.UseMetricsRequestTrackingMiddleware();

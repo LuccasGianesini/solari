@@ -9,10 +9,11 @@ using Solari.Callisto.Abstractions;
 
 namespace Solari.Callisto.Connector
 {
-    public sealed class CallistoConnection : ICallistoConnection
+    public sealed class CallistoConnection : ICallistoConnection, IDisposable
     {
         private readonly ReaderWriterLockSlim _lockSlim;
         private readonly Dictionary<string, IMongoClient> _client;
+        private bool _disposed;
         private IMongoDatabase _database;
 
         public CallistoConnection()
@@ -67,7 +68,7 @@ namespace Solari.Callisto.Connector
             if (string.IsNullOrEmpty(dataBaseName)) throw new ArgumentException("Value cannot be null or empty.", nameof(dataBaseName));
             _database = GetClient().GetDatabase(dataBaseName);
             DataBaseName = dataBaseName;
-            CallistoLogger.ConnectionLogger.ChangingDatabase(dataBaseName);   
+            CallistoLogger.ConnectionLogger.ChangingDatabase(dataBaseName);
         }
 
         public async Task<CallistoConnectionCheck> IsConnected(CancellationToken? cancellationToken = null)
@@ -93,6 +94,14 @@ namespace Solari.Callisto.Connector
                 CallistoLogger.ConnectionLogger.ConnectionStatus(ClusterState.Disconnected.ToString(), e.Message);
                 return new CallistoConnectionCheck(ClusterState.Disconnected, e.Message);
             }
+        }
+
+        public void Dispose()
+        {
+            if(_disposed)
+                return;
+            _lockSlim?.Dispose();
+            _disposed = true;
         }
     }
 }

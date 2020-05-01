@@ -1,5 +1,5 @@
 ﻿using System;
-using Solari.Io;
+using Solari.Sol.Extensions;
 
 namespace Solari.Hyperion.Abstractions
 {
@@ -13,7 +13,7 @@ namespace Solari.Hyperion.Abstractions
         public string WaitTime { get; set; }
 
         public HyperionHealthCheckOptions HealthCheck { get; set; } = new HyperionHealthCheckOptions();
-        public HyperionConfigurationProviderOptions ConfigurationProvider { get; set; }
+        public HyperionConfigurationProviderOptions ConfigurationProvider { get; set; } = new HyperionConfigurationProviderOptions();
 
         public TimeSpan GetWaitTime() { return string.IsNullOrEmpty(WaitTime) ? TimeSpan.Zero : WaitTime.ToTimeSpan(); }
     }

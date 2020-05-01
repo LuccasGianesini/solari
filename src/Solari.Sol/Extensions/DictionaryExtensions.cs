@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Solari.Io
+namespace Solari.Sol.Extensions
 {
     public static class DictionaryExtensions
     {

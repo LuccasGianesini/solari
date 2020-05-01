@@ -7,7 +7,7 @@ using OpenTracing;
 using OpenTracing.Tag;
 using Solari.Callisto.Abstractions;
 using Solari.Deimos.Abstractions;
-using Solari.Rhea;
+using Solari.Sol;
 
 namespace Solari.Callisto.Tracer.Framework
 {

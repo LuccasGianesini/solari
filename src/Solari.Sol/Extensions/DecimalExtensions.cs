@@ -1,7 +1,7 @@
 ﻿using System;
 using static System.Decimal;
 
-namespace Solari.Io
+namespace Solari.Sol.Extensions
 {
   public static class DecimalExtensions
   {
