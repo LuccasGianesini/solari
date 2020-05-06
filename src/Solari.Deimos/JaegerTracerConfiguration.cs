@@ -43,9 +43,9 @@ namespace Solari.Deimos
             foreach (string httpIgnoredEndpoint in options.Http.IgnoredInEndpoints)
             {
                 DeimosLogger.JaegerLogger.ConfigureRequestFiltering(httpIgnoredEndpoint);
-                diagnosticOptions.Hosting.IgnorePatterns.Add(context =>context.Request.Path
-                                                                              .ToUriComponent()
-                                                                              .Contains(PathString.FromUriComponent(httpIgnoredEndpoint)));
+                diagnosticOptions.Hosting.IgnorePatterns.Add(context => context.Request.Path
+                                                                               .ToUriComponent()
+                                                                               .Contains(PathString.FromUriComponent(httpIgnoredEndpoint)));
             }
         }
 
@@ -79,14 +79,16 @@ namespace Solari.Deimos
                        : (name + "." + applicationOptions.ApplicationEnvironment).ToLowerInvariant();
         }
 
-        private static ITracer BuildTracer(DeimosOptions options, ApplicationOptions appOptions, ILoggerFactory loggerFactory) =>
-            new Tracer.Builder(BuildServiceName(appOptions, options))
-                .WithLoggerFactory(loggerFactory)
-                .WithReporter(BuildRemoteReporter(options, appOptions, loggerFactory))
-                .WithSampler(GetSampler(options.Jaeger))
-                .WithTag("app.instance.id", appOptions.ApplicationInstanceId)
-                .WithTag("app.name", appOptions.ApplicationName)
-                .Build();
+        private static ITracer BuildTracer(DeimosOptions options, ApplicationOptions appOptions, ILoggerFactory loggerFactory)
+        {
+            return new Tracer.Builder(BuildServiceName(appOptions, options))
+                   .WithLoggerFactory(loggerFactory)
+                   .WithReporter(BuildRemoteReporter(options, appOptions, loggerFactory))
+                   .WithSampler(GetSampler(options.Jaeger))
+                   .WithTag("app.instance.id", appOptions.ApplicationInstanceId)
+                   .WithTag("app.name", appOptions.ApplicationName)
+                   .Build();
+        }
 
         private static RemoteReporter BuildRemoteReporter(DeimosOptions options, ApplicationOptions appOptions, ILoggerFactory loggerFactory)
         {
@@ -104,7 +106,7 @@ namespace Solari.Deimos
         {
             return options.Sampler switch
                    {
-                       "const"         => (ISampler) new ConstSampler(true),
+                       "const"         => new ConstSampler(true),
                        "rate"          => new RateLimitingSampler(options.MaxTracesPerSecond),
                        "probabilistic" => new ProbabilisticSampler(options.SamplingRate),
                        _               => new ConstSampler(true)
@@ -118,9 +120,7 @@ namespace Solari.Deimos
             {
                 conf.InjectEnabled = message => true;
                 foreach (string httpIgnoredEndpoint in options.Http.IgnoredOutEndpoints)
-                {
                     conf.IgnorePatterns.Add(context => context.RequestUri.OriginalString.Contains(httpIgnoredEndpoint));
-                }
 
                 DeimosLogger.JaegerLogger.ConfiguredHttpOut();
             });

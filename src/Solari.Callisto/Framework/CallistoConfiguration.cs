@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization.Conventions;
-using Serilog;
 using Solari.Callisto.Abstractions;
 using Solari.Callisto.Connector;
 using Solari.Sol;
@@ -18,7 +16,7 @@ namespace Solari.Callisto.Framework
         public CallistoConfiguration(ISolariBuilder solariBuilder) { _solariBuilder = solariBuilder; }
 
         /// <summary>
-        /// Configure the convention pack.
+        ///     Configure the convention pack.
         /// </summary>
         /// <param name="builder"></param>
         /// <returns></returns>
@@ -33,7 +31,7 @@ namespace Solari.Callisto.Framework
         }
 
         /// <summary>
-        /// Create and register the default convention pack.
+        ///     Create and register the default convention pack.
         /// </summary>
         /// <returns></returns>
         public ICallistoConfiguration RegisterDefaultConventionPack()
@@ -43,7 +41,8 @@ namespace Solari.Callisto.Framework
         }
 
         /// <summary>
-        /// Read the AppDomain and register the class map for all the classes implementing <see cref="IDocumentRoot"/> and <see cref="IDocumentNode"/>
+        ///     Read the AppDomain and register the class map for all the classes implementing <see cref="IDocumentRoot" /> and
+        ///     <see cref="IDocumentNode" />
         /// </summary>
         /// <returns></returns>
         public ICallistoConfiguration RegisterDefaultClassMaps()
@@ -57,24 +56,7 @@ namespace Solari.Callisto.Framework
         }
 
         /// <summary>
-        /// Register class custom class maps..
-        /// </summary>
-        /// <param name="classMapper">Mapper</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public ICallistoConfiguration RegisterClassMaps(Action<ICallistoClassMapper> classMapper)
-        {
-            if (classMapper == null) throw new ArgumentNullException(nameof(classMapper));
-            _solariBuilder.AddBuildAction(new BuildAction("Callisto ClassMaps")
-            {
-                Action = provider => { classMapper(new CallistoClassMapper()); }
-            });
-
-            return this;
-        }
-
-        /// <summary>
-        /// Register a MongoDb collection repository.
+        ///     Register a MongoDb collection repository.
         /// </summary>
         /// <param name="collectionName">The collection name</param>
         /// <param name="lifetime">Lifetime of the repository service.</param>
@@ -101,6 +83,23 @@ namespace Solari.Callisto.Framework
             return this;
         }
 
+        /// <summary>
+        ///     Register class custom class maps..
+        /// </summary>
+        /// <param name="classMapper">Mapper</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public ICallistoConfiguration RegisterClassMaps(Action<ICallistoClassMapper> classMapper)
+        {
+            if (classMapper == null) throw new ArgumentNullException(nameof(classMapper));
+            _solariBuilder.AddBuildAction(new BuildAction("Callisto ClassMaps")
+            {
+                Action = provider => { classMapper(new CallistoClassMapper()); }
+            });
+
+            return this;
+        }
+
         private static IEnumerable<Type> GetRoots(IEnumerable<Type> domain)
         {
             return domain
@@ -110,8 +109,8 @@ namespace Solari.Callisto.Framework
                        CallistoLogger.ClassMapsLogger.IdentifiedRoot(x.Name);
                        return x;
                    }).ToList();
-            
         }
+
         private static IEnumerable<Type> GetNodes(IEnumerable<Type> domain)
         {
             return domain

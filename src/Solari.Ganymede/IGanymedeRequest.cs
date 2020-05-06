@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using Solari.Ganymede.Domain.Options;
+﻿using Solari.Ganymede.Domain.Options;
 
 namespace Solari.Ganymede
 {

@@ -12,6 +12,7 @@ namespace Solari.Sol.Framework
     internal sealed class SolariBuilder : ISolariBuilder
     {
         private readonly ApplicationOptions _applicationOptions;
+
         public SolariBuilder(IServiceCollection services, IConfiguration configuration)
         {
             Services = services;
@@ -37,20 +38,18 @@ namespace Solari.Sol.Framework
         }
 
         /// <summary>
-        /// Get the <see cref="IHostEnvironment"/>. This property requires the <see cref="IServiceProvider"/> to be built.
+        ///     Get the <see cref="IHostEnvironment" />. This property requires the <see cref="IServiceProvider" /> to be built.
         /// </summary>
         public IHostEnvironment HostEnvironment { get; }
 
-        public ApplicationOptions GetAppOptions()
-        {
-            return _applicationOptions;
-        }
+        public ApplicationOptions GetAppOptions() { return _applicationOptions; }
 
         private ApplicationOptions LoadApplicationOptions()
         {
             IConfigurationSection section = AppConfiguration.GetSection(SolariConstants.ApplicationAppSettingsSection);
             return !section.Exists() ? new ApplicationOptions() : AppConfiguration.GetOptions<ApplicationOptions>(section);
         }
+
         private IHostEnvironment GetHostEnvironment()
         {
             using (IServiceScope scope = Services.BuildServiceProvider().GetRequiredService<IServiceScopeFactory>().CreateScope())

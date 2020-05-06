@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Runtime.InteropServices;
+﻿using System.Net;
 using System.Text;
 using Consul;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Solari.Hyperion.Abstractions;
 using Solari.Sol.Utils;
@@ -24,7 +18,7 @@ namespace Solari.Hyperion.ConfigurationProvider
             Data.Clear();
             using (IConsulClient client = new ConsulClientFactory().Create(_source.Options))
             {
-                var key = BuildKey();
+                string key = BuildKey();
                 QueryResult<KVPair> result = client.KV.Get(key).GetAwaiter().GetResult();
                 if (result.StatusCode != HttpStatusCode.OK)
                     throw new
@@ -34,7 +28,7 @@ namespace Solari.Hyperion.ConfigurationProvider
                 string json = Encoding.UTF8.GetString(result.Response.Value, 0, result.Response.Value.Length);
                 if (string.IsNullOrEmpty(json))
                     throw new HyperionLoadException($"Could not find any configuration with the key {key}.");
-                
+
                 Data = new JsonParser().Parse(JObject.Parse(json));
             }
         }
@@ -43,9 +37,7 @@ namespace Solari.Hyperion.ConfigurationProvider
         {
             var sb = new StringBuilder();
             if (!string.IsNullOrEmpty(_source.Options.ConfigurationProvider.Path))
-            {
                 return sb.Append(_source.Options.ConfigurationProvider.Path).Append(_source.Options.ConfigurationProvider.ConfigurationFileName).ToString();
-            }
 
             return sb.Append(_source.ApplicationOptions.ApplicationName).Append("/")
                      .Append(_source.ApplicationOptions.ApplicationEnvironment).Append("/")

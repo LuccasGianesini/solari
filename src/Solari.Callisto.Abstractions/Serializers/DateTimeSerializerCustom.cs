@@ -1,10 +1,11 @@
 ﻿using System;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 
 namespace Solari.Callisto.Abstractions.Serializers
 {
-    public class DateTimeSerializerCustom : MongoDB.Bson.Serialization.Serializers.DateTimeSerializer
+    public class DateTimeSerializerCustom : DateTimeSerializer
     {
         public override DateTime Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
         {

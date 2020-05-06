@@ -17,9 +17,6 @@ namespace Solari.Sol.Utils
         ///     Creates an instance of type <typeparamref name="T" /> by calling it's parameter-less constructor.
         /// </summary>
         /// <returns>An instance of type <typeparamref name="T" />.</returns>
-        public static T CreateInstance()
-        {
-            return CreateInstanceFunc();
-        }
+        public static T CreateInstance() { return CreateInstanceFunc(); }
     }
 }

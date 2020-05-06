@@ -6,8 +6,8 @@ namespace Solari.Vanth.Builders
 {
     public class CommonResponseBuilder<TResult> : ICommonResponseBuilder<TResult>
     {
-        private TResult _model;
         private readonly Stack<CommonErrorResponse> _errors = new Stack<CommonErrorResponse>(2);
+        private TResult _model;
 
         public ICommonResponseBuilder<TResult> WithResult(TResult model)
         {
@@ -30,10 +30,7 @@ namespace Solari.Vanth.Builders
 
         public ICommonResponseBuilder<TResult> WithErrors(Stack<CommonErrorResponse> errors)
         {
-            foreach (CommonErrorResponse commonErrorResponse in errors)
-            {
-                _errors.Push(commonErrorResponse);
-            }
+            foreach (CommonErrorResponse commonErrorResponse in errors) _errors.Push(commonErrorResponse);
 
             return this;
         }

@@ -17,9 +17,8 @@ namespace Solari.Callisto.Abstractions.Exceptions
         public NullUpdateDefinitionException(string message) : base(message) { }
         public NullUpdateDefinitionException(string message, Exception inner) : base(message, inner) { }
 
-        protected NullUpdateDefinitionException
-        (SerializationInfo info,
-         StreamingContext context) : base(info, context)
+        protected NullUpdateDefinitionException(SerializationInfo info,
+                                                StreamingContext context) : base(info, context)
         {
         }
     }

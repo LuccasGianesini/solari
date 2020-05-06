@@ -9,9 +9,9 @@ namespace Solari.Sol.Utils
     public static class ReflectionUtils
     {
         /// <summary>
-        /// Gets the assemblies all the assemblies from the app domain.
+        ///     Gets the assemblies all the assemblies from the app domain.
         /// </summary>
-        /// <returns><see cref="IEnumerable{T}"/>. T being <see cref="Assembly"/></returns>
+        /// <returns><see cref="IEnumerable{T}" />. T being <see cref="Assembly" /></returns>
         public static IEnumerable<Assembly> GetAssembliesFromAppDomain()
         {
             //TODO Find a more efficient way
@@ -21,20 +21,17 @@ namespace Solari.Sol.Utils
         }
 
         /// <summary>
-        /// Get the implementation of an open generic type.
+        ///     Get the implementation of an open generic type.
         /// </summary>
         /// <typeparam name="TService">Type of the service</typeparam>
-        /// <returns><see cref="IEnumerable{T}"/> of <see cref="Type"/></returns>
-        public static IEnumerable<Type> GetOpenGenericServiceImplementations<TService>()
-        {
-            return GetOpenGenericServiceImplementations(typeof(TService));
-        }
+        /// <returns><see cref="IEnumerable{T}" /> of <see cref="Type" /></returns>
+        public static IEnumerable<Type> GetOpenGenericServiceImplementations<TService>() { return GetOpenGenericServiceImplementations(typeof(TService)); }
 
         /// <summary>
-        /// Get the implementation of an open generic type.
+        ///     Get the implementation of an open generic type.
         /// </summary>
         /// <param name="openGenericType">Type of the service</param>
-        /// <returns><see cref="IEnumerable{T}"/> of <see cref="Type"/></returns>
+        /// <returns><see cref="IEnumerable{T}" /> of <see cref="Type" /></returns>
         public static IEnumerable<Type> GetOpenGenericServiceImplementations(Type openGenericType)
         {
             var list = new List<Type>();
@@ -54,21 +51,18 @@ namespace Solari.Sol.Utils
         }
 
         /// <summary>
-        /// Get the implementations of a service.
+        ///     Get the implementations of a service.
         /// </summary>
         /// <typeparam name="TService">Type of the service</typeparam>
-        /// <returns><see cref="IEnumerable{T}"/> of <see cref="Type"/></returns>
-        public static IEnumerable<Type> GetServiceImplementations<TService>()
-        {
-            return GetServiceImplementations(typeof(TService));
-        }
+        /// <returns><see cref="IEnumerable{T}" /> of <see cref="Type" /></returns>
+        public static IEnumerable<Type> GetServiceImplementations<TService>() { return GetServiceImplementations(typeof(TService)); }
 
 
         /// <summary>
-        /// Get the implementations of a service.
+        ///     Get the implementations of a service.
         /// </summary>
         /// <param name="type">Type of the service</param>
-        /// <returns><see cref="IEnumerable{T}"/> of <see cref="Type"/></returns>
+        /// <returns><see cref="IEnumerable{T}" /> of <see cref="Type" /></returns>
         public static IEnumerable<Type> GetServiceImplementations(Type type)
         {
             return GetAssembliesFromAppDomain().SelectMany(x => x.GetTypes())

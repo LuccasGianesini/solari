@@ -11,10 +11,7 @@ namespace Solari.Ganymede.Pipeline
             ConfigureInstance(resource.Uri);
         }
 
-        public PipelineDescriptor(string uri)
-        {
-            ConfigureInstance(uri);
-        }
+        public PipelineDescriptor(string uri) { ConfigureInstance(uri); }
 
         public GanymedeRequestResource Resource { get; }
         public HttpRequestMessage RequestMessage { get; private set; }

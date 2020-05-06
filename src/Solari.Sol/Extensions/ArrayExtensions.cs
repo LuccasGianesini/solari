@@ -5,8 +5,8 @@ namespace Solari.Sol.Extensions
     public static class ArrayExtensions
     {
         /// <summary>
-        /// Copies a total or portion of a source array of type T starting at offset
-        /// and copying count bytes.  (ArrayHelper.cs)
+        ///     Copies a total or portion of a source array of type T starting at offset
+        ///     and copying count bytes.  (ArrayHelper.cs)
         /// </summary>
         public static T[] SubArray<T>(this T[] array, int offset, int count)
         {
@@ -18,27 +18,29 @@ namespace Solari.Sol.Extensions
             Array.Copy(array, offset, result, 0, count);
             return result;
         }
+
         /// <summary>
-        /// Copies the source array of type T into the target array.
-        ///  (ArrayHelper.cs)
+        ///     Copies the source array of type T into the target array.
+        ///     (ArrayHelper.cs)
         /// </summary>
-        public static void Copy<T>(this T[] array,  T[] array1)
+        public static void Copy<T>(this T[] array, T[] array1)
         {
-            if(array == null || array1 == null)
+            if (array == null || array1 == null)
                 throw new Exception("Neither the source or target array can be null.");
 
             if (array == null || array1 == null)
                 throw new Exception("Neither the source or target array can be null.");
 
-            var len = array.Length;
-            var len1 = array1.Length;
+            int len = array.Length;
+            int len1 = array1.Length;
             if (len > len1)
                 throw new Exception("The target array must be the same length.");
             Array.Copy(array, 0, array1, 0, len);
         }
+
         /// <summary>
-        /// Inverts the order of the array.
-        ///  (ArrayHelper.cs)
+        ///     Inverts the order of the array.
+        ///     (ArrayHelper.cs)
         /// </summary>
         public static T[] Invert<T>(this T[] array)
         {

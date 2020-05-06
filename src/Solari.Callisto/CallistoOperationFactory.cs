@@ -4,7 +4,6 @@ using System.Threading;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
-using Solari.Callisto.Abstractions.Conventions;
 using Solari.Callisto.Abstractions.CQR;
 
 namespace Solari.Callisto
@@ -12,10 +11,10 @@ namespace Solari.Callisto
     public class CallistoOperationFactory : ICallistoOperationFactory
     {
         /// <summary>
-        /// Create an aggregate.
+        ///     Create an aggregate.
         /// </summary>
         /// <param name="operationName">The name of the operation</param>
-        /// <param name="pipelineDefinition">The <see cref="PipelineDefinition{TInput,TOutput}"/></param>
+        /// <param name="pipelineDefinition">The <see cref="PipelineDefinition{TInput,TOutput}" /></param>
         /// <param name="resultFunction">The result function</param>
         /// <param name="options">Options</param>
         /// <param name="sessionHandle">Session Handle</param>
@@ -23,11 +22,14 @@ namespace Solari.Callisto
         /// <typeparam name="T">Type of the entity</typeparam>
         /// <typeparam name="TProjectionModel">Type of the projection model</typeparam>
         /// <typeparam name="TResult">The final result of the query</typeparam>
-        /// <returns><see cref="ICallistoAggregation{T,TProjectionModel,TResult}"/></returns>
+        /// <returns>
+        ///     <see cref="ICallistoAggregation{T,TProjectionModel,TResult}" />
+        /// </returns>
         public ICallistoAggregation<T, TProjectionModel, TResult> CreateAggregation<T, TProjectionModel, TResult>(string operationName,
                                                                                                                   PipelineDefinition<T, TProjectionModel>
                                                                                                                       pipelineDefinition,
-                                                                                                                  Func<IAsyncCursor<TProjectionModel>, TResult> resultFunction,
+                                                                                                                  Func<IAsyncCursor<TProjectionModel>, TResult>
+                                                                                                                      resultFunction,
                                                                                                                   AggregateOptions options = null,
                                                                                                                   IClientSessionHandle sessionHandle = null,
                                                                                                                   CancellationToken? cancellationToken = null)
@@ -42,7 +44,7 @@ namespace Solari.Callisto
         }
 
         /// <summary>
-        ///  Create query by id.
+        ///     Create query by id.
         /// </summary>
         /// <param name="operationName">Operation Name</param>
         /// <param name="id">The filter for the query</param>
@@ -52,7 +54,9 @@ namespace Solari.Callisto
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <typeparam name="T">Type of the entity</typeparam>
         /// <typeparam name="TResult">Type of the query result</typeparam>
-        /// <returns><see cref="ICallistoQuery{T,TResult}"/></returns>
+        /// <returns>
+        ///     <see cref="ICallistoQuery{T,TResult}" />
+        /// </returns>
         public ICallistoQuery<T, TResult> CreateByIdQuery<T, TResult>(string operationName, ObjectId id,
                                                                       Func<IAsyncCursor<T>, TResult> resultFunction,
                                                                       FindOptions<T> findOptions = null, IClientSessionHandle sessionHandle = null,
@@ -64,7 +68,7 @@ namespace Solari.Callisto
         }
 
         /// <summary>
-        /// Create a query.
+        ///     Create a query.
         /// </summary>
         /// <param name="operationName">Operation Name</param>
         /// <param name="filterDefinition">The filter for the query</param>
@@ -74,7 +78,9 @@ namespace Solari.Callisto
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <typeparam name="T">Type of the entity</typeparam>
         /// <typeparam name="TResult">Type of the query result</typeparam>
-        /// <returns><see cref="ICallistoQuery{T,TResult}"/></returns>
+        /// <returns>
+        ///     <see cref="ICallistoQuery{T,TResult}" />
+        /// </returns>
         public ICallistoQuery<T, TResult> CreateQuery<T, TResult>(string operationName, FilterDefinition<T> filterDefinition,
                                                                   Func<IAsyncCursor<T>, TResult> resultFunction,
                                                                   FindOptions<T> findOptions = null, IClientSessionHandle sessionHandle = null,
@@ -89,7 +95,7 @@ namespace Solari.Callisto
         }
 
         /// <summary>
-        /// Create a replace command.
+        ///     Create a replace command.
         /// </summary>
         /// <param name="operationName">The name of the operation</param>
         /// <param name="replacement">The replacement entity</param>
@@ -98,7 +104,9 @@ namespace Solari.Callisto
         /// <param name="sessionHandle">Session Handle</param>
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <typeparam name="T">The type of the entity</typeparam>
-        /// <returns><see cref="ICallistoReplace{T}"/></returns>
+        /// <returns>
+        ///     <see cref="ICallistoReplace{T}" />
+        /// </returns>
         public ICallistoReplace<T> CreateReplace<T>(string operationName, T replacement, FilterDefinition<T> filterDefinition,
                                                     ReplaceOptions replaceOptions = null, IClientSessionHandle sessionHandle = null,
                                                     CancellationToken? cancellationToken = null) where T : class, IDocumentRoot
@@ -111,7 +119,7 @@ namespace Solari.Callisto
         }
 
         /// <summary>
-        /// Create a replace by id command.
+        ///     Create a replace by id command.
         /// </summary>
         /// <param name="operationName">The name of the operation</param>
         /// <param name="replacement">The replacement entity</param>
@@ -120,7 +128,9 @@ namespace Solari.Callisto
         /// <param name="sessionHandle">Session Handle</param>
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <typeparam name="T">The type of the entity</typeparam>
-        /// <returns><see cref="ICallistoReplace{T}"/></returns>
+        /// <returns>
+        ///     <see cref="ICallistoReplace{T}" />
+        /// </returns>
         public ICallistoReplace<T> CreateReplaceById<T>(string operationName, T replacement, ObjectId id,
                                                         ReplaceOptions replaceOptions = null, IClientSessionHandle sessionHandle = null,
                                                         CancellationToken? cancellationToken = null) where T : class, IDocumentRoot
@@ -132,7 +142,7 @@ namespace Solari.Callisto
         }
 
         /// <summary>
-        /// Create an delete command.
+        ///     Create an delete command.
         /// </summary>
         /// <param name="operationName">The name of the operation</param>
         /// <param name="filterDefinition">The filter for the query</param>
@@ -140,7 +150,9 @@ namespace Solari.Callisto
         /// <param name="sessionHandle">Session handle</param>
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <typeparam name="T">Type of the entity</typeparam>
-        /// <returns><see cref="ICallistoDelete{T}"/></returns>
+        /// <returns>
+        ///     <see cref="ICallistoDelete{T}" />
+        /// </returns>
         public ICallistoDelete<T> CreateDelete<T>(string operationName, FilterDefinition<T> filterDefinition, DeleteOptions deleteOptions = null,
                                                   IClientSessionHandle sessionHandle = null, CancellationToken? cancellationToken = null)
             where T : class, IDocumentRoot
@@ -151,14 +163,16 @@ namespace Solari.Callisto
         }
 
         /// <summary>
-        /// Create an delete command.
+        ///     Create an delete command.
         /// </summary>
         /// <param name="operationName">The name of the operation</param>
         /// <param name="deleteOptions">Options</param>
         /// <param name="sessionHandle">Session handle</param>
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <typeparam name="T">Type of the entity</typeparam>
-        /// <returns><see cref="ICallistoDelete{T}"/></returns>
+        /// <returns>
+        ///     <see cref="ICallistoDelete{T}" />
+        /// </returns>
         public ICallistoDelete<T> CreateDeleteById<T>(string operationName, ObjectId id, DeleteOptions deleteOptions = null,
                                                       IClientSessionHandle sessionHandle = null, CancellationToken? cancellationToken = null)
             where T : class, IDocumentRoot
@@ -169,7 +183,7 @@ namespace Solari.Callisto
         }
 
         /// <summary>
-        /// Create an InsertOne command.
+        ///     Create an InsertOne command.
         /// </summary>
         /// <param name="operationName">The name of the insert operation</param>
         /// <param name="value">Value</param>
@@ -177,7 +191,9 @@ namespace Solari.Callisto
         /// <param name="sessionHandle">Session Handle</param>
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <typeparam name="T">Type of the entity</typeparam>
-        /// <returns><see cref="ICallistoInsert{T}"/></returns>
+        /// <returns>
+        ///     <see cref="ICallistoInsert{T}" />
+        /// </returns>
         public ICallistoInsert<T> CreateInsert<T>(string operationName, T value,
                                                   InsertOneOptions insertOneOptions = null, IClientSessionHandle sessionHandle = null,
                                                   CancellationToken? cancellationToken = null) where T : class, IDocumentRoot
@@ -186,7 +202,7 @@ namespace Solari.Callisto
         }
 
         /// <summary>
-        /// Create an InsertMany command.
+        ///     Create an InsertMany command.
         /// </summary>
         /// <param name="operationName">The name of the insert many operation</param>
         /// <param name="values">The values array</param>
@@ -194,7 +210,9 @@ namespace Solari.Callisto
         /// <param name="sessionHandle">Session Handler</param>
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <typeparam name="T">Entity Type</typeparam>
-        /// <returns><see cref="ICallistoInsertMany{T}"/></returns>
+        /// <returns>
+        ///     <see cref="ICallistoInsertMany{T}" />
+        /// </returns>
         public ICallistoInsertMany<T> CreateInsertMany<T>(string operationName, IEnumerable<T> values,
                                                           InsertManyOptions insertManyOptions = null, IClientSessionHandle sessionHandle = null,
                                                           CancellationToken? cancellationToken = null) where T : class, IDocumentRoot
@@ -205,7 +223,7 @@ namespace Solari.Callisto
 
 
         /// <summary>
-        /// Create an update command.
+        ///     Create an update command.
         /// </summary>
         /// <param name="operationName">The name of the operation</param>
         /// <param name="filterDefinition">Filter</param>
@@ -214,7 +232,9 @@ namespace Solari.Callisto
         /// <param name="sessionHandle"></param>
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <typeparam name="T">Entity type</typeparam>
-        /// <returns><see cref="DefaultCallistoUpdate{T}"/></returns>
+        /// <returns>
+        ///     <see cref="DefaultCallistoUpdate{T}" />
+        /// </returns>
         public ICallistoUpdate<T> CreateUpdate<T>(string operationName, UpdateDefinition<T> updateDefinition,
                                                   FilterDefinition<T> filterDefinition, UpdateOptions updateOptions = null,
                                                   IClientSessionHandle sessionHandle = null, CancellationToken? cancellationToken = null)
@@ -227,7 +247,7 @@ namespace Solari.Callisto
         }
 
         /// <summary>
-        /// Create an update command using the id of the document as filter.
+        ///     Create an update command using the id of the document as filter.
         /// </summary>
         /// <param name="operationName">The name of the operation</param>
         /// <param name="id">Id of the document that will be updated</param>
@@ -236,7 +256,9 @@ namespace Solari.Callisto
         /// <param name="sessionHandle"></param>
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <typeparam name="T">Entity type</typeparam>
-        /// <returns><see cref="DefaultCallistoUpdate{T}"/></returns>
+        /// <returns>
+        ///     <see cref="DefaultCallistoUpdate{T}" />
+        /// </returns>
         public ICallistoUpdate<T> CreateUpdateById<T>(string operationName, ObjectId id,
                                                       UpdateDefinition<T> updateDefinition, UpdateOptions updateOptions = null,
                                                       IClientSessionHandle sessionHandle = null, CancellationToken? cancellationToken = null)
@@ -244,8 +266,8 @@ namespace Solari.Callisto
         {
             return id.Equals(CallistoConstants.ObjectIdDefaultValue)
                        ? DefaultCallistoUpdate<T>.Null()
-                       : CreateUpdate<T>(operationName, updateDefinition, Builders<T>.Filter.Eq(a => a.Id, id), updateOptions,
-                                         sessionHandle, cancellationToken);
+                       : CreateUpdate(operationName, updateDefinition, Builders<T>.Filter.Eq(a => a.Id, id), updateOptions,
+                                      sessionHandle, cancellationToken);
         }
     }
 }

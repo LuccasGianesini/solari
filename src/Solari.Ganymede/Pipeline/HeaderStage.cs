@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security;
 using System.Text;
 using Solari.Deimos.CorrelationId;
@@ -23,10 +22,7 @@ namespace Solari.Ganymede.Pipeline
 
         public PipelineDescriptor PipelineDescriptor { get; }
 
-        public static implicit operator PipelineDescriptor(HeaderStage headerStage)
-        {
-            return headerStage.PipelineDescriptor;
-        }
+        public static implicit operator PipelineDescriptor(HeaderStage headerStage) { return headerStage.PipelineDescriptor; }
 
         public HeaderStage Accept(string value, double? quality = null)
         {
@@ -74,7 +70,6 @@ namespace Solari.Ganymede.Pipeline
         {
             PipelineDescriptor.RequestMessage.AddCorrelationContext(manager.GetOrCreateAndSet(messageId));
             return this;
-
         }
 
         public HeaderStage BearerAuthorization(string value)
@@ -111,6 +106,7 @@ namespace Solari.Ganymede.Pipeline
 
             return this;
         }
+
         public HeaderStage Expect(string key, string value = null)
         {
             _headerBuilder.Expect(key, value);

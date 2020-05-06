@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using Solari.Deimos.CorrelationId;
 using Solari.Ganymede.Framework;
 
 namespace Solari.Ganymede.Builders
@@ -10,14 +9,11 @@ namespace Solari.Ganymede.Builders
     internal sealed class HttpRequestMessageHeaderBuilder : GanymedeHeaderBuilder
 
     {
-        public HttpRequestMessageHeaderBuilder(HttpRequestMessage requestMessage)
-        {
-            RequestMessage = requestMessage;
-        }
+        public HttpRequestMessageHeaderBuilder(HttpRequestMessage requestMessage) { RequestMessage = requestMessage; }
 
         public HttpRequestMessage RequestMessage { get; }
 
-        
+
         public override void Accept(string value, double? quality = null)
         {
             RequestMessage
@@ -26,7 +22,7 @@ namespace Solari.Ganymede.Builders
                 .Add(MediaTypeQualityHeader(value, quality));
         }
 
-        
+
         public override void AcceptCharset(string value, double? quality = null)
         {
             RequestMessage
@@ -35,7 +31,7 @@ namespace Solari.Ganymede.Builders
                 .Add(StringMediaQualityHeader(value, quality));
         }
 
-        
+
         public override void AcceptEncoding(string value, double? quality = null)
         {
             StringWithQualityHeaderValue headerToAdd = StringMediaQualityHeader(value, quality);
@@ -46,7 +42,7 @@ namespace Solari.Ganymede.Builders
                 .Add(headerToAdd);
         }
 
-        
+
         public override void AcceptLanguage(string value, double? quality = null)
         {
             RequestMessage
@@ -55,7 +51,7 @@ namespace Solari.Ganymede.Builders
                 .Add(StringMediaQualityHeader(value, quality));
         }
 
-        
+
         public override void Authorization(string key, string value = null)
         {
             if (key == null) throw new ArgumentNullException(nameof(key));
@@ -65,7 +61,7 @@ namespace Solari.Ganymede.Builders
                 .Authorization = new AuthenticationHeaderValue(key, value);
         }
 
-        
+
         public override void CacheControl(string value)
         {
             if (value == null) throw new ArgumentNullException(nameof(value));
@@ -74,6 +70,7 @@ namespace Solari.Ganymede.Builders
                 .Headers
                 .CacheControl = CacheControlHeaderValue.Parse(value);
         }
+
         public override void CustomHeader(string key, string value)
         {
             RequestMessage
@@ -88,7 +85,7 @@ namespace Solari.Ganymede.Builders
                 .Add(key, values);
         }
 
-        
+
         public override void Expect(string key, string value = null)
         {
             RequestMessage
@@ -97,7 +94,7 @@ namespace Solari.Ganymede.Builders
                 .Add(new NameValueWithParametersHeaderValue(key, value));
         }
 
-        
+
         public override void From(string value)
         {
             RequestMessage
@@ -105,7 +102,7 @@ namespace Solari.Ganymede.Builders
                 .From = value;
         }
 
-        
+
         public override void Host(string value)
         {
             RequestMessage
@@ -113,7 +110,7 @@ namespace Solari.Ganymede.Builders
                 .Host = value;
         }
 
-        
+
         public override void IfModifiedSince(DateTimeOffset? modifiedDate)
         {
             RequestMessage
@@ -121,7 +118,7 @@ namespace Solari.Ganymede.Builders
                 .IfModifiedSince = modifiedDate;
         }
 
-        
+
         public override void IfUnmodifiedSince(DateTimeOffset? modifiedDate)
         {
             RequestMessage
@@ -129,7 +126,7 @@ namespace Solari.Ganymede.Builders
                 .IfUnmodifiedSince = modifiedDate;
         }
 
-        
+
         public override void ProxyAuthorization(string key, string value = null)
         {
             if (key == null) throw new ArgumentNullException(nameof(key));
@@ -139,14 +136,14 @@ namespace Solari.Ganymede.Builders
                 .ProxyAuthorization = new AuthenticationHeaderValue(key, value);
         }
 
-        
+
         public override void Range(long? from, long? to)
         {
             RequestMessage
                 .Headers
                 .Range = new RangeHeaderValue(from, to);
         }
-        
+
         public override void Referrer(Uri uri)
         {
             RequestMessage
@@ -154,7 +151,7 @@ namespace Solari.Ganymede.Builders
                 .Referrer = uri ?? throw new ArgumentNullException(nameof(uri));
         }
 
-        
+
         public override void Referrer(string value)
         {
             if (string.IsNullOrEmpty(value)) throw new ArgumentNullException(nameof(value));
@@ -164,7 +161,7 @@ namespace Solari.Ganymede.Builders
                 .Referrer = new Uri(value);
         }
 
-        
+
         public override void UserAgent(string value)
         {
             if (string.IsNullOrEmpty(value)) throw new ArgumentNullException(nameof(value));

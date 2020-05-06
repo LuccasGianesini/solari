@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Solari.Sol;
 using Solari.Sol.Extensions;
-using StackExchange.Redis;
 
 namespace Solari.Oberon
 {
@@ -16,7 +15,7 @@ namespace Solari.Oberon
             var options = builder.AppConfiguration.GetOptions<OberonOptions>(section);
             if (!options.Enabled)
                 return builder;
-            
+
             builder.Services.Configure<OberonOptions>(builder.AppConfiguration.GetSection(OberonLibConstants.AppSettingsSection));
             builder.Services.AddDistributedRedisCache(config =>
             {

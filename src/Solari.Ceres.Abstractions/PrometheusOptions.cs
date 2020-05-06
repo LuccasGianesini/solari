@@ -2,7 +2,6 @@
 {
     public class PrometheusOptions
     {
-  
         public string OutputFormat { get; set; }
     }
 }

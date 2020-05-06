@@ -1,27 +1,11 @@
-﻿using System.Threading.Tasks;
-using MongoDB.Bson;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
-using Solari.Callisto.Connector;
 using Solari.Callisto.Framework.Operators;
 
 namespace Solari.Callisto
 {
     public abstract class CallistoRepository<TEntity> where TEntity : class, IDocumentRoot
     {
-        protected IMongoCollection<TEntity> Collection { get; }
-        protected ICallistoContext Context { get; }
-        protected ICallistoOperationFactory OperationFactory { get; }
-        protected InsertOperator<TEntity> Insert { get; }
-
-        protected UpdateOperator<TEntity> Update { get; }
-
-        protected DeleteOperator<TEntity> Delete { get; }
-
-        protected ReplaceOperator<TEntity> Replace { get; }
-        
-        protected QueryOperator<TEntity> Query {get;}
-
         protected CallistoRepository(ICallistoContext context)
         {
             Context = context;
@@ -33,5 +17,18 @@ namespace Solari.Callisto
             Replace = new ReplaceOperator<TEntity>(Collection, OperationFactory);
             Query = new QueryOperator<TEntity>(Collection, OperationFactory);
         }
+
+        protected IMongoCollection<TEntity> Collection { get; }
+        protected ICallistoContext Context { get; }
+        protected ICallistoOperationFactory OperationFactory { get; }
+        protected InsertOperator<TEntity> Insert { get; }
+
+        protected UpdateOperator<TEntity> Update { get; }
+
+        protected DeleteOperator<TEntity> Delete { get; }
+
+        protected ReplaceOperator<TEntity> Replace { get; }
+
+        protected QueryOperator<TEntity> Query { get; }
     }
 }

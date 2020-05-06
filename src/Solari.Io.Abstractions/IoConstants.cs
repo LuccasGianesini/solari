@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Solari.Io.Abstractions
+﻿namespace Solari.Io.Abstractions
 {
     public class IoConstants
     {

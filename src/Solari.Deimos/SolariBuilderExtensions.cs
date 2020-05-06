@@ -25,7 +25,6 @@ namespace Solari.Deimos
         {
             solariBuilder.AddDeimosCorrelationId(options.Http.UseMiddleware);
             JaegerTracerConfiguration.AddJaeger(solariBuilder, options);
-            
         }
     }
 }

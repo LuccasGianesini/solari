@@ -18,11 +18,11 @@ namespace Solari.Hyperion
 {
     public class HyperionStartupProcedure : IHostedService, IDisposable
     {
-        private readonly IConsulClient _client;
-        private readonly IServiceProvider _provider;
-        private readonly IHostApplicationLifetime _applicationLifetime;
-        private readonly HyperionOptions _options;
         private readonly ApplicationOptions _app;
+        private readonly IHostApplicationLifetime _applicationLifetime;
+        private readonly IConsulClient _client;
+        private readonly HyperionOptions _options;
+        private readonly IServiceProvider _provider;
         private CancellationTokenSource _cts;
         private bool _disposed;
 
@@ -35,6 +35,14 @@ namespace Solari.Hyperion
             _applicationLifetime = applicationLifetime;
             _options = options.Value;
             _app = app.Value;
+        }
+
+        public void Dispose()
+        {
+            if (_disposed)
+                return;
+            _cts?.Dispose();
+            _disposed = true;
         }
 
 
@@ -98,10 +106,8 @@ namespace Solari.Hyperion
             Uri appUri = GetApplicationUri(address);
             IPAddress ip = Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(x => x.AddressFamily == AddressFamily.InterNetwork);
             if (ip == null)
-            {
                 // Throw when ASPNETCORE_URLS is not defined.
                 throw new HyperionHostedException("Could not find instance host IP. ");
-            }
 
 
             return new AgentServiceRegistration
@@ -118,8 +124,7 @@ namespace Solari.Hyperion
         private AgentServiceCheck BuildServiceCheck(Uri appUri, IPAddress ip)
         {
             if (_options.HealthCheck.AddHealthCheck)
-            {
-                return new AgentServiceCheck()
+                return new AgentServiceCheck
                 {
                     HTTP = $"{appUri.Scheme}://{ip}:{appUri.Port}/hc",
                     Timeout = _options.HealthCheck.CheckTimeout.ToTimeSpan(),
@@ -127,7 +132,6 @@ namespace Solari.Hyperion
                     TLSSkipVerify = _options.HealthCheck.TlsSkipVerify,
                     DeregisterCriticalServiceAfter = TimeSpan.FromMinutes(5)
                 };
-            }
 
             return default;
         }
@@ -145,13 +149,5 @@ namespace Solari.Hyperion
         }
 
         private Uri GetApplicationUri(string address) { return string.IsNullOrEmpty(address) ? null : new Uri(address.Replace("*", "localhost")); }
-
-        public void Dispose()
-        {
-            if (_disposed)
-                return;
-            _cts?.Dispose();
-            _disposed = true;
-        }
     }
 }

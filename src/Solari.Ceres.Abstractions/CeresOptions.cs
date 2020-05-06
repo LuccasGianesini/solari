@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using App.Metrics;
-using App.Metrics.AspNetCore.Tracking.Internal;
-using App.Metrics.Filtering;
-
-namespace Solari.Ceres.Abstractions
+﻿namespace Solari.Ceres.Abstractions
 {
     public class CeresOptions
     {

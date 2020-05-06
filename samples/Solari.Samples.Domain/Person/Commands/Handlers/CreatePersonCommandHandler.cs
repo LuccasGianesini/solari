@@ -9,10 +9,10 @@ namespace Solari.Samples.Domain.Person.Commands.Handlers
 {
     public class CreatePersonCommandHandler : ICommandHandler<CreatePersonCommand>
     {
-        private readonly ITitanLogger<CreatePersonCommandHandler> _logger;
         private readonly IDispatcher _dispatcher;
-        private readonly IPersonRepository _repository;
+        private readonly ITitanLogger<CreatePersonCommandHandler> _logger;
         private readonly IPersonOperations _operations;
+        private readonly IPersonRepository _repository;
 
         public CreatePersonCommandHandler(ITitanLogger<CreatePersonCommandHandler> logger, IDispatcher dispatcher,
                                           IPersonRepository repository, IPersonOperations operations)
@@ -26,7 +26,7 @@ namespace Solari.Samples.Domain.Person.Commands.Handlers
         public async Task HandleCommandAsync(CreatePersonCommand command)
         {
             Helper.DefaultCommandLogMessage(_logger, PersonConstants.CreatePersonOperationName);
-            
+
             ICallistoInsert<Person> operation = _operations.CreateInsertOperation(command);
             CreatePersonResult repositoryResult = await _repository.InsertPerson(operation);
             if (repositoryResult.Success)
@@ -36,11 +36,10 @@ namespace Solari.Samples.Domain.Person.Commands.Handlers
             }
             else
             {
-                _logger.Error($"Error while trying to save person into the database");
+                _logger.Error("Error while trying to save person into the database");
             }
-            
-            command.Result = repositoryResult;
 
+            command.Result = repositoryResult;
         }
     }
 }

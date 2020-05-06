@@ -18,7 +18,7 @@ namespace Solari.Samples.Domain.Person.Exceptions
         public InsertPersonException(string message, Exception inner) : base(message, inner) { }
 
         protected InsertPersonException(SerializationInfo info,
-                              StreamingContext context) : base(info, context)
+                                        StreamingContext context) : base(info, context)
         {
         }
     }

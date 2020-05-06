@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Solari.Sol.Utils;
 using Solari.Vanth.Builders;
 
@@ -14,19 +12,16 @@ namespace Solari.Vanth
         public CommonErrorResponse(string code, List<CommonDetailedErrorResponse> details, string errorType, object innerError, string message,
                                    string target)
         {
-            Code       = code;
-            Details    = details;
-            ErrorType  = errorType;
+            Code = code;
+            Details = details;
+            ErrorType = errorType;
             InnerError = innerError;
-            Message    = message;
-            Target     = target;
+            Message = message;
+            Target = target;
         }
 
-        public CommonErrorResponse()
-        {
-            
-        }
-        
+        public CommonErrorResponse() { }
+
         public string Code { get; }
         public List<CommonDetailedErrorResponse> Details { get; } = new List<CommonDetailedErrorResponse>(2);
         public string ErrorType { get; }
@@ -35,10 +30,24 @@ namespace Solari.Vanth
         public string Target { get; }
 
         /// <summary>
-        /// Adds an <see cref="CommonDetailedErrorResponse"/> into the details list.
+        ///     Indicates if there is any details in the details list.
+        /// </summary>
+        public bool HasDetails => Details.Any();
+
+
+        /// <summary>
+        ///     Indicates if the InnerError property is different the null.
+        ///     It does not check if the property is a primitive, string, DateTime, Timespan, etc. and then checks the value.
+        /// </summary>
+        public bool HasInnerError => InnerError != null;
+
+        /// <summary>
+        ///     Adds an <see cref="CommonDetailedErrorResponse" /> into the details list.
         /// </summary>
         /// <param name="detailedError">The detail of error</param>
-        /// <returns><see cref="CommonErrorResponse"/></returns>
+        /// <returns>
+        ///     <see cref="CommonErrorResponse" />
+        /// </returns>
         public CommonErrorResponse AddDetailedError(CommonDetailedErrorResponse detailedError)
         {
             Details.Add(detailedError);
@@ -46,11 +55,13 @@ namespace Solari.Vanth
         }
 
         /// <summary>
-        /// Adds and <see cref="IEnumerable{T}"/> of <see cref="CommonDetailedErrorResponse"/> into the details list.
-        /// It does not clears the list.
+        ///     Adds and <see cref="IEnumerable{T}" /> of <see cref="CommonDetailedErrorResponse" /> into the details list.
+        ///     It does not clears the list.
         /// </summary>
         /// <param name="detailedErrors"></param>
-        /// <returns><see cref="CommonErrorResponse"/></returns>
+        /// <returns>
+        ///     <see cref="CommonErrorResponse" />
+        /// </returns>
         public CommonErrorResponse AddDetailedError(IEnumerable<CommonDetailedErrorResponse> detailedErrors)
         {
             Details.AddRange(detailedErrors);
@@ -58,28 +69,18 @@ namespace Solari.Vanth
         }
 
         /// <summary>
-        /// Adds an <see cref="CommonDetailedErrorResponse"/> into the details list.
+        ///     Adds an <see cref="CommonDetailedErrorResponse" /> into the details list.
         /// </summary>
-        /// <param name="detailedErrors"><see cref="ICommonDetailedErrorResponseBuilder"/> delegate</param>
-        /// <returns><see cref="CommonErrorResponse"/></returns>
+        /// <param name="detailedErrors"><see cref="ICommonDetailedErrorResponseBuilder" /> delegate</param>
+        /// <returns>
+        ///     <see cref="CommonErrorResponse" />
+        /// </returns>
         public CommonErrorResponse AddDetailedError(Func<ICommonDetailedErrorResponseBuilder, CommonDetailedErrorResponse> detailedErrors)
         {
             AddDetailedError(detailedErrors(new CommonDetailedErrorResponseBuilder()));
             return this;
         }
 
-        /// <summary>
-        /// Indicates if there is any details in the details list.
-        /// </summary>
-        public bool HasDetails => Details.Any();
-
-
-        /// <summary>
-        /// Indicates if the InnerError property is different the null.
-        /// It does not check if the property is a primitive, string, DateTime, Timespan, etc. and then checks the value.
-        /// </summary>
-        public bool HasInnerError => InnerError != null;
-        
         public override string ToString()
         {
             return
@@ -87,9 +88,9 @@ namespace Solari.Vanth
         }
 
         /// <summary>
-        /// Tries to get the list of details. 
+        ///     Tries to get the list of details.
         /// </summary>
-        /// <param name="errorStack">List of <see cref="CommonDetailedErrorResponse"/> wrapped in a <see cref="Maybe{T}"/></param>
+        /// <param name="errorStack">List of <see cref="CommonDetailedErrorResponse" /> wrapped in a <see cref="Maybe{T}" /></param>
         /// <returns>True if the property HasDetails is true. False if it is false</returns>
         public bool TryGetDetails(out Maybe<List<CommonDetailedErrorResponse>> errorStack)
         {
@@ -106,9 +107,9 @@ namespace Solari.Vanth
         }
 
         /// <summary>
-        /// Tries to get the inner error.
+        ///     Tries to get the inner error.
         /// </summary>
-        /// <param name="innerError">Property InnerError wrapped in a <see cref="Maybe{T}"/></param>
+        /// <param name="innerError">Property InnerError wrapped in a <see cref="Maybe{T}" /></param>
         /// <returns>True if the property HasInnerError is true. False if it is false</returns>
         public bool TryGetInnerError(out Maybe<object> innerError)
         {
@@ -125,11 +126,11 @@ namespace Solari.Vanth
         }
 
         /// <summary>
-        /// Clear the details list.
+        ///     Clear the details list.
         /// </summary>
         public void ClearDetails()
         {
-            if(Details.Any())
+            if (Details.Any())
                 Details.Clear();
         }
     }

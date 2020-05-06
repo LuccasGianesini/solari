@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Solari.Vanth.Exceptions;
 
 namespace Solari.Vanth.Builders
@@ -8,7 +7,7 @@ namespace Solari.Vanth.Builders
     public class CommonErrorResponseBuilder : ICommonErrorResponseBuilder
     {
         private string _code;
-        private List<CommonDetailedErrorResponse> _details = new List<CommonDetailedErrorResponse>();
+        private readonly List<CommonDetailedErrorResponse> _details = new List<CommonDetailedErrorResponse>();
         private string _errorType;
         private object _innerError;
         private string _message;

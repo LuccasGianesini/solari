@@ -6,7 +6,8 @@ namespace Solari.Ganymede.Framework
 {
     public sealed class CommandTypeRegistry
     {
-        
+        private static readonly CommandTypeRegistry SingletonInstance = new CommandTypeRegistry();
+
         private readonly ConcurrentDictionary<string, IHeaderBuilderCommand> _types = new ConcurrentDictionary<string, IHeaderBuilderCommand>
         {
             ["ACCEPT"] = new AcceptCommand(),
@@ -27,15 +28,9 @@ namespace Solari.Ganymede.Framework
             ["CUSTOM"] = new CustomHeaderCommand()
         };
 
-        private static readonly CommandTypeRegistry SingletonInstance = new CommandTypeRegistry();
+        static CommandTypeRegistry() { }
 
-        static CommandTypeRegistry()
-        {
-        }
-
-        private CommandTypeRegistry()
-        {
-        }
+        private CommandTypeRegistry() { }
 
         // ReSharper disable once ConvertToAutoProperty
         public static CommandTypeRegistry Instance => SingletonInstance;

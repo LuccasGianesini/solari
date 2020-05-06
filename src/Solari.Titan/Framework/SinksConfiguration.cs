@@ -1,14 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Text;
-using Elastic.CommonSchema.Serilog;
 using Serilog;
-using Serilog.Events;
 using Serilog.Formatting.Json;
-using Serilog.Sinks.Elasticsearch;
 using Serilog.Sinks.Graylog;
-using Serilog.Sinks.SystemConsole.Themes;
-using Solari.Sol;
 using Solari.Sol.Extensions;
 using Solari.Titan.Abstractions;
 
@@ -16,19 +9,20 @@ namespace Solari.Titan.Framework
 {
     internal static class SinksConfiguration
     {
-        internal static LoggerConfiguration ConfigureConsole(this LoggerConfiguration configuration, bool useConsole)
+        internal static LoggerConfiguration ConfigureConsole(this LoggerConfiguration configuration, TitanOptions options)
         {
-            if (!useConsole) return configuration;
+            if (options.Console == null || options.Console.Enabled == false)
+                return configuration;
 
             configuration.WriteTo
-                         .Console(outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss}][{Level:u3}]{Message:lj} {NewLine}{Exception}",theme: AnsiConsoleTheme.Code);
+                         .Console(outputTemplate: options.Console.OutputTemplate, theme: options.Console.GetConsoleTheme());
 
             return configuration;
         }
 
         internal static LoggerConfiguration ConfigureFile(this LoggerConfiguration configuration, TitanOptions options, string contentRootPath = "")
         {
-            if (!options.UseFile || options.File == null) return configuration;
+            if (options.File == null || options.File.Enabled == false) return configuration;
 
             string path = options.File.UseContentRoot
                               ? TitanLibHelper.BuildPath(contentRootPath, "logs", ".json")
@@ -44,12 +38,12 @@ namespace Solari.Titan.Framework
 
         internal static LoggerConfiguration ConfigureSeq(this LoggerConfiguration configuration, TitanOptions options)
         {
-            if (!options.UseSeq || options.Seq == null) return configuration;
+            if (options.Seq == null || options.Seq.Enabled == false) return configuration;
 
             long batchPosting = options.Seq.RawIngestionPayload / options.Seq.EventBodySizeLimit;
 
             configuration.WriteTo.Seq(options.Seq.IngestionEndpoint,
-                                      TitanLibHelper.GetLogLevel(options.LogLevelRestriction),
+                                      TitanLibHelper.GetLogLevel(options.Seq.LogLevelRestriction),
                                       period: options.Seq.Period.ToTimeSpan(), apiKey: options.Seq.Apikey, compact: true,
                                       eventBodyLimitBytes: options.Seq.EventBodySizeLimit, batchPostingLimit: (int) batchPosting,
                                       queueSizeLimit: options.Seq.QueueSizeLimit);
@@ -57,60 +51,21 @@ namespace Solari.Titan.Framework
             return configuration;
         }
 
-        internal static LoggerConfiguration ConfigureElasticSearch(this LoggerConfiguration configuration, TitanOptions options, ApplicationOptions applicationOptions)
+        internal static LoggerConfiguration ConfigureGrayLog(this LoggerConfiguration configuration, TitanOptions options)
         {
-            if (!options.UseElk || options.Elk == null) return configuration;
-            var elastic = new ElasticsearchSinkOptions(new Uri(options.Elk.Url))
+            var sinkOptions = new GraylogSinkOptions
             {
-                EmitEventFailure = EmitEventFailureHandling.RaiseCallback,
-                FailureCallback = e =>
-                {
-                    StringBuilder message = new StringBuilder()
-                                            .Append("Error submitting events to elasticsearch sink: ")
-                                            .Append("Template: ").Append(e.MessageTemplate).AppendLine()
-                                            .Append("Timestamp: ").Append(e.Timestamp).AppendLine()
-                                            .Append("Level: ").Append(e.Level).AppendLine()
-                                            .Append("Exception: ").Append(e.Exception).AppendLine()
-                                            .Append("Properties: ").AppendLine();
-
-
-                    foreach (KeyValuePair<string,LogEventPropertyValue> keyValuePair in e.Properties)
-                    {
-                        message.Append(keyValuePair.Key).Append(":").Append(keyValuePair.Value).AppendLine();
-                    }
-                        
-                    Log.Error(message.ToString());
-                },
-                
-                MinimumLogEventLevel = TitanLibHelper.GetLogLevel(options.LogLevelRestriction),
-                AutoRegisterTemplate = options.Elk.AutoRegisterTemplate,
-                AutoRegisterTemplateVersion = options.Elk.GetAutoRegisterTemplateVersion(),
-                BufferFileCountLimit = options.Elk.BufferFileCountLimit,
-                Period = options.Elk.GetPeriod(),
-                BatchPostingLimit = options.Elk.BatchPostingLimit,
-                QueueSizeLimit = options.Elk.QueueSizeLimit,
-                BufferCleanPayload = (failingEvent, statuscode, exception) =>
-                {
-                    Log.Error($"Error while sending payload to server. Code: {statuscode}  Message: {exception}");
-                    return exception;
-                },
-                BufferLogShippingInterval = options.Elk.GetBufferLogShippingInterval(),
-                IndexFormat = string.IsNullOrWhiteSpace(options.Elk.IndexFormat)
-                                  ? $"{applicationOptions.ApplicationName}-{DateTime.Now:dd-MM-yyyy}"
-                                  : options.Elk.IndexFormat,
-                ModifyConnectionSettings = connectionConfiguration =>
-                    options.Elk.BasicAuthEnabled
-                        ? connectionConfiguration.BasicAuthentication(options.Elk.Username, options.Elk.Password)
-                        : connectionConfiguration,
-                CustomFormatter = new EcsTextFormatter()
+                Facility = options.GrayLog.Facility,
+                Port = options.GrayLog.Port,
+                TransportType = options.GrayLog.GetTransportType(),
+                HostnameOrAddress = options.GrayLog.Address,
+                StackTraceDepth = options.GrayLog.StackTraceDepth,
+                MaxMessageSizeInUdp = options.GrayLog.MaxMessageSizeInUdp,
+                ShortMessageMaxLength = options.GrayLog.ShortMessageMaxLength,
+                MinimumLogEventLevel = options.GrayLog.GetMinimumLogEventLevel(),
+                MessageGeneratorType = options.GrayLog.GetMessageIdGeneratorType()
             };
-            configuration.WriteTo.Elasticsearch(elastic);
-
-            return configuration;
-        }
-        internal static LoggerConfiguration ConfigureGreyLog(this LoggerConfiguration configuration, TitanOptions options)
-        {
-            return !options.UseGreyLog || options.GreyLog == null ? configuration : configuration.WriteTo.Graylog(options.GreyLog);
+            return options.GrayLog == null || options.GrayLog.Enabled == false ? configuration : configuration.WriteTo.Graylog(sinkOptions);
         }
     }
 }

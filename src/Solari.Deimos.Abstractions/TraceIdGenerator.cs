@@ -9,18 +9,12 @@ namespace Solari.Deimos.Abstractions
         private static long _requestId = DateTime.UtcNow.Ticks;
         private string _id;
 
-        public TraceIdGenerator()
-        {
-            
-        }
+        public TraceIdGenerator() { }
 
-        public TraceIdGenerator(string id)
-        {
-            _id = id;
-        }
-        public string TraceIdentifier 
-            => _id ??= GenerateRequestId(Interlocked.Increment(ref _requestId));
-        
+        public TraceIdGenerator(string id) { _id = id; }
+
+        public string TraceIdentifier => _id ??= GenerateRequestId(Interlocked.Increment(ref _requestId));
+
 
         private static unsafe string GenerateRequestId(long id)
         {
@@ -41,7 +35,9 @@ namespace Solari.Deimos.Abstractions
 
             return new string((char*) numPtr, 0, 13);
         }
-        public static string Create() => new TraceIdGenerator().TraceIdentifier;
-        public static string Create(string id) => new TraceIdGenerator(id).TraceIdentifier;
+
+        public static string Create() { return new TraceIdGenerator().TraceIdentifier; }
+
+        public static string Create(string id) { return new TraceIdGenerator(id).TraceIdentifier; }
     }
 }

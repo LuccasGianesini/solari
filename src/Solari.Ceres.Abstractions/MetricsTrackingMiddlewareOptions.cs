@@ -11,10 +11,10 @@ namespace Solari.Ceres.Abstractions
         public bool OAuth2Tracking { get; set; }
         public bool ApdexTracking { get; set; } = true;
         public int ApdexSeconds { get; set; } = 1;
+
         public List<int> IgnoredHttpStatusCodes { get; set; } = new List<int>
         {
             404
         };
-        
     }
 }

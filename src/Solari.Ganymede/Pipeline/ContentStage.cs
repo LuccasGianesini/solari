@@ -8,18 +8,12 @@ namespace Solari.Ganymede.Pipeline
 {
     public class ContentStage : IPipelineStage
     {
-        public ContentStage(PipelineDescriptor pipelineDescriptor)
-        {
-            PipelineDescriptor = pipelineDescriptor;
-        }
-        
+        public ContentStage(PipelineDescriptor pipelineDescriptor) { PipelineDescriptor = pipelineDescriptor; }
+
         public PipelineDescriptor PipelineDescriptor { get; }
 
-        public static implicit operator PipelineDescriptor(ContentStage contentStage)
-        {
-            return contentStage.PipelineDescriptor;
-        }
-        
+        public static implicit operator PipelineDescriptor(ContentStage contentStage) { return contentStage.PipelineDescriptor; }
+
         /// <summary>
         ///     Use the <see cref="GanymedeRequestResource" /> object to set the necessary attribute values.
         /// </summary>
@@ -33,6 +27,7 @@ namespace Solari.Ganymede.Pipeline
 
             return this;
         }
+
         /// <summary>
         ///     Serializes the content into the correct output.
         /// </summary>
@@ -43,13 +38,12 @@ namespace Solari.Ganymede.Pipeline
         public ContentStage SerializeContent(object content, string contentType = "", Encoding encoding = null)
         {
             PipelineDescriptor.RequestMessage.Content = SerializerManager.SendToSerializer(content, PipelineDescriptor.RequestMessage,
-                                                                                          contentType, encoding);
+                                                                                           contentType, encoding);
 
             return this;
         }
-        
-      
-        
+
+
         /// <summary>
         ///     Set the content deserializer (<see cref="IContentSerializer" />) for the current
         ///     <see cref="System.Net.Http.HttpRequestMessage" />.
@@ -68,7 +62,7 @@ namespace Solari.Ganymede.Pipeline
 
             return this;
         }
-        
+
 
         /// <summary>
         ///     Set the content serializer (<see cref="IContentSerializer" />) for the current

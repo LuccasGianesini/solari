@@ -11,13 +11,10 @@ namespace Solari.Sol.Utils
         private string _id;
 
         /// <summary>
-        /// Generates a TraceId.
+        ///     Generates a TraceId.
         /// </summary>
         /// <returns></returns>
-        public string TraceIdentifier()
-        {
-            return _id ??= GenerateRequestId(Interlocked.Increment(ref _requestId));
-        }
+        public string TraceIdentifier() { return _id ??= GenerateRequestId(Interlocked.Increment(ref _requestId)); }
 
         private static unsafe string GenerateRequestId(long id)
         {

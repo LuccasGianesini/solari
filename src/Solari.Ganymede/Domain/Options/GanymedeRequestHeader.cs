@@ -1,5 +1,4 @@
-﻿using System;
-using Solari.Ganymede.Builders;
+﻿using Solari.Ganymede.Builders;
 
 namespace Solari.Ganymede.Domain.Options
 {
@@ -24,7 +23,5 @@ namespace Solari.Ganymede.Domain.Options
 	    ///     For single parameter method like IfModifiedSince, set this as the value for the parameter.
 	    /// </summary>
 	    public string Value { get; set; }
-
-	
     }
 }

@@ -17,7 +17,7 @@ namespace Solari.Io
                 return builder;
             if (options.EnableUi)
             {
-                builder.MapHealthChecks(options.HealthEndpoint, new HealthCheckOptions()
+                builder.MapHealthChecks(options.HealthEndpoint, new HealthCheckOptions
                 {
                     Predicate = _ => true,
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
@@ -26,7 +26,7 @@ namespace Solari.Io
                 return builder;
             }
 
-            builder.MapHealthChecks(options.HealthEndpoint, new HealthCheckOptions()
+            builder.MapHealthChecks(options.HealthEndpoint, new HealthCheckOptions
             {
                 Predicate = _ => true
             });

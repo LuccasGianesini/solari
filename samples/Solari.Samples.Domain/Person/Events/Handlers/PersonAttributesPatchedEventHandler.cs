@@ -10,11 +10,6 @@ namespace Solari.Samples.Domain.Person.Events.Handlers
         private readonly ITitanLogger<PersonAttributesPatchedEventHandler> _logger;
         private readonly ITracer _tracer;
 
-        public PersonAttributesPatchedEventHandler()
-        {
-           
-        }
-
         public async Task HandleEventAsync(PersonAttributesPatchedEvent @event) { }
     }
 }

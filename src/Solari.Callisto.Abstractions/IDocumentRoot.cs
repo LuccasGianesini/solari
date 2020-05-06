@@ -1,5 +1,4 @@
-﻿using System.Runtime.Serialization;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 
 namespace Solari.Callisto.Abstractions
 {

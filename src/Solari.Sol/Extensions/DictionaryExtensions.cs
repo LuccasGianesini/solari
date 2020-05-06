@@ -6,7 +6,7 @@ namespace Solari.Sol.Extensions
     public static class DictionaryExtensions
     {
         /// <summary>
-        /// Tries to add a value into a dictionary.
+        ///     Tries to add a value into a dictionary.
         /// </summary>
         /// <param name="dictionary">The dictionary</param>
         /// <param name="key">Key</param>
@@ -27,8 +27,8 @@ namespace Solari.Sol.Extensions
         }
 
         /// <summary>
-        /// Tries to get a value of the dictionary. If the value is in the dictionary, the value is returned.
-        /// If it is the value from valueFactory is added to the dictionary. 
+        ///     Tries to get a value of the dictionary. If the value is in the dictionary, the value is returned.
+        ///     If it is the value from valueFactory is added to the dictionary.
         /// </summary>
         /// <param name="dictionary">The dictionary</param>
         /// <param name="key">Key</param>
@@ -57,7 +57,7 @@ namespace Solari.Sol.Extensions
         }
 
         /// <summary>
-        /// Tries to remove a value from the dictionary.
+        ///     Tries to remove a value from the dictionary.
         /// </summary>
         /// <param name="dictionary">The dictionary</param>
         /// <param name="key">Key</param>
@@ -72,9 +72,9 @@ namespace Solari.Sol.Extensions
 
             return dictionary.TryGetValue(key, out value) && dictionary.Remove(key);
         }
-        
+
         /// <summary>
-        /// Tries to update a value in the dictionary. 
+        ///     Tries to update a value in the dictionary.
         /// </summary>
         /// <param name="dictionary">The dictionary</param>
         /// <param name="key">key</param>

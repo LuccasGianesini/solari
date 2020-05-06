@@ -9,7 +9,7 @@ namespace Solari.Callisto.DependencyInjection
     public static class SolariBuilderExtensions
     {
         /// <summary>
-        /// Add callisto and callisto connector into the DI container.
+        ///     Add callisto and callisto connector into the DI container.
         /// </summary>
         /// <param name="solariBuilder"></param>
         /// <param name="configure"></param>

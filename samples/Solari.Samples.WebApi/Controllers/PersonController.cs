@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-
 using Microsoft.AspNetCore.Mvc;
-
 using MongoDB.Driver;
 using Solari.Eris;
 using Solari.Samples.Domain;
-
 using Solari.Samples.Domain.Person.Commands;
 using Solari.Samples.Domain.Person.Results;
 using Solari.Titan;

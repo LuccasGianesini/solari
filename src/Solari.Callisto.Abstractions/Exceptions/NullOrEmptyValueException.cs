@@ -17,9 +17,8 @@ namespace Solari.Callisto.Abstractions.Exceptions
         public NullOrEmptyValueException(string message) : base(message) { }
         public NullOrEmptyValueException(string message, Exception inner) : base(message, inner) { }
 
-        protected NullOrEmptyValueException
-        (SerializationInfo info,
-         StreamingContext context) : base(info, context)
+        protected NullOrEmptyValueException(SerializationInfo info,
+                                            StreamingContext context) : base(info, context)
         {
         }
     }

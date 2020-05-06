@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -31,16 +29,18 @@ namespace Solari.Samples.WorkerService
             }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureServices((hostContext, services) =>
-                {
-                    services.AddSol(hostContext.Configuration)
-                            .AddDeimos()
-                            .AddOberon()
-                            .AddGanymede(actions => actions.AddGanymedeClient<ITestClient, TestClient>("Solari-Samples"));
-                    
-                    services.AddHostedService<Worker>();
-                });
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+                       .ConfigureServices((hostContext, services) =>
+                       {
+                           services.AddSol(hostContext.Configuration)
+                                   .AddDeimos()
+                                   .AddOberon()
+                                   .AddGanymede(actions => actions.AddGanymedeClient<ITestClient, TestClient>("Solari-Samples"));
+
+                           services.AddHostedService<Worker>();
+                       });
+        }
     }
 }

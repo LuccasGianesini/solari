@@ -5,9 +5,9 @@ namespace Solari.Callisto.Connector
 {
     public class CallistoConnectionBuilder
     {
+        private string _dataBaseName;
 
         private IMongoClient _mongoClient;
-        private string _dataBaseName;
 
 
         public CallistoConnectionBuilder WithMongoClient(Func<MongoClientBuilder, MongoClient> builder)
@@ -15,7 +15,7 @@ namespace Solari.Callisto.Connector
             _mongoClient = builder(new MongoClientBuilder());
             return this;
         }
-        
+
         public CallistoConnectionBuilder WithMongoClient(MongoClient mongoClient)
         {
             _mongoClient = mongoClient;
@@ -30,8 +30,8 @@ namespace Solari.Callisto.Connector
 
         public ICallistoConnection Build()
         {
-            if(_mongoClient == null) throw new ArgumentException("No MongoClient created. Make sure build the client beforehand");
-            if(string.IsNullOrEmpty(_dataBaseName)) throw new ArgumentException("No database name supplied.");
+            if (_mongoClient == null) throw new ArgumentException("No MongoClient created. Make sure build the client beforehand");
+            if (string.IsNullOrEmpty(_dataBaseName)) throw new ArgumentException("No database name supplied.");
             return new CallistoConnection().AddClient(_mongoClient).AddDataBase(_dataBaseName);
         }
     }

@@ -11,10 +11,10 @@ namespace Solari.Callisto.Connector
 {
     public sealed class CallistoConnection : ICallistoConnection, IDisposable
     {
-        private readonly ReaderWriterLockSlim _lockSlim;
         private readonly Dictionary<string, IMongoClient> _client;
-        private bool _disposed;
+        private readonly ReaderWriterLockSlim _lockSlim;
         private IMongoDatabase _database;
+        private bool _disposed;
 
         public CallistoConnection()
         {
@@ -98,7 +98,7 @@ namespace Solari.Callisto.Connector
 
         public void Dispose()
         {
-            if(_disposed)
+            if (_disposed)
                 return;
             _lockSlim?.Dispose();
             _disposed = true;

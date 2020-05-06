@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using Solari.Ganymede.Domain.Exceptions;
 using Solari.Ganymede.Domain.Options;
 using Solari.Ganymede.Pipeline;
 
@@ -21,11 +18,7 @@ namespace Solari.Ganymede
         }
 
 
-        public PipelineManager ForResource(string resourceName)
-        {
-        
-            return new PipelineManager(_httpClient, _request.GetResource(resourceName));
-        }
+        public PipelineManager ForResource(string resourceName) { return new PipelineManager(_httpClient, _request.GetResource(resourceName)); }
 
         public PipelineManager ForResource(GanymedeRequestResource resource)
         {

@@ -1,18 +1,13 @@
-using System;
-using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Mvc;
-using Solari.Callisto;
 using Solari.Callisto.Connector;
 using Solari.Callisto.Connector.DependencyInjection;
 using Solari.Callisto.DependencyInjection;
 using Solari.Callisto.Tracer;
-using Solari.Ceres;
 using Solari.Ceres.DependencyInjection;
 using Solari.Deimos;
 using Solari.Eris;
@@ -63,10 +58,7 @@ namespace Solari.Samples.WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseOpenApi();
             app.UseSwaggerUi3();

@@ -18,7 +18,7 @@ namespace Solari.Io.Abstractions
         public SolariIoException(string message, Exception inner) : base(message, inner) { }
 
         protected SolariIoException(SerializationInfo info,
-                              StreamingContext context) : base(info, context)
+                                    StreamingContext context) : base(info, context)
         {
         }
     }

@@ -17,9 +17,8 @@ namespace Solari.Callisto.Abstractions.Exceptions
         public NullResultFunctionException(string message) : base(message) { }
         public NullResultFunctionException(string message, Exception inner) : base(message, inner) { }
 
-        protected NullResultFunctionException
-        (SerializationInfo info,
-         StreamingContext context) : base(info, context)
+        protected NullResultFunctionException(SerializationInfo info,
+                                              StreamingContext context) : base(info, context)
         {
         }
     }

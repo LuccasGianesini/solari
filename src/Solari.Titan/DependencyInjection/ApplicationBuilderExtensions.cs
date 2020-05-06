@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,11 +15,11 @@ namespace Solari.Titan.DependencyInjection
     {
         public static IWebHostBuilder UseTitan(this IWebHostBuilder webHostBuilder)
         {
-            return webHostBuilder.ConfigureServices((collection =>
-                                                        {
-                                                            collection.TryAdd(ServiceDescriptor.Singleton(typeof(ILogEnricher<>), typeof(LogEnricher<>)));
-                                                            collection.TryAdd(ServiceDescriptor.Singleton(typeof(ITitanLogger<>), typeof(TitanLogger<>)));
-                                                        }))
+            return webHostBuilder.ConfigureServices(collection =>
+                                 {
+                                     collection.TryAdd(ServiceDescriptor.Singleton(typeof(ILogEnricher<>), typeof(LogEnricher<>)));
+                                     collection.TryAdd(ServiceDescriptor.Singleton(typeof(ITitanLogger<>), typeof(TitanLogger<>)));
+                                 })
                                  .UseSerilog((context, config) =>
                                  {
                                      LoggingDefaultAction(config, GetOptions(context.Configuration),
@@ -31,11 +30,11 @@ namespace Solari.Titan.DependencyInjection
 
         public static IHostBuilder UseTitan(this IHostBuilder hostBuilder)
         {
-            return hostBuilder.ConfigureServices((collection =>
-                                                     {
-                                                         collection.TryAdd(ServiceDescriptor.Singleton(typeof(ILogEnricher<>), typeof(LogEnricher<>)));
-                                                         collection.TryAdd(ServiceDescriptor.Singleton(typeof(ITitanLogger<>), typeof(TitanLogger<>)));
-                                                     }))
+            return hostBuilder.ConfigureServices(collection =>
+                              {
+                                  collection.TryAdd(ServiceDescriptor.Singleton(typeof(ILogEnricher<>), typeof(LogEnricher<>)));
+                                  collection.TryAdd(ServiceDescriptor.Singleton(typeof(ITitanLogger<>), typeof(TitanLogger<>)));
+                              })
                               .UseSerilog((context, config) =>
                               {
                                   LoggingDefaultAction(config, GetOptions(context.Configuration),

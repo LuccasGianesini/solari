@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Solari.Ganymede.Domain.Exceptions;
@@ -9,8 +8,6 @@ namespace Solari.Ganymede
 {
     public class GanymedeRequest<TClientImplementation> : IGanymedeRequest<TClientImplementation>
     {
-        public GanymedeRequestSettings RequestSettings { get; }
-
         private readonly IImmutableDictionary<string, GanymedeRequestResource> _resources;
 
         public GanymedeRequest(GanymedeRequestSettings requestSettings)
@@ -18,6 +15,8 @@ namespace Solari.Ganymede
             RequestSettings = requestSettings;
             _resources = BuildResourceDictionary(RequestSettings);
         }
+
+        public GanymedeRequestSettings RequestSettings { get; }
 
         public GanymedeRequestResource GetResource(string resourceName)
         {

@@ -17,9 +17,8 @@ namespace Solari.Callisto.Abstractions.Exceptions
         public NullPipelineDefinitionException(string message) : base(message) { }
         public NullPipelineDefinitionException(string message, Exception inner) : base(message, inner) { }
 
-        protected NullPipelineDefinitionException
-        (SerializationInfo info,
-         StreamingContext context) : base(info, context)
+        protected NullPipelineDefinitionException(SerializationInfo info,
+                                                  StreamingContext context) : base(info, context)
         {
         }
     }

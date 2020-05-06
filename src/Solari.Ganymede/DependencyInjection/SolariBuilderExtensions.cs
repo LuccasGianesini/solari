@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Solari.Ganymede.Domain;
 using Solari.Ganymede.Domain.Options;
@@ -17,9 +16,9 @@ namespace Solari.Ganymede.DependencyInjection
 {
     public static class SolariBuilderExtensions
     {
-        public static ISolariBuilder AddGanymede(this ISolariBuilder builder, 
+        public static ISolariBuilder AddGanymede(this ISolariBuilder builder,
                                                  Action<HttpClientActions> configureClients,
-                                                 Action<PolicyActions> configurePoliceRegistry = null, 
+                                                 Action<PolicyActions> configurePoliceRegistry = null,
                                                  string yamlFile = GanymedeConstants.YamlFileName)
         {
             AddCoreServices(builder, yamlFile);
@@ -49,10 +48,7 @@ namespace Solari.Ganymede.DependencyInjection
                               : Path.Join(AppContext.BaseDirectory, yamlFileName + "." + builder.HostEnvironment.EnvironmentName + ".yaml");
 
 
-            if (File.Exists(file))
-            {
-                return ReadAndDeserializeYaml(file).ToDictionary(pair => pair.Name, pair => pair);
-            }
+            if (File.Exists(file)) return ReadAndDeserializeYaml(file).ToDictionary(pair => pair.Name, pair => pair);
 
             throw new Exception($"Could not find {file}");
         }

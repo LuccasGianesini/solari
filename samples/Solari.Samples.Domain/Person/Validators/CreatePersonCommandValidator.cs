@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using Solari.Samples.Domain.Person.Commands;
-using Solari.Vanth.Validation;
 
 namespace Solari.Samples.Domain.Person.Validators
 {
@@ -8,7 +7,6 @@ namespace Solari.Samples.Domain.Person.Validators
     {
         public CreatePersonCommandValidator()
         {
-            
             RuleFor(a => a).NotNull()
                            .WithErrorCode(Constants.NullObjectErrorCode)
                            .WithName(Constants.NullObjectErrorName)
@@ -19,7 +17,5 @@ namespace Solari.Samples.Domain.Person.Validators
                                 .WithName(Constants.EmptyPropertyErrorName)
                                 .WithMessage("Person name cannot be empty!");
         }
-
-        
     }
 }

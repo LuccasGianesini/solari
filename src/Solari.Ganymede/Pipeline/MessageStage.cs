@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Threading;
 using Solari.Ganymede.Domain.Options;
 using Solari.Ganymede.Extensions;
-using Solari.Ganymede.Framework;
 
 namespace Solari.Ganymede.Pipeline
 {
@@ -18,10 +17,7 @@ namespace Solari.Ganymede.Pipeline
         /// <inheritdoc />
         public PipelineDescriptor PipelineDescriptor { get; }
 
-        public static implicit operator PipelineDescriptor(MessageStage messageStage)
-        {
-            return messageStage.PipelineDescriptor;
-        }
+        public static implicit operator PipelineDescriptor(MessageStage messageStage) { return messageStage.PipelineDescriptor; }
 
 
         /// <summary>

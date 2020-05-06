@@ -17,14 +17,13 @@ namespace Solari.Callisto.Connector.DependencyInjection
             solariBuilder.AddBuildAction(
                                          new BuildAction("Callisto Connector")
                                          {
-                                             
                                              Action = provider =>
                                              {
                                                  var factory = provider.GetService<ICallistoConnectionFactory>();
                                                  var appOptions = provider.GetService<IOptions<ApplicationOptions>>();
                                                  var callistoOptions = provider.GetService<IOptions<CallistoConnectorOptions>>();
                                                  ICallistoConnection connection = provider.GetService<ICallistoConnection>()
-                                                                                          .AddClient(factory.Make(callistoOptions.Value, 
+                                                                                          .AddClient(factory.Make(callistoOptions.Value,
                                                                                                                   appOptions.Value).GetClient())
                                                                                           .AddDataBase(callistoOptions.Value.Database);
                                                  connection.IsConnected().GetAwaiter().GetResult();

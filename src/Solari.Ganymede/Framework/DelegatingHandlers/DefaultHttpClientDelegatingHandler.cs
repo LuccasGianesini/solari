@@ -5,9 +5,6 @@ namespace Solari.Ganymede.Framework.DelegatingHandlers
 {
     public class DefaultHttpClientDelegatingHandler : HttpClientHandler
     {
-        public DefaultHttpClientDelegatingHandler()
-        {
-            AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
-        }
+        public DefaultHttpClientDelegatingHandler() { AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip; }
     }
 }

@@ -23,7 +23,7 @@ namespace Solari.Vanth
         public string Source { get; }
 
         /// <summary>
-        /// Indicates if the Exception is different the null.
+        ///     Indicates if the Exception is different the null.
         /// </summary>
         public bool HasException => Exception != null;
 
@@ -31,24 +31,22 @@ namespace Solari.Vanth
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder()
-                               .Append($"Detail:").AppendLine()
+                               .Append("Detail:").AppendLine()
                                .Append($"{nameof(Code)}: {Code}").AppendLine()
                                .Append($"{nameof(Message)}: {Message}").AppendLine()
                                .Append($"{nameof(Target)}: {Target}").AppendLine()
                                .Append($"{nameof(Source)}: {Source}").AppendLine();
             if (Exception != null)
-            {
                 sb.Append("Exception:").AppendLine()
                   .Append($"Exception Message: {Exception.Message}")
                   .Append($"Source: {Exception.Source}");
-            }
             return sb.ToString();
         }
 
         /// <summary>
-        /// Tries to get the Exception.
+        ///     Tries to get the Exception.
         /// </summary>
-        /// <param name="mayBeException">The exception wrapped in a <see cref="Maybe{T}"/></param>
+        /// <param name="mayBeException">The exception wrapped in a <see cref="Maybe{T}" /></param>
         /// <returns>True if HasException is true. False if it is false</returns>
         public bool TryGetException(out Maybe<Exception> mayBeException)
         {
@@ -63,6 +61,5 @@ namespace Solari.Vanth
 
             return false;
         }
-
     }
 }

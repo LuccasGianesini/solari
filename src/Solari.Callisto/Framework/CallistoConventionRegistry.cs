@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Conventions;
@@ -9,19 +8,14 @@ namespace Solari.Callisto.Framework
 {
     internal class CallistoConventionRegistry
     {
-        private static readonly CallistoConventionRegistry _instance = new CallistoConventionRegistry();
-        
-        static CallistoConventionRegistry(){}
+        static CallistoConventionRegistry() { }
 
-        private CallistoConventionRegistry()
-        {
-            RegisteredConventions = new Queue<IConvention>(10);
-        }
+        private CallistoConventionRegistry() { RegisteredConventions = new Queue<IConvention>(10); }
 
-        public static CallistoConventionRegistry Instance => _instance;
+        public static CallistoConventionRegistry Instance { get; } = new CallistoConventionRegistry();
 
         internal Queue<IConvention> RegisteredConventions { get; }
-        
+
         public CallistoConventionRegistry AddConvention(IConvention convention)
         {
             if (convention == null) throw new ArgumentNullException(nameof(convention));
@@ -38,9 +32,6 @@ namespace Solari.Callisto.Framework
             RegisteredConventions.Enqueue(new EnumRepresentationConvention(BsonType.String));
             RegisteredConventions.Enqueue(new CallistoGuidConvention());
             RegisteredConventions.Enqueue(new CallistoDecimalConvention());
-            
         }
-        
-        
     }
 }

@@ -41,7 +41,7 @@ namespace Solari.Hyperion.ConfigurationProvider
             var hype = configRoot.GetOptions<HyperionOptions>(HyperionConstants.AppSettingsSection);
             var app = configRoot.GetOptions<ApplicationOptions>(SolariConstants.ApplicationAppSettingsSection);
             hype ??= options(new HyperionOptions());
-            var src = new HyperionConfigurationSource()
+            var src = new HyperionConfigurationSource
             {
                 Options = hype,
                 ApplicationOptions = app

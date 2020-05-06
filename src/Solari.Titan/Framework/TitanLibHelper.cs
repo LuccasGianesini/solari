@@ -6,14 +6,11 @@ namespace Solari.Titan.Framework
 {
     public static class TitanLibHelper
     {
-        
-        public static string BuildPath(params string[] paths)
-        {
-            return Path.Combine(paths);
-        }
+        public static string BuildPath(params string[] paths) { return Path.Combine(paths); }
 
         public static LogEventLevel GetLogLevel(string fromSettings)
         {
+            if (string.IsNullOrEmpty(fromSettings)) return LogEventLevel.Warning;
             return fromSettings.ToLowerInvariant() switch
                    {
                        "verbose"     => LogEventLevel.Verbose,

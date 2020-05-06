@@ -4,7 +4,6 @@ namespace Solari.Callisto.Tracer
 {
     public class CallistoTracerOptions
     {
-        
         public List<string> TracedDbOperations { get; set; } = new List<string>
         {
             "insert",

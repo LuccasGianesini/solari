@@ -3,6 +3,5 @@
     public static class CeresConstants
     {
         public const string AppSettingsSection = "Ceres";
-        
     }
 }

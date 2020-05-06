@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using HealthChecks.Publisher.Seq;
 using HealthChecks.UI.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -42,10 +41,7 @@ namespace Solari.Io
 
         private static void ConfigureUi(ISolariBuilder builder, IoOptions options)
         {
-            if (!options.EnableUi)
-            {
-                return;
-            }
+            if (!options.EnableUi) return;
 
             builder.Services.AddHealthChecksUI(a =>
                    {
@@ -69,10 +65,7 @@ namespace Solari.Io
 
         public static void ConfigureWebHooks(Settings settings, IoOptions options)
         {
-            if (options.WebHooks == null || !options.WebHooks.Any())
-            {
-                return;
-            }
+            if (options.WebHooks == null || !options.WebHooks.Any()) return;
 
             options.WebHooks.ForEach(a => settings.AddWebhookNotification(a.Name, a.Uri, a.Payload, a.RestoredPayload));
         }
@@ -106,7 +99,7 @@ namespace Solari.Io
         {
             if (options.Seq == null)
                 return;
-            if (!options.Seq.Enabled)
+            if (options.Seq.Enabled == false)
                 return;
             if (options.Seq.UseTitanConfiguration)
             {
@@ -125,7 +118,6 @@ namespace Solari.Io
             var titanOptions = builder.AppConfiguration.GetOptions<TitanOptions>(section);
 
             healthChecksBuilder.AddSeqPublisher(CreateSeqPublisherOptions(titanOptions.Seq.IngestionEndpoint, titanOptions.Seq.Apikey));
-            return;
         }
 
         private static Action<SeqOptions> CreateSeqPublisherOptions(string endpoint, string apiKey)

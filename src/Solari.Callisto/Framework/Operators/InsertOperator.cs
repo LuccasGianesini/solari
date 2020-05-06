@@ -26,7 +26,8 @@ namespace Solari.Callisto.Framework.Operators
         /// <returns>The inserted entities with id</returns>
         /// <exception cref="NullCallistoOperationException">When <see cref="ICallistoInsert{T}"/> is null</exception>
         /// <exception cref="NullOrEmptyValueException">When the values array is null or empty</exception>
-        public async Task<TEntity> One(Func<ICallistoOperationFactory, ICallistoInsert<TEntity>> factory) => await One(factory(_factory));
+        public async Task<TEntity> One(Func<ICallistoOperationFactory, ICallistoInsert<TEntity>> factory) { return await One(factory(_factory)); }
+
         /// <summary>
         /// Insert many documents into the collection.
         /// </summary>
@@ -34,7 +35,11 @@ namespace Solari.Callisto.Framework.Operators
         /// <returns>The inserted entities with id</returns>
         /// <exception cref="NullCallistoOperationException">When <see cref="ICallistoInsertMany{T}"/> is null</exception>
         /// <exception cref="NullOrEmptyValueException">When the values array is null or empty</exception>
-        public async Task<IEnumerable<TEntity>> Many(Func<ICallistoOperationFactory, ICallistoInsertMany<TEntity>> factory) => await Many(factory(_factory));
+        public async Task<IEnumerable<TEntity>> Many(Func<ICallistoOperationFactory, ICallistoInsertMany<TEntity>> factory)
+        {
+            return await Many(factory(_factory));
+        }
+
         /// <summary>
         /// Insert one document into the collection.
         /// </summary>

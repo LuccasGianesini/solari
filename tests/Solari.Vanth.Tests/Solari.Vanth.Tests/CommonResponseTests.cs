@@ -11,46 +11,24 @@ namespace Solari.Vanth.Tests
         private const string Result = "this is a test";
         private const string Error = "this is an error";
 
-        [Fact]
-        public void BuildCommonResponse_Result_ShouldContainOnlyResult()
-        {
-            CommonResponse<string> response = new CommonResponseBuilder<string>().WithResult(Result).Build();
-            Assert.True(response.HasResult);
-            Assert.False(response.HasErrors);
-        }
 
         [Fact]
-        public void BuildCommonResponse_Result_ShouldBeEqualsPrivateProperty()
+        public void BuildCommonErrorResponse_Detail_Exception_ShouldSerializeToJsonSuccessfully()
         {
-            CommonResponse<string> response = new CommonResponseBuilder<string>().WithResult(Result).Build();
-            Assert.Equal(Result, response.Result);
-        }
-
-        [Fact]
-        public void BuildCommonResponse_Result_ShouldSerializeToJson_Successfully()
-        {
-            CommonResponse<string> response = new CommonResponseBuilder<string>().WithResult(Result).Build();
-            string json = JsonConvert.SerializeObject(response);
-            Assert.NotEqual(string.Empty, json);
-        }
-
-        [Fact]
-        public void BuildCommonResponse_Error_ShouldContainOnlyOneError()
-        {
-            CommonResponse<string> error = new CommonResponseBuilder<string>().WithError(builder => builder.WithMessage(Error).Build()).Build();
-            Assert.True(error.HasErrors);
-            Assert.False(error.HasResult);
-            Assert.NotEmpty(error.Errors);
-            Assert.Single(error.Errors);
-        }
-
-        [Fact]
-        public void BuildCommonResponse_Error_ShouldSerializeToJsonSuccessfully()
-        {
-            CommonResponse<string> error = new CommonResponseBuilder<string>().WithError(builder => builder.WithMessage(Error).Build()).Build();
+            CommonDetailedErrorResponse detail = new CommonDetailedErrorResponseBuilder()
+                                                 .WithMessage(Error)
+                                                 .WithException(new Exception("This is an Exception"))
+                                                 .Build();
+            CommonErrorResponse error = new CommonErrorResponseBuilder()
+                                        .WithMessage(Error)
+                                        .WithDetail(detail)
+                                        .Build();
             string json = JsonConvert.SerializeObject(error);
             Assert.NotEqual(string.Empty, json);
         }
+
+        [Fact]
+        public void BuildCommonErrorResponse_Detail_ShouldContainDetail() { }
 
         [Fact]
         public void BuildCommonErrorResponse_Detail_ShouldContainExceptionAsDetail()
@@ -75,23 +53,45 @@ namespace Solari.Vanth.Tests
                                                        .Build());
         }
 
+        [Fact]
+        public void BuildCommonResponse_Error_ShouldContainOnlyOneError()
+        {
+            CommonResponse<string> error = new CommonResponseBuilder<string>().WithError(builder => builder.WithMessage(Error).Build()).Build();
+            Assert.True(error.HasErrors);
+            Assert.False(error.HasResult);
+            Assert.NotEmpty(error.Errors);
+            Assert.Single(error.Errors);
+        }
 
         [Fact]
-        public void BuildCommonErrorResponse_Detail_Exception_ShouldSerializeToJsonSuccessfully()
+        public void BuildCommonResponse_Error_ShouldSerializeToJsonSuccessfully()
         {
-            CommonDetailedErrorResponse detail = new CommonDetailedErrorResponseBuilder()
-                                                 .WithMessage(Error)
-                                                 .WithException(new Exception("This is an Exception"))
-                                                 .Build();
-            CommonErrorResponse error = new CommonErrorResponseBuilder()
-                                        .WithMessage(Error)
-                                        .WithDetail(detail)
-                                        .Build();
+            CommonResponse<string> error = new CommonResponseBuilder<string>().WithError(builder => builder.WithMessage(Error).Build()).Build();
             string json = JsonConvert.SerializeObject(error);
             Assert.NotEqual(string.Empty, json);
         }
 
         [Fact]
-        public void BuildCommonErrorResponse_Detail_ShouldContainDetail() { }
+        public void BuildCommonResponse_Result_ShouldBeEqualsPrivateProperty()
+        {
+            CommonResponse<string> response = new CommonResponseBuilder<string>().WithResult(Result).Build();
+            Assert.Equal(Result, response.Result);
+        }
+
+        [Fact]
+        public void BuildCommonResponse_Result_ShouldContainOnlyResult()
+        {
+            CommonResponse<string> response = new CommonResponseBuilder<string>().WithResult(Result).Build();
+            Assert.True(response.HasResult);
+            Assert.False(response.HasErrors);
+        }
+
+        [Fact]
+        public void BuildCommonResponse_Result_ShouldSerializeToJson_Successfully()
+        {
+            CommonResponse<string> response = new CommonResponseBuilder<string>().WithResult(Result).Build();
+            string json = JsonConvert.SerializeObject(response);
+            Assert.NotEqual(string.Empty, json);
+        }
     }
 }

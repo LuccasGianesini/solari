@@ -9,8 +9,8 @@ namespace Solari.Vanth.Builders
         private string _code;
         private Exception _exception;
         private string _message;
-        private string _target;
         private string _source;
+        private string _target;
 
 
         public ICommonDetailedErrorResponseBuilder WithErrorCode(string code)
@@ -43,7 +43,7 @@ namespace Solari.Vanth.Builders
             _target = target;
             return this;
         }
-        
+
         public ICommonDetailedErrorResponseBuilder WithSource(string source)
         {
             _source = source;

@@ -18,74 +18,84 @@ namespace Solari.Callisto.Framework.Operators
             _collection = collection;
             _factory = factory;
         }
+
         /// <summary>
-        /// Delete one document by id.
+        ///     Delete one document by id.
         /// </summary>
         /// <param name="id">Document id</param>
         /// <returns></returns>
-        public async Task<DeleteResult> OneById(ObjectId id) => await One(_factory.CreateDeleteById<TEntity>($"delete by id {nameof(TEntity)}",id));
-        
-        /// <summary>
-        /// Delete many documents from the collection.
-        /// </summary>
-        /// <param name="factory">The operation factory</param>
-        /// <exception cref="NullCallistoOperationException">When command is null</exception>
-        /// <exception cref="NullFilterDefinitionException">When command <see cref="FilterDefinition{TDocument}"/> is null</exception>
-        /// <returns><see cref="DeleteResult"/></returns>
-        public async Task<DeleteResult> Many(Func<ICallistoOperationFactory, ICallistoDelete<TEntity>> factory) => await Many(factory(_factory));
-        
-        /// <summary>
-        /// Delete one document from the collection.
-        /// </summary>
-        /// <param name="factory">The operation factory</param>
-        /// <exception cref="NullCallistoOperationException">When command is null</exception>
-        /// <exception cref="NullFilterDefinitionException">When command <see cref="FilterDefinition{TDocument}"/> is null</exception>
-        /// <returns><see cref="DeleteResult"/></returns>
-        public async Task<DeleteResult> One(Func<ICallistoOperationFactory, ICallistoDelete<TEntity>> factory) => await One(factory(_factory));
+        public async Task<DeleteResult> OneById(ObjectId id) { return await One(_factory.CreateDeleteById<TEntity>($"delete by id {nameof(TEntity)}", id)); }
 
         /// <summary>
-        /// Delete one document from the collection.
+        ///     Delete many documents from the collection.
         /// </summary>
-        /// <param name="operation"><see cref="ICallistoDelete{T}"/></param>
+        /// <param name="factory">The operation factory</param>
         /// <exception cref="NullCallistoOperationException">When command is null</exception>
-        /// <exception cref="NullFilterDefinitionException">When command <see cref="FilterDefinition{TDocument}"/> is null</exception>
-        /// <returns><see cref="DeleteResult"/></returns>
+        /// <exception cref="NullFilterDefinitionException">When command <see cref="FilterDefinition{TDocument}" /> is null</exception>
+        /// <returns>
+        ///     <see cref="DeleteResult" />
+        /// </returns>
+        public async Task<DeleteResult> Many(Func<ICallistoOperationFactory, ICallistoDelete<TEntity>> factory) { return await Many(factory(_factory)); }
+
+        /// <summary>
+        ///     Delete one document from the collection.
+        /// </summary>
+        /// <param name="factory">The operation factory</param>
+        /// <exception cref="NullCallistoOperationException">When command is null</exception>
+        /// <exception cref="NullFilterDefinitionException">When command <see cref="FilterDefinition{TDocument}" /> is null</exception>
+        /// <returns>
+        ///     <see cref="DeleteResult" />
+        /// </returns>
+        public async Task<DeleteResult> One(Func<ICallistoOperationFactory, ICallistoDelete<TEntity>> factory) { return await One(factory(_factory)); }
+
+        /// <summary>
+        ///     Delete one document from the collection.
+        /// </summary>
+        /// <param name="operation">
+        ///     <see cref="ICallistoDelete{T}" />
+        /// </param>
+        /// <exception cref="NullCallistoOperationException">When command is null</exception>
+        /// <exception cref="NullFilterDefinitionException">When command <see cref="FilterDefinition{TDocument}" /> is null</exception>
+        /// <returns>
+        ///     <see cref="DeleteResult" />
+        /// </returns>
         public async Task<DeleteResult> One(ICallistoDelete<TEntity> operation)
         {
             if (operation == null)
                 throw new NullCallistoOperationException(CallistoOperationHelper.NullOperationInstanceMessage("delete-one", nameof(ICallistoInsert<TEntity>)));
             operation.ValidateOperation();
             if (operation.UseSessionHandle)
-            {
                 return await _collection.DeleteOneAsync(operation.ClientSessionHandle,
                                                         operation.FilterDefinition,
                                                         operation.DeleteOptions,
                                                         operation.CancellationToken).ConfigureAwait(false);
-            }
 
             return await _collection.DeleteOneAsync(operation.FilterDefinition,
                                                     operation.DeleteOptions,
                                                     operation.CancellationToken).ConfigureAwait(false);
         }
+
         /// <summary>
-        /// Delete many documents from the collection.
+        ///     Delete many documents from the collection.
         /// </summary>
-        /// <param name="operation"><see cref="ICallistoDelete{T}"/></param>
+        /// <param name="operation">
+        ///     <see cref="ICallistoDelete{T}" />
+        /// </param>
         /// <exception cref="NullCallistoOperationException">When command is null</exception>
-        /// <exception cref="NullFilterDefinitionException">When command <see cref="FilterDefinition{TDocument}"/> is null</exception>
-        /// <returns><see cref="DeleteResult"/></returns>
+        /// <exception cref="NullFilterDefinitionException">When command <see cref="FilterDefinition{TDocument}" /> is null</exception>
+        /// <returns>
+        ///     <see cref="DeleteResult" />
+        /// </returns>
         public async Task<DeleteResult> Many(ICallistoDelete<TEntity> operation)
         {
             if (operation == null)
                 throw new NullCallistoOperationException(CallistoOperationHelper.NullOperationInstanceMessage("delete-one", nameof(ICallistoInsert<TEntity>)));
             operation.ValidateOperation();
             if (operation.UseSessionHandle)
-            {
                 return await _collection.DeleteManyAsync(operation.ClientSessionHandle,
-                                                        operation.FilterDefinition,
-                                                        operation.DeleteOptions,
-                                                        operation.CancellationToken).ConfigureAwait(false);
-            }
+                                                         operation.FilterDefinition,
+                                                         operation.DeleteOptions,
+                                                         operation.CancellationToken).ConfigureAwait(false);
 
             return await _collection.DeleteManyAsync(operation.FilterDefinition,
                                                      operation.DeleteOptions,

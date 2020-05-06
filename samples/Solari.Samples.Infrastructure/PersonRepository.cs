@@ -1,15 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
-using Elastic.CommonSchema;
+﻿using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Solari.Callisto;
 using Solari.Callisto.Abstractions.CQR;
 using Solari.Samples.Domain.Person;
-using Solari.Samples.Domain.Person.Exceptions;
 using Solari.Samples.Domain.Person.Results;
 using Solari.Titan;
-using Solari.Vanth;
 
 namespace Solari.Samples.Infrastructure
 {
@@ -27,7 +23,7 @@ namespace Solari.Samples.Infrastructure
 
         public async Task<bool> Exists(ObjectId id) { return await Query.Exists(a => a.Id == id); }
 
-        public async Task<Person> Get(ObjectId id) => await Query.FindById(id);
+        public async Task<Person> Get(ObjectId id) { return await Query.FindById(id); }
 
         public async Task<UpdateResult> PatchAttribute(ICallistoUpdate<Person> update)
         {
@@ -41,9 +37,6 @@ namespace Solari.Samples.Infrastructure
             }
         }
 
-        public async Task<UpdateResult> UpdatePerson(ICallistoUpdate<Person> update)
-        {
-            return await Update.One(update);
-        }
+        public async Task<UpdateResult> UpdatePerson(ICallistoUpdate<Person> update) { return await Update.One(update); }
     }
 }

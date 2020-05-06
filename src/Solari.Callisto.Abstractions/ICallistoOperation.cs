@@ -8,9 +8,9 @@ namespace Solari.Callisto.Abstractions
         string OperationName { get; }
         CallistoOperation OperationType { get; }
         CancellationToken CancellationToken { get; }
-        void ValidateOperation();
         IClientSessionHandle ClientSessionHandle { get; }
         bool UseSessionHandle { get; }
+        void ValidateOperation();
         ICallistoOperation<T> AddSessionHandle(IClientSessionHandle sessionHandle);
         ICallistoOperation<T> AddCancellationToken(CancellationToken cancellationToken);
     }

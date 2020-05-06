@@ -1,19 +1,13 @@
-﻿﻿using System;
- using System.Collections.Generic;
- using System.Linq;
- using System.Net.Http;
-using Microsoft.Extensions.Options;
-using Solari.Ganymede.Domain.Options;
-using Solari.Ganymede.Framework;
-using Solari.Ganymede.Pipeline;
+﻿using System;
+using System.Net.Http;
 
 namespace Solari.Ganymede
 {
     public abstract class GanymedeClient<TClientImplementation>
     {
-        
-        protected readonly HttpClient HttpClient;
         private readonly IGanymedeRequest<TClientImplementation> _request;
+
+        protected readonly HttpClient HttpClient;
 
         protected GanymedeClient(HttpClient httpClient, IGanymedeRequest<TClientImplementation> request)
         {
@@ -22,6 +16,5 @@ namespace Solari.Ganymede
         }
 
         protected Requester<TClientImplementation> NewRequest => new Requester<TClientImplementation>(HttpClient, _request);
-
     }
 }

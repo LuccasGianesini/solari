@@ -47,7 +47,8 @@ namespace Solari.Sol.Extensions
         /// <returns>Float value or 0 if parsing failed</returns>
         public static float ToFloat(this string value) { return float.TryParse(CleanStringOfNonDigits(value), out float @float) ? @float : 0; }
 
-        /// <summary>'
+        /// <summary>
+        ///     '
         ///     Parses a string into a integer.
         /// </summary>
         /// <param name="value"></param>
@@ -191,7 +192,7 @@ namespace Solari.Sol.Extensions
         }
 
         /// <summary>
-        ///     Converts a string into a <see cref="TimeSpan"/>
+        ///     Converts a string into a <see cref="TimeSpan" />
         ///     <remark>
         ///         <code>
         ///             string value = "ms1000";
@@ -207,7 +208,7 @@ namespace Solari.Sol.Extensions
         /// </summary>
         /// <param name="value"></param>
         /// <returns>
-        /// Timespan value or <see cref="TimeSpan.MinValue"/>. If string is null, <see cref="TimeSpan.MinValue"/> will be returned.
+        ///     Timespan value or <see cref="TimeSpan.MinValue" />. If string is null, <see cref="TimeSpan.MinValue" /> will be returned.
         /// </returns>
         public static TimeSpan ToTimeSpan(this string value)
         {
@@ -226,6 +227,6 @@ namespace Solari.Sol.Extensions
             return lowered.StartsWith("d") ? TimeSpan.FromMilliseconds(ToLong(value)) : TimeSpan.MinValue;
         }
 
-        public static string Underscore(this string value) => string.Concat(value.Select((x, i) => i > 0 && char.IsUpper(x) ? "_" + x : x.ToString()));
+        public static string Underscore(this string value) { return string.Concat(value.Select((x, i) => i > 0 && char.IsUpper(x) ? "_" + x : x.ToString())); }
     }
 }

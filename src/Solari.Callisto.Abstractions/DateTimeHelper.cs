@@ -7,15 +7,14 @@ namespace Solari.Callisto.Abstractions
         public static readonly DateTime DefaultDateTimeValue = new DateTime(1753, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         public static readonly DateTimeOffset DefaultDateTimeOffsetValue = new DateTimeOffset(DefaultDateTimeValue, TimeSpan.Zero);
-        
+
         /// <summary>
-        /// Create a utc <see cref="DateTimeOffset"/> based on the value provided.
+        ///     Create a utc <see cref="DateTimeOffset" /> based on the value provided.
         /// </summary>
         /// <param name="value">The value</param>
         /// <returns></returns>
         public static DateTimeOffset BuildDateTimeOffset(DateTimeOffset value)
         {
-
             DateTimeOffset? dateTimeOffset = value;
             if (dateTimeOffset == DateTimeOffset.MinValue)
                 dateTimeOffset = DefaultDateTimeOffsetValue;
@@ -24,7 +23,7 @@ namespace Solari.Callisto.Abstractions
         }
 
         /// <summary>
-        /// Create a utc <see cref="DateTime"/> based on the value provided.
+        ///     Create a utc <see cref="DateTime" /> based on the value provided.
         /// </summary>
         /// <param name="value">The value</param>
         /// <returns></returns>

@@ -480,7 +480,7 @@ namespace Solari.Sol.Extensions
             foreach (string str in value)
                 if (str != null)
                 {
-                    var buf = str.GetBytes(enc);
+                    byte[] buf = str.GetBytes(enc);
                     Buffer.BlockCopy(buf, 0, numArray, dstOffset, buf.Length);
                     dstOffset += buf.Length;
                 }
@@ -1107,7 +1107,7 @@ namespace Solari.Sol.Extensions
             var arr = new List<float>();
             for (var i = 0; i < value.Length; i += 4)
             {
-                byte[] t = new[] {value[i], value[i + 1], value[i + 2], value[i + 3]};
+                byte[] t = {value[i], value[i + 1], value[i + 2], value[i + 3]};
                 arr.Add(t.ToFloat());
             }
 
@@ -1127,7 +1127,7 @@ namespace Solari.Sol.Extensions
             var arr = new List<double>();
             for (var i = 0; i < value.Length; i += 8)
             {
-                byte[] t = new[] {value[i], value[i + 1], value[i + 2], value[i + 3], value[i + 4], value[i + 5], value[i + 6], value[i + 7]};
+                byte[] t = {value[i], value[i + 1], value[i + 2], value[i + 3], value[i + 4], value[i + 5], value[i + 6], value[i + 7]};
                 arr.Add(t.ToDouble());
             }
 
@@ -1147,7 +1147,7 @@ namespace Solari.Sol.Extensions
             var arr = new List<decimal>();
             for (var i = 0; i < value.Length; i += 16)
             {
-                byte[] t = new[]
+                byte[] t =
                 {
                     value[i], value[i + 1], value[i + 2], value[i + 3], value[i + 4], value[i + 5], value[i + 6], value[i + 7], value[i + 8], value[i + 9],
                     value[i + 10], value[i + 11], value[i + 12], value[i + 13], value[i + 14], value[i + 15]

@@ -1,5 +1,4 @@
 ﻿using App.Metrics;
-using App.Metrics.Apdex;
 
 namespace Solari.Ceres.Abstractions
 {
@@ -8,7 +7,7 @@ namespace Solari.Ceres.Abstractions
         private readonly IMetrics _metrics;
 
         public CeresMetrics(IMetrics metrics) { _metrics = metrics; }
-        
+
         public void MeasureException()
         {
             _metrics.Measure.Counter.Increment(MetricsRegistry.ErrorMetrics.CatchExceptionTotal);

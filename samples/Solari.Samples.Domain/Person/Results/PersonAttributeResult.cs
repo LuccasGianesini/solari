@@ -2,16 +2,12 @@
 {
     public class PersonAttributeResult
     {
+        public PersonAttributeResult(long expected) { Expected = expected; }
+
         public long Expected { get; set; }
         public long Modified { get; set; }
-        
 
-        public bool IsSuccess() => Expected == Modified;
 
-        public PersonAttributeResult(long expected)
-        {
-            Expected = expected;
-            
-        }
+        public bool IsSuccess() { return Expected == Modified; }
     }
 }

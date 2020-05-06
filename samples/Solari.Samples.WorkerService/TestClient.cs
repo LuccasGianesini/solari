@@ -4,7 +4,6 @@ using Solari.Ganymede;
 using Solari.Ganymede.Domain;
 using Solari.Ganymede.Pipeline;
 
-
 namespace Solari.Samples.WorkerService
 {
     public interface ITestClient
@@ -14,8 +13,7 @@ namespace Solari.Samples.WorkerService
 
     public class TestClient : GanymedeClient<TestClient>, ITestClient
     {
-      
-        public TestClient(HttpClient httpClient, IGanymedeRequest<TestClient> request) : base(httpClient, request) {  }
+        public TestClient(HttpClient httpClient, IGanymedeRequest<TestClient> request) : base(httpClient, request) { }
 
         public async Task<string> Get()
         {

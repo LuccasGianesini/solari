@@ -9,15 +9,9 @@ namespace Solari.Callisto.Framework
     {
         public ICallistoClassMapper AutoRegister(AppDomainClasses maps)
         {
-            foreach (Type type in maps.DocumentRoots.Where(type => !BsonClassMap.IsClassMapRegistered(type)))
-            {
-                RegisterClassMap(type, ClassMap.Create(type));
-            }
+            foreach (Type type in maps.DocumentRoots.Where(type => !BsonClassMap.IsClassMapRegistered(type))) RegisterClassMap(type, ClassMap.Create(type));
 
-            foreach (Type type in maps.DocumentNodes.Where(type => !BsonClassMap.IsClassMapRegistered(type)))
-            {
-                RegisterClassMap(type, ClassMap.Create(type));
-            }
+            foreach (Type type in maps.DocumentNodes.Where(type => !BsonClassMap.IsClassMapRegistered(type))) RegisterClassMap(type, ClassMap.Create(type));
 
             return this;
         }

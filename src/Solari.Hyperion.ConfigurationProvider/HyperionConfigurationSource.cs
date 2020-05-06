@@ -9,9 +9,6 @@ namespace Solari.Hyperion.ConfigurationProvider
         public HyperionOptions Options { get; set; }
         public ApplicationOptions ApplicationOptions { get; set; }
 
-        public IConfigurationProvider Build(IConfigurationBuilder builder)
-        {
-            return new HyperionProvider(this);
-        }
+        public IConfigurationProvider Build(IConfigurationBuilder builder) { return new HyperionProvider(this); }
     }
 }

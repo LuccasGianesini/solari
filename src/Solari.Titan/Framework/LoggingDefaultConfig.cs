@@ -26,10 +26,9 @@ namespace Solari.Titan.Framework
         private static void AddSinks(LoggerConfiguration config, TitanOptions options, ApplicationOptions appOptions, string contentRootPath)
         {
             config
-                .ConfigureConsole(options.UseConsole)
+                .ConfigureConsole(options)
                 .ConfigureFile(options, contentRootPath)
-                .ConfigureElasticSearch(options, appOptions)
-                .ConfigureGreyLog(options)
+                .ConfigureGrayLog(options)
                 .ConfigureSeq(options);
         }
 
@@ -52,9 +51,7 @@ namespace Solari.Titan.Framework
                 .MinimumLevel.Override("Microsoft", TitanLibHelper.GetLogLevel(options.Overrides.Microsoft))
                 .MinimumLevel.Override("Microsoft.Hosting.Lifetime", TitanLibHelper.GetLogLevel(options.Overrides.MicrosoftHostingLifetime));
             foreach (string[] item in options.Overrides.Custom.Select(s => s.Split(":")))
-            {
                 config.MinimumLevel.Override(item[0], TitanLibHelper.GetLogLevel(item[1]));
-            }
         }
     }
 }

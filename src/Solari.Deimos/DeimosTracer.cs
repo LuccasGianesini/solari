@@ -10,7 +10,7 @@ namespace Solari.Deimos
 {
     public class DeimosTracer : IDeimosTracer
     {
-        private ConcurrentDictionary<string, ISpan> _spanCache;
+        private readonly ConcurrentDictionary<string, ISpan> _spanCache;
 
         public DeimosTracer(ITracer tracer)
         {
@@ -22,21 +22,18 @@ namespace Solari.Deimos
 
         public ISpan TraceOperation(string operationName, Action<ISpanEnricher> enrich = null, bool createNewActivity = false)
         {
-            var activeScope = OpenTracer.ScopeManager.Active;
+            IScope activeScope = OpenTracer.ScopeManager.Active;
             ISpanBuilder spanBuilder = OpenTracer.BuildSpan(operationName);
             ISpan span = activeScope?.Span == null ? spanBuilder.Start() : spanBuilder.AsChildOf(OpenTracer.ScopeManager.Active.Span).Start();
             enrich?.Invoke(new SpanEnricher(span));
             _spanCache.TryAdd(span.Context.SpanId, span);
             return span;
         }
-        
-        public void FinalizeTrace(ISpan spanToFinish , IDictionary<string, object> log = null)
+
+        public void FinalizeTrace(ISpan spanToFinish, IDictionary<string, object> log = null)
         {
             if (!_spanCache.TryRemove(spanToFinish.Context.SpanId, out ISpan span)) return;
-            if (log != null)
-            {
-                span.Log(log);
-            }
+            if (log != null) span.Log(log);
 
             span.Finish();
         }

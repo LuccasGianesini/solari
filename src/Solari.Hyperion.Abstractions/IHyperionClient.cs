@@ -6,7 +6,7 @@ namespace Solari.Hyperion.Abstractions
     {
         IConsulClient ConsulClient { get; }
         IKvOperations Kv { get; }
-        
+
         IServiceOperations Services { get; }
     }
 }

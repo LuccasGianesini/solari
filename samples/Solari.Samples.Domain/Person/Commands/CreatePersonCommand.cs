@@ -13,15 +13,11 @@ namespace Solari.Samples.Domain.Person.Commands
             Attributes = attributes;
         }
 
-        public CreatePersonCommand()
-        {
-            
-        }
+        public CreatePersonCommand() { }
+
         public string Name { get; set; }
         public List<PersonAttributeDto> Attributes { get; set; }
-        
-        public CreatePersonResult Result { get; set; }
 
-        
+        public CreatePersonResult Result { get; set; }
     }
 }

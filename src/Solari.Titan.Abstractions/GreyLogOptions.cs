@@ -1,7 +1,4 @@
-using System.Data.Common;
 using Serilog.Events;
-using Serilog.Sinks.Graylog;
-using Serilog.Sinks.Graylog.Core;
 using Serilog.Sinks.Graylog.Core.Helpers;
 using Serilog.Sinks.Graylog.Core.Transport;
 
@@ -9,9 +6,10 @@ namespace Solari.Titan.Abstractions
 {
     public class GreyLogOptions
     {
-        public string MinimumLogEventLevel { get; set; }
+        public bool Enabled { get; set; }
+        public string LogLevelRestriction { get; set; } = "Warning";
 
-        public string HostnameOrAddress { get; set; }
+        public string Address { get; set; }
 
         public int Port { get; set; }
         public string TransportType { get; set; }
@@ -27,19 +25,20 @@ namespace Solari.Titan.Abstractions
         public int StackTraceDepth { get; set; } = 10;
         public string MessageGeneratorType { get; set; }
 
-        public MessageIdGeneratorType GetMessageIdGeneratorType() =>
-            
-            MessageGeneratorType == null 
-                ? MessageIdGeneratorType.Md5 
-                :  MessageGeneratorType.ToLowerInvariant().Equals("timestamp") 
-                    ? MessageIdGeneratorType.Timestamp 
-                    : MessageIdGeneratorType.Md5;
+        public MessageIdGeneratorType GetMessageIdGeneratorType()
+        {
+            return MessageGeneratorType == null
+                       ? MessageIdGeneratorType.Md5
+                       : MessageGeneratorType.ToLowerInvariant().Equals("timestamp")
+                           ? MessageIdGeneratorType.Timestamp
+                           : MessageIdGeneratorType.Md5;
+        }
 
         public LogEventLevel GetMinimumLogEventLevel()
         {
-            if (MinimumLogEventLevel == null)
+            if (LogLevelRestriction == null)
                 return LogEventLevel.Warning;
-            return MinimumLogEventLevel.ToLowerInvariant() switch
+            return LogLevelRestriction.ToLowerInvariant() switch
                    {
                        "verbose"     => LogEventLevel.Verbose,
                        "debug"       => LogEventLevel.Debug,
@@ -63,20 +62,5 @@ namespace Solari.Titan.Abstractions
                        _      => Serilog.Sinks.Graylog.Core.Transport.TransportType.Udp
                    };
         }
-
-        public static implicit operator GraylogSinkOptions(GreyLogOptions options) =>
-            new GraylogSinkOptions
-            {
-                Host = options.Host,
-                Facility = options.Facility,
-                Port = options.Port,
-                TransportType = options.GetTransportType(),
-                HostnameOrAddress = options.HostnameOrAddress,
-                StackTraceDepth = options.StackTraceDepth,
-                MaxMessageSizeInUdp = options.MaxMessageSizeInUdp,
-                ShortMessageMaxLength = options.ShortMessageMaxLength,
-                MinimumLogEventLevel = options.GetMinimumLogEventLevel(),
-                MessageGeneratorType = options.GetMessageIdGeneratorType()
-            };
     }
 }

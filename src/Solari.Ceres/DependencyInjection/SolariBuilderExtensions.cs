@@ -17,13 +17,10 @@ namespace Solari.Ceres.DependencyInjection
             if (!section.Exists())
                 return builder;
             var options = builder.AppConfiguration.GetOptions<CeresOptions>(section);
-            
+
             ApplicationOptions appOptions = builder.GetAppOptions();
             var metricsBuilder = new MetricsBuilder();
-            if (!options.Enabled)
-            {
-                return builder;
-            }
+            if (!options.Enabled) return builder;
 
             builder.Services.Configure<CeresOptions>(builder.AppConfiguration.GetSection(CeresConstants.AppSettingsSection));
 
@@ -85,10 +82,7 @@ namespace Solari.Ceres.DependencyInjection
                 Action = provider =>
                 {
                     var appBuilder = provider.GetService<ISolariMarshal>();
-                    if (appBuilder == null)
-                    {
-                        return;
-                    }
+                    if (appBuilder == null) return;
 
                     if (options.UseEnvEndpoint)
                         appBuilder.ApplicationBuilder.UseEnvInfoEndpoint();
@@ -118,10 +112,7 @@ namespace Solari.Ceres.DependencyInjection
                 Action = provider =>
                 {
                     var appBuilder = provider.GetService<ISolariMarshal>();
-                    if (appBuilder == null)
-                    {
-                        return;
-                    }
+                    if (appBuilder == null) return;
 
                     if (options.Middlewares.ApdexTracking)
                         appBuilder.ApplicationBuilder.UseMetricsApdexTrackingMiddleware();

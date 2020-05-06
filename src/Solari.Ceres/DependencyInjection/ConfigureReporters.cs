@@ -34,6 +34,7 @@ namespace Solari.Ceres.DependencyInjection
                 builder.OutputMetrics.AsPrometheusPlainText();
                 return builder;
             }
+
             switch (options.Prometheus.OutputFormat)
             {
                 case "proto":

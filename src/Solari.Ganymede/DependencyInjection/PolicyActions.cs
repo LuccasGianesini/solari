@@ -9,10 +9,7 @@ namespace Solari.Ganymede.DependencyInjection
     {
         private readonly ISolariBuilder _builder;
 
-        public PolicyActions(ISolariBuilder builder)
-        {
-            _builder = builder;
-        }
+        public PolicyActions(ISolariBuilder builder) { _builder = builder; }
 
         public ISolariBuilder ConfigureRegistry(Action<GanymedePolicyRegistry> configureRegistry)
         {

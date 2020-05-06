@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using App.Metrics;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -15,9 +14,9 @@ namespace Solari.Ceres.Framework
     public class MemoryMeasurementHostedService : IHostedService, IDisposable
     {
         private const string Prefix = "Solari.Ceres (MemoryMeasurementHostedService):";
-        private readonly IMetrics _metrics;
-        private readonly ILogger<MemoryMeasurementHostedService> _logger;
         private readonly IHostApplicationLifetime _lifetime;
+        private readonly ILogger<MemoryMeasurementHostedService> _logger;
+        private readonly IMetrics _metrics;
         private readonly CeresOptions _options;
         private CancellationTokenSource _cts;
         private bool _disposed;
@@ -32,10 +31,25 @@ namespace Solari.Ceres.Framework
             _metrics = metrics;
         }
 
+        public void Dispose()
+        {
+            if (_disposed)
+                return;
+            _cts.Dispose();
+            _disposed = true;
+        }
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _executingTask = ExecuteAsync(cancellationToken);
             return _executingTask.IsCompleted ? _executingTask : Task.CompletedTask;
+        }
+
+
+        public async Task StopAsync(CancellationToken cancellationToken)
+        {
+            _cts.Cancel();
+            await Task.WhenAny(_executingTask, Task.Delay(Timeout.Infinite, cancellationToken));
         }
 
         public Task ExecuteAsync(CancellationToken cancellationToken)
@@ -91,21 +105,6 @@ namespace Solari.Ceres.Framework
                 _logger.LogDebug($"{Prefix}Awaiting next run.");
                 await Task.Delay(_options.Memory.Interval.ToTimeSpan(), cancellationToken);
             }
-        }
-
-
-        public async Task StopAsync(CancellationToken cancellationToken)
-        {
-            _cts.Cancel();
-            await Task.WhenAny(_executingTask, Task.Delay(Timeout.Infinite, cancellationToken));
-        }
-
-        public void Dispose()
-        {
-            if (_disposed)
-                return;
-            _cts.Dispose();
-            _disposed = true;
         }
     }
 }

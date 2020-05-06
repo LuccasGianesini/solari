@@ -6,9 +6,9 @@ namespace Solari.Deimos.CorrelationId.Framework
 {
     public class CorrelationIdMiddleware
     {
-        private readonly IServiceProvider _provider;
-        private readonly RequestDelegate _next;
         private readonly ICorrelationContextManager _manager;
+        private readonly RequestDelegate _next;
+        private readonly IServiceProvider _provider;
 
         public CorrelationIdMiddleware(RequestDelegate next, ICorrelationContextManager manager,
                                        IServiceProvider provider)

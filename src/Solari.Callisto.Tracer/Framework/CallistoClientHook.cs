@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Events;
 using Solari.Callisto.Connector;
@@ -14,11 +13,11 @@ namespace Solari.Callisto.Tracer.Framework
 
     public class CallistoClientHook : ICallistoClientHook
     {
+        private readonly ICallistoEventListener _callistoEventListener;
         private readonly ICallistoConnection _connection;
+        private readonly IOptions<DeimosOptions> _deimosOptions;
         private readonly ICallistoConnectionFactory _factory;
         private readonly IOptions<CallistoTracerOptions> _options;
-        private readonly IOptions<DeimosOptions> _deimosOptions;
-        private readonly ICallistoEventListener _callistoEventListener;
 
         public CallistoClientHook(ICallistoConnection connection,
                                   ICallistoConnectionFactory factory,

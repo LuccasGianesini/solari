@@ -211,6 +211,7 @@ namespace Solari.Ganymede.Extensions
 
             return (IContentSerializer) contentSerializer;
         }
+
         private static IContentDeserializer GetDeserializerByPropertyKey(HttpRequestMessage requestMessage, string propertyKey)
         {
             if (requestMessage == null)
@@ -221,6 +222,5 @@ namespace Solari.Ganymede.Extensions
 
             return (IContentDeserializer) contentSerializer;
         }
-
     }
 }

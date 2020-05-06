@@ -1,6 +1,5 @@
-﻿using System;
-using MongoDB.Bson;
-using Solari.Titan;
+﻿using MongoDB.Bson;
+using Solari.Callisto.Abstractions;
 
 namespace Solari.Samples.Domain.Person.Results
 {
@@ -17,8 +16,8 @@ namespace Solari.Samples.Domain.Person.Results
 
         public static CreatePersonResult Create(ObjectId objectId)
         {
-            var id = objectId.ToString(); 
-            return id.Equals(Callisto.Abstractions.CallistoConstants.ObjectIdDefaultValueAsString)
+            var id = objectId.ToString();
+            return id.Equals(CallistoConstants.ObjectIdDefaultValueAsString)
                        ? new CreatePersonResult(false, string.Empty)
                        : new CreatePersonResult(true, id);
         }

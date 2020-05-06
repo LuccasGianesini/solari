@@ -1,6 +1,6 @@
 namespace Solari.Eris
 {
-   public interface IQuery<T>
+    public interface IQuery<T>
     {
     }
 }

@@ -2,9 +2,6 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Solari.Samples.Domain.Person.Results;
 using Solari.Titan;
 
 namespace Solari.Samples.Domain
@@ -13,9 +10,10 @@ namespace Solari.Samples.Domain
     {
         public static string GetPropertyName<T>(Expression<Func<T, object>> expression)
         {
-            var body = (MemberExpression)expression.Body;
+            var body = (MemberExpression) expression.Body;
             return body.Member.Name;
         }
+
         public static void DefaultCommandLogMessage<T>(ITitanLogger<T> logger, string commandName, params string[] args) where T : class
         {
             StringBuilder builder;
@@ -26,14 +24,13 @@ namespace Solari.Samples.Domain
                 {
                     builder.Append($"Received '{commandName}' command").Append(arg).Append(" ");
                 }
+
                 logger.Information(builder.ToString());
             }
             else
             {
-                logger.Information($"Received '{commandName}' command");                
+                logger.Information($"Received '{commandName}' command");
             }
-            
-            
         }
 
         public static void DefaultExceptionLogMessage<T>(ITitanLogger<T> logger, MemberInfo info, Exception exception) where T : class

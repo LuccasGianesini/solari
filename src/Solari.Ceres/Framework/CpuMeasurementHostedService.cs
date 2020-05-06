@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using App.Metrics;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -15,16 +14,15 @@ namespace Solari.Ceres.Framework
     public class CpuMeasurementHostedService : IHostedService, IDisposable
     {
         private const string Prefix = "Solari.Ceres (CpuMeasurementHostedService):";
-        private readonly ILogger<CpuMeasurementHostedService> _logger;
-        private readonly IHostApplicationLifetime _lifetime;
-        private readonly IMetrics _metrics;
-        private CancellationTokenSource _cts;
-        private bool _disposed;
-        private readonly CeresOptions _options;
-        private Task _executingTask;
         public static DateTime StartTime = DateTime.UtcNow;
         private static TimeSpan _start;
-        public double CpuUsageTotal { get; private set; }
+        private readonly IHostApplicationLifetime _lifetime;
+        private readonly ILogger<CpuMeasurementHostedService> _logger;
+        private readonly IMetrics _metrics;
+        private readonly CeresOptions _options;
+        private CancellationTokenSource _cts;
+        private bool _disposed;
+        private Task _executingTask;
 
         public CpuMeasurementHostedService(IOptions<CeresOptions> ceresOptions, ILogger<CpuMeasurementHostedService> logger,
                                            IHostApplicationLifetime lifetime, IMetrics metrics)
@@ -35,10 +33,26 @@ namespace Solari.Ceres.Framework
             _options = ceresOptions.Value;
         }
 
+        public double CpuUsageTotal { get; private set; }
+
+        public void Dispose()
+        {
+            if (_disposed)
+                return;
+            _cts.Dispose();
+            _disposed = true;
+        }
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _executingTask = ExecuteAsync(cancellationToken);
             return _executingTask.IsCompleted ? _executingTask : Task.CompletedTask;
+        }
+
+        public async Task StopAsync(CancellationToken cancellationToken)
+        {
+            _cts.Cancel();
+            await Task.WhenAny(_executingTask, Task.Delay(Timeout.Infinite, cancellationToken));
         }
 
         private Task ExecuteAsync(CancellationToken cancellationToken)
@@ -81,20 +95,6 @@ namespace Solari.Ceres.Framework
                 _logger.LogDebug($"{Prefix}Awaiting next run.");
                 await Task.Delay(_options.Cpu.Interval.ToTimeSpan(), cancellationToken);
             }
-        }
-
-        public async Task StopAsync(CancellationToken cancellationToken)
-        {
-            _cts.Cancel();
-            await Task.WhenAny(_executingTask, Task.Delay(Timeout.Infinite, cancellationToken));
-        }
-
-        public void Dispose()
-        {
-            if (_disposed)
-                return;
-            _cts.Dispose();
-            _disposed = true;
         }
     }
 }

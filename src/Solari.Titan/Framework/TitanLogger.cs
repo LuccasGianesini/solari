@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Extensions.Logging;
+
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace Solari.Titan.Framework

@@ -6,14 +6,11 @@ using Serilog.Core;
 
 namespace Solari.Titan.Framework
 {
-    public class LogEnricher<T> : ILogEnricher<T> where T: class
+    public class LogEnricher<T> : ILogEnricher<T> where T : class
     {
         private readonly ConcurrentStack<IDisposable> _context;
 
-        public LogEnricher()
-        {
-            _context = new ConcurrentStack<IDisposable>();
-        }
+        public LogEnricher() { _context = new ConcurrentStack<IDisposable>(); }
 
         public void DisposeScopes()
         {

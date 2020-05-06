@@ -5,30 +5,27 @@ using System.Linq;
 namespace Solari.Sol.Utils
 {
     /// <summary>
-    /// Base on Eric Andres and Pluralsight code. Check him out at https://www.pluralsight.com/tech-blog/maybe/
+    ///     Base on Eric Andres and Pluralsight code. Check him out at https://www.pluralsight.com/tech-blog/maybe/
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public struct Maybe<T>
     {
         private readonly IEnumerable<T> _values;
 
-        private Maybe(IEnumerable<T> values)
-        {
-            _values = values;
-        }
+        private Maybe(IEnumerable<T> values) { _values = values; }
 
         /// <summary>
-        /// Creates a <see cref="Maybe{T}"/> with no value added to the array. HasValue evaluates to false.
+        ///     Creates a <see cref="Maybe{T}" /> with no value added to the array. HasValue evaluates to false.
         /// </summary>
         public static Maybe<T> None => new Maybe<T>(new T[0]);
 
         /// <summary>
-        /// Checks if the Values array contains any element.
+        ///     Checks if the Values array contains any element.
         /// </summary>
         public bool HasValue => _values != null && _values.Any();
 
         /// <summary>
-        /// The value of the <see cref="Maybe{T}"/>
+        ///     The value of the <see cref="Maybe{T}" />
         /// </summary>
         /// <exception cref="InvalidOperationException">If has value evaluates to false.</exception>
         public T Value
@@ -42,10 +39,10 @@ namespace Solari.Sol.Utils
         }
 
         /// <summary>
-        /// Creates a <see cref="Maybe{T}"/> with a value added to the values array. HasValue evaluates to true.
+        ///     Creates a <see cref="Maybe{T}" /> with a value added to the values array. HasValue evaluates to true.
         /// </summary>
         /// <param name="value"></param>
-        /// <returns><see cref="Maybe{T}"/>. T being the value type</returns>
+        /// <returns><see cref="Maybe{T}" />. T being the value type</returns>
         /// <exception cref="InvalidOperationException">If provided value is equals to null</exception>
         public static Maybe<T> Some(T value)
         {
@@ -55,7 +52,7 @@ namespace Solari.Sol.Utils
         }
 
         /// <summary>
-        /// Executes a function based on the values of the Maybe.
+        ///     Executes a function based on the values of the Maybe.
         /// </summary>
         /// <param name="some">Function if there is a value</param>
         /// <param name="none">Function when no value is present in the values arrary</param>
@@ -69,7 +66,7 @@ namespace Solari.Sol.Utils
         }
 
         /// <summary>
-        /// Executes an action based on the values of the <see cref="Maybe{T}"/>
+        ///     Executes an action based on the values of the <see cref="Maybe{T}" />
         /// </summary>
         /// <param name="some">Action when there is a value present in the values array.</param>
         /// <param name="none">Action when there is no value in the values array</param>
@@ -80,9 +77,9 @@ namespace Solari.Sol.Utils
             else
                 none();
         }
-        
+
         /// <summary>
-        /// Executes an action when the values arrays is not empty.
+        ///     Executes an action when the values arrays is not empty.
         /// </summary>
         /// <param name="some">Action</param>
         public void IfSome(Action<T> some)
@@ -91,25 +88,20 @@ namespace Solari.Sol.Utils
         }
 
         /// <summary>
-        /// Checks to see if the HasValue property is true and returns the value.
+        ///     Checks to see if the HasValue property is true and returns the value.
         /// </summary>
         /// <param name="default">Default value of T</param>
         /// <returns>Value containing in the array or the default value of T</returns>
-        public T ValueOrDefault(T @default)
-        {
-            return !HasValue ? @default : _values.Single();
-        }
-        /// <summary>
-        /// Checks to see if the HasValue property is true and returns the value.
-        /// </summary>
-        /// <returns>Value containing in the array or the default value of T</returns>
-        public T ValueOrDefault()
-        {
-            return !HasValue ? default(T) : _values.Single();
-        }
+        public T ValueOrDefault(T @default) { return !HasValue ? @default : _values.Single(); }
 
         /// <summary>
-        /// Throws an '<see cref="Exception"/> when HasValue evaluates to false.
+        ///     Checks to see if the HasValue property is true and returns the value.
+        /// </summary>
+        /// <returns>Value containing in the array or the default value of T</returns>
+        public T ValueOrDefault() { return !HasValue ? default : _values.Single(); }
+
+        /// <summary>
+        ///     Throws an '<see cref="Exception" /> when HasValue evaluates to false.
         /// </summary>
         /// <param name="e"></param>
         /// <returns></returns>
@@ -124,9 +116,6 @@ namespace Solari.Sol.Utils
 
     public static class Maybe
     {
-        public static Maybe<T> Some<T>(T value)
-        {
-            return Maybe<T>.Some(value);
-        }
+        public static Maybe<T> Some<T>(T value) { return Maybe<T>.Some(value); }
     }
 }

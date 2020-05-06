@@ -11,7 +11,7 @@ namespace Solari.Callisto.Connector
     public interface IMongoDbClientSettingsBuilder
     {
         /// <summary>
-        /// The timeout for the wait queue. If TimeSpan.MinValue mongo's default value will be used. 
+        ///     The timeout for the wait queue. If TimeSpan.MinValue mongo's default value will be used.
         /// </summary>
         /// <param name="waitQueueTimeout">The timeout</param>
         /// <returns></returns>
@@ -27,14 +27,14 @@ namespace Solari.Callisto.Connector
         MongoDbClientSettingsBuilder WithTls(bool useTls);
 
         /// <summary>
-        /// The server selection timeout. If TimeSpan.MinValue mongo's default value will be used.
+        ///     The server selection timeout. If TimeSpan.MinValue mongo's default value will be used.
         /// </summary>
         /// <param name="serverSelectionTimeout">The timeout</param>
         /// <returns></returns>
         MongoDbClientSettingsBuilder WithServerSelectionTimeout(TimeSpan serverSelectionTimeout);
 
         /// <summary>
-        /// The server selection timeout. If TimeSpan.MinValue mongo's default value will be used.
+        ///     The server selection timeout. If TimeSpan.MinValue mongo's default value will be used.
         /// </summary>
         /// <param name="socketTimeout">The timeout</param>
         /// <returns></returns>
@@ -47,35 +47,35 @@ namespace Solari.Callisto.Connector
         MongoDbClientSettingsBuilder WithReplicaSetName(string replicaName);
 
         /// <summary>
-        /// The maximum pool size for the connection. If <=0  mongo's default value will be used. 
+        ///     The maximum pool size for the connection. If <=0  mongo's default value will be used. 
         /// </summary>
         /// <param name="maxConnectionPoolSize">The maximum connection pool size</param>
         /// <returns></returns>
         MongoDbClientSettingsBuilder WithMaxConnectionPoolSize(int maxConnectionPoolSize);
 
         /// <summary>
-        /// The minimum pool size for the connection. If <=0  mongo's default value will be used. 
+        ///     The minimum pool size for the connection. If <=0  mongo's default value will be used. 
         /// </summary>
         /// <param name="minConnectionPoolSize">The minimum connection pool size</param>
         /// <returns></returns>
         MongoDbClientSettingsBuilder WithMinConnectionPoolSize(int minConnectionPoolSize);
 
         /// <summary>
-        /// The maximum lifetime of the connection. If <=0  mongo's default value will be used. 
+        ///     The maximum lifetime of the connection. If <=0  mongo's default value will be used. 
         /// </summary>
         /// <param name="maxConnectionLifeTime">The maximum lifetime of the connection size</param>
         /// <returns></returns>
         MongoDbClientSettingsBuilder WithMaxConnectionLifeTime(TimeSpan maxConnectionLifeTime);
 
         /// <summary>
-        /// The maximum idle time of the connection. If <=0  mongo's default value will be used. 
+        ///     The maximum idle time of the connection. If <=0  mongo's default value will be used. 
         /// </summary>
         /// <param name="maxConnectionIdleTime"></param>
         /// <returns></returns>
         MongoDbClientSettingsBuilder WithMaxConnectionIdleTime(TimeSpan maxConnectionIdleTime);
 
         /// <summary>
-        /// The local threshold. If <=0  mongo's default value will be used. 
+        ///     The local threshold. If <=0  mongo's default value will be used. 
         /// </summary>
         /// <param name="localThreshold"></param>
         /// <returns></returns>
@@ -84,21 +84,21 @@ namespace Solari.Callisto.Connector
         MongoDbClientSettingsBuilder WithIpv6(bool ipv6);
 
         /// <summary>
-        /// The heartbeat interval. If <=0  mongo's default value will be used. 
+        ///     The heartbeat interval. If <=0  mongo's default value will be used. 
         /// </summary>
         /// <param name="heartbeatInterval"></param>
         /// <returns></returns>
         MongoDbClientSettingsBuilder WithHeartbeatInterval(TimeSpan heartbeatInterval);
 
         /// <summary>
-        /// The heartbeat timeout. If <=0  mongo's default value will be used. 
+        ///     The heartbeat timeout. If <=0  mongo's default value will be used. 
         /// </summary>
         /// <param name="heartbeatTimeout"></param>
         /// <returns></returns>
         MongoDbClientSettingsBuilder WithHeartBeatTimeout(TimeSpan heartbeatTimeout);
 
         /// <summary>
-        /// The connect timeout. If <=0  mongo's default value will be used. 
+        ///     The connect timeout. If <=0  mongo's default value will be used. 
         /// </summary>
         /// <param name="connectTimeout">The maximum connection pool size</param>
         /// <returns></returns>

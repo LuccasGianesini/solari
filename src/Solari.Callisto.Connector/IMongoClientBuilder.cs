@@ -15,7 +15,7 @@ namespace Solari.Callisto.Connector
         MongoClientBuilder WithMongoUrl(Func<MongoUrlBuilder, MongoUrl> builder, string url);
 
         /// <summary>
-        /// Build an <see cref="MongoClient"/> with precedence order as follows: ConnectionString -> MongoClientSettings -> MongoUrl.
+        ///     Build an <see cref="MongoClient" /> with precedence order as follows: ConnectionString -> MongoClientSettings -> MongoUrl.
         /// </summary>
         /// <returns></returns>
         MongoClient Build();

@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
 using System.Net.Http;
 
 // ReSharper disable CollectionNeverUpdated.Global
@@ -22,6 +20,5 @@ namespace Solari.Ganymede.Domain.Options
         public List<GanymedeRequestResource> Resources { get; set; } = new List<GanymedeRequestResource>(5);
         public long MaxResponseContentBufferSize { get; set; }
         public string Timeout { get; set; }
-        
     }
 }

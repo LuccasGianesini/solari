@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,13 +19,10 @@ namespace Solari.Callisto.Connector
 
     public class CallistoHealthCheck : IHealthCheck
     {
-        private readonly ICallistoConnection _connection;
         private const string Description = "MongoDb connection state";
+        private readonly ICallistoConnection _connection;
 
-        public CallistoHealthCheck(ICallistoConnection connection)
-        {
-            _connection = connection;
-        }
+        public CallistoHealthCheck(ICallistoConnection connection) { _connection = connection; }
 
         public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = new CancellationToken())
         {
@@ -46,7 +41,7 @@ namespace Solari.Callisto.Connector
 
         private Dictionary<string, object> BuildDataDictionary(CallistoConnectionCheck status)
         {
-            return new Dictionary<string, object>()
+            return new Dictionary<string, object>
             {
                 {"ConnectionState", status.ClusterState.ToString()},
                 {"PingResult", status.PingResult}

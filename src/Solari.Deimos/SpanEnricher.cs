@@ -10,10 +10,7 @@ namespace Solari.Deimos
     {
         private readonly ISpan _span;
 
-        public SpanEnricher(ISpan span)
-        {
-            _span = span ?? throw new ArgumentNullException(nameof(span));
-        }
+        public SpanEnricher(ISpan span) { _span = span ?? throw new ArgumentNullException(nameof(span)); }
 
         public ISpanEnricher Tag(string key, string value)
         {

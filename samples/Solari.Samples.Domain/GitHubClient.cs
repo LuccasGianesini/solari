@@ -7,9 +7,7 @@ namespace Solari.Samples.Domain
 {
     public class GitHubClient : GanymedeClient<GitHubClient>, IGitHubClient
     {
-        public GitHubClient(HttpClient httpClient, IGanymedeRequest<GitHubClient> request) : base(httpClient, request)
-        {
-        }
+        public GitHubClient(HttpClient httpClient, IGanymedeRequest<GitHubClient> request) : base(httpClient, request) { }
 
         public async Task<string> GetUserProfile(string profileName)
         {
@@ -19,6 +17,5 @@ namespace Solari.Samples.Domain
                                             .AsString();
             return result;
         }
-        
     }
 }

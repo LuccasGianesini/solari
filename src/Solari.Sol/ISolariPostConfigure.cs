@@ -1,11 +1,9 @@
-using System;
-
 namespace Solari.Sol
 {
     public interface ISolariPostConfigure
     {
         /// <summary>
-        ///<see cref="ISolariMarshal"/>
+        ///     <see cref="ISolariMarshal" />
         /// </summary>
         ISolariMarshal Marshal { get; }
     }

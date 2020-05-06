@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -14,8 +13,8 @@ namespace Solari.Hyperion
 {
     public class KvOperations : IKvOperations
     {
-        private readonly IConsulClient _client;
         private readonly ApplicationOptions _applicationOptions;
+        private readonly IConsulClient _client;
 
         public KvOperations(IConsulClient client, IOptions<ApplicationOptions> applicationOptions)
         {
@@ -27,12 +26,6 @@ namespace Solari.Hyperion
         {
             if (string.IsNullOrEmpty(key)) throw new HyperionException("A key-value pair entry needs a key!");
             return await _client.KV.Delete(key);
-        }
-
-        public async Task<IReadOnlyList<string>> GetKeys(string prefix)
-        {
-            QueryResult<string[]> keys = await _client.KV.Keys(prefix);
-            return keys.Response.ToList();
         }
 
         public async Task<WriteResult<bool>> SaveToKv<T>(string key, T value) where T : class
@@ -181,6 +174,12 @@ namespace Solari.Hyperion
             return result.Response.Value.ToUShort();
         }
 
+        public async Task<IReadOnlyList<string>> GetKeys(string prefix)
+        {
+            QueryResult<string[]> keys = await _client.KV.Keys(prefix);
+            return keys.Response.ToList();
+        }
+
         private static KVPair BuildKvPair(string key, byte[] value)
         {
             return new KVPair(key)
@@ -200,8 +199,9 @@ namespace Solari.Hyperion
 
         private string BuildKey(string key) { return _applicationOptions.ApplicationName + "/" + key; }
 
-        private static string SerializeToJson<T>(T @object) => JsonSerializer.Serialize(@object);
-        private static T SerializeToObject<T>(string json) => JsonSerializer.Deserialize<T>(json);
+        private static string SerializeToJson<T>(T @object) { return JsonSerializer.Serialize(@object); }
+
+        private static T SerializeToObject<T>(string json) { return JsonSerializer.Deserialize<T>(json); }
 
         private static void IsValid(string key, object value)
         {

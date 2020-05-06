@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Jaeger.Thrift.Agent;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
@@ -15,8 +14,8 @@ namespace Solari.Samples.Infrastructure
 {
     public class PersonOperations : IPersonOperations
     {
-        private readonly ICallistoOperationFactory _operationFactory;
         private readonly ITitanLogger<PersonOperations> _logger;
+        private readonly ICallistoOperationFactory _operationFactory;
 
         public PersonOperations(ICallistoOperationFactory operationFactory, ITitanLogger<PersonOperations> logger)
         {
@@ -26,17 +25,17 @@ namespace Solari.Samples.Infrastructure
 
         public ICallistoUpdate<Person> CreateUpdatePersonOperation(string id, ICallistoUpdate update)
         {
-            var props = update.GetType()
-                              .GetProperties()
-                              .Where(a => update.Fields
-                                                .Select(b => b.ToLowerInvariant())
-                                                .Contains(a.Name.ToLowerInvariant()))
-                              .ToList();
+            List<PropertyInfo> props = update.GetType()
+                                             .GetProperties()
+                                             .Where(a => update.Fields
+                                                               .Select(b => b.ToLowerInvariant())
+                                                               .Contains(a.Name.ToLowerInvariant()))
+                                             .ToList();
 
             foreach (PropertyInfo propertyInfo in props)
             {
-                var name = propertyInfo.Name;
-                var val = propertyInfo.GetValue(update);
+                string name = propertyInfo.Name;
+                object? val = propertyInfo.GetValue(update);
             }
 
             return null;

@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 
 namespace Solari.Callisto.Abstractions.CQR
 {
@@ -7,6 +6,5 @@ namespace Solari.Callisto.Abstractions.CQR
     {
         FilterDefinition<T> FilterDefinition { get; }
         DeleteOptions DeleteOptions { get; }
-        
     }
 }

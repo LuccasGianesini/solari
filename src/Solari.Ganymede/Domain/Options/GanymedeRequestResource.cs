@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
 using System.Net.Http;
 using Solari.Ganymede.ContentSerializers;
 using Solari.Sol.Extensions;
@@ -55,19 +53,20 @@ namespace Solari.Ganymede.Domain.Options
         public string Verb { get; set; }
 
         /// <summary>
-        /// Completion option of the request.
-        ///  Available values:
+        ///     Completion option of the request.
+        ///     Available values:
         ///     content-read
         ///     headers-read
-        ///     
-        /// 
         /// </summary>
         public string CompletionOption { get; set; }
-         /// <summary>
-        /// Gets the completion option of the request.
-        /// Defaults to <see cref="HttpCompletionOption.ResponseContentRead"/>;
+
+        /// <summary>
+        ///     Gets the completion option of the request.
+        ///     Defaults to <see cref="HttpCompletionOption.ResponseContentRead" />;
         /// </summary>
-        /// <returns><see cref="HttpCompletionOption"/></returns>
+        /// <returns>
+        ///     <see cref="HttpCompletionOption" />
+        /// </returns>
         public HttpCompletionOption GetCompletionOption()
         {
             if (string.IsNullOrEmpty(CompletionOption)) return HttpCompletionOption.ResponseContentRead;
@@ -80,10 +79,12 @@ namespace Solari.Ganymede.Domain.Options
         }
 
         /// <summary>
-        /// Gets the timeout of the request.
-        /// Defaults to 30 seconds.
+        ///     Gets the timeout of the request.
+        ///     Defaults to 30 seconds.
         /// </summary>
-        /// <returns><see cref="TimeSpan"/></returns>
+        /// <returns>
+        ///     <see cref="TimeSpan" />
+        /// </returns>
         public TimeSpan GetTimeout()
         {
             if (string.IsNullOrEmpty(Timeout)) return TimeSpan.FromSeconds(30);
@@ -92,7 +93,7 @@ namespace Solari.Ganymede.Domain.Options
         }
 
         /// <summary>
-        /// Gets the http version of the request. Defaults to 1.1
+        ///     Gets the http version of the request. Defaults to 1.1
         /// </summary>
         /// <returns></returns>
         public Version GetHttpVersion()
@@ -109,10 +110,12 @@ namespace Solari.Ganymede.Domain.Options
         }
 
         /// <summary>
-        /// Gets the <see cref="HttpMethod"/> of the request.
+        ///     Gets the <see cref="HttpMethod" /> of the request.
         /// </summary>
         /// <exception cref="ArgumentException">When invalid verb is provided</exception>
-        /// <returns><see cref="HttpMethod"/></returns>
+        /// <returns>
+        ///     <see cref="HttpMethod" />
+        /// </returns>
         public HttpMethod GetVerb()
         {
             if (string.IsNullOrEmpty(Verb)) return HttpMethod.Get;
@@ -147,7 +150,7 @@ namespace Solari.Ganymede.Domain.Options
             if (string.IsNullOrEmpty(Deserializer)) return new JsonContentDeserializer();
             return Deserializer.ToLowerInvariant().Trim() switch
                    {
-                       "json"        => (IContentDeserializer) new JsonContentDeserializer(),
+                       "json"        => new JsonContentDeserializer(),
                        "xml"         => new XmlContentDeserializer(),
                        "url-encoded" => new UrlEncodedDeserializer(),
                        _             => new JsonContentDeserializer()

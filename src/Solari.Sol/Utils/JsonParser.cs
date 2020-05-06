@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Solari.Sol.Utils
 {
-   //Credits goes to  .NET Foundation Team.
+    //Credits goes to  .NET Foundation Team.
     //JSON parser is based on JsonConfigurationFileParser found in Microsoft.Extensions.Configuration.Json library.
     //https://github.com/aspnet/Configuration/blob/dev/src/Microsoft.Extensions.Configuration.Json/JsonConfigurationFileParser.cs
     public sealed class JsonParser
@@ -14,8 +14,8 @@ namespace Solari.Sol.Utils
         private readonly IDictionary<string, string> _mappings = new SortedDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         private readonly Stack<string> _stack = new Stack<string>();
-        private  string _currentPath;
-        
+        private string _currentPath;
+
         public IDictionary<string, string> Parse(JObject jObject)
         {
             VisitJObject(jObject);
@@ -25,7 +25,7 @@ namespace Solari.Sol.Utils
 
         private void VisitJObject(JObject jObject)
         {
-            foreach (var property in jObject.Properties())
+            foreach (JProperty property in jObject.Properties())
             {
                 EnterContext(property.Name);
                 VisitProperty(property);
@@ -33,10 +33,7 @@ namespace Solari.Sol.Utils
             }
         }
 
-        private void VisitProperty(JProperty property)
-        {
-            VisitToken(property.Value);
-        }
+        private void VisitProperty(JProperty property) { VisitToken(property.Value); }
 
         private void VisitToken(JToken token)
         {
@@ -77,12 +74,9 @@ namespace Solari.Sol.Utils
 
         private void VisitPrimitive(JToken data)
         {
-            var key = _currentPath;
+            string key = _currentPath;
 
-            if (_mappings.ContainsKey(key))
-            {
-                throw new FormatException($"Duplicated key: '{key}'");
-            }
+            if (_mappings.ContainsKey(key)) throw new FormatException($"Duplicated key: '{key}'");
 
             _mappings[key] = data.ToString();
         }

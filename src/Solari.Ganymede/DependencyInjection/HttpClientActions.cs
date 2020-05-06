@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Polly.Registry;
 using Solari.Ganymede.Domain;
 using Solari.Ganymede.Domain.Exceptions;
@@ -137,9 +136,7 @@ namespace Solari.Ganymede.DependencyInjection
                    .AddSingleton<IGanymedeRequest<TImplementation>>(a =>
                    {
                        if (_requestSettings.ContainsKey(name))
-                       {
                            return new GanymedeRequest<TImplementation>(_requestSettings.FirstOrDefault(a => a.Key == name).Value);
-                       }
 
                        throw new
                            RequestNotFoundException($"The request {name} was not found in the dictionary. " +

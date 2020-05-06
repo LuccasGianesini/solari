@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
@@ -17,11 +15,11 @@ namespace Solari.Ganymede.Domain
             StartedUtc = startedUtc;
             EndedUtc = endedUtc;
         }
+
         public HttpResponseMessage ResponseMessage { get; }
         public TimeSpan? Duration => EndedUtc - StartedUtc;
         public DateTimeOffset? EndedUtc { get; }
         public bool IsSuccessStatusCode { get; }
         public DateTimeOffset StartedUtc { get; }
-        
     }
 }

@@ -33,8 +33,6 @@ namespace Solari.Samples.Domain.Person.Validators
                 .WithMessage("Operation must be 'Add' or 'Remove' or 'Update'")
                 .WithErrorCode("ERR-023")
                 .WithName("Invalid operation name");
-            
         }
-        
     }
 }

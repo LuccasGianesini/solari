@@ -13,23 +13,15 @@ namespace Solari.Ganymede.Domain.Exceptions
         //    http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dncscol/html/csharp07192001.asp
         //
 
-        public MessageValidationException()
-        {
-        }
+        public MessageValidationException() { }
 
-        public MessageValidationException(string message) : base(message)
-        {
-        }
+        public MessageValidationException(string message) : base(message) { }
 
-        public MessageValidationException(string message, Exception inner) : base(message, inner)
-        {
-        }
+        public MessageValidationException(string message, Exception inner) : base(message, inner) { }
 
-        protected MessageValidationException(
-            SerializationInfo info,
-            StreamingContext context) : base(info, context)
+        protected MessageValidationException(SerializationInfo info,
+                                             StreamingContext context) : base(info, context)
         {
-        
         }
     }
 }
