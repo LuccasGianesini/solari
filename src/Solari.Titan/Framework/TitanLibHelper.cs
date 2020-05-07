@@ -8,17 +8,22 @@ namespace Solari.Titan.Framework
     {
         public static string BuildPath(params string[] paths) { return Path.Combine(paths); }
 
-        public static LogEventLevel GetLogLevel(string fromSettings)
+        public static LogEventLevel GetLogLevel(string level)
         {
-            if (string.IsNullOrEmpty(fromSettings)) return LogEventLevel.Warning;
-            return fromSettings.ToLowerInvariant() switch
+            if (string.IsNullOrEmpty(level)) return LogEventLevel.Information;
+            return level.ToLowerInvariant() switch
                    {
                        "verbose"     => LogEventLevel.Verbose,
+                       "trace"       => LogEventLevel.Verbose,
                        "debug"       => LogEventLevel.Debug,
                        "information" => LogEventLevel.Information,
+                       "info"        => LogEventLevel.Information,
                        "warning"     => LogEventLevel.Warning,
+                       "warn"        => LogEventLevel.Warning,
                        "error"       => LogEventLevel.Error,
+                       "err"         => LogEventLevel.Error,
                        "fatal"       => LogEventLevel.Fatal,
+                       "critical"    => LogEventLevel.Fatal,
                        _             => LogEventLevel.Information
                    };
         }
