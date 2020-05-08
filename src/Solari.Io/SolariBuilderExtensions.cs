@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using HealthChecks.UI.Configuration;
 using Microsoft.AspNetCore.Builder;
@@ -18,7 +19,7 @@ namespace Solari.Io
         {
             IConfigurationSection section = builder.AppConfiguration.GetSection(IoConstants.AppSettingsSection);
             if (!section.Exists())
-                return builder;
+                throw new IOException("Io AppSettings section not found!");
             var options = builder.AppConfiguration.GetOptions<IoOptions>(section);
             builder.Services.Configure<IoOptions>(section);
             if (!options.Enabled)
@@ -84,7 +85,7 @@ namespace Solari.Io
 
         private static void ConfigurePrometheusGatewayPublisher(ISolariBuilder builder, IoOptions options, IHealthChecksBuilder healthChecksBuilder)
         {
-            if (options.PrometheusGateway == null)
+            if (options.PrometheusGateway is null)
                 return;
             if (!options.PrometheusGateway.Enabled)
                 return;
@@ -97,7 +98,7 @@ namespace Solari.Io
 
         private static void ConfigureSeqPublisher(ISolariBuilder builder, IoOptions options, IHealthChecksBuilder healthChecksBuilder)
         {
-            if (options.Seq == null)
+            if (options.Seq is null)
                 return;
             if (options.Seq.Enabled == false)
                 return;

@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,9 +18,9 @@ namespace Solari.Titan.DependencyInjection
         {
             return webHostBuilder.UseSerilog((context, config) =>
             {
-                LoggingDefaultAction(config, GetOptions(context.Configuration),
-                                     GetApplicationOptions(context.Configuration),
-                                     context.HostingEnvironment.ContentRootPath);
+                ApplicationOptions appOptions = GetApplicationOptions(context.Configuration);
+                TitanOptions options = GetOptions(context.Configuration);
+                LoggingDefaultConfig.BuildDefaultConfig(config, options, appOptions, AppDomain.CurrentDomain.BaseDirectory);
             });
         }
 
@@ -27,28 +28,23 @@ namespace Solari.Titan.DependencyInjection
         {
             return hostBuilder.UseSerilog((context, config) =>
             {
-                LoggingDefaultAction(config, GetOptions(context.Configuration),
-                                     GetApplicationOptions(context.Configuration),
-                                     context.HostingEnvironment.ContentRootPath);
+                ApplicationOptions appOptions = GetApplicationOptions(context.Configuration);
+                TitanOptions options = GetOptions(context.Configuration);
+                LoggingDefaultConfig.BuildDefaultConfig(config, options, appOptions, AppDomain.CurrentDomain.BaseDirectory);
             });
         }
 
         private static ApplicationOptions GetApplicationOptions(IConfiguration configuration)
         {
-            return configuration.GetOptions<ApplicationOptions>(SolariConstants.ApplicationAppSettingsSection);
+            IConfigurationSection section = configuration.GetSection(SolariConstants.ApplicationAppSettingsSection);
+            return configuration.GetOptions<ApplicationOptions>(section) ?? new ApplicationOptions();
         }
 
 
         private static TitanOptions GetOptions(IConfiguration configuration)
         {
-            return configuration.GetOptions<TitanOptions>(TitanConstants.TitanAppSettingsSection);
-        }
-
-
-        private static LoggerConfiguration LoggingDefaultAction(LoggerConfiguration loggerConfiguration, TitanOptions options, ApplicationOptions
-                                                                    appOptions, string contentRootPath)
-        {
-            return LoggingDefaultConfig.BuildDefaultConfig(loggerConfiguration, options, appOptions, contentRootPath);
+            IConfigurationSection section = configuration.GetSection(TitanConstants.TitanAppSettingsSection);
+            return configuration.GetOptions<TitanOptions>(section) ?? new TitanOptions();
         }
     }
 }

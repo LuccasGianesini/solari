@@ -18,6 +18,7 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Solari.Hyperion.Abstractions\Solari.Hyperion.Abstractions.csproj" />
+      <ProjectReference Include="..\Solari.Hyperion\Solari.Hyperion.csproj" />
     </ItemGroup>
  
 </Project>

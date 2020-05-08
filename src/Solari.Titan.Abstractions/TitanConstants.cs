@@ -4,5 +4,6 @@ namespace Solari.Titan.Abstractions
     {
         public const string TitanAppSettingsSection = "Titan";
         public const string GlobalLogLevelRestriction = "warning";
+        public const string GlobalOverrideLevel = "warning";
     }
 }

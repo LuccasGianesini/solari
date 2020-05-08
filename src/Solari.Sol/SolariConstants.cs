@@ -8,6 +8,5 @@ namespace Solari.Sol
         public const string ApplicationAppSettingsSection = "Application";
         public const string ASPNETCORE_ENVIRONMENT = "ASPNETCORE_ENVIRONMENT";
         public const string DOTNET_ENVIRONMENT = "DOTNET_ENVIRONMENT";
-        public const string K8S_NODE_IP_ADDR = "K8S_NODE_IP_ADDR";
     }
 }

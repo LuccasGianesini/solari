@@ -10,13 +10,9 @@ namespace Solari.Titan.Framework
 {
     internal static class LoggingDefaultConfig
     {
-        private const LogEventLevel OverrideDefault = LogEventLevel.Warning;
-
         internal static LoggerConfiguration BuildDefaultConfig(LoggerConfiguration config,
                                                                TitanOptions options, ApplicationOptions appOptions, string contentRootPath)
         {
-            if (options == null) throw new ArgumentException("Serilog options cannot be null. Check your AppSettings.json and your hosting environment");
-
             ConfigureMinimumLevels(config, options);
             ConfigureEnrich(config, appOptions);
             AddSinks(config, options, appOptions, contentRootPath);
@@ -49,7 +45,9 @@ namespace Solari.Titan.Framework
                 .MinimumLevel.Is(TitanLibHelper.GetLogLevel(options.DefaultLevel))
                 .MinimumLevel.Override("System", TitanLibHelper.GetLogLevel(options.Overrides.System))
                 .MinimumLevel.Override("Microsoft", TitanLibHelper.GetLogLevel(options.Overrides.Microsoft))
+                .MinimumLevel.Override("Microsoft.AspNetCore", TitanLibHelper.GetLogLevel(options.Overrides.AspNetCore))
                 .MinimumLevel.Override("Microsoft.Hosting.Lifetime", TitanLibHelper.GetLogLevel(options.Overrides.MicrosoftHostingLifetime));
+            
             foreach (string[] item in options.Overrides.Custom.Select(s => s.Split(":")))
                 config.MinimumLevel.Override(item[0], TitanLibHelper.GetLogLevel(item[1]));
         }

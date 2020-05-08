@@ -1,7 +1,11 @@
-﻿namespace Solari.Titan.Abstractions
+﻿using System;
+
+namespace Solari.Titan.Abstractions
 {
-    public class ILoggingScope
+    public interface ILoggingScope : IDisposable
     {
-        
+        void PushContext(IDisposable logContext);
+        void CloseScope();
+
     }
 }

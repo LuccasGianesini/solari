@@ -57,6 +57,24 @@ namespace Solari.Sol.Utils
                     VisitPrimitive(token);
                     break;
 
+                case JTokenType.None:
+                    break;
+                case JTokenType.Constructor:
+                    break;
+                case JTokenType.Property:
+                    break;
+                case JTokenType.Comment:
+                    break;
+                case JTokenType.Undefined:
+                    break;
+                case JTokenType.Date:
+                    break;
+                case JTokenType.Guid:
+                    break;
+                case JTokenType.Uri:
+                    break;
+                case JTokenType.TimeSpan:
+                    break;
                 default:
                     throw new FormatException($"Invalid JSON token: {token}");
             }

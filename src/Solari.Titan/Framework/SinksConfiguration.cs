@@ -7,11 +7,17 @@ using Solari.Titan.Abstractions;
 
 namespace Solari.Titan.Framework
 {
+    //TODO REVIEW ALL METHODS TO COMPLY WITH DEFAULT CONFIG
     internal static class SinksConfiguration
     {
+        
         internal static LoggerConfiguration ConfigureConsole(this LoggerConfiguration configuration, TitanOptions options)
         {
-            if (options.Console == null || options.Console.Enabled == false)
+            if (options.Console == null)
+            {
+                options.Console = new ConsoleOptions();
+            }
+            if (options.Console.Enabled == false)
                 return configuration;
 
             configuration.WriteTo

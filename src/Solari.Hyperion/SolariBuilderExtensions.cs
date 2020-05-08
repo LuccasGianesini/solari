@@ -10,25 +10,44 @@ namespace Solari.Hyperion
     {
         public static ISolariBuilder AddHyperion(this ISolariBuilder builder)
         {
-            if (!builder.AppConfiguration.GetSection(HyperionConstants.AppSettingsSection).Exists())
-                return builder;
-            var options = builder.AppConfiguration.GetOptions<HyperionOptions>(HyperionConstants.AppSettingsSection);
-            builder.Services.Configure<HyperionOptions>(builder.AppConfiguration.GetSection(HyperionConstants.AppSettingsSection));
-            builder.Services.AddSingleton<HyperionStartupProcedure, HyperionStartupProcedure>();
-            builder.Services.AddSingleton<IHyperionClient, HyperionClient>();
-            builder.Services.AddSingleton<IKvOperations, KvOperations>();
-            builder.Services.AddSingleton<IServiceOperations, ServiceOperations>();
-            builder.Services.AddSingleton<IConsulClientFactory, ConsulClientFactory>();
-            builder.Services.AddSingleton(provider => provider.GetService<IConsulClientFactory>().Create(options));
-            RegisterService(builder, options);
+            HyperionOptions options = ConfigureHyperionOptions(builder.Services, builder.AppConfiguration);
+            AddHyperionCoreServices(builder.Services, options);
+            RegisterApplication(builder.Services, options);
             return builder;
         }
 
-        private static void RegisterService(ISolariBuilder builder, HyperionOptions hyperionOptions)
+
+        public static HyperionOptions ConfigureHyperionOptions(IServiceCollection serviceCollection, IConfiguration configuration)
+        {
+            IConfigurationSection section = GetHyperionOptions(configuration, out HyperionOptions options);
+            serviceCollection.Configure<HyperionOptions>(section);
+            return options;
+        }
+
+        public static IConfigurationSection GetHyperionOptions(IConfiguration configuration, out HyperionOptions options)
+        {
+            IConfigurationSection section = configuration.GetSection(HyperionConstants.AppSettingsSection);
+            if (!section.Exists())
+                throw new HyperionException("Hyperion AppSettings section not found!");
+            options = configuration.GetOptions<HyperionOptions>(section);
+            return section;
+        }
+
+
+        public static void AddHyperionCoreServices(IServiceCollection serviceCollection, HyperionOptions options)
+        {
+            serviceCollection.AddSingleton<IHyperionClient, HyperionClient>();
+            serviceCollection.AddSingleton<IKvOperations, KvOperations>();
+            serviceCollection.AddSingleton<IServiceOperations, ServiceOperations>();
+            serviceCollection.AddSingleton<IConsulClientFactory, ConsulClientFactory>();
+            serviceCollection.AddSingleton(provider => provider.GetService<IConsulClientFactory>().Create(options));
+        }
+
+        public static void RegisterApplication(IServiceCollection serviceCollection, HyperionOptions hyperionOptions)
         {
             if (!hyperionOptions.Register)
                 return;
-            builder.Services.AddHostedService<HyperionStartupProcedure>();
+            serviceCollection.AddHostedService<HyperionStartupProcedure>();
         }
     }
 }

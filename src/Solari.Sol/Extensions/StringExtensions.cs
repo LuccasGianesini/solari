@@ -227,6 +227,7 @@ namespace Solari.Sol.Extensions
             return lowered.StartsWith("d") ? TimeSpan.FromMilliseconds(ToLong(value)) : TimeSpan.MinValue;
         }
 
-        public static string Underscore(this string value) { return string.Concat(value.Select((x, i) => i > 0 && char.IsUpper(x) ? "_" + x : x.ToString())); }
+        public static string DashToLower(this string value) => value.Dash().ToLowerInvariant();
+        public static string Dash(this string value) { return string.Concat(value.Select((x, i) => i > 0 && char.IsUpper(x) ? "-" + x : x.ToString())); }
     }
 }

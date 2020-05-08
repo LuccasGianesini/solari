@@ -15,7 +15,8 @@ namespace Solari.Ceres.DependencyInjection
         {
             IConfigurationSection section = builder.AppConfiguration.GetSection(CeresConstants.AppSettingsSection);
             if (!section.Exists())
-                return builder;
+                throw new CeresException("Ceres AppSettings section not found!");
+            
             var options = builder.AppConfiguration.GetOptions<CeresOptions>(section);
 
             ApplicationOptions appOptions = builder.GetAppOptions();
@@ -30,9 +31,9 @@ namespace Solari.Ceres.DependencyInjection
             ConfigureReporters.ConfigurePrometheus(options, metricsBuilder);
             ConfigureInfluxDb(builder, options, metricsBuilder);
             ConfigureEndpoints(builder, options);
-            ConfigureMiddleware(builder, options);
-            ConfigureCpuUsageMetric(builder, options);
-            ConfigureMemoryUsageMetric(builder, options);
+            ConfigureMiddleware(builder, options.Middlewares);
+            ConfigureCpuUsageMetric(builder, options.Cpu);
+            ConfigureMemoryUsageMetric(builder, options.Memory);
             return builder;
         }
 
@@ -44,20 +45,20 @@ namespace Solari.Ceres.DependencyInjection
             builder.Services.AddMetricsReportingHostedService();
         }
 
-        private static void ConfigureCpuUsageMetric(ISolariBuilder builder, CeresOptions options)
+        private static void ConfigureCpuUsageMetric(ISolariBuilder builder, CpuUsageOptions options)
         {
-            if (options.Cpu is null)
+            if (options is null)
                 return;
-            if (!options.Cpu.Enabled)
+            if (!options.Enabled)
                 return;
             builder.Services.AddHostedService<CpuMeasurementHostedService>();
         }
 
-        private static void ConfigureMemoryUsageMetric(ISolariBuilder builder, CeresOptions options)
+        private static void ConfigureMemoryUsageMetric(ISolariBuilder builder, MemoryUsageOptions options)
         {
-            if (options.Memory is null)
+            if (options is null)
                 return;
-            if (!options.Memory.Enabled)
+            if (!options.Enabled)
                 return;
             builder.Services.AddHostedService<MemoryMeasurementHostedService>();
         }
@@ -69,7 +70,7 @@ namespace Solari.Ceres.DependencyInjection
                 a.Enabled = options.Enabled;
                 a.AddServerTag();
                 a.AddEnvTag();
-                a.GlobalTags.Add("app", appOptions.ApplicationName.ToLowerInvariant().Underscore());
+                a.GlobalTags.Add("app", appOptions.ApplicationName.ToLowerInvariant().Dash());
                 a.DefaultContextLabel = appOptions.ApplicationName;
                 a.ReportingEnabled = options.InfluxDb.Enabled;
             });
@@ -94,17 +95,17 @@ namespace Solari.Ceres.DependencyInjection
             });
         }
 
-        private static void ConfigureMiddleware(ISolariBuilder builder, CeresOptions options)
+        private static void ConfigureMiddleware(ISolariBuilder builder, MetricsTrackingMiddlewareOptions options)
         {
-            if (options.Middlewares == null)
+            if (options is null)
                 return;
 
             builder.Services.AddMetricsTrackingMiddleware(a =>
             {
-                a.ApdexTrackingEnabled = options.Middlewares.ApdexTracking;
-                a.ApdexTSeconds = options.Middlewares.ApdexSeconds;
-                a.IgnoredHttpStatusCodes = options.Middlewares.IgnoredHttpStatusCodes;
-                a.OAuth2TrackingEnabled = options.Middlewares.OAuth2Tracking;
+                a.ApdexTrackingEnabled = options.ApdexTracking;
+                a.ApdexTSeconds = options.ApdexSeconds;
+                a.IgnoredHttpStatusCodes = options.IgnoredHttpStatusCodes;
+                a.OAuth2TrackingEnabled = options.OAuth2Tracking;
             });
 
             builder.AddBuildAction(new BuildAction("Ceres Middleware")
@@ -114,19 +115,19 @@ namespace Solari.Ceres.DependencyInjection
                     var appBuilder = provider.GetService<ISolariMarshal>();
                     if (appBuilder == null) return;
 
-                    if (options.Middlewares.ApdexTracking)
+                    if (options.ApdexTracking)
                         appBuilder.ApplicationBuilder.UseMetricsApdexTrackingMiddleware();
-                    if (options.Middlewares.PostAndPutSizeTracking)
+                    if (options.PostAndPutSizeTracking)
                         appBuilder.ApplicationBuilder.UseMetricsPostAndPutSizeTrackingMiddleware();
-                    if (options.Middlewares.RequestTracking)
+                    if (options.RequestTracking)
                         appBuilder.ApplicationBuilder.UseMetricsRequestTrackingMiddleware();
-                    if (options.Middlewares.OAuth2Tracking)
+                    if (options.OAuth2Tracking)
                         appBuilder.ApplicationBuilder.UseMetricsOAuth2TrackingMiddleware();
-                    if (options.Middlewares.ErrorTracking)
+                    if (options.ErrorTracking)
                         appBuilder.ApplicationBuilder.UseMetricsErrorTrackingMiddleware();
-                    if (options.Middlewares.ActiveRequests)
+                    if (options.ActiveRequests)
                         appBuilder.ApplicationBuilder.UseMetricsActiveRequestMiddleware();
-                    if (options.Middlewares.RequestTracking)
+                    if (options.RequestTracking)
                         appBuilder.ApplicationBuilder.UseMetricsRequestTrackingMiddleware();
                 }
             });
