@@ -16,7 +16,7 @@ namespace Solari.Sol
         /// <summary>
         ///     The application name.
         /// </summary>
-        public string ApplicationName { get; set; } = Assembly.GetEntryAssembly()?.GetName(false).Name.DashToLower();
+        public string ApplicationName { get; set; } = (Assembly.GetEntryAssembly()?.GetName(false).Name?.Replace(".", "-"))?.ToLowerInvariant();
 
         /// <summary>
         ///     The version of the application
@@ -26,7 +26,7 @@ namespace Solari.Sol
         /// <summary>
         ///     The environment that the application is running.
         /// </summary>
-        public string ApplicationEnvironment => GetEnvironment();
+        public string ApplicationEnvironment => GetEnvironment().ToLowerInvariant();
 
         public string ApplicationId => GetApplicationId();
 
