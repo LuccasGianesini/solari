@@ -1,10 +1,9 @@
-﻿trigger:
+trigger:
   branches:
     include:
-      - beta
+      - develop
     exclude:
-      - alpha
-      - develop   
+      - alpha   
       - master
 pr:
   branches:
