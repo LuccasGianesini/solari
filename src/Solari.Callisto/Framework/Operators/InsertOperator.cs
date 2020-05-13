@@ -48,7 +48,7 @@ namespace Solari.Callisto.Framework.Operators
         /// <exception cref="NullCallistoOperationException">When <see cref="ICallistoInsert{T}"/> is null</exception>
         /// <exception cref="NullOrEmptyValueException">When the values array is null or empty</exception>
         /// 
-        public async Task<TEntity> One(TEntity entity) { return await One(_factory.CreateInsert($"insert {nameof(TEntity)}", entity)); }
+        public async Task<TEntity> One(TEntity entity) { return await One(_factory.CreateInsert(entity)); }
 
         /// <summary>
         /// Insert one document into the collection.
@@ -90,7 +90,7 @@ namespace Solari.Callisto.Framework.Operators
         /// <exception cref="NullOrEmptyValueException">When the values array is null or empty</exception>
         public async Task<IEnumerable<TEntity>> Many(IEnumerable<TEntity> entities)
         {
-            return await Many(_factory.CreateInsertMany($"insert-many {nameof(TEntity)}", entities));
+            return await Many(_factory.CreateInsertMany(entities));
         }
 
         /// <summary>

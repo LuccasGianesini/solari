@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using Solari.Callisto.Connector;
 using Solari.Callisto.Connector.DependencyInjection;
 using Solari.Callisto.DependencyInjection;
@@ -19,6 +20,7 @@ using Solari.Samples.Domain;
 using Solari.Samples.Domain.Person;
 using Solari.Samples.Infrastructure;
 using Solari.Sol;
+using Solari.Themis;
 
 namespace Solari.Samples.WebApi
 {
@@ -39,17 +41,10 @@ namespace Solari.Samples.WebApi
                     .AddEris()
                     .AddOberon()
                     .AddGanymede(requests => requests.AddGanymedeClient<IGitHubClient, GitHubClient>("GitHub"))
-                    .AddCeres()
-                    .AddIo(a => a.AddCallistoHealthCheck()
-                                 .AddPrivateMemoryHealthCheck(524288000)
-                                 .AddProcessAllocatedMemoryHealthCheck(209715200))
-                    .AddHyperion()
-                    .AddCallistoConnector()
-                    .AddCallisto(callistoConfiguration => callistoConfiguration
-                                                          .RegisterDefaultConventionPack()
-                                                          .RegisterDefaultClassMaps()
-                                                          .RegisterCollection<IPersonRepository, PersonRepository, Person>("person", ServiceLifetime.Scoped))
-                    .AddDeimos(manager => manager.Register(new CallistoTracerPlugin()));
+                    .AddCallistoWithDefaults(callistoConfiguration => callistoConfiguration
+                                                 .RegisterScopedCollection<IPersonRepository, PersonRepository, Person>("person"))
+                    .AddThemis(tracing => tracing.AddCallistoTracing(),
+                               health => health.AddCallistoHealthCheck());
 
             services.AddScoped<IPersonOperations, PersonOperations>();
             services.AddOpenApiDocument(cfg => cfg.PostProcess = d => d.Info.Title = "Solari Sample Api");
@@ -62,6 +57,7 @@ namespace Solari.Samples.WebApi
 
             app.UseOpenApi();
             app.UseSwaggerUi3();
+            app.UseSerilogRequestLogging();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {

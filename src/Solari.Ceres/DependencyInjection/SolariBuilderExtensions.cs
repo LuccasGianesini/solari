@@ -16,7 +16,7 @@ namespace Solari.Ceres.DependencyInjection
             IConfigurationSection section = builder.AppConfiguration.GetSection(CeresConstants.AppSettingsSection);
             if (!section.Exists())
                 throw new CeresException("Ceres AppSettings section not found!");
-            
+
             var options = builder.AppConfiguration.GetOptions<CeresOptions>(section);
 
             ApplicationOptions appOptions = builder.GetAppOptions();
@@ -32,8 +32,8 @@ namespace Solari.Ceres.DependencyInjection
             ConfigureInfluxDb(builder, options, metricsBuilder);
             ConfigureEndpoints(builder, options);
             ConfigureMiddleware(builder, options.Middlewares);
-            ConfigureCpuUsageMetric(builder, options.Cpu);
-            ConfigureMemoryUsageMetric(builder, options.Memory);
+            ConfigureCpuUsageMetric(builder, options.CollectCpuMetrics);
+            ConfigureMemoryUsageMetric(builder, options.CollectMemoryMetrics);
             return builder;
         }
 
@@ -45,20 +45,16 @@ namespace Solari.Ceres.DependencyInjection
             builder.Services.AddMetricsReportingHostedService();
         }
 
-        private static void ConfigureCpuUsageMetric(ISolariBuilder builder, CpuUsageOptions options)
+        private static void ConfigureCpuUsageMetric(ISolariBuilder builder, bool enabled)
         {
-            if (options is null)
-                return;
-            if (!options.Enabled)
+            if (!enabled)
                 return;
             builder.Services.AddHostedService<CpuMeasurementHostedService>();
         }
 
-        private static void ConfigureMemoryUsageMetric(ISolariBuilder builder, MemoryUsageOptions options)
+        private static void ConfigureMemoryUsageMetric(ISolariBuilder builder, bool enabled)
         {
-            if (options is null)
-                return;
-            if (!options.Enabled)
+            if (!enabled)
                 return;
             builder.Services.AddHostedService<MemoryMeasurementHostedService>();
         }

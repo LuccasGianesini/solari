@@ -6,15 +6,15 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Clusters;
 using Solari.Callisto.Abstractions;
+using Solari.Callisto.Abstractions.Exceptions;
 
 namespace Solari.Callisto.Connector
 {
-    public sealed class CallistoConnection : ICallistoConnection, IDisposable
+    public sealed class CallistoConnection : ICallistoConnection
     {
-        private readonly Dictionary<string, IMongoClient> _client;
         private readonly ReaderWriterLockSlim _lockSlim;
+        private readonly Dictionary<string, IMongoClient> _client;
         private IMongoDatabase _database;
-        private bool _disposed;
 
         public CallistoConnection()
         {
@@ -22,21 +22,7 @@ namespace Solari.Callisto.Connector
             _client = new Dictionary<string, IMongoClient>(1);
         }
 
-
         public IMongoDatabase GetDataBase() { return GetClient().GetDatabase(DataBaseName); }
-
-        public IMongoClient LockedRead()
-        {
-            _lockSlim.EnterReadLock();
-            try
-            {
-                return GetClient();
-            }
-            finally
-            {
-                _lockSlim.ExitReadLock();
-            }
-        }
 
         public ICallistoConnection AddClient(IMongoClient mongoClient)
         {
@@ -94,14 +80,6 @@ namespace Solari.Callisto.Connector
                 CallistoLogger.ConnectionLogger.ConnectionStatus(ClusterState.Disconnected.ToString(), e.Message);
                 return new CallistoConnectionCheck(ClusterState.Disconnected, e.Message);
             }
-        }
-
-        public void Dispose()
-        {
-            if (_disposed)
-                return;
-            _lockSlim?.Dispose();
-            _disposed = true;
         }
     }
 }

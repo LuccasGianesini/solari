@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Solari.Callisto.Abstractions.CQR;
@@ -14,11 +15,11 @@ namespace Solari.Samples.Domain.Person.Commands.Handlers
     public class AddPersonAttributeCommandHandler : ICommandHandler<PersonAttributeCommand>
     {
         private readonly IDispatcher _dispatcher;
-        private readonly ITitanLogger<AddPersonAttributeCommandHandler> _logger;
+        private readonly ILogger<AddPersonAttributeCommandHandler> _logger;
         private readonly IPersonOperations _operations;
         private readonly IPersonRepository _repository;
 
-        public AddPersonAttributeCommandHandler(ITitanLogger<AddPersonAttributeCommandHandler> logger, IDispatcher dispatcher,
+        public AddPersonAttributeCommandHandler(ILogger<AddPersonAttributeCommandHandler> logger, IDispatcher dispatcher,
                                                 IPersonRepository repository, IPersonOperations operations)
         {
             _logger = logger;
@@ -44,7 +45,7 @@ namespace Solari.Samples.Domain.Person.Commands.Handlers
         {
             // if (response.HasResult) await _dispatcher.PublishAsync(new PersonAttributesPatchedEvent(command.PersonId));
 
-            if (response.HasErrors) _logger.Warning($"Error while patching person attributes. Person id: {command.PersonId}");
+            if (response.HasErrors) _logger.LogWarning($"Error while patching person attributes. Person id: {command.PersonId}");
         }
 
         private async Task<CommonResponse<object>> ExecutePatch(PersonAttributeCommand command)
@@ -71,14 +72,15 @@ namespace Solari.Samples.Domain.Person.Commands.Handlers
 
         private long WhenModified(PersonAttributeCommand command, PersonAttributeDto personAttributeDto)
         {
-            _logger.Information($"Successfully {command.Operation.ToString()} person {command.PersonId} attribute. " +
-                                $"Attribute: {personAttributeDto.AttributeName}");
+            _logger.LogInformation($"Successfully {command.Operation.ToString()} person {command.PersonId} attribute. " +
+                                   $"Attribute: {personAttributeDto.AttributeName}");
             return 1;
         }
 
         private void WhenNotModified(string failed, PersonAttributeDto personAttributeDto, ICommonResponseBuilder<object> response)
         {
-            _logger.Warning(failed, enricher => enricher.WithProperty("Target", personAttributeDto.AttributeName));
+            // TODO ENRICH
+            // _logger.LogWarning(failed, enricher => enricher.WithProperty("Target", personAttributeDto.AttributeName));
             response.WithError(builder => builder.WithMessage(failed)
                                                  .WithTarget(personAttributeDto.AttributeName)
                                                  .WithErrorType("Database Write error")

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
 using Solari.Callisto.Connector;
 using Solari.Sol;
@@ -62,25 +65,45 @@ namespace Solari.Callisto.Framework
         /// <param name="lifetime">Lifetime of the repository service.</param>
         /// <typeparam name="TService">Repository interface</typeparam>
         /// <typeparam name="TImplementation">Repository Implementation</typeparam>
-        /// <typeparam name="TEntity">Root document</typeparam>
+        /// <typeparam name="TCollection">Root document</typeparam>
         /// <returns></returns>
-        public ICallistoConfiguration RegisterCollection<TService, TImplementation, TEntity>(string collectionName,
-                                                                                             ServiceLifetime lifetime = ServiceLifetime.Transient)
-            where TEntity : class, IDocumentRoot
-            where TImplementation : CallistoRepository<TEntity>, TService
+        public ICallistoConfiguration RegisterCollection<TService, TImplementation, TCollection>(string collectionName, ServiceLifetime lifetime)
+            where TCollection : class, IDocumentRoot
+            where TImplementation : CallistoRepository<TCollection>, TService
 
         {
             _solariBuilder.Services.Add(ServiceDescriptor.Describe(typeof(TService), provider =>
             {
                 // ReSharper disable once ConvertToLambdaExpression
                 CallistoLogger.CollectionLogger.CallingRepository(collectionName, lifetime.ToString());
-                return ActivatorUtilities.CreateInstance<TImplementation>(provider,
-                                                                          new CallistoContext(collectionName,
-                                                                                              provider.GetRequiredService<ICallistoConnection>(),
-                                                                                              provider.GetRequiredService<ICallistoOperationFactory>()));
+                var connection = provider.GetService<ICallistoConnection>();
+                IMongoCollection<TCollection> collection = connection.GetDataBase().GetCollection<TCollection>(collectionName);
+                var context = new CallistoContext<TCollection>(collection, connection, provider.GetService<ICallistoOperationFactory>());
+                return ActivatorUtilities.CreateInstance<TImplementation>(provider, context);
             }, lifetime));
 
             return this;
+        }
+
+        public ICallistoConfiguration RegisterScopedCollection<TService, TImplementation, TCollection>(string collectionName)
+            where TCollection : class, IDocumentRoot
+            where TImplementation : CallistoRepository<TCollection>, TService
+        {
+            return RegisterCollection<TService, TImplementation, TCollection>(collectionName, ServiceLifetime.Scoped);
+        }
+
+        public ICallistoConfiguration RegisterTransientCollection<TService, TImplementation, TCollection>(string collectionName)
+            where TCollection : class, IDocumentRoot
+            where TImplementation : CallistoRepository<TCollection>, TService
+        {
+            return RegisterCollection<TService, TImplementation, TCollection>(collectionName, ServiceLifetime.Transient);
+        }
+
+        public ICallistoConfiguration RegisterSingletonCollection<TService, TImplementation, TCollection>(string collectionName)
+            where TCollection : class, IDocumentRoot
+            where TImplementation : CallistoRepository<TCollection>, TService
+        {
+            return RegisterCollection<TService, TImplementation, TCollection>(collectionName, ServiceLifetime.Singleton);
         }
 
         /// <summary>

@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Solari.Hyperion.ConfigurationProvider;
+using Solari.Juno;
 using Solari.Titan.DependencyInjection;
 
 namespace Solari.Samples.WebApi
@@ -26,6 +27,7 @@ namespace Solari.Samples.WebApi
             return Host.CreateDefaultBuilder(args)
                        .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
                        .UseHyperion()
+                       .UseJuno(false)
                        .UseTitan();
         }
     }

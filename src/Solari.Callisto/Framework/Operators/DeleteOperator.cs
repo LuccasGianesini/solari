@@ -24,7 +24,7 @@ namespace Solari.Callisto.Framework.Operators
         /// </summary>
         /// <param name="id">Document id</param>
         /// <returns></returns>
-        public async Task<DeleteResult> OneById(ObjectId id) { return await One(_factory.CreateDeleteById<TEntity>($"delete by id {nameof(TEntity)}", id)); }
+        public async Task<DeleteResult> OneById(ObjectId id) { return await One(_factory.CreateDeleteById<TEntity>(id)); }
 
         /// <summary>
         ///     Delete many documents from the collection.

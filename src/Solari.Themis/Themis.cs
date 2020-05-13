@@ -12,10 +12,10 @@ namespace Solari.Themis
     {
         private readonly IMetrics _metrics;
         private readonly ITracer _tracer;
-        private readonly ILogger _logger;
+        private readonly ILogger<Themis> _logger;
 
 
-        public Themis(IMetrics metrics, ITracer tracer, ILogger logger)
+        public Themis(IMetrics metrics, ITracer tracer, ILogger<Themis> logger)
         {
             _metrics = metrics;
             _tracer = tracer;

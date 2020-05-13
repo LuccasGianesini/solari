@@ -34,7 +34,7 @@ namespace Solari.Sol
         private string AspNetCoreEnvironment { get; } = Environment.GetEnvironmentVariable(SolariConstants.ASPNETCORE_ENVIRONMENT);
         private string DotNetEnvironment { get; } = Environment.GetEnvironmentVariable(SolariConstants.DOTNET_ENVIRONMENT);
 
-        public bool IsInDevelopment() { return ApplicationEnvironment.ToLowerInvariant().Equals("development"); }
+        public bool IsInDevelopment() { return ApplicationEnvironment.Equals("development"); }
 
         private string GetApplicationId() { return ApplicationName + "-" + ApplicationInstanceId; }
 

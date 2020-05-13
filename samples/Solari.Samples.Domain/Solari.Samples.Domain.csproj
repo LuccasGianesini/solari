@@ -20,9 +20,12 @@
     <ProjectReference Include="..\..\src\Solari.Hyperion\Solari.Hyperion.csproj" />
     <ProjectReference Include="..\..\src\Solari.Io.Abstractions\Solari.Io.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\Solari.Io\Solari.Io.csproj" />
+    <ProjectReference Include="..\..\src\Solari.Juno.Abstractions\Solari.Juno.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\Solari.Juno\Solari.Juno.csproj" />
     <ProjectReference Include="..\..\src\Solari.Oberon\Solari.Oberon.csproj" />
     <ProjectReference Include="..\..\src\Solari.Rhea\Solari.Rhea.csproj" />
     <ProjectReference Include="..\..\src\Solari.Sol\Solari.Sol.csproj" />
+    <ProjectReference Include="..\..\src\Solari.Themis\Solari.Themis.csproj" />
     <ProjectReference Include="..\..\src\Solari.Titan.Abstractions\Solari.Titan.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\Solari.Titan\Solari.Titan.csproj" />
     <ProjectReference Include="..\..\src\Solari.Vanth\Solari.Vanth.csproj" />

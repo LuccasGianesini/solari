@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Solari.Deimos.Abstractions;
 using Solari.Hyperion.Abstractions;
 using Solari.Samples.Domain;
 using Solari.Samples.Domain.Person;
+using Solari.Samples.Domain.Person.Commands;
 using Solari.Titan;
 
 namespace Solari.Samples.WebApi.Controllers
@@ -15,23 +17,27 @@ namespace Solari.Samples.WebApi.Controllers
     public class TestController : ControllerBase
     {
         private readonly IHyperionClient _client;
+        private readonly IPersonRepository _repository;
         private readonly IGitHubClient _hubClient;
-        private readonly ITitanLogger<TestController> _logger;
+        private readonly ILogger<TestController> _logger;
         private readonly IPersonOperations _operations;
-        private readonly IDeimosTracer _tracer;
 
-        public TestController(ITitanLogger<TestController> logger, IDeimosTracer tracer, IPersonOperations operations, IHyperionClient client)
+        public TestController(ILogger<TestController> logger,  IPersonOperations operations, IHyperionClient client, IPersonRepository repository)
         {
             _logger = logger;
-            _tracer = tracer;
             _operations = operations;
             _client = client;
+            _repository = repository;
         }
 
         [HttpPost]
         public async Task<IActionResult> Get([FromBody] UpdatePersonDto dto)
         {
-            _operations.CreateUpdatePersonOperation(dto.Id, dto);
+           await _repository.InsertPerson(_operations.CreateInsertOperation(new CreatePersonCommand
+            {
+                Name = "Test"
+            }));
+            
             return Ok();
         }
 

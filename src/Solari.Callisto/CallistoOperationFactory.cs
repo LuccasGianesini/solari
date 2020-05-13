@@ -25,13 +25,13 @@ namespace Solari.Callisto
         /// <returns>
         ///     <see cref="ICallistoAggregation{T,TProjectionModel,TResult}" />
         /// </returns>
-        public ICallistoAggregation<T, TProjectionModel, TResult> CreateAggregation<T, TProjectionModel, TResult>(string operationName,
-                                                                                                                  PipelineDefinition<T, TProjectionModel>
+        public ICallistoAggregation<T, TProjectionModel, TResult> CreateAggregation<T, TProjectionModel, TResult>(PipelineDefinition<T, TProjectionModel>
                                                                                                                       pipelineDefinition,
                                                                                                                   Func<IAsyncCursor<TProjectionModel>, TResult>
                                                                                                                       resultFunction,
                                                                                                                   AggregateOptions options = null,
                                                                                                                   IClientSessionHandle sessionHandle = null,
+                                                                                                                  string operationName = "",
                                                                                                                   CancellationToken? cancellationToken = null)
             where T : class, IDocumentRoot
         {
@@ -57,14 +57,15 @@ namespace Solari.Callisto
         /// <returns>
         ///     <see cref="ICallistoQuery{T,TResult}" />
         /// </returns>
-        public ICallistoQuery<T, TResult> CreateByIdQuery<T, TResult>(string operationName, ObjectId id,
+        public ICallistoQuery<T, TResult> CreateByIdQuery<T, TResult>(ObjectId id,
                                                                       Func<IAsyncCursor<T>, TResult> resultFunction,
                                                                       FindOptions<T> findOptions = null, IClientSessionHandle sessionHandle = null,
+                                                                      string operationName = "",
                                                                       CancellationToken? cancellationToken = null) where T : class, IDocumentRoot
         {
             return id.Equals(CallistoConstants.ObjectIdDefaultValue)
                        ? DefaultCallistoQuery<T, TResult>.Null()
-                       : CreateQuery(operationName, Builders<T>.Filter.Eq(a => a.Id, id), resultFunction, findOptions, sessionHandle, cancellationToken);
+                       : CreateQuery(Builders<T>.Filter.Eq(a => a.Id, id), resultFunction, findOptions, sessionHandle, operationName, cancellationToken);
         }
 
         /// <summary>
@@ -81,9 +82,10 @@ namespace Solari.Callisto
         /// <returns>
         ///     <see cref="ICallistoQuery{T,TResult}" />
         /// </returns>
-        public ICallistoQuery<T, TResult> CreateQuery<T, TResult>(string operationName, FilterDefinition<T> filterDefinition,
+        public ICallistoQuery<T, TResult> CreateQuery<T, TResult>(FilterDefinition<T> filterDefinition,
                                                                   Func<IAsyncCursor<T>, TResult> resultFunction,
                                                                   FindOptions<T> findOptions = null, IClientSessionHandle sessionHandle = null,
+                                                                  string operationName = "",
                                                                   CancellationToken? cancellationToken = null) where T : class, IDocumentRoot
         {
             return filterDefinition == null
@@ -107,8 +109,9 @@ namespace Solari.Callisto
         /// <returns>
         ///     <see cref="ICallistoReplace{T}" />
         /// </returns>
-        public ICallistoReplace<T> CreateReplace<T>(string operationName, T replacement, FilterDefinition<T> filterDefinition,
+        public ICallistoReplace<T> CreateReplace<T>(T replacement, FilterDefinition<T> filterDefinition,
                                                     ReplaceOptions replaceOptions = null, IClientSessionHandle sessionHandle = null,
+                                                    string operationName = "",
                                                     CancellationToken? cancellationToken = null) where T : class, IDocumentRoot
         {
             return replacement == null
@@ -131,14 +134,15 @@ namespace Solari.Callisto
         /// <returns>
         ///     <see cref="ICallistoReplace{T}" />
         /// </returns>
-        public ICallistoReplace<T> CreateReplaceById<T>(string operationName, T replacement, ObjectId id,
+        public ICallistoReplace<T> CreateReplaceById<T>(T replacement, ObjectId id,
                                                         ReplaceOptions replaceOptions = null, IClientSessionHandle sessionHandle = null,
+                                                        string operationName = "",
                                                         CancellationToken? cancellationToken = null) where T : class, IDocumentRoot
         {
             return id.Equals(CallistoConstants.ObjectIdDefaultValue)
                        ? DefaultCallistoReplace<T>.Null()
-                       : CreateReplace(operationName, replacement, Builders<T>.Filter.Eq(a => a.Id, id), replaceOptions,
-                                       sessionHandle, cancellationToken);
+                       : CreateReplace(replacement, Builders<T>.Filter.Eq(a => a.Id, id), replaceOptions,
+                                       sessionHandle, operationName, cancellationToken);
         }
 
         /// <summary>
@@ -153,8 +157,9 @@ namespace Solari.Callisto
         /// <returns>
         ///     <see cref="ICallistoDelete{T}" />
         /// </returns>
-        public ICallistoDelete<T> CreateDelete<T>(string operationName, FilterDefinition<T> filterDefinition, DeleteOptions deleteOptions = null,
-                                                  IClientSessionHandle sessionHandle = null, CancellationToken? cancellationToken = null)
+        public ICallistoDelete<T> CreateDelete<T>(FilterDefinition<T> filterDefinition, DeleteOptions deleteOptions = null,
+                                                  IClientSessionHandle sessionHandle = null, string operationName = "",
+                                                  CancellationToken? cancellationToken = null)
             where T : class, IDocumentRoot
         {
             return filterDefinition == null
@@ -166,6 +171,7 @@ namespace Solari.Callisto
         ///     Create an delete command.
         /// </summary>
         /// <param name="operationName">The name of the operation</param>
+        /// <param name="id"></param>
         /// <param name="deleteOptions">Options</param>
         /// <param name="sessionHandle">Session handle</param>
         /// <param name="cancellationToken">Cancellation Token</param>
@@ -173,13 +179,14 @@ namespace Solari.Callisto
         /// <returns>
         ///     <see cref="ICallistoDelete{T}" />
         /// </returns>
-        public ICallistoDelete<T> CreateDeleteById<T>(string operationName, ObjectId id, DeleteOptions deleteOptions = null,
-                                                      IClientSessionHandle sessionHandle = null, CancellationToken? cancellationToken = null)
+        public ICallistoDelete<T> CreateDeleteById<T>(ObjectId id, DeleteOptions deleteOptions = null,
+                                                      IClientSessionHandle sessionHandle = null, string operationName = "",
+                                                      CancellationToken? cancellationToken = null)
             where T : class, IDocumentRoot
         {
             return id.Equals(CallistoConstants.ObjectIdDefaultValue)
                        ? DefaultCallistoDelete<T>.Null()
-                       : CreateDelete(operationName, Builders<T>.Filter.Eq(a => a.Id, id), deleteOptions, sessionHandle, cancellationToken);
+                       : CreateDelete(Builders<T>.Filter.Eq(a => a.Id, id), deleteOptions, sessionHandle, operationName, cancellationToken);
         }
 
         /// <summary>
@@ -194,8 +201,9 @@ namespace Solari.Callisto
         /// <returns>
         ///     <see cref="ICallistoInsert{T}" />
         /// </returns>
-        public ICallistoInsert<T> CreateInsert<T>(string operationName, T value,
+        public ICallistoInsert<T> CreateInsert<T>(T value,
                                                   InsertOneOptions insertOneOptions = null, IClientSessionHandle sessionHandle = null,
+                                                  string operationName = "",
                                                   CancellationToken? cancellationToken = null) where T : class, IDocumentRoot
         {
             return new DefaultCallistoInsert<T>(operationName, value, sessionHandle, insertOneOptions, cancellationToken);
@@ -213,8 +221,9 @@ namespace Solari.Callisto
         /// <returns>
         ///     <see cref="ICallistoInsertMany{T}" />
         /// </returns>
-        public ICallistoInsertMany<T> CreateInsertMany<T>(string operationName, IEnumerable<T> values,
+        public ICallistoInsertMany<T> CreateInsertMany<T>(IEnumerable<T> values,
                                                           InsertManyOptions insertManyOptions = null, IClientSessionHandle sessionHandle = null,
+                                                          string operationName = "",
                                                           CancellationToken? cancellationToken = null) where T : class, IDocumentRoot
         {
             return new DefaultCallistoInsertMany<T>(operationName, values, insertManyOptions,
@@ -235,9 +244,10 @@ namespace Solari.Callisto
         /// <returns>
         ///     <see cref="DefaultCallistoUpdate{T}" />
         /// </returns>
-        public ICallistoUpdate<T> CreateUpdate<T>(string operationName, UpdateDefinition<T> updateDefinition,
+        public ICallistoUpdate<T> CreateUpdate<T>(UpdateDefinition<T> updateDefinition,
                                                   FilterDefinition<T> filterDefinition, UpdateOptions updateOptions = null,
-                                                  IClientSessionHandle sessionHandle = null, CancellationToken? cancellationToken = null)
+                                                  IClientSessionHandle sessionHandle = null, string operationName = "",
+                                                  CancellationToken? cancellationToken = null)
             where T : class, IDocumentRoot
         {
             return updateDefinition == null || filterDefinition == null
@@ -259,15 +269,16 @@ namespace Solari.Callisto
         /// <returns>
         ///     <see cref="DefaultCallistoUpdate{T}" />
         /// </returns>
-        public ICallistoUpdate<T> CreateUpdateById<T>(string operationName, ObjectId id,
+        public ICallistoUpdate<T> CreateUpdateById<T>(ObjectId id,
                                                       UpdateDefinition<T> updateDefinition, UpdateOptions updateOptions = null,
-                                                      IClientSessionHandle sessionHandle = null, CancellationToken? cancellationToken = null)
+                                                      IClientSessionHandle sessionHandle = null, string operationName = "",
+                                                      CancellationToken? cancellationToken = null)
             where T : class, IDocumentRoot
         {
             return id.Equals(CallistoConstants.ObjectIdDefaultValue)
                        ? DefaultCallistoUpdate<T>.Null()
-                       : CreateUpdate(operationName, updateDefinition, Builders<T>.Filter.Eq(a => a.Id, id), updateOptions,
-                                      sessionHandle, cancellationToken);
+                       : CreateUpdate(updateDefinition, Builders<T>.Filter.Eq(a => a.Id, id), updateOptions,
+                                      sessionHandle, operationName, cancellationToken);
         }
     }
 }

@@ -103,7 +103,7 @@ namespace Solari.Ceres.Framework
                 }
 
                 _logger.LogDebug($"{Prefix}Awaiting next run.");
-                await Task.Delay(_options.Memory.Interval.ToTimeSpan(), cancellationToken);
+                await Task.Delay(_options.MemoryMetricsCollectorInterval.ToTimeSpan(), cancellationToken);
             }
         }
     }

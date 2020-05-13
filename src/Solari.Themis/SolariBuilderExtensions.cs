@@ -16,6 +16,7 @@ namespace Solari.Themis
             builder.AddIo(healthChecks);
             builder.AddCeres();
             builder.AddDeimos(tracingPlugins);
+            
             builder.Services.AddTransient<IThemis, Themis>();
             return builder;
         }

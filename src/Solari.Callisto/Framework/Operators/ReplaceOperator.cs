@@ -32,10 +32,7 @@ namespace Solari.Callisto.Framework.Operators
         /// <param name="id">The id of the document</param>
         /// <param name="replacement">The replacement entity</param>
         /// <returns></returns>
-        public async Task<ReplaceOneResult> OneVyId(ObjectId id, TEntity replacement)
-        {
-            return await One(_factory.CreateReplaceById($"replace {nameof(TEntity)}", replacement, id));
-        }
+        public async Task<ReplaceOneResult> OneVyId(ObjectId id, TEntity replacement) { return await One(_factory.CreateReplaceById(replacement, id)); }
 
         /// <summary>
         ///     Replace one document from the collection.

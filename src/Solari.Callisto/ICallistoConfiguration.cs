@@ -28,8 +28,28 @@ namespace Solari.Callisto
         ICallistoConfiguration RegisterDefaultClassMaps();
 
         ICallistoConfiguration RegisterCollection<TRepositoryService, TRepositoryImplementation, TEntity>(
-            string collectionName, ServiceLifetime lifetime = ServiceLifetime.Transient)
+            string collectionName, ServiceLifetime lifetime)
             where TEntity : class, IDocumentRoot
             where TRepositoryImplementation : CallistoRepository<TEntity>, TRepositoryService;
+
+        ICallistoConfiguration RegisterScopedCollection<TService, TImplementation, TCollection>(string collectionName)
+            where TCollection : class, IDocumentRoot
+            where TImplementation : CallistoRepository<TCollection>, TService;
+
+        ICallistoConfiguration RegisterTransientCollection<TService, TImplementation, TCollection>(string collectionName)
+            where TCollection : class, IDocumentRoot
+            where TImplementation : CallistoRepository<TCollection>, TService;
+
+        ICallistoConfiguration RegisterSingletonCollection<TService, TImplementation, TCollection>(string collectionName)
+            where TCollection : class, IDocumentRoot
+            where TImplementation : CallistoRepository<TCollection>, TService;
+
+        /// <summary>
+        ///     Register class custom class maps..
+        /// </summary>
+        /// <param name="classMapper">Mapper</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        ICallistoConfiguration RegisterClassMaps(Action<ICallistoClassMapper> classMapper);
     }
 }

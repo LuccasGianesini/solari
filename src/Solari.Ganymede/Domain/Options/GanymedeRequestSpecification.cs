@@ -7,7 +7,7 @@ using System.Net.Http;
 
 namespace Solari.Ganymede.Domain.Options
 {
-    public class GanymedeRequestSettings
+    public class GanymedeRequestSpecification
     {
         public string Name { get; set; }
 
