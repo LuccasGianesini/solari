@@ -7,7 +7,7 @@ namespace Solari.Ceres.DependencyInjection
 {
     public class ConfigureReporters
     {
-        public static IMetricsBuilder ConfigureGraphiteReporter(CeresOptions options, IMetricsBuilder builder)
+        public static IMetricsBuilder ConfigureInfluxDbReporter(CeresOptions options, IMetricsBuilder builder)
         {
             return builder.Report.ToInfluxDb(build =>
             {

@@ -11,6 +11,7 @@ namespace Solari.Ganymede.Pipeline
     {
         public MessageStage(PipelineDescriptor pipelineDescriptor)
         {
+            //TODO Create custom exceptions.
             PipelineDescriptor = pipelineDescriptor ?? throw new ArgumentNullException(nameof(pipelineDescriptor));
         }
 

@@ -78,7 +78,7 @@ namespace Solari.Ganymede.Pipeline
             return this;
         }
 
-        public Task<GanymedeHttpResponse> Send()
+        public ValueTask<GanymedeHttpResponse> Send()
         {
             _executeDefaultActions();
             return new HttpRequestCoordinator(_client, _currentDescriptor).Send(_currentDescriptor.RequestMessage);

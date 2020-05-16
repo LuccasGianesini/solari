@@ -17,7 +17,6 @@
         <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Solari.Hyperion.Abstractions\Solari.Hyperion.Abstractions.csproj" />
       <ProjectReference Include="..\Solari.Hyperion\Solari.Hyperion.csproj" />
     </ItemGroup>
  

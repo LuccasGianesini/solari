@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using Solari.Ganymede.ContentSerializers;
+using Solari.Ganymede.Domain.Exceptions;
 using Solari.Sol.Extensions;
 
 // ReSharper disable CollectionNeverUpdated.Global
@@ -70,10 +71,10 @@ namespace Solari.Ganymede.Domain.Options
         public HttpCompletionOption GetCompletionOption()
         {
             if (string.IsNullOrEmpty(CompletionOption)) return HttpCompletionOption.ResponseContentRead;
-            return CompletionOption.ToLowerInvariant().Trim() switch
+            return CompletionOption.ToUpperInvariant().Trim() switch
                    {
-                       "content-read" => HttpCompletionOption.ResponseContentRead,
-                       "headers-read" => HttpCompletionOption.ResponseHeadersRead,
+                       "CONTENT-READ" => HttpCompletionOption.ResponseContentRead,
+                       "HEADERS-READ" => HttpCompletionOption.ResponseHeadersRead,
                        _              => HttpCompletionOption.ResponseContentRead
                    };
         }
@@ -119,28 +120,28 @@ namespace Solari.Ganymede.Domain.Options
         public HttpMethod GetVerb()
         {
             if (string.IsNullOrEmpty(Verb)) return HttpMethod.Get;
-            return Verb.Trim().ToLowerInvariant() switch
+            return Verb.Trim().ToUpperInvariant() switch
                    {
-                       "post"    => HttpMethod.Post,
-                       "get"     => HttpMethod.Get,
-                       "delete"  => HttpMethod.Delete,
-                       "patch"   => HttpMethod.Patch,
-                       "put"     => HttpMethod.Put,
-                       "head"    => HttpMethod.Head,
-                       "trace"   => HttpMethod.Trace,
-                       "options" => HttpMethod.Options,
-                       _         => throw new ArgumentException($"Invalid http method found while setting method for RequestMessage. Provided value: {Verb}")
+                       "POST"    => HttpMethod.Post,
+                       "GET"     => HttpMethod.Get,
+                       "DELETE"  => HttpMethod.Delete,
+                       "PATCH"   => HttpMethod.Patch,
+                       "PUT"     => HttpMethod.Put,
+                       "HEAD"    => HttpMethod.Head,
+                       "TRACE"   => HttpMethod.Trace,
+                       "OPTIONS" => HttpMethod.Options,
+                       _         => throw new GanymedeException($"Invalid http method found while setting method for RequestMessage. Provided value: {Verb}")
                    };
         }
 
         public IContentSerializer GetSerializer()
         {
             if (string.IsNullOrEmpty(Serializer)) return new JsonContentSerializer();
-            return Serializer.ToLowerInvariant().Trim() switch
+            return Serializer.ToUpperInvariant().Trim() switch
                    {
-                       "json"        => new JsonContentSerializer(),
-                       "xml"         => new XmlContentSerializer(),
-                       "url-encoded" => new UrlEncodedSerializer(),
+                       "JSON"        => new JsonContentSerializer(),
+                       "XML"         => new XmlContentSerializer(),
+                       "URL-ENCODED" => new UrlEncodedSerializer(),
                        _             => new JsonContentSerializer()
                    };
         }
@@ -148,11 +149,11 @@ namespace Solari.Ganymede.Domain.Options
         public IContentDeserializer GetDeserializer()
         {
             if (string.IsNullOrEmpty(Deserializer)) return new JsonContentDeserializer();
-            return Deserializer.ToLowerInvariant().Trim() switch
+            return Deserializer.ToUpperInvariant().Trim() switch
                    {
-                       "json"        => new JsonContentDeserializer(),
-                       "xml"         => new XmlContentDeserializer(),
-                       "url-encoded" => new UrlEncodedDeserializer(),
+                       "JSON"        => new JsonContentDeserializer(),
+                       "XML"         => new XmlContentDeserializer(),
+                       "URL-ENCODED" => new UrlEncodedDeserializer(),
                        _             => new JsonContentDeserializer()
                    };
         }

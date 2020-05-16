@@ -7,24 +7,24 @@ namespace Solari.Ganymede.Pipeline
 {
     public static class DeserializationStage
     {
-        public static async Task<string> AsString(this Task<GanymedeHttpResponse> httpResponse)
+        public static async ValueTask<string> AsString(this ValueTask<GanymedeHttpResponse> httpResponse)
         {
             GanymedeHttpResponse response = await httpResponse;
             return await response.AsString();
         }
 
-        public static async Task<string> AsString(this GanymedeHttpResponse httpResponse)
+        public static async ValueTask<string> AsString(this GanymedeHttpResponse httpResponse)
         {
             return await httpResponse.ResponseMessage.Content.ReadAsStringAsync();
         }
 
-        public static async Task<T> AsModel<T>(this Task<GanymedeHttpResponse> httpResponse)
+        public static async ValueTask<T> AsModel<T>(this ValueTask<GanymedeHttpResponse> httpResponse)
         {
             GanymedeHttpResponse response = await httpResponse;
             return await response.AsModel<T>();
         }
 
-        public static async Task<T> AsModel<T>(this GanymedeHttpResponse httpResponse)
+        public static async ValueTask<T> AsModel<T>(this GanymedeHttpResponse httpResponse)
         {
             Maybe<T> deserialized = await httpResponse
                                           .ResponseMessage

@@ -42,57 +42,57 @@ namespace Solari.Ceres.Abstractions
             public static GaugeOptions ProcessPagedMemorySizeGauge = new GaugeOptions
             {
                 Context = Context,
-                Name = "PagedProcess Memory Size",
-                MeasurementUnit = Unit.Bytes
+                Name = "PagedProcess Memory Size (MB)",
+                MeasurementUnit = Unit.MegaBytes
             };
 
             public static GaugeOptions ProcessPeekPagedMemorySizeGauge = new GaugeOptions
             {
                 Context = Context,
-                Name = "Process Peek Paged Memory Size",
-                MeasurementUnit = Unit.Bytes
+                Name = "Process Peek Paged Memory Size (MB)",
+                MeasurementUnit = Unit.MegaBytes
             };
 
             public static GaugeOptions ProcessPeekVirtualMemorySizeGauge = new GaugeOptions
             {
                 Context = Context,
-                Name = "Process Peek Paged Memory Size",
-                MeasurementUnit = Unit.Bytes
+                Name = "Process Peek Paged Memory Size (MB)",
+                MeasurementUnit = Unit.MegaBytes
             };
 
             public static GaugeOptions ProcessPeekWorkingSetSizeGauge = new GaugeOptions
             {
                 Context = Context,
-                Name = "Process Working Set",
-                MeasurementUnit = Unit.Bytes
+                Name = "Process Working Set (MB)",
+                MeasurementUnit = Unit.MegaBytes
             };
 
             public static GaugeOptions ProcessPrivateMemorySizeGauge = new GaugeOptions
             {
                 Context = Context,
-                Name = "Process Private Memory Size",
-                MeasurementUnit = Unit.Bytes
+                Name = "Process Private Memory Size (MB)",
+                MeasurementUnit = Unit.MegaBytes
             };
 
             public static GaugeOptions ProcessVirtualMemorySizeGauge = new GaugeOptions
             {
                 Context = Context,
-                Name = "Process Virtual Memory Size",
-                MeasurementUnit = Unit.Bytes
+                Name = "Process Virtual Memory Size (MB)",
+                MeasurementUnit = Unit.MegaBytes
             };
 
             public static GaugeOptions SystemNonPagedMemoryGauge = new GaugeOptions
             {
                 Context = Context,
-                Name = "System Non-Paged Memory",
-                MeasurementUnit = Unit.Bytes
+                Name = "System Non-Paged Memory (MB)",
+                MeasurementUnit = Unit.MegaBytes
             };
 
             public static GaugeOptions SystemPagedMemorySizeGauge = new GaugeOptions
             {
                 Context = Context,
-                Name = "PagedSystem Memory Size",
-                MeasurementUnit = Unit.Bytes
+                Name = "PagedSystem Memory Size (MB)",
+                MeasurementUnit = Unit.MegaBytes
             };
         }
     }

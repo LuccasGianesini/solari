@@ -18,7 +18,7 @@ namespace Solari.Ganymede
         }
 
 
-        public PipelineManager ForResource(string resourceName) { return new PipelineManager(_httpClient, _request.GetResource(resourceName)); }
+        public PipelineManager ForResource(string resourceName) { return ForResource(_request.GetResource(resourceName)); }
 
         public PipelineManager ForResource(GanymedeRequestResource resource)
         {

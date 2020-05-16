@@ -77,7 +77,7 @@ namespace Solari.Ceres.Framework
         private async Task MeasureCpu(CancellationToken cancellationToken)
         {
             _logger.LogDebug($"{Prefix}Starting hosted service");
-            while (!_cts.IsCancellationRequested)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 _logger.LogDebug($"{Prefix}Starting CPU Measurements");
                 TimeSpan newCpuTime = Process.GetCurrentProcess().TotalProcessorTime - _start;

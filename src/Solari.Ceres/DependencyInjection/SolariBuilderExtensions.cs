@@ -41,7 +41,7 @@ namespace Solari.Ceres.DependencyInjection
         {
             if (options.InfluxDb == null || !options.InfluxDb.Enabled)
                 return;
-            ConfigureReporters.ConfigureGraphiteReporter(options, metricsBuilder);
+            ConfigureReporters.ConfigureInfluxDbReporter(options, metricsBuilder);
             builder.Services.AddMetricsReportingHostedService();
         }
 
@@ -59,6 +59,7 @@ namespace Solari.Ceres.DependencyInjection
             builder.Services.AddHostedService<MemoryMeasurementHostedService>();
         }
 
+
         private static void ConfigureMetricsBuilder(IMetricsBuilder metricsBuilder, CeresOptions options, ApplicationOptions appOptions)
         {
             metricsBuilder.Configuration.Configure(a =>
@@ -66,7 +67,7 @@ namespace Solari.Ceres.DependencyInjection
                 a.Enabled = options.Enabled;
                 a.AddServerTag();
                 a.AddEnvTag();
-                a.GlobalTags.Add("app", appOptions.ApplicationName.ToLowerInvariant().Dash());
+                a.GlobalTags.Add("app", appOptions.ApplicationName);
                 a.DefaultContextLabel = appOptions.ApplicationName;
                 a.ReportingEnabled = options.InfluxDb.Enabled;
             });
@@ -123,8 +124,6 @@ namespace Solari.Ceres.DependencyInjection
                         appBuilder.ApplicationBuilder.UseMetricsErrorTrackingMiddleware();
                     if (options.ActiveRequests)
                         appBuilder.ApplicationBuilder.UseMetricsActiveRequestMiddleware();
-                    if (options.RequestTracking)
-                        appBuilder.ApplicationBuilder.UseMetricsRequestTrackingMiddleware();
                 }
             });
         }

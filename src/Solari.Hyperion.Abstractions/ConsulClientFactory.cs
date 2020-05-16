@@ -25,7 +25,7 @@ namespace Solari.Hyperion.Abstractions
         }
 
 
-        private Action<ConsulClientConfiguration> BuildConfiguration(string address, string datacenter, string token, TimeSpan waitTime)
+        private static Action<ConsulClientConfiguration> BuildConfiguration(string address, string datacenter, string token, TimeSpan waitTime)
         {
             if (string.IsNullOrEmpty(address))
 
