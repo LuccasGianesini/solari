@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{18CC488B-9DAD-4718-9A43-760FAD6069C4}"
-ProjectSection(SolutionItems) = preProject
-	src\Changelog.md = src\Changelog.md
-EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solari.Rhea", "src\Solari.Rhea\Solari.Rhea.csproj", "{163111CC-C3C8-484E-AB73-2C99CFC37B4A}"
 EndProject
