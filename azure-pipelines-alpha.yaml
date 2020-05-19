@@ -66,6 +66,7 @@ jobs:
          gitHubConnection: 'github.com_azpipelines'
          repositoryName: '$(Build.Repository.Name)'
          action: 'create'
+         tag: '$(Build.BuildNumber)'
          target: '$(Build.SourceVersion)'
          tagSource: 'gitTag'
          title: 'Version $(Build.SourceVersion)'
