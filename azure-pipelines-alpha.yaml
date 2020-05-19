@@ -67,6 +67,7 @@ jobs:
          repositoryName: '$(Build.Repository.Name)'
          action: 'create'
          tag: '$(Build.BuildNumber)'
+         tagPattern: '[0-9]*\S'
          target: '$(Build.SourceVersion)'
          tagSource: 'gitTag'
          title: 'Version $(Build.SourceVersion)'
