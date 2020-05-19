@@ -14,4 +14,8 @@ branches:
     tag: ''
     track-merge-target: false
     tracks-release-branches: false
-    is-release-branch: false
+    is-release-branch: true
+  develop:
+    tag: 'alpha'
+    prevent-increment-of-merged-branch-version: true
+    

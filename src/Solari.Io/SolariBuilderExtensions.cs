@@ -34,7 +34,6 @@ namespace Solari.Io
         {
             IHealthChecksBuilder healthChecks = builder.Services.AddHealthChecks();
             addChecks?.Invoke(healthChecks);
-            ConfigurePrometheusGatewayPublisher(builder, options, healthChecks);
         }
 
         private static void ConfigureUi(ISolariBuilder builder, IoOptions options)
@@ -79,19 +78,7 @@ namespace Solari.Io
 
             options.Endpoints.ForEach(a => settings.AddHealthCheckEndpoint(a.Name, a.Uri));
         }
-
-        private static void ConfigurePrometheusGatewayPublisher(ISolariBuilder builder, IoOptions options, IHealthChecksBuilder healthChecksBuilder)
-        {
-            if (options.PrometheusGateway is null)
-                return;
-            if (!options.PrometheusGateway.Enabled)
-                return;
-            if (string.IsNullOrEmpty(options.PrometheusGateway.Address))
-                throw new SolariIoException("Prometheus push gateway address is null or empty.");
-            ApplicationOptions appOptions = builder.GetAppOptions();
-            healthChecksBuilder.AddPrometheusGatewayPublisher(options.PrometheusGateway.Address, appOptions.ApplicationName,
-                                                              options.PrometheusGateway.Instance);
-        }
+        
         
 
         

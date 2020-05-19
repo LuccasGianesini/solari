@@ -24,8 +24,4 @@
     <ProjectReference Include="..\..\src\Solari.Hyperion\Solari.Hyperion.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.3" />
-  </ItemGroup>
-
 </Project>
