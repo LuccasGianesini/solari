@@ -45,7 +45,9 @@ jobs:
             $(solution)
           arguments: '--configuration $(BuildConfiguration) /p:Version=$(Build.BuildNumber)'
           versioningScheme: byBuildNumber
+      
       - task: PowerShell@2
+        displayName: 'Pack'
         inputs:
           filePath: 'packall.ps1'
           arguments: '-BUILD_NUMBER $(Build.BuildNumber) -BUILD_ARTIFACT_DIR $(Build.ArtifactStagingDirectory)'
@@ -55,7 +57,6 @@ jobs:
         displayName: 'Push Nuget Packages'
         inputs:
           command: 'push'
-          packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build
-      .ArtifactStagingDirectory)/**/$(prj1).$(Build.BuildNumber).symbols.nupkg'
+          packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.$(Build.BuildNumber).symbols.nupkg'
           nuGetFeedType: 'external'
           publishFeedCredentials: 'Nuget.org'

@@ -1,5 +1,4 @@
 next-version: 1.5.10
-mode: Mainline
 legacy-semver-padding: 0
 build-metadata-padding: 0
 commits-since-version-source-padding: 0
@@ -8,6 +7,7 @@ assembly-file-versioning-scheme: MajorMinorPatchTag
 assembly-informational-format: '{LegacySemVer}'
 branches:
   master:
+    mode: Mainline
     regex: master
     increment: Patch
     prevent-increment-of-merged-branch-version: true
@@ -16,6 +16,11 @@ branches:
     tracks-release-branches: false
     is-release-branch: true
   develop:
+    regex: dev(elop)?(ment)?$
+    mode: ContinuousDeployment
     tag: 'alpha'
-    prevent-increment-of-merged-branch-version: true
+    prevent-increment-of-merged-branch-version: false
+    track-merge-target: true
+    tracks-release-branches: true
+    is-release-branch: false
     
