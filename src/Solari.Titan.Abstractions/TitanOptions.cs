@@ -7,7 +7,6 @@ namespace Solari.Titan.Abstractions
         public FileOptions File { get; set; }
         public ConsoleOptions Console { get; set; }
         public OverridesOptions Overrides { get; set; } = new OverridesOptions();
-        public SeqOptions Seq { get; set; }
-        public GrayLogOptions GrayLog { get; set; }
+
     }
 }

@@ -8,8 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Solari.Io.Abstractions;
 using Solari.Sol;
 using Solari.Sol.Extensions;
-using Solari.Titan.Abstractions;
-using SeqOptions = Microsoft.Extensions.DependencyInjection.SeqOptions;
 
 namespace Solari.Io
 {
@@ -36,7 +34,6 @@ namespace Solari.Io
         {
             IHealthChecksBuilder healthChecks = builder.Services.AddHealthChecks();
             addChecks?.Invoke(healthChecks);
-            ConfigureSeqPublisher(builder, options, healthChecks);
             ConfigurePrometheusGatewayPublisher(builder, options, healthChecks);
         }
 
@@ -95,41 +92,8 @@ namespace Solari.Io
             healthChecksBuilder.AddPrometheusGatewayPublisher(options.PrometheusGateway.Address, appOptions.ApplicationName,
                                                               options.PrometheusGateway.Instance);
         }
+        
 
-        private static void ConfigureSeqPublisher(ISolariBuilder builder, IoOptions options, IHealthChecksBuilder healthChecksBuilder)
-        {
-            if (options.Seq is null)
-                return;
-            if (options.Seq.Enabled == false)
-                return;
-            if (options.Seq.UseTitanConfiguration)
-            {
-                ConfigureSeqPublisherFromTitanOptions(builder, healthChecksBuilder);
-                return;
-            }
-
-            healthChecksBuilder.AddSeqPublisher(CreateSeqPublisherOptions(options.Seq.IngestionEndpoint, options.Seq.ApiKey));
-        }
-
-        private static void ConfigureSeqPublisherFromTitanOptions(ISolariBuilder builder, IHealthChecksBuilder healthChecksBuilder)
-        {
-            IConfigurationSection section = builder.AppConfiguration.GetSection(TitanConstants.TitanAppSettingsSection);
-            if (!section.Exists())
-                throw new SolariIoException("Unable to get Titan configuration section!");
-            var titanOptions = builder.AppConfiguration.GetOptions<TitanOptions>(section);
-
-            healthChecksBuilder.AddSeqPublisher(CreateSeqPublisherOptions(titanOptions.Seq.IngestionEndpoint, titanOptions.Seq.Apikey));
-        }
-
-        private static Action<SeqOptions> CreateSeqPublisherOptions(string endpoint, string apiKey)
-        {
-            if (string.IsNullOrEmpty(endpoint))
-                throw new SolariIoException("Seq ingestion endpoint is null or empty.");
-            return options =>
-            {
-                options.Endpoint = endpoint;
-                options.ApiKey = apiKey;
-            };
-        }
+        
     }
 }

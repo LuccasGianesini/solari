@@ -557,49 +557,34 @@ namespace Solari.Sol.Extensions
             {
                 case "Byte":
                     return !type.IsArray ? new byte[1] {(byte) obj} : (byte[]) obj;
-                    break;
                 case "Boolean":
                     return !type.IsArray ? ((bool) obj).GetBytes() : ((bool[]) obj).GetBytes();
-                    break;
                 case "SByte":
                     return !type.IsArray ? ((sbyte) obj).GetBytes() : ((sbyte[]) obj).GetBytes();
-                    break;
                 case "Char":
                     return !type.IsArray ? ((char) obj).GetBytes() : ((char[]) obj).GetBytes();
-                    break;
                 case "Int16":
                     return !type.IsArray ? ((short) obj).GetBytes() : ((short[]) obj).GetBytes();
-                    break;
                 case "UInt16":
                     return !type.IsArray ? ((ushort) obj).GetBytes() : ((ushort[]) obj).GetBytes();
-                    break;
                 case "Int32":
                     return !type.IsArray ? ((int) obj).GetBytes() : ((int[]) obj).GetBytes();
-                    break;
                 case "UInt32":
                     return !type.IsArray ? ((uint) obj).GetBytes() : ((uint[]) obj).GetBytes();
-                    break;
                 case "Int64":
                     return !type.IsArray ? ((long) obj).GetBytes() : ((long[]) obj).GetBytes();
-                    break;
                 case "UInt64":
                     return !type.IsArray ? ((ulong) obj).GetBytes() : ((ulong[]) obj).GetBytes();
-                    break;
                 case "Single":
                     return !type.IsArray ? ((float) obj).GetBytes() : ((float[]) obj).GetBytes();
-                    break;
                 case "Double":
                     return !type.IsArray ? ((double) obj).GetBytes() : ((double[]) obj).GetBytes();
-                    break;
                 case "String":
                     return !type.IsArray ? ((string) obj).GetBytes() : ((string[]) obj).GetBytes();
-                    break;
                 case "Decimal":
                     return !type.IsArray ? ((decimal) obj).GetBytes() : ((decimal[]) obj).GetBytes();
-                    break;
                 case "DateTime":
                     return !type.IsArray ? ((DateTime) obj).GetBytes() : ((DateTime[]) obj).GetBytes();
-                    break;
             }
 
             if (type == typeof(BigInteger))

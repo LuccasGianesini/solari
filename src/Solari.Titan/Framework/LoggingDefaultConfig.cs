@@ -1,7 +1,5 @@
-using System;
 using System.Linq;
 using Serilog;
-using Serilog.Events;
 using Serilog.Exceptions;
 using Solari.Sol;
 using Solari.Titan.Abstractions;
@@ -24,9 +22,7 @@ namespace Solari.Titan.Framework
             config
                 .ConfigureConsole(options)
                 .ConfigureFile(options.File, contentRootPath)
-                .ConfigureGrayLog(options.GrayLog)
-                .ConfigureSeq(options.Seq)
-                .ConfigureLoki(options.Loki);
+                .ConfigureLoki(options.Loki, appOptions.ApplicationName, appOptions.ApplicationEnvironment);
         }
 
         private static void ConfigureEnrich(LoggerConfiguration config, ApplicationOptions appOptions)
@@ -35,6 +31,7 @@ namespace Solari.Titan.Framework
                   .Enrich.WithExceptionDetails()
                   .Enrich.WithThreadId()
                   .Enrich.WithThreadName()
+                  .Enrich.With<JaegerEnricher>()
                   .Enrich.WithProperty("app", appOptions.ApplicationName)
                   .Enrich.WithProperty("version", appOptions.ApplicationVersion)
                   .Enrich.WithProperty("env", appOptions.ApplicationEnvironment);

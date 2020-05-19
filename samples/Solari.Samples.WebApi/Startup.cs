@@ -53,7 +53,7 @@ namespace Solari.Samples.WebApi
 
             app.UseOpenApi();
             app.UseSwaggerUi3();
-            app.UseSerilogRequestLogging();
+            // app.UseSerilogRequestLogging();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
