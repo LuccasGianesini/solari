@@ -60,14 +60,16 @@ jobs:
           packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.$(Build.BuildNumber).symbols.nupkg'
           nuGetFeedType: 'external'
           publishFeedCredentials: 'Nuget.org'
-      
+
       - task: GitHubRelease@1
-          inputs:
-            repositoryName: '$(Build.Repository.Name)'
-            action: 'create'
-            target: '$(Build.SourceVersion)'
-            tagSource: 'gitTag'
-            releaseNotesSource: 'inline'
-            releaseNotesInline: 'Changelog: https://github.com/LuccasGianesini/solari/wiki/Changelog'
-            isPreRelease: true
-            addChangeLog: false
+        inputs:
+         gitHubConnection: 'github.com_azpipelines'
+         repositoryName: '$(Build.Repository.Name)'
+         action: 'create'
+         target: '$(Build.SourceVersion)'
+         tagSource: 'gitTag'
+         title: 'Version $(Build.SourceVersion)'
+         releaseNotesSource: 'inline'
+         releaseNotesInline: 'Changelog: https://github.com/LuccasGianesini/solari/wiki/Changelog'
+         isPreRelease: true
+         addChangeLog: false
