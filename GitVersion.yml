@@ -15,6 +15,14 @@ branches:
     track-merge-target: false
     tracks-release-branches: false
     is-release-branch: true
+  beta:
+    regex: beta
+    mode: ContinuousDeployment
+    tag: 'beta'
+    prevent-increment-of-merged-branch-version: false
+    track-merge-target: true
+    tracks-release-branches: true
+    is-release-branch: false
   develop:
     regex: dev(elop)?(ment)?$
     mode: ContinuousDeployment
