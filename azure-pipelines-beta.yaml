@@ -1,9 +1,7 @@
 trigger:
   branches:
-    include:
-      - develop
     exclude:
-      - alpha   
+      - develop   
       - master
 pr:
   branches:
