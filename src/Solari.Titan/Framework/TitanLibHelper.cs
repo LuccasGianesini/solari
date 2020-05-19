@@ -11,33 +11,33 @@ namespace Solari.Titan.Framework
         public static LogEventLevel GetLogLevel(string level)
         {
             if (string.IsNullOrEmpty(level)) return LogEventLevel.Information;
-            return level.ToLowerInvariant() switch
+            return level.ToUpperInvariant() switch
                    {
-                       "verbose"     => LogEventLevel.Verbose,
-                       "trace"       => LogEventLevel.Verbose,
-                       "debug"       => LogEventLevel.Debug,
-                       "information" => LogEventLevel.Information,
-                       "info"        => LogEventLevel.Information,
-                       "warning"     => LogEventLevel.Warning,
-                       "warn"        => LogEventLevel.Warning,
-                       "error"       => LogEventLevel.Error,
-                       "err"         => LogEventLevel.Error,
-                       "fatal"       => LogEventLevel.Fatal,
-                       "critical"    => LogEventLevel.Fatal,
+                       "VERBOSE"     => LogEventLevel.Verbose,
+                       "TRACE"       => LogEventLevel.Verbose,
+                       "DEBUG"       => LogEventLevel.Debug,
+                       "INFORMATION" => LogEventLevel.Information,
+                       "INFO"        => LogEventLevel.Information,
+                       "WARNING"     => LogEventLevel.Warning,
+                       "WARN"        => LogEventLevel.Warning,
+                       "ERROR"       => LogEventLevel.Error,
+                       "ERR"         => LogEventLevel.Error,
+                       "FATAL"       => LogEventLevel.Fatal,
+                       "CRITICAL"    => LogEventLevel.Fatal,
                        _             => LogEventLevel.Information
                    };
         }
 
         public static RollingInterval GetRollingInterval(string fromSettings)
         {
-            return fromSettings.ToLowerInvariant() switch
+            return fromSettings.ToUpperInvariant() switch
                    {
-                       "infinite" => RollingInterval.Infinite,
-                       "year"     => RollingInterval.Year,
-                       "month"    => RollingInterval.Month,
-                       "day"      => RollingInterval.Day,
-                       "hour"     => RollingInterval.Hour,
-                       "minute"   => RollingInterval.Minute,
+                       "INFINITE" => RollingInterval.Infinite,
+                       "YEAR"     => RollingInterval.Year,
+                       "MONTH"    => RollingInterval.Month,
+                       "DAY"      => RollingInterval.Day,
+                       "HOUR"     => RollingInterval.Hour,
+                       "MINUTE"   => RollingInterval.Minute,
                        _          => RollingInterval.Day
                    };
         }

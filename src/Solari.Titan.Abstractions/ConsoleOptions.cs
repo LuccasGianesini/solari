@@ -12,11 +12,11 @@ namespace Solari.Titan.Abstractions
         {
             if (string.IsNullOrEmpty(Theme)) return SystemConsoleTheme.Colored;
 
-            return Theme.ToLowerInvariant() switch
+            return Theme.ToUpperInvariant() switch
                    {
-                       "literate" => SystemConsoleTheme.Literate,
-                       "gray"     => SystemConsoleTheme.Grayscale,
-                       "colored"  => SystemConsoleTheme.Colored,
+                       "LITERATE" => SystemConsoleTheme.Literate,
+                       "GRAY"     => SystemConsoleTheme.Grayscale,
+                       "COLORED"  => SystemConsoleTheme.Colored,
                        _          => SystemConsoleTheme.Colored
                    };
         }

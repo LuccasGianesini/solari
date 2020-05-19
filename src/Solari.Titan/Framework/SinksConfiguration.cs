@@ -2,22 +2,33 @@ using System.Text;
 using Serilog;
 using Serilog.Formatting.Json;
 using Serilog.Sinks.Graylog;
+using Serilog.Sinks.Loki.gRPC;
 using Solari.Sol.Extensions;
 using Solari.Titan.Abstractions;
 
 namespace Solari.Titan.Framework
 {
-    //TODO REVIEW ALL METHODS TO COMPLY WITH DEFAULT CONFIG
     internal static class SinksConfiguration
     {
-        
+        internal static LoggerConfiguration ConfigureLoki(this LoggerConfiguration configuration, LokiOptions lokiOptions)
+        {
+            if (lokiOptions == null)
+                return configuration;
+            if (lokiOptions.Enabled is false)
+                return configuration;
+
+            if (string.IsNullOrEmpty(lokiOptions.RpcEndpoint))
+                throw new TitanException("Loki gRPC endpoint is null or empty");
+            configuration.WriteTo.LokigRPC(lokiOptions.RpcEndpoint, null, lokiOptions.Period.ToTimeSpan(), lokiOptions.QueueLimit, lokiOptions
+                                               .BatchSizeLimit, TitanLibHelper.GetLogLevel(lokiOptions.LogLevelRestriction), lokiOptions.StackTraceAsLabel);
+            return configuration;
+        }
+
         internal static LoggerConfiguration ConfigureConsole(this LoggerConfiguration configuration, TitanOptions options)
         {
-            if (options.Console == null)
-            {
-                options.Console = new ConsoleOptions();
-            }
-            if (options.Console.Enabled == false)
+            options.Console ??= new ConsoleOptions();
+
+            if (options.Console.Enabled is false)
                 return configuration;
 
             configuration.WriteTo
@@ -26,52 +37,52 @@ namespace Solari.Titan.Framework
             return configuration;
         }
 
-        internal static LoggerConfiguration ConfigureFile(this LoggerConfiguration configuration, TitanOptions options, string contentRootPath = "")
+        internal static LoggerConfiguration ConfigureFile(this LoggerConfiguration configuration, FileOptions options, string contentRootPath = "")
         {
-            if (options.File == null || options.File.Enabled == false) return configuration;
+            if (options == null || options.Enabled is false) return configuration;
 
-            string path = options.File.UseContentRoot
+            string path = options.UseContentRoot
                               ? TitanLibHelper.BuildPath(contentRootPath, "logs", ".json")
-                              : TitanLibHelper.BuildPath(options.File.Path, ".json");
+                              : TitanLibHelper.BuildPath(options.Path, ".json");
 
             configuration.WriteTo.File(new JsonFormatter(), path,
-                                       rollingInterval: TitanLibHelper.GetRollingInterval(options.File.RollingInterval),
-                                       flushToDiskInterval: options.File.Period.ToTimeSpan(),
+                                       rollingInterval: TitanLibHelper.GetRollingInterval(options.RollingInterval),
+                                       flushToDiskInterval: options.Period.ToTimeSpan(),
                                        rollOnFileSizeLimit: true, encoding: Encoding.UTF8);
 
             return configuration;
         }
 
-        internal static LoggerConfiguration ConfigureSeq(this LoggerConfiguration configuration, TitanOptions options)
+        internal static LoggerConfiguration ConfigureSeq(this LoggerConfiguration configuration, SeqOptions options)
         {
-            if (options.Seq == null || options.Seq.Enabled == false) return configuration;
+            if (options == null || options.Enabled is false) return configuration;
 
-            long batchPosting = options.Seq.RawIngestionPayload / options.Seq.EventBodySizeLimit;
+            long batchPosting = options.RawIngestionPayload / options.EventBodySizeLimit;
 
-            configuration.WriteTo.Seq(options.Seq.IngestionEndpoint,
-                                      TitanLibHelper.GetLogLevel(options.Seq.LogLevelRestriction),
-                                      period: options.Seq.Period.ToTimeSpan(), apiKey: options.Seq.Apikey, compact: true,
-                                      eventBodyLimitBytes: options.Seq.EventBodySizeLimit, batchPostingLimit: (int) batchPosting,
-                                      queueSizeLimit: options.Seq.QueueSizeLimit);
+            configuration.WriteTo.Seq(options.IngestionEndpoint,
+                                      TitanLibHelper.GetLogLevel(options.LogLevelRestriction),
+                                      period: options.Period.ToTimeSpan(), apiKey: options.Apikey, compact: true,
+                                      eventBodyLimitBytes: options.EventBodySizeLimit, batchPostingLimit: (int) batchPosting,
+                                      queueSizeLimit: options.QueueSizeLimit);
 
             return configuration;
         }
 
-        internal static LoggerConfiguration ConfigureGrayLog(this LoggerConfiguration configuration, TitanOptions options)
+        internal static LoggerConfiguration ConfigureGrayLog(this LoggerConfiguration configuration, GrayLogOptions options)
         {
             var sinkOptions = new GraylogSinkOptions
             {
-                Facility = options.GrayLog.Facility,
-                Port = options.GrayLog.Port,
-                TransportType = options.GrayLog.GetTransportType(),
-                HostnameOrAddress = options.GrayLog.Address,
-                StackTraceDepth = options.GrayLog.StackTraceDepth,
-                MaxMessageSizeInUdp = options.GrayLog.MaxMessageSizeInUdp,
-                ShortMessageMaxLength = options.GrayLog.ShortMessageMaxLength,
-                MinimumLogEventLevel = options.GrayLog.GetMinimumLogEventLevel(),
-                MessageGeneratorType = options.GrayLog.GetMessageIdGeneratorType()
+                Facility = options.Facility,
+                Port = options.Port,
+                TransportType = options.GetTransportType(),
+                HostnameOrAddress = options.Address,
+                StackTraceDepth = options.StackTraceDepth,
+                MaxMessageSizeInUdp = options.MaxMessageSizeInUdp,
+                ShortMessageMaxLength = options.ShortMessageMaxLength,
+                MinimumLogEventLevel = TitanLibHelper.GetLogLevel(options.LogLevelRestriction),
+                MessageGeneratorType = options.GetMessageIdGeneratorType()
             };
-            return options.GrayLog == null || options.GrayLog.Enabled == false ? configuration : configuration.WriteTo.Graylog(sinkOptions);
+            return options == null || options.Enabled is false ? configuration : configuration.WriteTo.Graylog(sinkOptions);
         }
     }
 }

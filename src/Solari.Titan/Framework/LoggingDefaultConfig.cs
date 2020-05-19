@@ -23,9 +23,10 @@ namespace Solari.Titan.Framework
         {
             config
                 .ConfigureConsole(options)
-                .ConfigureFile(options, contentRootPath)
-                .ConfigureGrayLog(options)
-                .ConfigureSeq(options);
+                .ConfigureFile(options.File, contentRootPath)
+                .ConfigureGrayLog(options.GrayLog)
+                .ConfigureSeq(options.Seq)
+                .ConfigureLoki(options.Loki);
         }
 
         private static void ConfigureEnrich(LoggerConfiguration config, ApplicationOptions appOptions)
@@ -34,9 +35,9 @@ namespace Solari.Titan.Framework
                   .Enrich.WithExceptionDetails()
                   .Enrich.WithThreadId()
                   .Enrich.WithThreadName()
-                  .Enrich.WithProperty("Application", appOptions.ApplicationName)
-                  .Enrich.WithProperty("Application Version", appOptions.ApplicationVersion)
-                  .Enrich.WithProperty("Application Environment", appOptions.ApplicationEnvironment);
+                  .Enrich.WithProperty("app", appOptions.ApplicationName)
+                  .Enrich.WithProperty("version", appOptions.ApplicationVersion)
+                  .Enrich.WithProperty("env", appOptions.ApplicationEnvironment);
         }
 
         private static void ConfigureMinimumLevels(LoggerConfiguration config, TitanOptions options)
@@ -47,7 +48,7 @@ namespace Solari.Titan.Framework
                 .MinimumLevel.Override("Microsoft", TitanLibHelper.GetLogLevel(options.Overrides.Microsoft))
                 .MinimumLevel.Override("Microsoft.AspNetCore", TitanLibHelper.GetLogLevel(options.Overrides.AspNetCore))
                 .MinimumLevel.Override("Microsoft.Hosting.Lifetime", TitanLibHelper.GetLogLevel(options.Overrides.MicrosoftHostingLifetime));
-            
+
             foreach (string[] item in options.Overrides.Custom.Select(s => s.Split(":")))
                 config.MinimumLevel.Override(item[0], TitanLibHelper.GetLogLevel(item[1]));
         }
