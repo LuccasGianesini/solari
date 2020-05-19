@@ -1,6 +1,7 @@
 trigger:
   branches:
     exclude:
+      - beta
       - develop   
       - master
 pr:
