@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
-using Solari.Rhea;
+using Solari.Sol.Utils;
 
 namespace Solari.Ganymede.ContentSerializers
 {

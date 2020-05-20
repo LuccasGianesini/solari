@@ -17,9 +17,8 @@ namespace Solari.Callisto.Abstractions.Exceptions
         public NullIdentifierException(string message) : base(message) { }
         public NullIdentifierException(string message, Exception inner) : base(message, inner) { }
 
-        protected NullIdentifierException
-        (SerializationInfo info,
-         StreamingContext context) : base(info, context)
+        protected NullIdentifierException(SerializationInfo info,
+                                          StreamingContext context) : base(info, context)
         {
         }
     }

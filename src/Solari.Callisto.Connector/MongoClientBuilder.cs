@@ -2,7 +2,7 @@
 using System.Linq;
 using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
-using Solari.Io;
+using Solari.Sol.Extensions;
 
 namespace Solari.Callisto.Connector
 {
@@ -44,10 +44,10 @@ namespace Solari.Callisto.Connector
                                    .WithConnectionStringScheme(connectorOptions.GetConnectionStringScheme())
                                    .WithApplicationName(applicationName)
                                    .Build();
-            
+
             return this;
         }
-        
+
         public MongoClientBuilder WithMongoClientSettings(MongoClientSettings clientSettings)
         {
             _mongoClientSettings = clientSettings;
@@ -83,19 +83,15 @@ namespace Solari.Callisto.Connector
             _mongoUrl = builder(new MongoUrlBuilder(url));
             return this;
         }
-        
-        
+
 
         /// <summary>
-        /// Build an <see cref="MongoClient"/> with precedence order as follows: ConnectionString -> MongoClientSettings -> MongoUrl.
+        ///     Build an <see cref="MongoClient" /> with precedence order as follows: ConnectionString -> MongoClientSettings -> MongoUrl.
         /// </summary>
         /// <returns></returns>
         public MongoClient Build()
         {
-            if (!string.IsNullOrEmpty(_connectionString))
-            {
-                return new MongoClient(_connectionString);
-            }
+            if (!string.IsNullOrEmpty(_connectionString)) return new MongoClient(_connectionString);
 
             return _mongoClientSettings != null ? new MongoClient(_mongoClientSettings) : new MongoClient(_mongoUrl);
         }

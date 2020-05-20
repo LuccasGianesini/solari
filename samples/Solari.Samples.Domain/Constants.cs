@@ -8,8 +8,6 @@
         public const string EmptyPropertyErrorName = "EmptyPropertyValue";
 
         public const string InvalidObjectIdErrorCode = "ERR-12";
-        public const string InvalidObjectIdErrorName= "InvalidObjectId";
-
-
+        public const string InvalidObjectIdErrorName = "InvalidObjectId";
     }
 }

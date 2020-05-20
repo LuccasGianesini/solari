@@ -8,7 +8,6 @@ namespace Solari.Callisto.Connector
     {
 
         IMongoDatabase GetDataBase();
-        IMongoClient LockedRead();
         IMongoClient GetClient();
         string DataBaseName { get; }
         void UpdateClient(IMongoClient client);

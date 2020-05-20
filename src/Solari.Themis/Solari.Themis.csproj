@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Solari.Ceres\Solari.Ceres.csproj" />
+      <ProjectReference Include="..\Solari.Deimos.CorrelationId\Solari.Deimos.CorrelationId.csproj" />
+      <ProjectReference Include="..\Solari.Deimos\Solari.Deimos.csproj" />
+      <ProjectReference Include="..\Solari.Io\Solari.Io.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -8,6 +8,5 @@ namespace Solari.Callisto.Abstractions.CQR
         FindOptions<T> FindOptions { get; }
         FilterDefinition<T> FilterDefinition { get; }
         Func<IAsyncCursor<T>, TResult> ResultFunction { get; }
-        
     }
 }

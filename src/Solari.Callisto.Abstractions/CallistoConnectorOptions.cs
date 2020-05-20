@@ -14,7 +14,7 @@ namespace Solari.Callisto.Abstractions
         public string HeartbeatTimeout { get; set; }
 
         /// <summary>
-        /// List of host;port
+        ///     List of host;port
         /// </summary>
         public List<string> Servers { get; set; }
 
@@ -36,24 +36,24 @@ namespace Solari.Callisto.Abstractions
         public string WriteConcern { get; set; }
 
         public bool RetryReads { get; set; }
-        public string ReadConcern { get; set; } 
-        public string ReadPreference { get; set; } 
+        public string ReadConcern { get; set; }
+        public string ReadPreference { get; set; }
 
         public string ServerSelectionTimeout { get; set; }
 
-        public string SocketTimeout { get; set; } 
-        
+        public string SocketTimeout { get; set; }
+
         public string WaitQueueTimeout { get; set; }
 
-        public string ConnectionMode { get; set; } 
+        public string ConnectionMode { get; set; }
 
-        public string GuidRepresentation { get; set; } 
+        public string GuidRepresentation { get; set; }
 
-        public string ConnectionStringScheme { get; set; } 
+        public string ConnectionStringScheme { get; set; }
 
         public WriteConcern GetWriteConcern()
         {
-            if(string.IsNullOrEmpty(WriteConcern)) return MongoDB.Driver.WriteConcern.Acknowledged;
+            if (string.IsNullOrEmpty(WriteConcern)) return MongoDB.Driver.WriteConcern.Acknowledged;
             return WriteConcern.ToLowerInvariant() switch
                    {
                        "acknowledged"   => MongoDB.Driver.WriteConcern.Acknowledged,
@@ -68,7 +68,7 @@ namespace Solari.Callisto.Abstractions
 
         public ReadPreference GetReadPreference()
         {
-            if(string.IsNullOrEmpty(ReadPreference)) return MongoDB.Driver.ReadPreference.Primary;
+            if (string.IsNullOrEmpty(ReadPreference)) return MongoDB.Driver.ReadPreference.Primary;
             return ReadPreference.ToLowerInvariant() switch
                    {
                        "primary"            => MongoDB.Driver.ReadPreference.Primary,
@@ -83,7 +83,7 @@ namespace Solari.Callisto.Abstractions
 
         public ReadConcern GetReadConcern()
         {
-            if(string.IsNullOrEmpty(ReadConcern)) return MongoDB.Driver.ReadConcern.Default;
+            if (string.IsNullOrEmpty(ReadConcern)) return MongoDB.Driver.ReadConcern.Default;
             return ReadConcern.ToLowerInvariant() switch
                    {
                        "available"    => MongoDB.Driver.ReadConcern.Available,
@@ -98,7 +98,7 @@ namespace Solari.Callisto.Abstractions
 
         public ConnectionMode GetConnectionMode()
         {
-            if(string.IsNullOrEmpty(ConnectionMode)) return MongoDB.Driver.ConnectionMode.Automatic;
+            if (string.IsNullOrEmpty(ConnectionMode)) return MongoDB.Driver.ConnectionMode.Automatic;
             return ConnectionMode.ToLowerInvariant() switch
                    {
                        "automatic"   => MongoDB.Driver.ConnectionMode.Automatic,
@@ -112,7 +112,7 @@ namespace Solari.Callisto.Abstractions
 
         public GuidRepresentation GetGuidRepresentation()
         {
-            if(string.IsNullOrEmpty(GuidRepresentation)) return MongoDB.Bson.GuidRepresentation.Unspecified;
+            if (string.IsNullOrEmpty(GuidRepresentation)) return MongoDB.Bson.GuidRepresentation.Unspecified;
             return GuidRepresentation.ToLowerInvariant() switch
                    {
                        "unspecified"  => MongoDB.Bson.GuidRepresentation.Unspecified,
@@ -126,7 +126,7 @@ namespace Solari.Callisto.Abstractions
 
         public ConnectionStringScheme GetConnectionStringScheme()
         {
-            if(string.IsNullOrEmpty(ConnectionStringScheme)) return MongoDB.Driver.Core.Configuration.ConnectionStringScheme.MongoDB;
+            if (string.IsNullOrEmpty(ConnectionStringScheme)) return MongoDB.Driver.Core.Configuration.ConnectionStringScheme.MongoDB;
             return ConnectionStringScheme.ToLowerInvariant() switch
                    {
                        "mongodb"     => MongoDB.Driver.Core.Configuration.ConnectionStringScheme.MongoDB,

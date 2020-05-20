@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Linq;
 using MongoDB.Bson.Serialization.Conventions;
-using Serilog;
 using Solari.Callisto.Abstractions;
 
 namespace Solari.Callisto.Framework
 {
     public class ConventionPackBuilder : IConventionPackBuilder
     {
-        private string _name;
-        private Func<Type, bool> _filter;
         private readonly CallistoConventionRegistry _registry;
         private ConventionPack _conventionPack;
+        private Func<Type, bool> _filter;
+        private string _name;
         public ConventionPackBuilder() { _registry = CallistoConventionRegistry.Instance; }
 
         /// <summary>
-        /// Set the name of the convention pack.
+        ///     Set the name of the convention pack.
         /// </summary>
         /// <param name="name">The name</param>
         /// <returns></returns>
@@ -26,7 +25,7 @@ namespace Solari.Callisto.Framework
         }
 
         /// <summary>
-        /// Set the filter used to apply the convention pack.
+        ///     Set the filter used to apply the convention pack.
         /// </summary>
         /// <param name="filter">The filter</param>
         /// <returns></returns>
@@ -37,7 +36,7 @@ namespace Solari.Callisto.Framework
         }
 
         /// <summary>
-        /// Use the default conventions.
+        ///     Use the default conventions.
         /// </summary>
         /// <returns></returns>
         public IConventionPackBuilder WithDefaultConventions()
@@ -48,7 +47,7 @@ namespace Solari.Callisto.Framework
         }
 
         /// <summary>
-        /// Add a convention into the convention pack. <see cref="IConvention"/>
+        ///     Add a convention into the convention pack. <see cref="IConvention" />
         /// </summary>
         /// <param name="convention">The convention</param>
         /// <returns></returns>
@@ -60,7 +59,7 @@ namespace Solari.Callisto.Framework
         }
 
         /// <summary>
-        /// Build the convention pack. If no conventions were provided, the library will use its default conventions. 
+        ///     Build the convention pack. If no conventions were provided, the library will use its default conventions.
         /// </summary>
         /// <returns></returns>
         public IConventionPackBuilder BuildConventionPack()
@@ -78,9 +77,11 @@ namespace Solari.Callisto.Framework
         }
 
         /// <summary>
-        /// Register the convention pack into the <see cref="MongoDB.Bson.Serialization.Conventions.ConventionRegistry"/>
-        ///  </summary>
-        /// <returns><see cref="ConventionPack"/></returns>
+        ///     Register the convention pack into the <see cref="MongoDB.Bson.Serialization.Conventions.ConventionRegistry" />
+        /// </summary>
+        /// <returns>
+        ///     <see cref="ConventionPack" />
+        /// </returns>
         public ConventionPack RegisterConventionPack()
         {
             if (_conventionPack == null) BuildConventionPack();

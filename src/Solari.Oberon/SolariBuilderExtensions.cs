@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Solari.Io;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Solari.Sol;
-using StackExchange.Redis;
+using Solari.Sol.Extensions;
 
 namespace Solari.Oberon
 {
@@ -9,7 +9,13 @@ namespace Solari.Oberon
     {
         public static ISolariBuilder AddOberon(this ISolariBuilder builder)
         {
-            var options = builder.AppConfiguration.GetOptions<OberonOptions>(OberonLibConstants.AppSettingsSection);
+            IConfigurationSection section = builder.AppConfiguration.GetSection(OberonLibConstants.AppSettingsSection);
+            if (!section.Exists())
+                return builder;
+            var options = builder.AppConfiguration.GetOptions<OberonOptions>(section);
+            if (!options.Enabled)
+                return builder;
+
             builder.Services.Configure<OberonOptions>(builder.AppConfiguration.GetSection(OberonLibConstants.AppSettingsSection));
             builder.Services.AddDistributedRedisCache(config =>
             {
@@ -19,6 +25,6 @@ namespace Solari.Oberon
 
             builder.Services.AddSingleton<IOberon, Oberon>();
             return builder;
-        } 
+        }
     }
 }

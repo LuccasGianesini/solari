@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using Serilog;
 
 namespace Solari.Sol.Framework.Exceptions
 {

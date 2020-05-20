@@ -1,10 +1,4 @@
-﻿using System;
-using MongoDB.Bson;
-using MongoDB.Driver;
-using Solari.Callisto.Abstractions.CQR;
-using Solari.Callisto.Abstractions.Exceptions;
-
-namespace Solari.Callisto.Abstractions
+﻿namespace Solari.Callisto.Abstractions
 {
     public static class CallistoOperationHelper
     {
@@ -13,6 +7,6 @@ namespace Solari.Callisto.Abstractions
             return $"The {op} {opName} has a null {defType} definition. The operation will not be carried out";
         }
 
-        public static string NullOperationInstanceMessage(string op, string @interface) => $"The provided {@interface} {op} instance is null";
+        public static string NullOperationInstanceMessage(string op, string @interface) { return $"The provided {@interface} {op} instance is null"; }
     }
 }

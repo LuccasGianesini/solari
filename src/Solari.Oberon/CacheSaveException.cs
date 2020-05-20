@@ -18,8 +18,8 @@ namespace Solari.Oberon
         public CacheSaveException(string message, Exception inner) : base(message, inner) { }
 
         protected CacheSaveException(SerializationInfo info,
-                              StreamingContext context) : base(info, context)
+                                     StreamingContext context) : base(info, context)
         {
         }
-    }    
+    }
 }

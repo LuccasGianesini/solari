@@ -9,7 +9,7 @@ namespace Solari.Deimos
     public static class DeimosJaegerExtensions
     {
         /// <summary>
-        /// Extract the headers from a HttpRequest.
+        ///     Extract the headers from a HttpRequest.
         /// </summary>
         /// <param name="requestHeaders">Headers</param>
         /// <returns></returns>
@@ -17,9 +17,9 @@ namespace Solari.Deimos
         {
             return requestHeaders.ToDictionary(k => k.Key, v => v.Value.FirstOrDefault());
         }
-        
+
         /// <summary>
-        /// Try to extract the headers from a http span context.
+        ///     Try to extract the headers from a http span context.
         /// </summary>
         /// <param name="headers">The headers</param>
         /// <param name="tracer">Tracer instance</param>

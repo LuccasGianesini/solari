@@ -1,15 +1,13 @@
-﻿trigger:
+trigger:
   branches:
     include:
       - beta
     exclude:
-      - alpha
       - develop   
       - master
 pr:
   branches:
     exclude:
-      - alpha
       - beta
       - master
       - develop
@@ -48,7 +46,9 @@ jobs:
             $(solution)
           arguments: '--configuration $(BuildConfiguration) /p:Version=$(Build.BuildNumber)'
           versioningScheme: byBuildNumber
+      
       - task: PowerShell@2
+        displayName: 'Pack'
         inputs:
           filePath: 'packall.ps1'
           arguments: '-BUILD_NUMBER $(Build.BuildNumber) -BUILD_ARTIFACT_DIR $(Build.ArtifactStagingDirectory)'
@@ -58,7 +58,22 @@ jobs:
         displayName: 'Push Nuget Packages'
         inputs:
           command: 'push'
-          packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build
-      .ArtifactStagingDirectory)/**/$(prj1).$(Build.BuildNumber).symbols.nupkg'
+          packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.$(Build.BuildNumber).symbols.nupkg'
           nuGetFeedType: 'external'
           publishFeedCredentials: 'Nuget.org'
+      
+      - task: GitHubRelease@1
+        displayName: 'Create GitHub release'
+        inputs:
+          gitHubConnection: 'github.com_azpipelines'
+          repositoryName: '$(Build.Repository.Name)'
+          action: 'create'
+          target: '$(Build.SourceVersion)'
+          tagSource: 'userSpecifiedTag'
+          tag: 'v$(Build.BuildNumber)'
+          title: 'Version $(Build.BuildNumber)'
+          releaseNotesSource: 'inline'
+          releaseNotesInline: 'Changelog: https://github.com/LuccasGianesini/solari/wiki/Changelog'
+          isPreRelease: true
+          addChangeLog: true
+          assets: false

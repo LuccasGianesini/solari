@@ -4,8 +4,8 @@ using System.Net.Http;
 using System.Threading;
 using Solari.Ganymede.ContentSerializers;
 using Solari.Ganymede.Domain;
-using Solari.Io;
-using Solari.Rhea;
+using Solari.Sol.Extensions;
+using Solari.Sol.Utils;
 
 namespace Solari.Ganymede.Extensions
 {
@@ -211,6 +211,7 @@ namespace Solari.Ganymede.Extensions
 
             return (IContentSerializer) contentSerializer;
         }
+
         private static IContentDeserializer GetDeserializerByPropertyKey(HttpRequestMessage requestMessage, string propertyKey)
         {
             if (requestMessage == null)
@@ -221,6 +222,5 @@ namespace Solari.Ganymede.Extensions
 
             return (IContentDeserializer) contentSerializer;
         }
-
     }
 }

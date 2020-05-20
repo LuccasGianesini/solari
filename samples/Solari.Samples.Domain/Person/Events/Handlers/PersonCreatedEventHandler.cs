@@ -1,24 +1,16 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Solari.Eris;
-using Solari.Miranda;
 using Solari.Titan;
 
 namespace Solari.Samples.Domain.Person.Events.Handlers
 {
     public class PersonCreatedEventHandler : IEventHandler<PersonCreatedEvent>
     {
-        private readonly IMirandaClient _publisher;
-        private readonly ITitanLogger<PersonCreatedEventHandler> _logger;
-        public PersonCreatedEventHandler(IMirandaClient publisher, ITitanLogger<PersonCreatedEventHandler> logger)
-        {
-            _publisher = publisher;
-            _logger = logger;
-        }
+        private readonly ILogger<PersonCreatedEventHandler> _logger;
 
-        public async Task HandleEventAsync(PersonCreatedEvent @event)
-        {
-            await _publisher.PublishAsync(@event);
-            _logger.Information($"Published '{PersonConstants.CreatePersonOperationName} event'");
-        }
+        public PersonCreatedEventHandler(ILogger<PersonCreatedEventHandler> logger) { _logger = logger; }
+
+        public async Task HandleEventAsync(PersonCreatedEvent @event) { _logger.LogInformation($"Published '{PersonConstants.CreatePersonOperationName} event'"); }
     }
 }

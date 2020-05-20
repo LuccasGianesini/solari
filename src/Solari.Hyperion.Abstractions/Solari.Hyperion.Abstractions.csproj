@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <AssemblyName>Solari.Hyperion.Abstractions</AssemblyName>
+        <Authors>Lauth</Authors>
+        <Title>Solari.Hyperion.Abstractions</Title>
+        <PackageId>Solari.Hyperion.Abstractions</PackageId>
+        <PackageDescription>Hyperion Abstraction library</PackageDescription>
+        <PackageTags>C#; DotnetCore; Hyperion Abstractions</PackageTags>
+        <LangVersion>8</LangVersion>
+        <RootNamespace>Solari.Hyperion.Abstractions</RootNamespace>
+        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Consul" Version="0.7.2.6" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
+    </ItemGroup>
+
+</Project>

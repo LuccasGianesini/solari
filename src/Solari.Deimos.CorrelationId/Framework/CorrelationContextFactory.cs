@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using OpenTracing;
 using Solari.Deimos.Abstractions;
-using ITracer = OpenTracing.ITracer;
 
 namespace Solari.Deimos.CorrelationId.Framework
 {
@@ -37,15 +35,7 @@ namespace Solari.Deimos.CorrelationId.Framework
         {
             var tracer = _provider.GetService<ITracer>();
 
-            if (tracer.ActiveSpan == null)
-            {
-                return new DefaultCorrelationContext();
-            }
-
-            if (tracer.ActiveSpan.Context == null)
-            {
-                return new DefaultCorrelationContext();
-            }
+            if (tracer?.ActiveSpan?.Context == null) return null;
 
             var ctx = tracer.ActiveSpan.Context.ToString();
             IEnvoyCorrelationContext envoy = ExtractFromJaegerContext(ctx);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
@@ -33,17 +32,15 @@ namespace Solari.Vanth.Validation
                     CommonErrorResponse error = new CommonErrorResponseBuilder()
                                                 .WithCode(CommonErrorCode.ValidationErrorCode)
                                                 .WithErrorType(CommonErrorType.ValidationError)
-                                                .WithMessage($"Invalid Model State!")
+                                                .WithMessage("Invalid Model State!")
                                                 .WithTarget($"Action: {context.ActionDescriptor.DisplayName} ActionArgument: {key}")
                                                 .Build();
 
                     foreach (ValidationFailure failure in result.Errors)
-                    {
                         error.AddDetailedError(builder => builder.WithErrorCode(failure.ErrorCode)
                                                                  .WithMessage(failure.ErrorMessage)
                                                                  .WithTarget(failure.PropertyName)
                                                                  .Build());
-                    }
 
                     response.AddError(error);
                 }

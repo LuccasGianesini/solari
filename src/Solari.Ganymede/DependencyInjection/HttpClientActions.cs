@@ -2,28 +2,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Polly.Registry;
 using Solari.Ganymede.Domain;
 using Solari.Ganymede.Domain.Exceptions;
 using Solari.Ganymede.Domain.Options;
 using Solari.Ganymede.Extensions;
 using Solari.Ganymede.Framework.DelegatingHandlers;
-using Solari.Io;
 using Solari.Sol;
+using Solari.Sol.Extensions;
 
 namespace Solari.Ganymede.DependencyInjection
 {
     public class HttpClientActions
     {
         private readonly ISolariBuilder _builder;
-        private readonly IReadOnlyDictionary<string, GanymedeRequestSettings> _requestSettings;
+        private readonly IConfiguration _configuration;
 
-        public HttpClientActions(ISolariBuilder builder, IReadOnlyDictionary<string, GanymedeRequestSettings> requestSettings)
+        public HttpClientActions(ISolariBuilder builder, IConfiguration configuration)
         {
             _builder = builder;
-            _requestSettings = requestSettings;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -126,34 +126,31 @@ namespace Solari.Ganymede.DependencyInjection
         }
 
 
-        private IHttpClientBuilder ConfigureGanymedeHttpClient<TService, TImplementation>(string name)
+        private IHttpClientBuilder ConfigureGanymedeHttpClient<TService, TImplementation>(string section)
             where TService : class
             where TImplementation : class, TService
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException(nameof(name));
+            if (string.IsNullOrEmpty(section)) throw new ArgumentNullException(nameof(section));
 
             return _builder
                    .Services
                    .AddSingleton<IGanymedeRequest<TImplementation>>(a =>
                    {
-                       if (_requestSettings.ContainsKey(name))
-                       {
-                           return new GanymedeRequest<TImplementation>(_requestSettings.FirstOrDefault(a => a.Key == name).Value);
-                       }
-
+                       IConfigurationSection cfgSection = _configuration.GetSection(section);
+                       if (cfgSection.Exists())
+                           return new GanymedeRequest<TImplementation>(_configuration.GetOptions<GanymedeRequestSpecification>(cfgSection));
                        throw new
-                           RequestNotFoundException($"The request {name} was not found in the dictionary. " +
-                                                    "Make sure the yaml file contains the request");
+                           RequestNotFoundException($"The request {section} was not found in the AppSettings.json file.");
                    })
                    .AddHttpClient<TService, TImplementation>()
                    .ConfigureHttpClient((provider, httpClient) =>
                    {
                        var request = provider.GetRequiredService<IGanymedeRequest<TImplementation>>();
 
-                       httpClient.SetBaseAddress(request.RequestSettings.BaseAddress.Trim());
-                       httpClient.SetDefaultRequestHeaders(request.RequestSettings.DefaultRequestHeaders);
-                       httpClient.SetMaxResponseContentBufferSize(request.RequestSettings.MaxResponseContentBufferSize);
-                       httpClient.SetTimeout(request.RequestSettings.Timeout.ToTimeSpan());
+                       httpClient.SetBaseAddress(request.RequestSpecification.BaseAddress.Trim());
+                       httpClient.SetDefaultRequestHeaders(request.RequestSpecification.DefaultRequestHeaders);
+                       httpClient.SetMaxResponseContentBufferSize(request.RequestSpecification.MaxResponseContentBufferSize);
+                       httpClient.SetTimeout(request.RequestSpecification.Timeout.ToTimeSpan());
                    })
                    .ConfigurePrimaryHttpMessageHandler(_ => new DefaultHttpClientDelegatingHandler());
         }

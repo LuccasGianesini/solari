@@ -21,7 +21,7 @@ namespace Solari.Callisto.Framework.Operators
         }
 
         /// <summary>
-        /// Returns the first document that matched the predicate.
+        ///     Returns the first document that matched the predicate.
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
@@ -42,18 +42,19 @@ namespace Solari.Callisto.Framework.Operators
         }
 
         /// <summary>
-        /// Find one document by id.
+        ///     Find one document by id.
         /// </summary>
         /// <param name="id">The id</param>
         /// <returns></returns>
-        public async Task<TEntity> FindById(ObjectId id) =>
-            await Find(_factory.CreateQuery($"query-by-id {nameof(TEntity)}",
-                                             Builders<TEntity>.Filter.Eq(a => a.Id, id),
-                                             cursor => cursor.FirstOrDefault()));
+        public async Task<TEntity> FindById(ObjectId id)
+        {
+            return await Find(_factory.CreateQuery(Builders<TEntity>.Filter.Eq(a => a.Id, id),
+                                                   cursor => cursor.FirstOrDefault()));
+        }
 
 
         /// <summary>
-        /// Queries the database
+        ///     Queries the database
         /// </summary>
         /// <param name="factory">The operation factory</param>
         /// <returns></returns>
@@ -63,7 +64,7 @@ namespace Solari.Callisto.Framework.Operators
         }
 
         /// <summary>
-        /// Execute a query.
+        ///     Execute a query.
         /// </summary>
         /// <param name="operation">The operation</param>
         /// <typeparam name="TResult">The Result</typeparam>
@@ -75,7 +76,6 @@ namespace Solari.Callisto.Framework.Operators
                 throw new NullCallistoOperationException(CallistoOperationHelper.NullOperationInstanceMessage("query", nameof(ICallistoInsert<TEntity>)));
             operation.ValidateOperation();
             if (operation.UseSessionHandle)
-            {
                 using (IAsyncCursor<TEntity> cursor = await _collection.FindAsync(operation.ClientSessionHandle,
                                                                                   operation.FilterDefinition,
                                                                                   operation.FindOptions,
@@ -84,7 +84,6 @@ namespace Solari.Callisto.Framework.Operators
                 {
                     return operation.ResultFunction(cursor);
                 }
-            }
 
             using (IAsyncCursor<TEntity> cursor = await _collection.FindAsync(operation.FilterDefinition,
                                                                               operation.FindOptions,
@@ -96,7 +95,7 @@ namespace Solari.Callisto.Framework.Operators
         }
 
         /// <summary>
-        /// Execute an aggregation.
+        ///     Execute an aggregation.
         /// </summary>
         /// <param name="factory">The operation factory</param>
         /// <typeparam name="TProjectionModel">The model for the projection</typeparam>
@@ -104,10 +103,13 @@ namespace Solari.Callisto.Framework.Operators
         /// <returns></returns>
         /// <exception cref="NullCallistoOperationException"></exception>
         public async Task<TResult> Aggregate<TProjectionModel, TResult>(
-            Func<ICallistoOperationFactory, ICallistoAggregation<TEntity, TProjectionModel, TResult>> factory) =>
-            await Aggregate(factory(_factory));
+            Func<ICallistoOperationFactory, ICallistoAggregation<TEntity, TProjectionModel, TResult>> factory)
+        {
+            return await Aggregate(factory(_factory));
+        }
+
         /// <summary>
-        /// Execute an aggregation.
+        ///     Execute an aggregation.
         /// </summary>
         /// <param name="operation">The operation</param>
         /// <typeparam name="TProjectionModel">The model for the projection</typeparam>
@@ -120,7 +122,6 @@ namespace Solari.Callisto.Framework.Operators
                 throw new NullCallistoOperationException(CallistoOperationHelper.NullOperationInstanceMessage("aggregation", nameof(ICallistoInsert<TEntity>)));
             operation.ValidateOperation();
             if (operation.UseSessionHandle)
-            {
                 using (IAsyncCursor<TProjectionModel> cursor = await _collection.AggregateAsync(operation.ClientSessionHandle,
                                                                                                 operation.PipelineDefinition,
                                                                                                 operation.AggregateOptions,
@@ -128,7 +129,7 @@ namespace Solari.Callisto.Framework.Operators
                 {
                     return operation.ResultFunction(cursor);
                 }
-            }
+
             using (IAsyncCursor<TProjectionModel> cursor = await _collection.AggregateAsync(operation.PipelineDefinition,
                                                                                             operation.AggregateOptions,
                                                                                             operation.CancellationToken))

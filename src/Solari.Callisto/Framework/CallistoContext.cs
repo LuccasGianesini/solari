@@ -1,22 +1,19 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
 using Solari.Callisto.Connector;
 
 namespace Solari.Callisto.Framework
 {
-    public class CallistoContext : ICallistoContext
+    public class CallistoContext<TCollection> : ICallistoContext<TCollection> where TCollection : class, IDocumentRoot
     {
-        public string CollectionName { get; }
-
-        public ICallistoConnection Connection { get; }
-        public ICallistoOperationFactory OperationFactory { get; }
-
-        public CallistoContext(string collectionName, ICallistoConnection connection, ICallistoOperationFactory operationFactory)
+        public CallistoContext(IMongoCollection<TCollection> collection, ICallistoConnection connection, ICallistoOperationFactory operationFactory)
         {
-            CollectionName = collectionName;
+            Collection = collection;
             OperationFactory = operationFactory;
             Connection = connection;
         }
+        public ICallistoConnection Connection { get; }
+        public IMongoCollection<TCollection> Collection { get; }
+        public ICallistoOperationFactory OperationFactory { get; }
     }
 }

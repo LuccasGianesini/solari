@@ -6,6 +6,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Clusters;
 using Solari.Callisto.Abstractions;
+using Solari.Callisto.Abstractions.Exceptions;
 
 namespace Solari.Callisto.Connector
 {
@@ -21,21 +22,7 @@ namespace Solari.Callisto.Connector
             _client = new Dictionary<string, IMongoClient>(1);
         }
 
-
         public IMongoDatabase GetDataBase() { return GetClient().GetDatabase(DataBaseName); }
-
-        public IMongoClient LockedRead()
-        {
-            _lockSlim.EnterReadLock();
-            try
-            {
-                return GetClient();
-            }
-            finally
-            {
-                _lockSlim.ExitReadLock();
-            }
-        }
 
         public ICallistoConnection AddClient(IMongoClient mongoClient)
         {
@@ -67,7 +54,7 @@ namespace Solari.Callisto.Connector
             if (string.IsNullOrEmpty(dataBaseName)) throw new ArgumentException("Value cannot be null or empty.", nameof(dataBaseName));
             _database = GetClient().GetDatabase(dataBaseName);
             DataBaseName = dataBaseName;
-            CallistoLogger.ConnectionLogger.ChangingDatabase(dataBaseName);   
+            CallistoLogger.ConnectionLogger.ChangingDatabase(dataBaseName);
         }
 
         public async Task<CallistoConnectionCheck> IsConnected(CancellationToken? cancellationToken = null)

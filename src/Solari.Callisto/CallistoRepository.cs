@@ -1,37 +1,38 @@
 ﻿using System.Threading.Tasks;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
-using Solari.Callisto.Connector;
 using Solari.Callisto.Framework.Operators;
 
 namespace Solari.Callisto
 {
-    public abstract class CallistoRepository<TEntity> where TEntity : class, IDocumentRoot
+    public abstract class CallistoRepository<T> where T : class, IDocumentRoot
     {
-        protected IMongoCollection<TEntity> Collection { get; }
-        protected ICallistoContext Context { get; }
-        protected ICallistoOperationFactory OperationFactory { get; }
-        protected InsertOperator<TEntity> Insert { get; }
-
-        protected UpdateOperator<TEntity> Update { get; }
-
-        protected DeleteOperator<TEntity> Delete { get; }
-
-        protected ReplaceOperator<TEntity> Replace { get; }
-        
-        protected QueryOperator<TEntity> Query {get;}
-
-        protected CallistoRepository(ICallistoContext context)
+        protected CallistoRepository(ICallistoContext<T> context)
         {
             Context = context;
-            Collection = Context.Connection.GetDataBase().GetCollection<TEntity>(context.CollectionName);
+            Collection = context.Collection;
             OperationFactory = context.OperationFactory;
-            Insert = new InsertOperator<TEntity>(Collection, OperationFactory);
-            Update = new UpdateOperator<TEntity>(Collection, OperationFactory);
-            Delete = new DeleteOperator<TEntity>(Collection, OperationFactory);
-            Replace = new ReplaceOperator<TEntity>(Collection, OperationFactory);
-            Query = new QueryOperator<TEntity>(Collection, OperationFactory);
+            Insert = new InsertOperator<T>(Collection, OperationFactory);
+            Update = new UpdateOperator<T>(Collection, OperationFactory);
+            Delete = new DeleteOperator<T>(Collection, OperationFactory);
+            Replace = new ReplaceOperator<T>(Collection, OperationFactory);
+            Query = new QueryOperator<T>(Collection, OperationFactory);
         }
+
+        protected IMongoCollection<T> Collection { get; }
+        protected ICallistoContext<T> Context { get; }
+        protected ICallistoOperationFactory OperationFactory { get; }
+        protected InsertOperator<T> Insert { get; }
+
+        protected UpdateOperator<T> Update { get; }
+
+        protected DeleteOperator<T> Delete { get; }
+
+        protected ReplaceOperator<T> Replace { get; }
+
+        protected QueryOperator<T> Query { get; }
+
+        protected async Task<IClientSessionHandle> StartSessionAsync() => await Context.Connection.GetClient().StartSessionAsync();
+        protected void EndSession(IClientSessionHandle sessionHandle) => sessionHandle.Dispose();
     }
 }

@@ -18,7 +18,7 @@ namespace Solari.Vanth.Exceptions
         public NullOrEmptyErrorMessageException(string message, Exception inner) : base(message, inner) { }
 
         protected NullOrEmptyErrorMessageException(SerializationInfo info,
-                              StreamingContext context) : base(info, context)
+                                                   StreamingContext context) : base(info, context)
         {
         }
     }

@@ -1,6 +1,4 @@
-﻿using System;
-using Solari.Callisto.Abstractions;
-using Solari.Samples.Domain.Person.Commands;
+﻿using Solari.Callisto.Abstractions;
 using Solari.Samples.Domain.Person.Dtos;
 
 namespace Solari.Samples.Domain.Person
@@ -21,5 +19,5 @@ namespace Solari.Samples.Domain.Person
         {
             return new PersonAttribute(command.AttributeName, command.AttributeValue);
         }
-        }
+    }
 }

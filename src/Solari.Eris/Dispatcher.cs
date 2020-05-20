@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,10 +17,7 @@ namespace Solari.Eris
                 IEnumerable<ICommandHandler<TCommand, TCommandResult>> handlers = scope
                                                                                   .ServiceProvider
                                                                                   .GetServices<ICommandHandler<TCommand, TCommandResult>>();
-                foreach (ICommandHandler<TCommand, TCommandResult> commandHandler in handlers)
-                {
-                    yield return await commandHandler.HandleCommandAsync(command);
-                }
+                foreach (ICommandHandler<TCommand, TCommandResult> commandHandler in handlers) yield return await commandHandler.HandleCommandAsync(command);
             }
         }
 
@@ -30,10 +26,7 @@ namespace Solari.Eris
             using (IServiceScope scope = _factory.CreateScope())
             {
                 IEnumerable<ICommandHandler<TCommand>> handlers = scope.ServiceProvider.GetServices<ICommandHandler<TCommand>>();
-                foreach (ICommandHandler<TCommand> handler in handlers)
-                {
-                    await handler.HandleCommandAsync(command);
-                }
+                foreach (ICommandHandler<TCommand> handler in handlers) await handler.HandleCommandAsync(command);
             }
         }
 
@@ -42,10 +35,7 @@ namespace Solari.Eris
             using (IServiceScope scope = _factory.CreateScope())
             {
                 IEnumerable<IEventHandler<TEvent>> handlers = scope.ServiceProvider.GetServices<IEventHandler<TEvent>>();
-                foreach (IEventHandler<TEvent> handler in handlers)
-                {
-                    await handler.HandleEventAsync(@event);
-                }
+                foreach (IEventHandler<TEvent> handler in handlers) await handler.HandleEventAsync(@event);
             }
         }
 
@@ -54,10 +44,7 @@ namespace Solari.Eris
             using (IServiceScope scope = _factory.CreateScope())
             {
                 IEnumerable<IQueryHandler<TQuery, TQueryResult>> handlers = scope.ServiceProvider.GetServices<IQueryHandler<TQuery, TQueryResult>>();
-                foreach (IQueryHandler<TQuery,TQueryResult> queryHandler in handlers)
-                {
-                    yield return await queryHandler.HandleQueryAsync(query);
-                }
+                foreach (IQueryHandler<TQuery, TQueryResult> queryHandler in handlers) yield return await queryHandler.HandleQueryAsync(query);
             }
         }
     }

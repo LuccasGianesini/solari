@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-     <PropertyGroup>
+    <PropertyGroup>
         <AssemblyName>Solari.Sol</AssemblyName>
         <Authors>Lauth</Authors>
         <Title>Solari.Sol</Title>
@@ -8,30 +8,27 @@
         <PackageTags>C#; DotnetCore; Bootstrapper</PackageTags>
         <LangVersion>8</LangVersion>
         <RootNamespace>Solari.Sol</RootNamespace>
-         <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
+        <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <ItemGroup>
         <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
-      <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.3" />
-      <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.1.3" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.3" />
-      <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.3" />
-      <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.3" />
-      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.3" />
-      <PackageReference Include="Scrutor" Version="3.2.1" />
-      <PackageReference Include="Serilog" Version="2.9.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.4" />
+        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.4" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.1.4" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.4" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.4" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.4" />
+        <PackageReference Include="NewId" Version="3.0.2" />
+        <PackageReference Include="Scrutor" Version="3.2.1" />
+        <PackageReference Include="Serilog" Version="2.9.0" />
     </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Solari.Io\Solari.Io.csproj" />
-      <ProjectReference Include="..\Solari.Rhea\Solari.Rhea.csproj" />
-    </ItemGroup>
-
 
 </Project>

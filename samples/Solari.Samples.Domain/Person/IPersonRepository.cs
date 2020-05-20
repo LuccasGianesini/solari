@@ -3,7 +3,6 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using Solari.Callisto.Abstractions.CQR;
 using Solari.Samples.Domain.Person.Results;
-using Solari.Vanth;
 
 namespace Solari.Samples.Domain.Person
 {

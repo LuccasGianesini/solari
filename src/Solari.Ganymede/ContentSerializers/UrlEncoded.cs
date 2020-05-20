@@ -4,12 +4,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Solari.Ganymede.Framework;
-using Solari.Io;
-using Solari.Rhea;
+using Solari.Sol.Extensions;
+using Solari.Sol.Utils;
 
 namespace Solari.Ganymede.ContentSerializers
 {
-
     public class UrlEncodedDeserializer : IContentDeserializer
     {
         public async Task<Maybe<TModel>> Deserialize<TModel>(HttpContent content)
@@ -22,10 +21,9 @@ namespace Solari.Ganymede.ContentSerializers
             return model != null ? Maybe<TModel>.Some(model) : Maybe<TModel>.None;
         }
     }
-    
+
     public class UrlEncodedSerializer : IContentSerializer
     {
-        
         public HttpContent Serialize(object content, string contentType, Encoding encoding = null)
         {
             if (content == null) return new FormUrlEncodedContent(Enumerable.Empty<KeyValuePair<string, string>>());

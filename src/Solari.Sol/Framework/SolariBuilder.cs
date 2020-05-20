@@ -5,12 +5,14 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Solari.Io;
+using Solari.Sol.Extensions;
 
 namespace Solari.Sol.Framework
 {
     internal sealed class SolariBuilder : ISolariBuilder
     {
+        private readonly ApplicationOptions _applicationOptions;
+
         public SolariBuilder(IServiceCollection services, IConfiguration configuration)
         {
             Services = services;
@@ -18,6 +20,7 @@ namespace Solari.Sol.Framework
             BuildActions = new Queue<BuildAction>(5);
             HostEnvironment = GetHostEnvironment();
             ApplicationAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
+            _applicationOptions = LoadApplicationOptions();
         }
 
 
@@ -35,13 +38,16 @@ namespace Solari.Sol.Framework
         }
 
         /// <summary>
-        /// Get the <see cref="IHostEnvironment"/>. This property requires the <see cref="IServiceProvider"/> to be built.
+        ///     Get the <see cref="IHostEnvironment" />. This property requires the <see cref="IServiceProvider" /> to be built.
         /// </summary>
         public IHostEnvironment HostEnvironment { get; }
 
-        public ApplicationOptions GetAppOptions()
+        public ApplicationOptions GetAppOptions() { return _applicationOptions; }
+
+        private ApplicationOptions LoadApplicationOptions()
         {
-            return AppConfiguration.GetOptions<ApplicationOptions>(SolariConstants.ApplicationAppSettingsSection);
+            IConfigurationSection section = AppConfiguration.GetSection(SolariConstants.ApplicationAppSettingsSection);
+            return !section.Exists() ? new ApplicationOptions() : AppConfiguration.GetOptions<ApplicationOptions>(section);
         }
 
         private IHostEnvironment GetHostEnvironment()

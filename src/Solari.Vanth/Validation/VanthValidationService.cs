@@ -11,13 +11,13 @@ namespace Solari.Vanth.Validation
 
         public VanthValidationService(IValidatorFactory validatorFactory) { _validatorFactory = validatorFactory; }
 
-        public ValidationResult Validate<T>(T entity) where T : class 
-            => GetValidationForEntity(entity).Validate(entity);
+        public ValidationResult Validate<T>(T entity) where T : class { return GetValidationForEntity(entity).Validate(entity); }
 
-        public async Task<ValidationResult> ValidateAsync<T>(T entity, CancellationToken cancellationToken) where T : class 
-            => await GetValidationForEntity(entity).ValidateAsync(entity, cancellationToken);
+        public async Task<ValidationResult> ValidateAsync<T>(T entity, CancellationToken cancellationToken) where T : class
+        {
+            return await GetValidationForEntity(entity).ValidateAsync(entity, cancellationToken);
+        }
 
-        private IValidator GetValidationForEntity<T>(T entity) where T : class 
-            => _validatorFactory.GetValidator(entity.GetType());
+        private IValidator GetValidationForEntity<T>(T entity) where T : class { return _validatorFactory.GetValidator(entity.GetType()); }
     }
 }

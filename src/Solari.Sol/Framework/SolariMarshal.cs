@@ -1,9 +1,8 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serilog;
-using Solari.Io;
 using Solari.Sol.Framework.Exceptions;
 
 namespace Solari.Sol.Framework
@@ -15,7 +14,7 @@ namespace Solari.Sol.Framework
 
         public SolariMarshal(ISolariBuilder builder)
         {
-            _builder       = builder;
+            _builder = builder;
             _postConfigure = new SolariPostConfigure(this);
         }
 
@@ -24,7 +23,7 @@ namespace Solari.Sol.Framework
 
         public IServiceProvider Provider { get; private set; }
 
-        
+
         public ISolariMarshal ExecuteBuildActions()
         {
             if (Provider == null)
@@ -39,10 +38,13 @@ namespace Solari.Sol.Framework
             return this;
         }
 
-        public TService GetService<TService>()
+        public ISolariMarshal ExecuteBuildAsyncActions()
         {
-            return Provider.GetService<TService>();
+            foreach (BuildAction builderBuildAction in _builder.BuildActions) Task.Run(async () => await builderBuildAction.AsyncAction);
+            return this;
         }
+
+        public TService GetService<TService>() { return Provider.GetService<TService>(); }
 
         public ISolariMarshal PostConfigureServices(Action<ISolariPostConfigure> action)
         {
@@ -51,14 +53,7 @@ namespace Solari.Sol.Framework
             return this;
         }
 
-        public ISolariMarshal PostConfigureServices(Action<IServiceProvider> action)
-        {
-            action(Provider);
-
-            return this;
-        }
-        
-        public ISolariMarshal ConfigureApplication(IServiceProvider provider,IApplicationBuilder applicationBuilder, IHost host)
+        public ISolariMarshal ConfigureApplication(IServiceProvider provider, IApplicationBuilder applicationBuilder, IHost host)
         {
             Provider = provider ?? throw new NullServiceProviderException();
             if (applicationBuilder != null)
@@ -72,6 +67,13 @@ namespace Solari.Sol.Framework
             return this;
 
             ;
+        }
+
+        public ISolariMarshal PostConfigureServices(Action<IServiceProvider> action)
+        {
+            action(Provider);
+
+            return this;
         }
     }
 }

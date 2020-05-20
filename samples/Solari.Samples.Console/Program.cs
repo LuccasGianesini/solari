@@ -1,11 +1,7 @@
-﻿using System;
-
-namespace Solari.Samples.Console
+﻿namespace Solari.Samples.Console
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
-        { 
-        }
+        private static void Main(string[] args) { }
     }
 }

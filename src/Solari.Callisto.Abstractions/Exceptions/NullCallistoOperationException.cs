@@ -10,9 +10,8 @@ namespace Solari.Callisto.Abstractions.Exceptions
         public NullCallistoOperationException(string message) : base(message) { }
         public NullCallistoOperationException(string message, Exception inner) : base(message, inner) { }
 
-        protected NullCallistoOperationException
-        (SerializationInfo info,
-         StreamingContext context) : base(info, context)
+        protected NullCallistoOperationException(SerializationInfo info,
+                                                 StreamingContext context) : base(info, context)
         {
         }
     }

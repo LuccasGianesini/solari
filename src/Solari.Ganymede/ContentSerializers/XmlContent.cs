@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-using Solari.Ganymede.Domain;
-using Solari.Rhea;
+using Solari.Sol.Utils;
 
 namespace Solari.Ganymede.ContentSerializers
 {

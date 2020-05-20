@@ -6,18 +6,17 @@ using MongoDB.Driver.Core.Events;
 using OpenTracing;
 using OpenTracing.Tag;
 using Solari.Callisto.Abstractions;
-using Solari.Deimos.Abstractions;
-using Solari.Rhea;
+using Solari.Sol;
 
 namespace Solari.Callisto.Tracer.Framework
 {
     public class CallistoJaegerEventListener : ICallistoEventListener
     {
-        private readonly ITracer _tracer;
         private readonly IEventFilter _eventFilter;
         private readonly List<string> _events;
         private readonly int _maxPacketSize;
         private readonly ConcurrentDictionary<int, ISpan> _spanCache;
+        private readonly ITracer _tracer;
 
         public CallistoJaegerEventListener(ITracer tracer, IEventFilter eventFilter, IOptions<CallistoTracerOptions> options)
         {

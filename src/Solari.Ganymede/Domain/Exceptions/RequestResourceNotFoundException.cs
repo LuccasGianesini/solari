@@ -6,9 +6,7 @@ namespace Solari.Ganymede.Domain.Exceptions
     [Serializable]
     public class RequestResourceNotFoundException : Exception
     {
-        public RequestResourceNotFoundException()
-        {
-        }
+        public RequestResourceNotFoundException() { }
 
         public RequestResourceNotFoundException(string message)
             : base(message)
@@ -21,7 +19,7 @@ namespace Solari.Ganymede.Domain.Exceptions
         }
 
         protected RequestResourceNotFoundException(SerializationInfo info,
-                                          StreamingContext context)
+                                                   StreamingContext context)
             : base(info, context)
         {
         }

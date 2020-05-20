@@ -2,9 +2,6 @@
 {
     internal sealed class ProxyAuthorizationCommand : IHeaderBuilderCommand
     {
-        public void Execute(GanymedeHeaderBuilder headerBuilder, string keyOrQuality, string value)
-        {
-            headerBuilder.ProxyAuthorization(keyOrQuality, value);
-        }
+        public void Execute(GanymedeHeaderBuilder headerBuilder, string keyOrQuality, string value) { headerBuilder.ProxyAuthorization(keyOrQuality, value); }
     }
 }

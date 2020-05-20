@@ -1,11 +1,10 @@
-﻿using System.Collections.Immutable;
-using Solari.Ganymede.Domain.Options;
+﻿using Solari.Ganymede.Domain.Options;
 
 namespace Solari.Ganymede
 {
     public interface IGanymedeRequest<TClientImplementation>
     {
-        GanymedeRequestSettings RequestSettings { get; }
+        GanymedeRequestSpecification RequestSpecification { get; }
         GanymedeRequestResource GetResource(string resourceName);
     }
 }

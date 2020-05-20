@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization.Conventions;
-using Serilog;
+using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
 using Solari.Callisto.Connector;
-using Solari.Rhea.Utils;
 using Solari.Sol;
 
 namespace Solari.Callisto.Framework
@@ -19,7 +19,7 @@ namespace Solari.Callisto.Framework
         public CallistoConfiguration(ISolariBuilder solariBuilder) { _solariBuilder = solariBuilder; }
 
         /// <summary>
-        /// Configure the convention pack.
+        ///     Configure the convention pack.
         /// </summary>
         /// <param name="builder"></param>
         /// <returns></returns>
@@ -34,7 +34,7 @@ namespace Solari.Callisto.Framework
         }
 
         /// <summary>
-        /// Create and register the default convention pack.
+        ///     Create and register the default convention pack.
         /// </summary>
         /// <returns></returns>
         public ICallistoConfiguration RegisterDefaultConventionPack()
@@ -44,7 +44,8 @@ namespace Solari.Callisto.Framework
         }
 
         /// <summary>
-        /// Read the AppDomain and register the class map for all the classes implementing <see cref="IDocumentRoot"/> and <see cref="IDocumentNode"/>
+        ///     Read the AppDomain and register the class map for all the classes implementing <see cref="IDocumentRoot" /> and
+        ///     <see cref="IDocumentNode" />
         /// </summary>
         /// <returns></returns>
         public ICallistoConfiguration RegisterDefaultClassMaps()
@@ -58,7 +59,55 @@ namespace Solari.Callisto.Framework
         }
 
         /// <summary>
-        /// Register class custom class maps..
+        ///     Register a MongoDb collection repository.
+        /// </summary>
+        /// <param name="collectionName">The collection name</param>
+        /// <param name="lifetime">Lifetime of the repository service.</param>
+        /// <typeparam name="TService">Repository interface</typeparam>
+        /// <typeparam name="TImplementation">Repository Implementation</typeparam>
+        /// <typeparam name="TCollection">Root document</typeparam>
+        /// <returns></returns>
+        public ICallistoConfiguration RegisterCollection<TService, TImplementation, TCollection>(string collectionName, ServiceLifetime lifetime)
+            where TCollection : class, IDocumentRoot
+            where TImplementation : CallistoRepository<TCollection>, TService
+
+        {
+            _solariBuilder.Services.Add(ServiceDescriptor.Describe(typeof(TService), provider =>
+            {
+                // ReSharper disable once ConvertToLambdaExpression
+                CallistoLogger.CollectionLogger.CallingRepository(collectionName, lifetime.ToString());
+                var connection = provider.GetService<ICallistoConnection>();
+                IMongoCollection<TCollection> collection = connection.GetDataBase().GetCollection<TCollection>(collectionName);
+                var context = new CallistoContext<TCollection>(collection, connection, provider.GetService<ICallistoOperationFactory>());
+                return ActivatorUtilities.CreateInstance<TImplementation>(provider, context);
+            }, lifetime));
+
+            return this;
+        }
+
+        public ICallistoConfiguration RegisterScopedCollection<TService, TImplementation, TCollection>(string collectionName)
+            where TCollection : class, IDocumentRoot
+            where TImplementation : CallistoRepository<TCollection>, TService
+        {
+            return RegisterCollection<TService, TImplementation, TCollection>(collectionName, ServiceLifetime.Scoped);
+        }
+
+        public ICallistoConfiguration RegisterTransientCollection<TService, TImplementation, TCollection>(string collectionName)
+            where TCollection : class, IDocumentRoot
+            where TImplementation : CallistoRepository<TCollection>, TService
+        {
+            return RegisterCollection<TService, TImplementation, TCollection>(collectionName, ServiceLifetime.Transient);
+        }
+
+        public ICallistoConfiguration RegisterSingletonCollection<TService, TImplementation, TCollection>(string collectionName)
+            where TCollection : class, IDocumentRoot
+            where TImplementation : CallistoRepository<TCollection>, TService
+        {
+            return RegisterCollection<TService, TImplementation, TCollection>(collectionName, ServiceLifetime.Singleton);
+        }
+
+        /// <summary>
+        ///     Register class custom class maps..
         /// </summary>
         /// <param name="classMapper">Mapper</param>
         /// <returns></returns>
@@ -74,34 +123,6 @@ namespace Solari.Callisto.Framework
             return this;
         }
 
-        /// <summary>
-        /// Register a MongoDb collection repository.
-        /// </summary>
-        /// <param name="collectionName">The collection name</param>
-        /// <param name="lifetime">Lifetime of the repository service.</param>
-        /// <typeparam name="TService">Repository interface</typeparam>
-        /// <typeparam name="TImplementation">Repository Implementation</typeparam>
-        /// <typeparam name="TEntity">Root document</typeparam>
-        /// <returns></returns>
-        public ICallistoConfiguration RegisterCollection<TService, TImplementation, TEntity>(string collectionName,
-                                                                                             ServiceLifetime lifetime = ServiceLifetime.Transient)
-            where TEntity : class, IDocumentRoot
-            where TImplementation : CallistoRepository<TEntity>, TService
-
-        {
-            _solariBuilder.Services.Add(ServiceDescriptor.Describe(typeof(TService), provider =>
-            {
-                // ReSharper disable once ConvertToLambdaExpression
-                CallistoLogger.CollectionLogger.CallingRepository(collectionName, lifetime.ToString());
-                return ActivatorUtilities.CreateInstance<TImplementation>(provider,
-                                                                          new CallistoContext(collectionName,
-                                                                                              provider.GetRequiredService<ICallistoConnection>(),
-                                                                                              provider.GetRequiredService<ICallistoOperationFactory>()));
-            }, lifetime));
-
-            return this;
-        }
-
         private static IEnumerable<Type> GetRoots(IEnumerable<Type> domain)
         {
             return domain
@@ -111,8 +132,8 @@ namespace Solari.Callisto.Framework
                        CallistoLogger.ClassMapsLogger.IdentifiedRoot(x.Name);
                        return x;
                    }).ToList();
-            
         }
+
         private static IEnumerable<Type> GetNodes(IEnumerable<Type> domain)
         {
             return domain

@@ -1,7 +1,6 @@
 ﻿using System;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
-using MongoDB.Bson.Serialization.Serializers;
 using Solari.Callisto.Abstractions.Serializers;
 
 namespace Solari.Callisto.Abstractions.Conventions
@@ -28,7 +27,6 @@ namespace Solari.Callisto.Abstractions.Conventions
             if (memberMap.MemberType != typeof(DateTimeOffset) && memberMap.MemberType != typeof(DateTimeOffset?)) return;
             memberMap.SetSerializer(new DateTimeOffsetSerializerCustom());
             CallistoLogger.ConventionsLogger.DateTimeOffset(memberMap.ClassMap.ClassType.Name, memberMap.MemberName);
-
         }
     }
 }

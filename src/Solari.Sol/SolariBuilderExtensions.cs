@@ -1,27 +1,27 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Solari.Sol.Framework;
-using Solari.Io;
 
 namespace Solari.Sol
 {
     public static class SolariBuilderExtensions
     {
-        
         /// <summary>
-        /// Add sol into the DI container.
-        /// <remarks>
-        ///  Sol adds the following services into the DI:
-        ///     Options;
-        ///     Logging;
-        ///     ApplicationOptions;
-        ///     ISolariBuilder;
-        ///     ISolariPostConfigure;
-        ///     ISolariMarshal;
-        /// </remarks>
+        ///     Add sol into the DI container.
+        ///     <remarks>
+        ///         Sol adds the following services into the DI:
+        ///         Options;
+        ///         Logging;
+        ///         ApplicationOptions;
+        ///         ISolariBuilder;
+        ///         ISolariPostConfigure;
+        ///         ISolariMarshal;
+        ///     </remarks>
         /// </summary>
         /// <param name="serviceCollection"></param>
-        /// <param name="configuration"><see cref="IConfiguration"/></param>
+        /// <param name="configuration">
+        ///     <see cref="IConfiguration" />
+        /// </param>
         /// <returns></returns>
         public static ISolariBuilder AddSol(this IServiceCollection serviceCollection, IConfiguration configuration)
         {

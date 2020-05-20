@@ -1,23 +1,29 @@
 ﻿using System;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Solari.Deimos.Abstractions;
 using Solari.Deimos.CorrelationId;
-using Solari.Io;
 using Solari.Sol;
+using Solari.Sol.Extensions;
 
 namespace Solari.Deimos
 {
     public static class SolariBuilderExtensions
     {
-        public static ISolariBuilder AddDeimos(this ISolariBuilder solariBuilder, Action<ITracerPluginManager> action = null)
+        public static ISolariBuilder AddDeimos(this ISolariBuilder solariBuilder, Action<ITracerPluginManager> plugins = null)
         {
-            var options = solariBuilder.AppConfiguration.GetOptions<DeimosOptions>(DeimosConstants.TracingAppSettingsSection);
-            solariBuilder.Services.Configure<DeimosOptions>(solariBuilder.AppConfiguration.GetSection(DeimosConstants.TracingAppSettingsSection));
-            solariBuilder.Services.AddSingleton<IDeimosTracer, DeimosTracer>();
+            IConfigurationSection section = solariBuilder.AppConfiguration.GetSection(DeimosConstants.TracingAppSettingsSection);
+            if (!section.Exists())
+                throw new DeimosException("Deimos AppSettings section not found!");
+
+            var options = solariBuilder.AppConfiguration.GetOptions<DeimosOptions>(section);
+            solariBuilder.Services.Configure<DeimosOptions>(section);
+
             ConfigureTracing(solariBuilder, options);
-            if (action == null) return solariBuilder;
+            
+            if (plugins == null) return solariBuilder;
             var manager = new TracerPluginManager(solariBuilder);
-            action(manager);
+            plugins(manager);
             return solariBuilder;
         }
 
@@ -25,7 +31,6 @@ namespace Solari.Deimos
         {
             solariBuilder.AddDeimosCorrelationId(options.Http.UseMiddleware);
             JaegerTracerConfiguration.AddJaeger(solariBuilder, options);
-            
         }
     }
 }

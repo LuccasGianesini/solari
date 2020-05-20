@@ -8,10 +8,7 @@ namespace Solari.Sol
         {
             private const string Prefix = "Solari.Sol (Marshal): ";
 
-            public static void ExecutingBuildAction(string actionName)
-            {
-                Log.Debug($"{Prefix}Executing build action: {actionName}");
-            }
+            public static void ExecutingBuildAction(string actionName) { Log.Debug($"{Prefix}Executing build action: {actionName}"); }
         }
     }
 }

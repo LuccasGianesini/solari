@@ -6,10 +6,8 @@ namespace Solari.Deimos.Abstractions
     public class TracerPluginManager : ITracerPluginManager
     {
         private readonly ISolariBuilder _builder;
-        public TracerPluginManager(ISolariBuilder builder)
-        {
-            _builder = builder;
-        }
+
+        public TracerPluginManager(ISolariBuilder builder) { _builder = builder; }
 
         public ITracerPluginManager Register(ITracerPlugin plugin)
         {

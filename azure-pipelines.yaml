@@ -3,12 +3,12 @@ trigger:
     include:
       - master   
     exclude:
-      - alpha
       - beta
       - develop
 pr:
   branches:
     exclude:
+      - beta
       - master
       - develop
 pool:
@@ -66,10 +66,12 @@ jobs:
         inputs:
           gitHubConnection: 'github.com_azpipelines'
           repositoryName: '$(Build.Repository.Name)'
-          action: 'create'
+          action: 'create'   
           target: '$(Build.SourceVersion)'
           tagSource: 'userSpecifiedTag'
-          tag: '$(Build.BuildNumber)'
+          tag: 'v$(Build.BuildNumber)'
           title: 'Version $(Build.BuildNumber)'
-          assets:
+          releaseNotesSource: 'inline'
+          releaseNotesInline: 'Changelog: https://github.com/LuccasGianesini/solari/wiki/Changelog' 
+          assets: false
           addChangeLog: false

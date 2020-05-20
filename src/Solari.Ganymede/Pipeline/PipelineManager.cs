@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Elastic.CommonSchema;
-using Solari.Deimos.CorrelationId;
-using Solari.Ganymede.ContentSerializers;
 using Solari.Ganymede.Domain;
-using Solari.Ganymede.Domain.Exceptions;
 using Solari.Ganymede.Domain.Options;
-using Solari.Ganymede.Extensions;
 using Solari.Ganymede.Framework;
-using Solari.Rhea;
-using Solari.Sol;
-using Solari.Vanth;
-using Solari.Vanth.Builders;
 
 // ReSharper disable MemberCanBePrivate.Global
 
@@ -38,7 +29,7 @@ namespace Solari.Ganymede.Pipeline
         }
 
         /// <summary>
-        /// Configure the basics of a <see cref="HttpRequestMessage"/> like <see cref="HttpMethod"/> or <see cref="HttpCompletionOption"/>
+        ///     Configure the basics of a <see cref="HttpRequestMessage" /> like <see cref="HttpMethod" /> or <see cref="HttpCompletionOption" />
         /// </summary>
         /// <param name="messageStage">Function to be invoked</param>
         /// <returns></returns>
@@ -51,7 +42,7 @@ namespace Solari.Ganymede.Pipeline
         }
 
         /// <summary>
-        /// Configure the body content of the request, as well as the serializers to be used. 
+        ///     Configure the body content of the request, as well as the serializers to be used.
         /// </summary>
         /// <param name="contentStage">Function to be invoked</param>
         /// <returns></returns>
@@ -63,7 +54,7 @@ namespace Solari.Ganymede.Pipeline
         }
 
         /// <summary>
-        /// Configures the headers of the request.
+        ///     Configures the headers of the request.
         /// </summary>
         /// <param name="headerStage">Function to be invoked</param>
         /// <returns></returns>
@@ -75,7 +66,7 @@ namespace Solari.Ganymede.Pipeline
         }
 
         /// <summary>
-        /// Configure the Uri of the request.
+        ///     Configure the Uri of the request.
         /// </summary>
         /// <param name="uriStage">Function to be invoked</param>
         /// <returns></returns>
@@ -87,7 +78,7 @@ namespace Solari.Ganymede.Pipeline
             return this;
         }
 
-        public Task<GanymedeHttpResponse> Send()
+        public ValueTask<GanymedeHttpResponse> Send()
         {
             _executeDefaultActions();
             return new HttpRequestCoordinator(_client, _currentDescriptor).Send(_currentDescriptor.RequestMessage);
@@ -99,7 +90,5 @@ namespace Solari.Ganymede.Pipeline
 
             if (!_messageConfigured) ConfigureHttpMessage(message => message.UseGanymedeEndpointOptions());
         }
-
-      
     }
 }

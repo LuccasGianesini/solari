@@ -4,8 +4,6 @@ using System.Net.Http;
 using System.Threading;
 using Solari.Ganymede.Domain.Options;
 using Solari.Ganymede.Extensions;
-using Solari.Ganymede.Framework;
-using Solari.Io;
 
 namespace Solari.Ganymede.Pipeline
 {
@@ -13,16 +11,14 @@ namespace Solari.Ganymede.Pipeline
     {
         public MessageStage(PipelineDescriptor pipelineDescriptor)
         {
+            //TODO Create custom exceptions.
             PipelineDescriptor = pipelineDescriptor ?? throw new ArgumentNullException(nameof(pipelineDescriptor));
         }
 
         /// <inheritdoc />
         public PipelineDescriptor PipelineDescriptor { get; }
 
-        public static implicit operator PipelineDescriptor(MessageStage messageStage)
-        {
-            return messageStage.PipelineDescriptor;
-        }
+        public static implicit operator PipelineDescriptor(MessageStage messageStage) { return messageStage.PipelineDescriptor; }
 
 
         /// <summary>

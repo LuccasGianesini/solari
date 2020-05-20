@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Solari.Ganymede.Domain;
 using Solari.Ganymede.Domain.Exceptions;
@@ -21,12 +19,12 @@ namespace Solari.Ganymede.Framework
             _descriptor = descriptor;
         }
 
-        public async Task<GanymedeHttpResponse> Send(HttpRequestMessage requestMessage)
+        public async ValueTask<GanymedeHttpResponse> Send(HttpRequestMessage requestMessage)
         {
-            if (!CanMessageBeSent(requestMessage)) throw new MessageValidationException("Required headers are not present in the current HttpRequestMessage");
+            if (!CanMessageBeSent(requestMessage)) throw new GanymedeMessageValidationException("Required headers are not present in the current HttpRequestMessage");
 
             DateTimeOffset started = DateTimeOffset.UtcNow;
-            HttpResponseMessage response = await _client.SendAsync(requestMessage);
+            HttpResponseMessage response = await _client.SendAsync(requestMessage).ConfigureAwait(false);
             DateTimeOffset ended = DateTimeOffset.UtcNow;
 
             return new GanymedeHttpResponse(response, started, ended);

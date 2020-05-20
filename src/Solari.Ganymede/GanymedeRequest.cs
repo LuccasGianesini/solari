@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Solari.Ganymede.Domain.Exceptions;
@@ -9,15 +8,15 @@ namespace Solari.Ganymede
 {
     public class GanymedeRequest<TClientImplementation> : IGanymedeRequest<TClientImplementation>
     {
-        public GanymedeRequestSettings RequestSettings { get; }
-
         private readonly IImmutableDictionary<string, GanymedeRequestResource> _resources;
 
-        public GanymedeRequest(GanymedeRequestSettings requestSettings)
+        public GanymedeRequest(GanymedeRequestSpecification requestSpecification)
         {
-            RequestSettings = requestSettings;
-            _resources = BuildResourceDictionary(RequestSettings);
+            RequestSpecification = requestSpecification;
+            _resources = BuildResourceDictionary(RequestSpecification);
         }
+
+        public GanymedeRequestSpecification RequestSpecification { get; }
 
         public GanymedeRequestResource GetResource(string resourceName)
         {
@@ -28,12 +27,12 @@ namespace Solari.Ganymede
             return _resources.FirstOrDefault(a => a.Key == resourceName).Value;
         }
 
-        private IImmutableDictionary<string, GanymedeRequestResource> BuildResourceDictionary(GanymedeRequestSettings requestSettings)
+        private IImmutableDictionary<string, GanymedeRequestResource> BuildResourceDictionary(GanymedeRequestSpecification requestSpecification)
         {
-            if (requestSettings == null)
-                throw new NullGanymedeRequestSettingsException($"Unable to create resource dictionary because{nameof(requestSettings)} is null");
+            if (requestSpecification == null)
+                throw new NullGanymedeRequestSettingsException($"Unable to create resource dictionary because{nameof(requestSpecification)} is null");
 
-            return requestSettings.Resources.ToImmutableDictionary(pair => pair.Name, pair => pair);
+            return requestSpecification.Resources.ToImmutableDictionary(pair => pair.Name, pair => pair);
         }
     }
 }

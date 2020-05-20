@@ -83,7 +83,7 @@ namespace Solari.Ganymede.Pipeline
         public UriStage AppendQueryString(string queryString)
         {
             if (string.IsNullOrEmpty(queryString)) throw new ArgumentNullException(nameof(queryString));
-            
+
             if (QueryStringHelper.Eval(queryString)) _stringBuilder.Append(queryString);
 
             return this;

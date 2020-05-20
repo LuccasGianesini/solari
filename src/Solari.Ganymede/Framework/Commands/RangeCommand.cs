@@ -1,5 +1,5 @@
 ﻿using System;
-using Solari.Io;
+using Solari.Sol.Extensions;
 
 namespace Solari.Ganymede.Framework.Commands
 {

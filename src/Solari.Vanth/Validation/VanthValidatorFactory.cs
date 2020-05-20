@@ -2,7 +2,6 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
-
 namespace Solari.Vanth.Validation
 {
     public class VanthValidatorFactory : IValidatorFactory
