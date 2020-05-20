@@ -67,8 +67,8 @@ jobs:
           action: 'create'
           target: '$(Build.SourceVersion)'
           tagSource: 'userSpecifiedTag'
-          tag: 'v$(Build.SourceVersion)'
-          title: 'Version $(Build.SourceVersion)'
+          tag: 'v$(Build.BuildNumber)'
+          title: 'Version $(Build.BuildNumber)'
           releaseNotesSource: 'inline'
           releaseNotesInline: 'Changelog: https://github.com/LuccasGianesini/solari/wiki/Changelog'
           isPreRelease: true
