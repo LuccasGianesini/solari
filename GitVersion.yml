@@ -1,5 +1,4 @@
 next-version: 1.5.10
-mode: Mainline
 legacy-semver-padding: 0
 build-metadata-padding: 0
 commits-since-version-source-padding: 0
@@ -8,6 +7,7 @@ assembly-file-versioning-scheme: MajorMinorPatchTag
 assembly-informational-format: '{LegacySemVer}'
 branches:
   master:
+    mode: ContinuousDeployment
     regex: master
     increment: Patch
     prevent-increment-of-merged-branch-version: true
