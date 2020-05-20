@@ -61,6 +61,7 @@ jobs:
           nuGetFeedType: 'external'
           publishFeedCredentials: 'Nuget.org'
       - task: GitHubRelease@1
+        displayName: 'Create GitHub release'
         inputs:
           gitHubConnection: 'github.com_azpipelines'
           repositoryName: '$(Build.Repository.Name)'

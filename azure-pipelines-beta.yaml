@@ -63,14 +63,16 @@ jobs:
           publishFeedCredentials: 'Nuget.org'
       
       - task: GitHubRelease@1
-          inputs:
-            repositoryName: '$(Build.Repository.Name)'
-            action: 'create'
-            target: '$(Build.SourceVersion)'
-            tagSource: 'userSpecifiedTag'
-            tag: 'v$(Build.BuildNumber)'
-            releaseNotesSource: 'inline'
-            releaseNotesInline: 'Changelog: https://github.com/LuccasGianesini/solari/wiki/Changelog'
-            isPreRelease: true
-            addChangeLog: false
-            assets: false
+        displayName: 'Create GitHub release'
+        inputs:
+          gitHubConnection: 'github.com_azpipelines'
+          repositoryName: '$(Build.Repository.Name)'
+          action: 'create'
+          target: '$(Build.SourceVersion)'
+          tagSource: 'userSpecifiedTag'
+          tag: 'v$(Build.BuildNumber)'
+          releaseNotesSource: 'inline'
+          releaseNotesInline: 'Changelog: https://github.com/LuccasGianesini/solari/wiki/Changelog'
+          isPreRelease: true
+          addChangeLog: false
+          assets: false
