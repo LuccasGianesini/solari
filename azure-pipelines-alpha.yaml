@@ -72,4 +72,5 @@ jobs:
           releaseNotesSource: 'inline'
           releaseNotesInline: 'Changelog: https://github.com/LuccasGianesini/solari/wiki/Changelog'
           isPreRelease: true
+          assets: false
           addChangeLog: false
