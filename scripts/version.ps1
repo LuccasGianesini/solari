@@ -71,6 +71,14 @@ function getCommitsSinceLastTag {
   try {
     $commits = ([regex]::match((git describe --tags), '-([0-9])-').Groups[1].Value)
     Write-Host('Found ' + $commits + ' since last tag.')
+    if($null -eq $commits)
+    {
+      return '0'
+    }
+    if($commits -eq '')
+    {
+      return '0'
+    }
     return $commits
   }
   catch {
@@ -207,7 +215,7 @@ function buildTargetMajorVersion {
   if (($global:targetMajor -as [int]) -lt ($global:currentMajor -as [int])) {
     throw 'The target major version is lower then the current major version.'
   }
-  return $global:targetMinor
+  return $global:targetMajor
 }
 
 function buildTargetPatchVersion {
