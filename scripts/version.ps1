@@ -222,10 +222,15 @@ function buildTargetPatchVersion {
   }
 
   # master means prod. So increment patch by 1
-  if ($global:branch -eq 'master') {
-    Write-Host('Using master branch. Found release tag.The patch version will be incremented by 1')
-    return  (($global:currentPatch -as [int]) + 1) -as [string];
+  # if ($global:branch -eq 'master') {
+  #   Write-Host('Using master branch. Found release tag.The patch version will be incremented by 1')
+  #   return  (($global:currentPatch -as [int]) + 1) -as [string];
+  # }
+  if(isPreRelease $global:currentVersion)
+  {
+    return $global:currentPatch
   }
+
   if($global:currentVersion -eq $global:currentProdVersion)
   {
     return (($global:currentPatch -as [int]) + 1) -as [string]
@@ -252,9 +257,6 @@ function buildDefaultVersionScheme {
     throw 'Patch version cannot be a negative value'
   }
   return $global:targetMajor + '.' + $global:targetMinor + '.' + $global:targetPatch  
-}
-function buildCommitsCount {
-  
 }
 function buildBetaReleaseVersion {
   Write-Host('Building a beta version')
