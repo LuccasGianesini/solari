@@ -11,8 +11,8 @@ param (
 # On releases/* tag is going to be '-bata.' + number of commits since last tag. If there is a patch bump. start with 1.
 # On develop tag is going to be '-unstable.' + number of commits since last tag. If there is a patch bump. start with 1.
 
-$global:targetMajor = '0' # Can be changed.
-$global:targetMinor = '0' # Can be changed.
+$global:targetMajor = '1' # Can be changed.
+$global:targetMinor = '6' # Can be changed.
 $global:targetPatch = $null #Patch is auto incremented.
 $global:tags = (git tag --sort=refname)
 $global:hasNoReleases = $null
