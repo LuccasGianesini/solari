@@ -1,13 +1,13 @@
 trigger:
   branches:
     exclude:
-      - beta
-      - develop   
+      - releases/*
       - master
+      - develop
 pr:
   branches:
     exclude:
-      - beta
+      - releases/*
       - master
       - develop
 pool:
@@ -18,6 +18,7 @@ jobs:
       solution: '**/*.sln'
       buildPlatform: 'Any CPU'
       buildConfiguration: 'Release'
+      my_build_number: ''      
     displayName: 'Build solution and create NuGet packages'
     continueOnError: false
     workspace:
@@ -25,53 +26,45 @@ jobs:
     cancelTimeoutInMinutes: 5
     steps:
       - task: DotNetCoreCLI@2
-        displayName: 'Install GitVersion'
-        inputs:
-          command: 'custom'
-          custom: 'tool'
-          arguments: 'install -g gitversion.tool'
-      - task: DotNetCoreCLI@2
-        displayName: 'GitVersion setup'
-        inputs:
-          command: 'custom'
-          custom: 'gitversion'
-          arguments: '/output buildserver'
-
-      - task: DotNetCoreCLI@2
         displayName: 'Build solution'
         inputs:
           command: 'build'
           projects: |
             $(solution)
-          arguments: '--configuration $(BuildConfiguration) /p:Version=$(Build.BuildNumber)'
-          versioningScheme: byBuildNumber
-      
-      - task: PowerShell@2
-        displayName: 'Pack'
-        inputs:
-          filePath: 'packall.ps1'
-          arguments: '-BUILD_NUMBER $(Build.BuildNumber) -BUILD_ARTIFACT_DIR $(Build.ArtifactStagingDirectory)'
+          arguments: '--configuration $(buildConfiguration)'
+          versioningScheme: off
 
+      - task: PowerShell@2
+        displayName: 'Create Nuget version'
+        inputs:
+          filePath: './scripts/version.ps1'
+          arguments: '-BRANCH_NAME $(Build.SourceBranchName)'
+      - task: PowerShell@2
+        displayName: 'Create Nuget packages'
+        inputs:
+          filePath: './scripts/packall.ps1'
+          arguments: '-VERSION $(my_build_number) -BUILD_ARTIFACT_DIR $(Build.ArtifactStagingDirectory)'
+            
       - task: NuGetCommand@2
         continueOnError: false
         displayName: 'Push Nuget Packages'
         inputs:
           command: 'push'
-          packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.$(Build.BuildNumber).symbols.nupkg'
+          packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
           nuGetFeedType: 'external'
           publishFeedCredentials: 'Nuget.org'
+
       - task: GitHubRelease@1
         displayName: 'Create GitHub release'
         inputs:
           gitHubConnection: 'github.com_azpipelines'
           repositoryName: '$(Build.Repository.Name)'
-          action: 'create'
+          action: 'create'   
           target: '$(Build.SourceVersion)'
           tagSource: 'userSpecifiedTag'
-          tag: 'v$(Build.BuildNumber)'
-          title: 'Version $(Build.BuildNumber)'
+          tag: 'v$(my_build_number)'
+          title: 'Version $(my_build_number)'
           releaseNotesSource: 'inline'
-          releaseNotesInline: 'Changelog: https://github.com/LuccasGianesini/solari/wiki/Changelog'
-          isPreRelease: true
+          releaseNotesInline: 'Changelog: https://github.com/LuccasGianesini/solari/wiki/Changelog' 
           assets: false
           addChangeLog: true
