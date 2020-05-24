@@ -6,7 +6,7 @@ param (
 
 function packSrc  {
     (Get-ChildItem ./src/ -Recurse -Depth 3 -Include *.csproj) | foreach {
-      Write-Host('Packaging ' + $_.Name + ' with version ' + $VERSIONs)
+      Write-Host('Packaging ' + $_.Name + ' with version ' + $VERSION)
       dotnet pack $_ -c release /p:PackageVersion=$VERSION --no-restore -o $BUILD_ARTIFACT_DIR -v q
       Write-Host('Package created at ' + $BUILD_ARTIFACT_DIR)
     }
