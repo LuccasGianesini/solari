@@ -78,7 +78,7 @@ namespace Solari.Callisto.Framework
                 CallistoLogger.CollectionLogger.CallingRepository(collectionName, lifetime.ToString());
                 var connection = provider.GetService<ICallistoConnection>();
                 IMongoCollection<TCollection> collection = connection.GetDataBase().GetCollection<TCollection>(collectionName);
-                var context = new CallistoContext<TCollection>(collection, connection, provider.GetService<ICallistoOperationFactory>());
+                var context = new CallistoContext<TCollection>(collection, connection);
                 return ActivatorUtilities.CreateInstance<TImplementation>(provider, context);
             }, lifetime));
 

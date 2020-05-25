@@ -15,11 +15,11 @@ namespace Solari.Samples.Infrastructure
         private readonly ILogger<PersonRepository> _logger;
         public PersonRepository(ICallistoContext<Person> context, ILogger<PersonRepository> logger) : base(context) { _logger = logger; }
 
-        public async Task<CreatePersonResult> InsertPerson(ICallistoInsert<Person> insert)
+        public async Task<CreatePersonResult> InsertPerson(ICallistoInsertOne<Person> insertOne)
         {
             _logger.LogInformation("Executing database insertion");
-            await Insert.One(insert);
-            return CreatePersonResult.Create(insert.Value.Id);
+            await Insert.One(insertOne);
+            return CreatePersonResult.Create(insertOne.Value.Id);
         }
 
         public async Task<bool> Exists(ObjectId id) { return await Query.Exists(a => a.Id == id); }
@@ -28,12 +28,10 @@ namespace Solari.Samples.Infrastructure
 
         public async Task<UpdateResult> PatchAttribute(ICallistoUpdate<Person> update)
         {
-            IClientSessionHandle session = await StartSessionAsync();
-            session.StartTransaction();
-            update.AddSessionHandle(session);
+            IClientSessionHandle session = await StartSessionAsync(update);
             UpdateResult result = await Update.One(update);
             await session.CommitTransactionAsync();
-            EndSession(session);
+            EndSession(update);
             return result;
         }
     }

@@ -17,7 +17,7 @@ namespace Solari.Callisto.DependencyInjection
         /// <returns></returns>
         public static ISolariBuilder AddCallisto(this ISolariBuilder solariBuilder, Action<ICallistoConfiguration> configure)
         {
-            solariBuilder.Services.AddTransient<ICallistoOperationFactory, CallistoOperationFactory>();
+            AddCoreServices(solariBuilder);
             configure(new CallistoConfiguration(solariBuilder));
             return solariBuilder;
         }
@@ -25,10 +25,20 @@ namespace Solari.Callisto.DependencyInjection
 
         public static ISolariBuilder AddCallistoWithDefaults(this ISolariBuilder solariBuilder, Action<ICallistoConfiguration> configure)
         {
-            solariBuilder.AddCallistoConnector();
-            solariBuilder.Services.AddTransient<ICallistoOperationFactory, CallistoOperationFactory>();
+            
+            AddCoreServices(solariBuilder);
             configure(new CallistoConfiguration(solariBuilder).RegisterDefaultConventionPack().RegisterDefaultClassMaps());
             return solariBuilder;
+        }
+
+        private static void AddCoreServices(this ISolariBuilder builder)
+        {
+            builder.AddCallistoConnector();
+            builder.Services.AddTransient<ICallistoUpdateOperationFactory, CallistoUpdateOperationFactory>();
+            builder.Services.AddTransient<ICallistoInsertOperationFactory, CallistoInsertOperationFactory>();
+            builder.Services.AddTransient<ICallistoDeleteOperationFactory, CallistoDeleteOperationFactory>();
+            builder.Services.AddTransient<ICallistoReplaceOperationFactory, CallistoReplaceOperationFactory>();
+            builder.Services.AddTransient<ICallistoQueryOperationFactory, CallistoQueryOperationFactory>();
         }
     }
 }

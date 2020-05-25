@@ -28,7 +28,7 @@ namespace Solari.Samples.Domain.Person.Commands.Handlers
         {
             Helper.DefaultCommandLogMessage(_logger, PersonConstants.CreatePersonOperationName);
 
-            ICallistoInsert<Person> operation = _operations.CreateInsertOperation(command);
+            ICallistoInsertOne<Person> operation = _operations.CreateInsertOperation(command);
             CreatePersonResult repositoryResult = await _repository.InsertPerson(operation);
             if (repositoryResult.Success)
             {

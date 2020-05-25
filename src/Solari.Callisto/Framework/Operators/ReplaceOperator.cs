@@ -11,9 +11,9 @@ namespace Solari.Callisto.Framework.Operators
     public sealed class ReplaceOperator<TEntity> where TEntity : class, IDocumentRoot
     {
         private readonly IMongoCollection<TEntity> _collection;
-        private readonly ICallistoOperationFactory _factory;
+        private readonly ICallistoReplaceOperationFactory _factory;
 
-        public ReplaceOperator(IMongoCollection<TEntity> collection, ICallistoOperationFactory factory)
+        public ReplaceOperator(IMongoCollection<TEntity> collection, ICallistoReplaceOperationFactory factory)
         {
             _collection = collection;
             _factory = factory;
@@ -24,7 +24,7 @@ namespace Solari.Callisto.Framework.Operators
         /// </summary>
         /// <param name="factory">Operation factory</param>
         /// <returns></returns>
-        public async Task<ReplaceOneResult> One(Func<ICallistoOperationFactory, ICallistoReplace<TEntity>> factory) { return await One(factory(_factory)); }
+        public async Task<ReplaceOneResult> One(Func<ICallistoReplaceOperationFactory, ICallistoReplace<TEntity>> factory) { return await One(factory(_factory)); }
 
         /// <summary>
         ///     Replace one document by id.
@@ -48,17 +48,14 @@ namespace Solari.Callisto.Framework.Operators
         /// </returns>
         public async Task<ReplaceOneResult> One(ICallistoReplace<TEntity> operation)
         {
-            if (operation == null)
-                throw new NullCallistoOperationException(CallistoOperationHelper.NullOperationInstanceMessage("delete-one", nameof(ICallistoInsert<TEntity>)));
-            operation.ValidateOperation();
-            if (operation.UseSessionHandle)
-                return await _collection.ReplaceOneAsync(operation.ClientSessionHandle,
-                                                         operation.FilterDefinition,
+            CallistoOperationHelper.PreExecutionCheck(operation);
+            if (operation.ClientSessionHandle is null)
+                return await _collection.ReplaceOneAsync(operation.FilterDefinition,
                                                          operation.Replacement,
                                                          operation.ReplaceOptions,
                                                          operation.CancellationToken).ConfigureAwait(false);
-
-            return await _collection.ReplaceOneAsync(operation.FilterDefinition,
+            return await _collection.ReplaceOneAsync(operation.ClientSessionHandle,
+                                                     operation.FilterDefinition,
                                                      operation.Replacement,
                                                      operation.ReplaceOptions,
                                                      operation.CancellationToken).ConfigureAwait(false);

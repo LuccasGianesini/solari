@@ -20,7 +20,6 @@
      <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
    </ItemGroup>
    <ItemGroup>
-     <PackageReference Include="FluentValidation" Version="8.6.2" />
      <PackageReference Include="FluentValidation.AspNetCore" Version="8.6.2" />
      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="8.6.2" />
    </ItemGroup>

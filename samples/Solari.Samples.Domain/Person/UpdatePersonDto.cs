@@ -3,7 +3,7 @@ using Solari.Callisto.Abstractions;
 
 namespace Solari.Samples.Domain.Person
 {
-    public class UpdatePersonDto : ICallistoUpdate
+    public class UpdatePersonDto
     {
         public string Id { get; set; }
         public string Name { get; set; }

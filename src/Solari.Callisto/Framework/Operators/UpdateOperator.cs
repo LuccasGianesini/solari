@@ -10,9 +10,9 @@ namespace Solari.Callisto.Framework.Operators
     public sealed class UpdateOperator<TEntity> where TEntity : class, IDocumentRoot
     {
         private readonly IMongoCollection<TEntity> _collection;
-        private readonly ICallistoOperationFactory _factory;
+        private readonly ICallistoUpdateOperationFactory _factory;
 
-        public UpdateOperator(IMongoCollection<TEntity> collection, ICallistoOperationFactory factory)
+        public UpdateOperator(IMongoCollection<TEntity> collection, ICallistoUpdateOperationFactory factory)
         {
             _collection = collection;
             _factory = factory;
@@ -28,7 +28,7 @@ namespace Solari.Callisto.Framework.Operators
         /// <returns>
         ///     <see cref="UpdateResult" />
         /// </returns>
-        public async Task<UpdateResult> Many(Func<ICallistoOperationFactory, ICallistoUpdate<TEntity>> factory) { return await Many(factory(_factory)); }
+        public async Task<UpdateResult> Many(Func<ICallistoUpdateOperationFactory, ICallistoUpdate<TEntity>> factory) { return await Many(factory(_factory)); }
 
         /// <summary>
         ///     Update a single document.
@@ -40,7 +40,7 @@ namespace Solari.Callisto.Framework.Operators
         /// <returns>
         ///     <see cref="UpdateResult" />
         /// </returns>
-        public async Task<UpdateResult> One(Func<ICallistoOperationFactory, ICallistoUpdate<TEntity>> factory) { return await One(factory(_factory)); }
+        public async Task<UpdateResult> One(Func<ICallistoUpdateOperationFactory, ICallistoUpdate<TEntity>> factory) { return await One(factory(_factory)); }
 
         /// <summary>
         ///     Update a single document.
@@ -54,18 +54,16 @@ namespace Solari.Callisto.Framework.Operators
         /// </returns>
         public async Task<UpdateResult> One(ICallistoUpdate<TEntity> operation)
         {
-            if (operation == null)
-                throw new NullCallistoOperationException(CallistoOperationHelper.NullOperationInstanceMessage("update-one", nameof(ICallistoUpdate<TEntity>)));
-            operation.ValidateOperation();
+            CallistoOperationHelper.PreExecutionCheck(operation);
 
-            if (operation.UseSessionHandle)
-                return await _collection.UpdateOneAsync(operation.ClientSessionHandle,
-                                                        operation.FilterDefinition,
+            if (operation.ClientSessionHandle is null)
+                return await _collection.UpdateOneAsync(operation.FilterDefinition,
                                                         operation.UpdateDefinition,
                                                         operation.UpdateOptions,
                                                         operation.CancellationToken).ConfigureAwait(false);
-
-            return await _collection.UpdateOneAsync(operation.FilterDefinition,
+            
+            return await _collection.UpdateOneAsync(operation.ClientSessionHandle,
+                                                    operation.FilterDefinition,
                                                     operation.UpdateDefinition,
                                                     operation.UpdateOptions,
                                                     operation.CancellationToken).ConfigureAwait(false);
@@ -83,14 +81,15 @@ namespace Solari.Callisto.Framework.Operators
         /// </returns>
         public async Task<UpdateResult> Many(ICallistoUpdate<TEntity> operation)
         {
-            if (operation.UseSessionHandle)
-                return await _collection.UpdateManyAsync(operation.ClientSessionHandle,
-                                                         operation.FilterDefinition,
+            CallistoOperationHelper.PreExecutionCheck(operation);
+            if (operation.ClientSessionHandle is null)
+                return await _collection.UpdateManyAsync(operation.FilterDefinition,
                                                          operation.UpdateDefinition,
                                                          operation.UpdateOptions,
                                                          operation.CancellationToken).ConfigureAwait(false);
-
-            return await _collection.UpdateManyAsync(operation.FilterDefinition,
+            
+            return await _collection.UpdateManyAsync(operation.ClientSessionHandle,
+                                                     operation.FilterDefinition,
                                                      operation.UpdateDefinition,
                                                      operation.UpdateOptions,
                                                      operation.CancellationToken).ConfigureAwait(false);
