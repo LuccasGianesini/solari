@@ -119,14 +119,13 @@ namespace Solari.Callisto.Framework
             {
                 Action = provider => { classMapper(new CallistoClassMapper()); }
             });
-
             return this;
         }
 
         private static IEnumerable<Type> GetRoots(IEnumerable<Type> domain)
         {
             return domain
-                   .Where(x => typeof(IDocumentRoot).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
+                   .Where(x => CallistoTypeHelper.IsDocumentRoot(x) && !x.IsInterface && !x.IsAbstract)
                    .Select(x =>
                    {
                        CallistoLogger.ClassMapsLogger.IdentifiedRoot(x.Name);
@@ -137,7 +136,7 @@ namespace Solari.Callisto.Framework
         private static IEnumerable<Type> GetNodes(IEnumerable<Type> domain)
         {
             return domain
-                   .Where(x => typeof(IDocumentNode).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
+                   .Where(x => CallistoTypeHelper.IsDocumentNode(x) && !x.IsInterface && !x.IsAbstract)
                    .Select(x =>
                    {
                        CallistoLogger.ClassMapsLogger.IdentifiedNode(x.Name);
