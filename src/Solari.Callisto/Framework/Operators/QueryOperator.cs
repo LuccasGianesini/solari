@@ -46,7 +46,7 @@ namespace Solari.Callisto.Framework.Operators
         /// </summary>
         /// <param name="id">The id</param>
         /// <returns></returns>
-        public async Task<TEntity> FindById(ObjectId id)
+        public async Task<TEntity> FindById(Guid id)
         {
             return await Find(_factory.CreateQuery(Builders<TEntity>.Filter.Eq(a => a.Id, id),
                                                    cursor => cursor.FirstOrDefault()));

@@ -1,9 +1,11 @@
 using MassTransit;
+using MassTransit.Definition;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Solari.Callisto.Connector;
@@ -13,6 +15,8 @@ using Solari.Eris;
 using Solari.Ganymede.DependencyInjection;
 using Solari.Io;
 using Solari.Oberon;
+using Solari.Callisto.Integrations.MassTransit;
+using Solari.Samples.Application.Person;
 using Solari.Samples.Application.Person.Consumers;
 using Solari.Samples.Domain;
 using Solari.Samples.Domain.Person;
@@ -47,10 +51,13 @@ namespace Solari.Samples.WebApi
             services.AddScoped<IPersonOperations, PersonOperations>();
             
             services.AddOpenApiDocument(cfg => cfg.PostProcess = d => d.Info.Title = "Solari Sample Api");
+            services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
             services.AddMassTransit(cfg =>
             {
                 cfg.AddConsumer<CreatePersonConsumer>();
                 cfg.AddRequestClient<CreatePersonCommand>();
+                cfg.AddSagaStateMachine<PersonStateMachine, PersonState>()
+                   .MongoDbRepositoryWithCallisto(Configuration);
                 cfg.AddMediator();
             });
         }

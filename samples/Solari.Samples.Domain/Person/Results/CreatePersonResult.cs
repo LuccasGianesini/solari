@@ -1,25 +1,23 @@
-﻿using MongoDB.Bson;
-using Solari.Callisto.Abstractions;
+﻿using System;
 
 namespace Solari.Samples.Domain.Person.Results
 {
     public class CreatePersonResult
     {
-        public CreatePersonResult(bool success, string id)
+        public CreatePersonResult(bool success, Guid id)
         {
             Success = success;
             Id = id;
         }
 
         public bool Success { get; }
-        public string Id { get; }
+        public Guid Id { get; }
 
-        public static CreatePersonResult Create(ObjectId objectId)
+        public static CreatePersonResult Create(Guid objectId)
         {
-            var id = objectId.ToString();
-            return id.Equals(CallistoConstants.ObjectIdDefaultValueAsString)
-                       ? new CreatePersonResult(false, string.Empty)
-                       : new CreatePersonResult(true, id);
+            return objectId == Guid.Empty
+                       ? new CreatePersonResult(false, Guid.Empty)
+                       : new CreatePersonResult(true, objectId);
         }
     }
 }

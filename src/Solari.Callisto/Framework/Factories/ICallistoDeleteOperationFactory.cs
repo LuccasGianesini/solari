@@ -8,7 +8,7 @@ namespace Solari.Callisto.Framework
 {
     public interface ICallistoDeleteOperationFactory
     {
-        ICallistoDelete<T> CreateDeleteById<T>(ObjectId id) 
+        ICallistoDelete<T> CreateDeleteById<T>(Guid id) 
             where T : class, IDocumentRoot;
         ICallistoDelete<T> CreateDelete<T>(FilterDefinition<T> filterDefinition)
             where T : class, IDocumentRoot;

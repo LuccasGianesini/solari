@@ -18,16 +18,23 @@ namespace Solari.Samples.Application.Person.Consumers
             _personRepository = personRepository;
             _operations = operations;
         }
+
         public async Task Consume(ConsumeContext<CreatePersonCommand> context)
         {
             ICallistoInsertOne<Domain.Person.Person> insertOperation = _operations.CreateInsertOperation(context.Message);
             CreatePersonResult dbResult = await _personRepository.InsertPerson(insertOperation);
+            if (dbResult.Success)
+            {
+                await context.Publish<IPersonCreatedEvent>(new
+                {
+                    Result = dbResult
+                });
+            }
+
             await context.RespondAsync<IPersonCreatedEvent>(new
             {
                 Result = dbResult
             });
-
-
         }
     }
 }

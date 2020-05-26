@@ -8,7 +8,7 @@ namespace Solari.Callisto.Framework
 {
     public interface ICallistoReplaceOperationFactory
     {
-        ICallistoReplace<T> CreateReplaceById<T>(T replacement, ObjectId id)
+        ICallistoReplace<T> CreateReplaceById<T>(T replacement, Guid id)
             where T : class, IDocumentRoot;
 
         ICallistoReplace<T> CreateReplace<T>(T replacement, FilterDefinition<T> filterDefinition)

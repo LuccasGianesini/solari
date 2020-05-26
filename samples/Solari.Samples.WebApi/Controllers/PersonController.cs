@@ -5,12 +5,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
-using Solari.Eris;
-using Solari.Samples.Domain;
 using Solari.Samples.Domain.Person.Commands;
 using Solari.Samples.Domain.Person.Events;
 using Solari.Samples.Domain.Person.Results;
-using Solari.Titan;
 using Solari.Vanth;
 using Solari.Vanth.Validation;
 
@@ -42,7 +39,8 @@ namespace Solari.Samples.WebApi.Controllers
         {
             try
             {
-                Response<IPersonCreatedEvent> response =  await _createPersonClient.GetResponse<IPersonCreatedEvent>(command);
+                Response<IPersonCreatedEvent> response =  
+                    await _createPersonClient.GetResponse<IPersonCreatedEvent>(command);
 
                 return Ok(_factory.CreateResult(response.Message));
             }
@@ -81,9 +79,8 @@ namespace Solari.Samples.WebApi.Controllers
 
         private IActionResult CreateExceptionError(Exception exception, string code, string message)
         {
-            Helper.DefaultExceptionLogMessage(_logger, exception.GetType(), exception);
-            return StatusCode(StatusCodes.Status500InternalServerError, _factory
-                                  .CreateErrorFromException<CreatePersonResult>(exception, code, message));
+            return StatusCode(StatusCodes.Status500InternalServerError, 
+                              _factory.CreateErrorFromException<CreatePersonResult>(exception, code, message));
         }
     }
 }

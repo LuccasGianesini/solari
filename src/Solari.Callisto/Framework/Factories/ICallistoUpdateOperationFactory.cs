@@ -8,7 +8,7 @@ namespace Solari.Callisto.Framework
 {
     public interface ICallistoUpdateOperationFactory
     {
-        ICallistoUpdate<T> CreateUpdateById<T>(ObjectId id, UpdateDefinition<T> updateDefinition)
+        ICallistoUpdate<T> CreateUpdateById<T>(Guid id, UpdateDefinition<T> updateDefinition)
             where T : class, IDocumentRoot;
 
         ICallistoUpdate<T> CreateUpdate<T>(UpdateDefinition<T> updateDefinition, FilterDefinition<T> filterDefinition)

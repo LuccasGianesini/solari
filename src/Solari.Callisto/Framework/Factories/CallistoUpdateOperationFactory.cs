@@ -11,10 +11,10 @@ namespace Solari.Callisto.Framework
     public class CallistoUpdateOperationFactory : ICallistoUpdateOperationFactory
     {
         
-        public ICallistoUpdate<T> CreateUpdateById<T>(ObjectId id, UpdateDefinition<T> updateDefinition)
+        public ICallistoUpdate<T> CreateUpdateById<T>(Guid id, UpdateDefinition<T> updateDefinition)
             where T : class, IDocumentRoot
         {
-            if (id == ObjectId.Empty)
+            if (id == Guid.Empty)
             {
                 throw new CallistoException("An empty ObjectId is invalid. Cannot create UpdateById operation.");
             }

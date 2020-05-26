@@ -9,9 +9,9 @@ namespace Solari.Callisto.Framework
 {
     public class CallistoDeleteOperationFactory : ICallistoDeleteOperationFactory
     {
-        public ICallistoDelete<T> CreateDeleteById<T>(ObjectId id) where T : class, IDocumentRoot
+        public ICallistoDelete<T> CreateDeleteById<T>(Guid id) where T : class, IDocumentRoot
         {
-            if (id == ObjectId.Empty)
+            if (id == Guid.Empty)
             {
                 throw new CallistoException("An empty ObjectId is invalid. Cannot create DeleteById operation.");
             }

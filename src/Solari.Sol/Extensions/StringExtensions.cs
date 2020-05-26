@@ -9,6 +9,13 @@ namespace Solari.Sol.Extensions
     {
         private static readonly Regex RxDigits = new Regex(@"[\d]+");
 
+        public static Guid AsGuid(this string value)
+        {
+            var bytes = value.GetBytes().Concat(new byte[] { 5, 5, 5, 5 }).ToArray();
+            Guid gid = new Guid(bytes);
+            return gid;
+        }
+
         public static bool ContainsOnly(this string @string, string allowed) { return @string.All(c => allowed.Contains(c.ToString())); }
 
         /// <summary>

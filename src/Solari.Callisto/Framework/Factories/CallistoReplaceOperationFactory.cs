@@ -10,10 +10,10 @@ namespace Solari.Callisto.Framework
 {
     public class CallistoReplaceOperationFactory : ICallistoReplaceOperationFactory
     {
-        public ICallistoReplace<T> CreateReplaceById<T>(T replacement, ObjectId id)
+        public ICallistoReplace<T> CreateReplaceById<T>(T replacement, Guid id)
             where T : class, IDocumentRoot
         {
-            if (id == ObjectId.Empty)
+            if (id == Guid.Empty)
             {
                 throw new CallistoException("An empty ObjectId is invalid. Cannot create ReplaceById operation.");
             }
