@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using Newtonsoft.Json;
 using Solari.Sol.Utils;
 using Solari.Vanth.Builders;
 
@@ -135,6 +136,11 @@ namespace Solari.Vanth
             if (!Errors.Any()) return;
             foreach (CommonErrorResponse commonErrorResponse in Errors) commonErrorResponse.ClearDetails();
             Errors.Clear();
+        }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
         }
     }
 }

@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +13,14 @@ using Solari.Eris;
 using Solari.Ganymede.DependencyInjection;
 using Solari.Io;
 using Solari.Oberon;
+using Solari.Samples.Application.Person.Consumers;
 using Solari.Samples.Domain;
 using Solari.Samples.Domain.Person;
+using Solari.Samples.Domain.Person.Commands;
 using Solari.Samples.Infrastructure;
 using Solari.Sol;
 using Solari.Themis;
+using Solari.Vanth.DependencyInjection;
 
 namespace Solari.Samples.WebApi
 {
@@ -30,12 +34,10 @@ namespace Solari.Samples.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddMetrics();
-
-
+            
             services.AddSol(Configuration)
-                    // .AddVanth()
-                    .AddEris()
-                    .AddOberon()
+                    .AddVanth()
+                    // .AddOberon()
                     .AddGanymede(requests => requests.AddGanymedeClient<IGitHubClient, GitHubClient>("GitHub"))
                     .AddCallistoWithDefaults(callistoConfiguration => callistoConfiguration
                                                  .RegisterScopedCollection<IPersonRepository, PersonRepository, Person>("person"))
@@ -43,7 +45,14 @@ namespace Solari.Samples.WebApi
                                health => health.AddCallistoHealthCheck());
 
             services.AddScoped<IPersonOperations, PersonOperations>();
+            
             services.AddOpenApiDocument(cfg => cfg.PostProcess = d => d.Info.Title = "Solari Sample Api");
+            services.AddMassTransit(cfg =>
+            {
+                cfg.AddConsumer<CreatePersonConsumer>();
+                cfg.AddRequestClient<CreatePersonCommand>();
+                cfg.AddMediator();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

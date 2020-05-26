@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using Solari.Sol.Utils;
 using Solari.Vanth.Builders;
 
@@ -81,10 +82,15 @@ namespace Solari.Vanth
             return this;
         }
 
+        // public override string ToString()
+        // {
+        //     return
+        //         $"Error: {nameof(Code)}: {Code},{Environment.NewLine}{nameof(Message)}: {Message},{Environment.NewLine}{nameof(Target)}: {Target},{Environment.NewLine}{nameof(ErrorType)}: {ErrorType}";
+        // }
+
         public override string ToString()
         {
-            return
-                $"Error: {nameof(Code)}: {Code},{Environment.NewLine}{nameof(Message)}: {Message},{Environment.NewLine}{nameof(Target)}: {Target},{Environment.NewLine}{nameof(ErrorType)}: {ErrorType}";
+            return JsonConvert.SerializeObject(this);
         }
 
         /// <summary>
