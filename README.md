@@ -4,7 +4,9 @@
 [![Build Status](https://dev.azure.com/luccaslauthgianesini/Solari/_apis/build/status/LuccasGianesini.solari?branchName=master&jobName=Build%20solution%20and%20create%20NuGet%20packages)](https://dev.azure.com/luccaslauthgianesini/Solari/_build/latest?definitionId=24&branchName=master)
 ![Nuget](https://img.shields.io/nuget/v/Solari.Sol)
 
-####[Changelog](https://github.com/LuccasGianesini/solari/wiki/Changelog)
+##### [Changelog](https://github.com/LuccasGianesini/solari/wiki/Changelog)
+
+
 
 ### Description
 
@@ -14,7 +16,6 @@
 
   * MongoDb Integration
   * MongoDb Tracing
-  * RabbitMq Tracing with ElasticApm
   * Jaeger Integration
   * ElasticApm Tracing
   * Elasticsearch backend for logs
@@ -32,7 +33,7 @@
  | Titan     | Logging (Serilog)                    |
  | Vanth     | CommonResponse                       |
  | Callisto  | MongoDb                              |
- | Deimos    | Tracing (Jaeger and ElasticApm       |
+ | Deimos    | Jaeger Tracing                       |
  | Ganymede  | Http                                 |
  | Juno      | Hashicorp Vault                      |
  | Hyperion  | Harshicorp Consul                    |
