@@ -12,9 +12,9 @@ namespace Solari.Titan.Abstractions
             ITracer tracer = GlobalTracer.Instance;
             if(tracer is null)
                 return;
-            logEvent.AddPropertyIfAbsent(new LogEventProperty("JaegerTraceId", new ScalarValue(tracer.ActiveSpan?.Context?.TraceId)));
-            logEvent.AddPropertyIfAbsent(new LogEventProperty("JaegerSpanId", new ScalarValue(tracer.ActiveSpan?.Context?.SpanId)));
-            logEvent.AddPropertyIfAbsent(new LogEventProperty("JaegerSpanContext", new ScalarValue(tracer.ActiveSpan?.Context?.ToString())));
+            logEvent.AddPropertyIfAbsent(new LogEventProperty("Jaeger_TraceId", new ScalarValue(tracer.ActiveSpan?.Context?.TraceId)));
+            logEvent.AddPropertyIfAbsent(new LogEventProperty("Jaeger_SpanId", new ScalarValue(tracer.ActiveSpan?.Context?.SpanId)));
+            logEvent.AddPropertyIfAbsent(new LogEventProperty("Jaeger_SpanContext", new ScalarValue(tracer.ActiveSpan?.Context?.ToString())));
 
         }
     }

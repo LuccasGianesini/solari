@@ -13,17 +13,20 @@ namespace Solari.Titan.Loki
     // Copied from Serilog.Sinks.Loki 
     // https://github.com/JosephWoodward/Serilog-Sinks-Loki
     // Thanks @JosephWoodward
-    internal class BatchFormatter : IBatchFormatter 
+    internal class BatchFormatter : IBatchFormatter
     {
+        // private readonly int _defaultLogLevelRestriction;
         private readonly IList<LokiLabel> _globalLabels;
 
         public BatchFormatter()
         {
+            // _defaultLogLevelRestriction = GetLevelRestriction(logEventLevel);
             _globalLabels = new List<LokiLabel>();
         }
 
         public BatchFormatter(IList<LokiLabel> globalLabels)
         {
+            // _defaultLogLevelRestriction = GetLevelRestriction(logEventLevel);
             _globalLabels = globalLabels;
         }
 
@@ -41,6 +44,8 @@ namespace Solari.Titan.Loki
             var content = new BatchContent();
             foreach (LogEvent logEvent in logs)
             {
+                // if (GetLevelRestriction(logEvent.Level) < _defaultLogLevelRestriction)
+                //     continue;
                 var stream = new BatchContentStream();
                 content.Streams.Add(stream);
 
@@ -78,9 +83,20 @@ namespace Solari.Titan.Loki
                 output.Write(content.Serialize());
         }
 
-        public void Format(IEnumerable<string> logEvents, TextWriter output)
+        public void Format(IEnumerable<string> logEvents, TextWriter output) { return; }
+
+        private int GetLevelRestriction(LogEventLevel eventLevel)
         {
-            return;
+            return eventLevel switch
+                   {
+                       LogEventLevel.Verbose     => 0,
+                       LogEventLevel.Debug       => 1,
+                       LogEventLevel.Information => 2,
+                       LogEventLevel.Warning     => 3,
+                       LogEventLevel.Error       => 4,
+                       LogEventLevel.Fatal       => 5,
+                       _                         => 2
+                   };
         }
 
         private static string GetLevel(LogEventLevel level)
