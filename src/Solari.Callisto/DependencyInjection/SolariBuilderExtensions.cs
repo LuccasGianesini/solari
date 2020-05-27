@@ -23,6 +23,13 @@ namespace Solari.Callisto.DependencyInjection
         }
 
 
+        /// <summary>
+        /// Configures the library to use default class maps and conventions.
+        /// It also adds the callisto connector.
+        /// </summary>
+        /// <param name="solariBuilder"></param>
+        /// <param name="configure"></param>
+        /// <returns></returns>
         public static ISolariBuilder AddCallistoWithDefaults(this ISolariBuilder solariBuilder, Action<ICallistoConfiguration> configure)
         {
             

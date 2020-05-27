@@ -11,13 +11,14 @@ namespace Solari.Callisto.Connector
         {
             if (string.IsNullOrEmpty(callistoOptions.ConnectionString))
                 return new CallistoConnectionBuilder()
-                       .WithMongoClient(builder => builder.WithCallistoConnectionOptions(callistoOptions, appOptions.ApplicationName).Build())
+                       .WithMongoClient(builder => builder.WithCallistoConnectionOptions(callistoOptions, appOptions.ApplicationName)
+                                                          .WithConnectionString(callistoOptions.ConnectionString)
+                                                          .Build())
                        .WithDataBaseName(callistoOptions.Database)
                        .Build();
 
             return new CallistoConnectionBuilder().WithMongoClient(builder => builder
-                                                                              .WithConnectionString(callistoOptions.ConnectionString)
-                                                                              .Build())
+                                                                       .Build())
                                                   .WithDataBaseName(callistoOptions.Database)
                                                   .Build();
         }
