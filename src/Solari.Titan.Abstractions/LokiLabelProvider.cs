@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Serilog.Sinks.Loki.gRPC.Labels;
+using Serilog.Sinks.Loki.Labels;
 
 namespace Solari.Titan.Abstractions
 {
