@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
 using Solari.Sol.Extensions;
@@ -11,8 +12,9 @@ namespace Solari.Callisto.Connector
         private string _connectionString;
         private MongoClientSettings _mongoClientSettings;
         private MongoUrl _mongoUrl;
+        private CallistoConnectorOptions _options;
 
-        public MongoClientBuilder WithCallistoConnectionOptions(CallistoConnectorOptions connectorOptions, string applicationName)
+        public IMongoClientBuilder WithCallistoConnectionOptions(CallistoConnectorOptions connectorOptions, string applicationName)
         {
             if (connectorOptions == null) throw new ArgumentNullException(nameof(connectorOptions));
             _mongoClientSettings = new MongoDbClientSettingsBuilder()
@@ -37,7 +39,6 @@ namespace Solari.Callisto.Connector
                                    .WithReadPreference(connectorOptions.GetReadPreference())
                                    .WithServerSelectionTimeout(connectorOptions.ServerSelectionTimeout.ToTimeSpan())
                                    .WithSocketTimeout(connectorOptions.SocketTimeout.ToTimeSpan())
-                                   // .WithWaitQueueSize(connectorOptions.WaitQueueSize)
                                    .WithWaitQueueTimeout(connectorOptions.WaitQueueTimeout.ToTimeSpan())
                                    .WithConnectionMode(connectorOptions.GetConnectionMode())
                                    .WithGuidRepresentation(connectorOptions.GetGuidRepresentation())
@@ -48,42 +49,52 @@ namespace Solari.Callisto.Connector
             return this;
         }
 
-        public MongoClientBuilder WithMongoClientSettings(MongoClientSettings clientSettings)
+        public IMongoClientBuilder WithMongoClientSettings(MongoClientSettings clientSettings)
         {
             _mongoClientSettings = clientSettings;
             return this;
         }
 
-        public MongoClientBuilder WithMongoClientSettings(Func<MongoDbClientSettingsBuilder, MongoClientSettings> builder)
+        public IMongoClientBuilder WithMongoClientSettings(Func<MongoDbClientSettingsBuilder, MongoClientSettings> builder)
         {
             _mongoClientSettings = builder(new MongoDbClientSettingsBuilder());
             return this;
         }
 
-        public MongoClientBuilder WithConnectionString(string connectionString)
+        public IMongoClientBuilder WithConnectionString(string connectionString)
         {
             _connectionString = connectionString;
             return this;
         }
 
-        public MongoClientBuilder WithMongoUrl(MongoUrl mongoUrl)
+        public IMongoClientBuilder WithMongoUrl(MongoUrl mongoUrl)
         {
             _mongoUrl = mongoUrl;
             return this;
         }
 
-        public MongoClientBuilder WithMongoUrl(Func<MongoUrlBuilder, MongoUrl> builder)
+        public IMongoClientBuilder WithMongoUrl(Func<MongoUrlBuilder, MongoUrl> builder)
         {
             _mongoUrl = builder(new MongoUrlBuilder());
             return this;
         }
 
-        public MongoClientBuilder WithMongoUrl(Func<MongoUrlBuilder, MongoUrl> builder, string url)
+        public IMongoClientBuilder WithMongoUrl(Func<MongoUrlBuilder, MongoUrl> builder, string url)
         {
             _mongoUrl = builder(new MongoUrlBuilder(url));
             return this;
         }
 
+        /// <summary>
+        /// Used to set GUID representation.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public IMongoClientBuilder WithConnectorOptions(CallistoConnectorOptions options)
+        {
+            _options = options;
+            return this;
+        }
 
         /// <summary>
         ///     Build an <see cref="MongoClient" /> with precedence order as follows: ConnectionString -> MongoClientSettings -> MongoUrl.
@@ -91,9 +102,26 @@ namespace Solari.Callisto.Connector
         /// <returns></returns>
         public MongoClient Build()
         {
-            if (!string.IsNullOrEmpty(_connectionString)) return new MongoClient(_connectionString);
+            if (CreateUsingConnectionString(out MongoClient mongoClient)) return mongoClient;
 
             return _mongoClientSettings != null ? new MongoClient(_mongoClientSettings) : new MongoClient(_mongoUrl);
+        }
+
+        private bool CreateUsingConnectionString(out MongoClient mongoClient)
+        {
+            if (!string.IsNullOrEmpty(_connectionString))
+            {
+                MongoClientSettings settings = new MongoClient(_connectionString).Settings.Clone();
+                settings.GuidRepresentation = _options?.GetGuidRepresentation() ?? GuidRepresentation.Standard;
+
+                {
+                    mongoClient = new MongoClient(settings);
+                    return true;
+                }
+            }
+
+            mongoClient = null;
+            return false;
         }
     }
 }
