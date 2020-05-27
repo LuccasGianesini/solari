@@ -70,15 +70,18 @@ function isPreRelease($version) {
 function getCommitsSinceLastTag {
   try {
     $commits = ([regex]::match((git describe --tags), '-([0-9])-').Groups[1].Value)
-    Write-Host('Found ' + $commits + ' since last tag.')
-    if($null -eq $commits)
+    if($commits -eq '')
     {
-      return '0'
+      Write-Host('Found 0 commits since last tag.')
+    }else{
+      Write-Host('Found ' + $commits + ' commits since last tag.')
     }
+
     if($commits -eq '')
     {
       return '0'
     }
+
     return $commits
   }
   catch {
@@ -109,24 +112,24 @@ function setCurrentVersion($versions) {
 }
 function getProdVersion($version) {
   $tag = extractVersionFromTag $version
-  if (!(isPreRelease $tag)) {
+  if (isPreRelease $tag -eq $false) {
     return $tag
   }
   return '0.0.0'
 }
-function setCurrentProdVersion($versions) {
-  if ($null -eq $versions) {
-    return '0.0.0';
-  }
-  if ($versions -isnot [System.Array]) {
-    return getProdVersion $versions
-  }
-  $version = ''
-  for ($i = $versions.length; $i -gt 0 ; $i--) {
-    $version = getProdVersion $versions[$i - 1]
-  }
-  return $version
-}
+# function setCurrentProdVersion($versions) {
+#   if ($null -eq $versions) {
+#     return '0.0.0';
+#   }
+#   if ($versions -isnot [System.Array]) {
+#     return getProdVersion $versions
+#   }
+#   $version = ''
+#   for ($i = $versions.length; $i -gt 0 ; $i--) {
+#     $version = getProdVersion $versions[$i - 1]
+#   }
+#   return $version
+# }
 
 # Extracts the patch value from the currentVersion
 function getPatchFromCurrentVersion($currentVersion) {
@@ -182,7 +185,7 @@ $global:currentVersion = setCurrentVersion $global:tags
 $global:isCurrentVersionPreRelease = isPreRelease $global:currentVersion
 Write-Output('Current release is: ' + $global:currentVersion + '. Is current version pre-release? ' + $global:isCurrentVersionPreRelease)
 
-$global:currentProdVersion = setCurrentProdVersion $global:tags
+#$global:currentProdVersion = setCurrentProdVersion $global:tags
 Write-Output('Current production release is: ' + $global:currentProdVersion)
 
 $global:hasNoReleases = hasNoReleases
@@ -218,42 +221,53 @@ function buildTargetMajorVersion {
   return $global:targetMajor
 }
 
+
+# If current version is pre and is on master - use current patch
+# If current version is prod and is on dev/res - increase patch by 1
+
 function buildTargetPatchVersion {
   # returns 1 so that the version doesn't ends being 0.0.0
   if ($global:hasNoReleases) {
     return '1'
   }
-  # changes in either one resets the patch to 0
+  # changes on either one resets the patch to 0
   if (hasMajorVersionChanged -or hasMinorVersionChanged) {
     Write-Host('There was a chenge in the major or minor versions. Patch version will be set to 0')
     return '0';
   }
-
-  # master means prod. So increment patch by 1
-  # if ($global:branch -eq 'master') {
-  #   Write-Host('Using master branch. Found release tag.The patch version will be incremented by 1')
-  #   return  (($global:currentPatch -as [int]) + 1) -as [string];
-  # }
-  if(isPreRelease $global:currentVersion)
+  
+  if($global:branch -like 'master')
   {
-    return $global:currentPatch
+    Write-Host('Using master branch')
+    if(isPreRelease $global:currentVersion)
+    {
+      Write-Host('Current version is pre-relese. Using current patch version')
+      return $global:currentPatch
+    }
+    else
+    {
+      Write-Host('Current version is production release. Current patch will be incremented by 1')
+      return ($global:currentPatch -as [int]) + 1
+    }
   }
-
-  if($global:currentVersion -eq $global:currentProdVersion)
-  {
-    return (($global:currentPatch -as [int]) + 1) -as [string]
+  
+  Write-Host('Using pre-release branches')
+  if(isPreRelease $global:currentVersion){
+    return $global:currentPatch  
   }
-  return $global:currentPatch
-
+  return ($global:currentPatch -as [int]) + 1
+  
 }
+
+
 $global:targetPatch = buildTargetPatchVersion
 $global:targetMinor = buildTargetMinorVersion
 $global:targetMajor = buildTargetMajorVersion
-
+Write-Output('..................................................')
 Write-Output('Target major version is: ' + $global:targetMajor)
 Write-Output('Target minor version is: ' + $global:targetMinor)
 Write-Output('Target patch version is: ' + $global:targetPatch)
-
+Write-Output('..................................................')
 function buildDefaultVersionScheme {
   if ($global:targetMajor -as [int] -lt 0) {
     throw 'Major version cannot be a negative value'
@@ -267,25 +281,25 @@ function buildDefaultVersionScheme {
   return $global:targetMajor + '.' + $global:targetMinor + '.' + $global:targetPatch  
 }
 function buildBetaReleaseVersion {
-  Write-Host('Building a beta version')
+  Write-Host('A beta version will be built')
   $scheme = buildDefaultVersionScheme
   if ($global:hasNoReleases) {
-    return $scheme + '-beta.1'
+    return $scheme + '-beta.0'
   }
   if (hasMajorVersionChanged -or hasMinorVersionChanged) {
-    return $scheme + '-beta.1'
+    return $scheme + '-beta.0'
   }
   $commits = getCommitsSinceLastTag
   return $scheme + '-beta.' + $commits
 }
 function buildUnstableReleaseVersion {
-  Write-Host('Building a unstable version')
+  Write-Host('An unstable version will be built')
   $scheme = buildDefaultVersionScheme
   if ($global:hasNoReleases) {
-    return $scheme + '-unstable.1'
+    return $scheme + '-unstable.0'
   }
   if (hasMajorVersionChanged -or hasMinorVersionChanged) {
-    return $scheme + '-unstable.1'
+    return $scheme + '-unstable.0'
   }
   $commits = getCommitsSinceLastTag
   return $scheme + '-unstable.' + $commits
