@@ -22,17 +22,17 @@ namespace Solari.Samples.Domain.Person.Validators
                 .WithMessage("The values collection cannot be empty")
                 .WithErrorCode(Constants.EmptyPropertyErrorCode)
                 .WithName(Constants.EmptyPropertyErrorName);
-            RuleFor(a => a.Operation)
-                .NotEmpty()
-                .WithMessage("The patch operation cannot be empty or null")
-                .WithErrorCode(Constants.EmptyPropertyErrorCode)
-                .WithName(Constants.EmptyPropertyErrorName)
-                .Equal(PatchOperation.Add)
-                .Equal(PatchOperation.Remove)
-                .Equal(PatchOperation.Update)
-                .WithMessage("Operation must be 'Add' or 'Remove' or 'Update'")
-                .WithErrorCode("ERR-023")
-                .WithName("Invalid operation name");
+            // RuleFor(a => a.Operation)
+            //     .NotEmpty()
+            //     .WithMessage("The patch operation cannot be empty or null")
+            //     .WithErrorCode(Constants.EmptyPropertyErrorCode)
+            //     .WithName(Constants.EmptyPropertyErrorName)
+            //     .Equal(PatchOperation.Add)
+            //     .Equal(PatchOperation.Remove)
+            //     .Equal(PatchOperation.Update)
+            //     .WithMessage("Operation must be 'Add' or 'Remove' or 'Update'")
+            //     .WithErrorCode("ERR-023")
+            //     .WithName("Invalid operation name");
         }
     }
 }

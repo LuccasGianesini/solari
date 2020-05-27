@@ -1,59 +1,32 @@
 ﻿using System.Threading;
+using FluentValidation.Results;
 using MongoDB.Driver;
 using Solari.Callisto.Abstractions.Exceptions;
+using Solari.Callisto.Abstractions.Validators;
 
 namespace Solari.Callisto.Abstractions.CQR
 {
     public sealed class DefaultCallistoUpdate<T> : ICallistoUpdate<T> where T : class, IDocumentRoot
     {
         public DefaultCallistoUpdate(string operationName, UpdateDefinition<T> updateDefinition,
-                                     FilterDefinition<T> filterDefinition, UpdateOptions updateOptions = null,
-                                     IClientSessionHandle sessionHandle = null, CancellationToken? cancellationToken = null)
+                                     FilterDefinition<T> filterDefinition, UpdateOptions updateOptions)
         {
             OperationName = operationName;
-            OperationType = CallistoOperation.Update;
-            CancellationToken = cancellationToken ?? CancellationToken.None;
             UpdateDefinition = updateDefinition;
             FilterDefinition = filterDefinition;
             UpdateOptions = updateOptions;
-            ClientSessionHandle = sessionHandle;
-            UseSessionHandle = ClientSessionHandle != null;
         }
 
         public string OperationName { get; }
-        public CallistoOperation OperationType { get; }
-        public CancellationToken CancellationToken { get; private set; }
+        public CancellationToken CancellationToken { get; set; }
         public UpdateDefinition<T> UpdateDefinition { get; }
         public FilterDefinition<T> FilterDefinition { get; }
         public UpdateOptions UpdateOptions { get; }
-        public IClientSessionHandle ClientSessionHandle { get; private set; }
-        public bool UseSessionHandle { get; private set; }
+        public IClientSessionHandle ClientSessionHandle { get; set; }
 
-        public void ValidateOperation()
+        public void Validate()
         {
-            if (UpdateDefinition == null)
-                throw new NullUpdateDefinitionException(CallistoOperationHelper.NullDefinitionMessage("update", OperationName, "update"));
-            if (FilterDefinition == null)
-                throw new NullFilterDefinitionException(CallistoOperationHelper.NullDefinitionMessage("update", OperationName, "filter"));
+            new UpdateValidator<T>().ValidateCallistoOperation(this);
         }
-
-        public ICallistoOperation<T> AddSessionHandle(IClientSessionHandle sessionHandle)
-        {
-            if (sessionHandle == null)
-                return this;
-            ClientSessionHandle = sessionHandle;
-            UseSessionHandle = true;
-            return this;
-        }
-
-        public ICallistoOperation<T> AddCancellationToken(CancellationToken cancellationToken)
-        {
-            if (cancellationToken == CancellationToken.None)
-                return this;
-            CancellationToken = cancellationToken;
-            return this;
-        }
-
-        public static DefaultCallistoUpdate<T> Null() { return new DefaultCallistoUpdate<T>("", null, null); }
     }
 }

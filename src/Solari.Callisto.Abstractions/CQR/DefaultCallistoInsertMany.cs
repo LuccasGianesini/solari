@@ -1,58 +1,31 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using FluentValidation.Results;
 using MongoDB.Driver;
 using Solari.Callisto.Abstractions.Exceptions;
+using Solari.Callisto.Abstractions.Validators;
 
 namespace Solari.Callisto.Abstractions.CQR
 {
     public class DefaultCallistoInsertMany<T> : ICallistoInsertMany<T> where T : class, IDocumentRoot
     {
-        public DefaultCallistoInsertMany(string operationName, IEnumerable<T> values,
-                                         InsertManyOptions insertManyOptions = null, IClientSessionHandle clientSessionHandle = null,
-                                         CancellationToken? cancellationToken = null)
+        public DefaultCallistoInsertMany(string operationName, IEnumerable<T> values, InsertManyOptions insertManyOptions)
         {
             OperationName = operationName;
-            OperationType = CallistoOperation.Insert;
-            CancellationToken = cancellationToken ?? CancellationToken.None;
             Values = values;
             InsertManyOptions = insertManyOptions;
-            ClientSessionHandle = clientSessionHandle;
-            UseSessionHandle = ClientSessionHandle != null;
         }
 
         public string OperationName { get; }
-        public CallistoOperation OperationType { get; }
-        public CancellationToken CancellationToken { get; private set; }
-
-        public void ValidateOperation()
-        {
-            if (Values == null || !Values.Any())
-                throw new NullOrEmptyValueException($"The values array of the {OperationName} is null or it does not contains any items.");
-        }
-
+        public CancellationToken CancellationToken { get; set; }
         public IEnumerable<T> Values { get; }
         public InsertManyOptions InsertManyOptions { get; }
-        public IClientSessionHandle ClientSessionHandle { get; private set; }
-        public bool UseSessionHandle { get; private set; }
+        public IClientSessionHandle ClientSessionHandle { get; set; }
 
-        public ICallistoOperation<T> AddSessionHandle(IClientSessionHandle sessionHandle)
+        public void Validate()
         {
-            if (sessionHandle == null)
-                return this;
-            ClientSessionHandle = sessionHandle;
-            UseSessionHandle = true;
-            return this;
+            new InsertManyValidator<T>().ValidateCallistoOperation(this);
         }
-
-        public ICallistoOperation<T> AddCancellationToken(CancellationToken cancellationToken)
-        {
-            if (cancellationToken == CancellationToken.None)
-                return this;
-            CancellationToken = cancellationToken;
-            return this;
-        }
-
-        public static ICallistoInsertMany<T> Null() { return new DefaultCallistoInsertMany<T>("", null); }
     }
 }

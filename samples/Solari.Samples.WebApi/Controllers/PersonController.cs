@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
+using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
-using Solari.Eris;
-using Solari.Samples.Domain;
 using Solari.Samples.Domain.Person.Commands;
+using Solari.Samples.Domain.Person.Events;
 using Solari.Samples.Domain.Person.Results;
-using Solari.Titan;
 using Solari.Vanth;
 using Solari.Vanth.Validation;
 
@@ -19,14 +18,14 @@ namespace Solari.Samples.WebApi.Controllers
     [Produces("application/json")]
     public class PersonController : ControllerBase
     {
-        private readonly IDispatcher _commandDispatcher;
+        private readonly IRequestClient<CreatePersonCommand> _createPersonClient;
         private readonly ICommonResponseFactory _factory;
         private readonly ILogger<PersonController> _logger;
 
 
-        public PersonController(IDispatcher commandDispatcher, ICommonResponseFactory factory, ILogger<PersonController> logger)
+        public PersonController(IRequestClient<CreatePersonCommand> createPersonClient,ICommonResponseFactory factory, ILogger<PersonController> logger)
         {
-            _commandDispatcher = commandDispatcher;
+            _createPersonClient = createPersonClient;
             _factory = factory;
             _logger = logger;
         }
@@ -40,9 +39,10 @@ namespace Solari.Samples.WebApi.Controllers
         {
             try
             {
-                await _commandDispatcher.DispatchCommand(command);
+                Response<IPersonCreatedEvent> response =  
+                    await _createPersonClient.GetResponse<IPersonCreatedEvent>(command);
 
-                return Ok(_factory.CreateResult(command.Result));
+                return Ok(_factory.CreateResult(response.Message));
             }
             catch (MongoWriteException exception)
             {
@@ -61,7 +61,6 @@ namespace Solari.Samples.WebApi.Controllers
         {
             try
             {
-                await _commandDispatcher.DispatchCommand(command);
                 return Ok(command.Result);
             }
             catch (MongoWriteException exception)
@@ -80,9 +79,8 @@ namespace Solari.Samples.WebApi.Controllers
 
         private IActionResult CreateExceptionError(Exception exception, string code, string message)
         {
-            Helper.DefaultExceptionLogMessage(_logger, exception.GetType(), exception);
-            return StatusCode(StatusCodes.Status500InternalServerError, _factory
-                                  .CreateErrorFromException<CreatePersonResult>(exception, code, message));
+            return StatusCode(StatusCodes.Status500InternalServerError, 
+                              _factory.CreateErrorFromException<CreatePersonResult>(exception, code, message));
         }
     }
 }

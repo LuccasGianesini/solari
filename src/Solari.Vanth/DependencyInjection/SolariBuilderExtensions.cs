@@ -1,5 +1,8 @@
 using System;
+using System.Linq;
 using FluentValidation;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Solari.Sol;
 using Solari.Sol.Extensions;
@@ -20,13 +23,38 @@ namespace Solari.Vanth.DependencyInjection
         /// </returns>
         public static ISolariBuilder AddVanth(this ISolariBuilder builder)
         {
+            IConfigurationSection section = builder.AppConfiguration.GetSection(VanthLibConstants.AppSettingsSection);
+            if (!section.Exists())
+                throw new VanthException("Unable to find Vanth AppSettings section");
+            var opt = builder.AppConfiguration.GetOptions<VanthOptions>(section);
             builder.Services.AddSingleton<ICommonResponseFactory, CommonResponseFactory>();
-            var opt = builder.AppConfiguration.GetOptions<VanthOptions>(VanthLibConstants.AppSettingsSection);
-            if (!opt.UseFluentValidation) return builder;
+            ConfigureFluentValidation(opt, builder);
+            ConfigureExceptionMiddleware(opt, builder, section);
+            return builder;
+        }
+
+        private static void ConfigureExceptionMiddleware(VanthOptions options, ISolariBuilder builder, IConfigurationSection section)
+        {
+            if(!options.UseExceptionHandlingMiddleware)
+                return;
+            builder.Services.Configure<VanthOptions>(section);
+            builder.AddBuildAction(new BuildAction("Solari.Vanth (ExceptionHandlingMiddleware)")
+            {
+                Action = provider =>
+                {
+                    var marshal = provider.GetService<ISolariMarshal>();
+                    if (marshal.ApplicationBuilder == null)
+                        return;
+                    marshal.ApplicationBuilder.UseMiddleware<ExceptionHandlingMiddleware>();
+                }
+            });
+        }
+        private static void ConfigureFluentValidation(VanthOptions options, ISolariBuilder builder)
+        {
+            if (!options.UseFluentValidation) return;
             builder.Services.AddSingleton<IVanthValidationService, VanthValidationService>();
             builder.Services.AddSingleton<IValidatorFactory, VanthValidatorFactory>();
-            builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
-            return builder;
+            builder.Services.AddValidatorsFromAssemblies(builder.ApplicationAssemblies.Where(a => !a.IsDynamic));
         }
     }
 }

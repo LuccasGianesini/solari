@@ -32,7 +32,6 @@ namespace Solari.Hyperion.ConfigurationProvider
         {
             builder.ConfigureAppConfiguration(configurationBuilder => configurationBuilder.UseHyperion(null))
                    .ConfigureServices((context, collection) => { AddHyperion(collection, context.Configuration); });
-            ;
             return builder;
         }
 
@@ -40,7 +39,6 @@ namespace Solari.Hyperion.ConfigurationProvider
         {
             builder.ConfigureAppConfiguration(configurationBuilder => configurationBuilder.UseHyperion(null))
                    .ConfigureServices((context, collection) => { AddHyperion(collection, context.Configuration); });
-            ;
             return builder;
         }
 

@@ -1,32 +1,38 @@
-using System;
 using System.Text;
 using Serilog;
 using Serilog.Formatting.Json;
 using Serilog.Sinks.Loki;
-using Serilog.Sinks.Loki.gRPC;
 using Solari.Sol.Extensions;
 using Solari.Titan.Abstractions;
+using Solari.Titan.Loki;
 
 namespace Solari.Titan.Framework
 {
     internal static class SinksConfiguration
     {
-        internal static LoggerConfiguration ConfigureLoki(this LoggerConfiguration configuration, LokiOptions lokiOptions, string appName,
-                                                          string appEnv)
+        internal static LoggerConfiguration ConfigureLoki(this LoggerConfiguration configuration, LokiOptions lokiOptions)
         {
             if (lokiOptions == null)
                 return configuration;
             if (lokiOptions.Enabled is false)
                 return configuration;
 
-            if (string.IsNullOrEmpty(lokiOptions.RpcEndpoint))
-                throw new TitanException("Loki gRPC endpoint is null or empty");
-            configuration.WriteTo.LokigRPC(lokiOptions.RpcEndpoint, new LokiLabelProvider(appName, appEnv), 
-                                           lokiOptions.Period.ToTimeSpan(), lokiOptions.QueueLimit,
-                                           lokiOptions.BatchSizeLimit, TitanLibHelper.GetLogLevel(lokiOptions.LogLevelRestriction), 
-                                           lokiOptions.StackTraceAsLabel);
+            if (string.IsNullOrEmpty(lokiOptions.Endpoint))
+                throw new TitanException("Loki endpoint is null or empty");
 
-            // configuration.WriteTo.LokiHttp(new NoAuthCredentials(lokiOptions.RpcEndpoint));
+
+            LokiCredentials credentials;
+            if (lokiOptions.Credentials is null)
+            {
+                credentials = new NoAuthCredentials(lokiOptions.Endpoint); 
+            }
+            else
+            {
+                credentials = new BasicAuthCredentials(lokiOptions.Endpoint, lokiOptions.Credentials.Username, lokiOptions.Credentials.Password);    
+            }
+
+            configuration.WriteTo.TitanLoki(credentials, null, null, TitanLibHelper.GetLogLevel(lokiOptions.LogLevelRestriction), 
+                                            lokiOptions.BatchSizeLimit, lokiOptions.Period.ToTimeSpan(), lokiOptions.QueueLimit);
             return configuration;
         }
 

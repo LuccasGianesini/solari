@@ -1,9 +1,9 @@
-﻿using MongoDB.Bson;
+﻿using System;
 
 namespace Solari.Callisto.Abstractions
 {
     public interface IDocumentRoot
     {
-        ObjectId Id { get; set; }
+        Guid Id { get; set; }
     }
 }

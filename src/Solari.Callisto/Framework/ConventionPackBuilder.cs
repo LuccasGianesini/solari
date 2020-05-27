@@ -85,8 +85,8 @@ namespace Solari.Callisto.Framework
         public ConventionPack RegisterConventionPack()
         {
             if (_conventionPack == null) BuildConventionPack();
-            if (string.IsNullOrEmpty(_name)) _name = "Solari.Callisto.DefaultConventionPack";
-            if (_filter == null) _filter = type => true;
+            if (string.IsNullOrEmpty(_name)) _name = "Solari.Callisto.Conventions";
+            _filter ??= CallistoTypeHelper.IsCallistoClass;
             ConventionRegistry.Register(_name, _conventionPack, _filter);
             CallistoLogger.ConventionPackLogger.RegisterConventionPack(_name);
             return _conventionPack;

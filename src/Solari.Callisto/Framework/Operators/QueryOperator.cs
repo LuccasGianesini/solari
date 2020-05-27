@@ -12,9 +12,9 @@ namespace Solari.Callisto.Framework.Operators
     public sealed class QueryOperator<TEntity> where TEntity : class, IDocumentRoot
     {
         private readonly IMongoCollection<TEntity> _collection;
-        private readonly ICallistoOperationFactory _factory;
+        private readonly ICallistoQueryOperationFactory _factory;
 
-        public QueryOperator(IMongoCollection<TEntity> collection, ICallistoOperationFactory factory)
+        public QueryOperator(IMongoCollection<TEntity> collection, ICallistoQueryOperationFactory factory)
         {
             _collection = collection;
             _factory = factory;
@@ -46,7 +46,7 @@ namespace Solari.Callisto.Framework.Operators
         /// </summary>
         /// <param name="id">The id</param>
         /// <returns></returns>
-        public async Task<TEntity> FindById(ObjectId id)
+        public async Task<TEntity> FindById(Guid id)
         {
             return await Find(_factory.CreateQuery(Builders<TEntity>.Filter.Eq(a => a.Id, id),
                                                    cursor => cursor.FirstOrDefault()));
@@ -58,7 +58,7 @@ namespace Solari.Callisto.Framework.Operators
         /// </summary>
         /// <param name="factory">The operation factory</param>
         /// <returns></returns>
-        public async Task<TResult> Find<TResult>(Func<ICallistoOperationFactory, ICallistoQuery<TEntity, TResult>> factory)
+        public async Task<TResult> Find<TResult>(Func<ICallistoQueryOperationFactory, ICallistoQuery<TEntity, TResult>> factory)
         {
             return await Find(factory(_factory));
         }
@@ -72,12 +72,9 @@ namespace Solari.Callisto.Framework.Operators
         /// <exception cref="NullCallistoOperationException"></exception>
         public async Task<TResult> Find<TResult>(ICallistoQuery<TEntity, TResult> operation)
         {
-            if (operation == null)
-                throw new NullCallistoOperationException(CallistoOperationHelper.NullOperationInstanceMessage("query", nameof(ICallistoInsert<TEntity>)));
-            operation.ValidateOperation();
-            if (operation.UseSessionHandle)
-                using (IAsyncCursor<TEntity> cursor = await _collection.FindAsync(operation.ClientSessionHandle,
-                                                                                  operation.FilterDefinition,
+            CallistoOperationHelper.PreExecutionCheck(operation);
+            if (operation.ClientSessionHandle is null)
+                using (IAsyncCursor<TEntity> cursor = await _collection.FindAsync(operation.FilterDefinition,
                                                                                   operation.FindOptions,
                                                                                   operation.CancellationToken)
                                                                        .ConfigureAwait(false))
@@ -85,7 +82,8 @@ namespace Solari.Callisto.Framework.Operators
                     return operation.ResultFunction(cursor);
                 }
 
-            using (IAsyncCursor<TEntity> cursor = await _collection.FindAsync(operation.FilterDefinition,
+            using (IAsyncCursor<TEntity> cursor = await _collection.FindAsync(operation.ClientSessionHandle,
+                                                                              operation.FilterDefinition,
                                                                               operation.FindOptions,
                                                                               operation.CancellationToken)
                                                                    .ConfigureAwait(false))
@@ -103,7 +101,8 @@ namespace Solari.Callisto.Framework.Operators
         /// <returns></returns>
         /// <exception cref="NullCallistoOperationException"></exception>
         public async Task<TResult> Aggregate<TProjectionModel, TResult>(
-            Func<ICallistoOperationFactory, ICallistoAggregation<TEntity, TProjectionModel, TResult>> factory)
+            Func<ICallistoQueryOperationFactory, ICallistoAggregation<TEntity, TProjectionModel, TResult>> factory)
+            where TProjectionModel : class
         {
             return await Aggregate(factory(_factory));
         }
@@ -117,20 +116,19 @@ namespace Solari.Callisto.Framework.Operators
         /// <returns></returns>
         /// <exception cref="NullCallistoOperationException"></exception>
         public async Task<TResult> Aggregate<TProjectionModel, TResult>(ICallistoAggregation<TEntity, TProjectionModel, TResult> operation)
+            where TProjectionModel : class
         {
-            if (operation == null)
-                throw new NullCallistoOperationException(CallistoOperationHelper.NullOperationInstanceMessage("aggregation", nameof(ICallistoInsert<TEntity>)));
-            operation.ValidateOperation();
-            if (operation.UseSessionHandle)
-                using (IAsyncCursor<TProjectionModel> cursor = await _collection.AggregateAsync(operation.ClientSessionHandle,
-                                                                                                operation.PipelineDefinition,
+            CallistoOperationHelper.PreExecutionCheck(operation);
+            if (operation.ClientSessionHandle is null)
+                using (IAsyncCursor<TProjectionModel> cursor = await _collection.AggregateAsync(operation.PipelineDefinition,
                                                                                                 operation.AggregateOptions,
                                                                                                 operation.CancellationToken))
                 {
                     return operation.ResultFunction(cursor);
                 }
 
-            using (IAsyncCursor<TProjectionModel> cursor = await _collection.AggregateAsync(operation.PipelineDefinition,
+            using (IAsyncCursor<TProjectionModel> cursor = await _collection.AggregateAsync(operation.ClientSessionHandle,
+                                                                                            operation.PipelineDefinition,
                                                                                             operation.AggregateOptions,
                                                                                             operation.CancellationToken))
             {

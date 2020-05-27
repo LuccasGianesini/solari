@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <AssemblyName>Solari.Titan.Loki</AssemblyName>
+        <Authors>Lauth</Authors>
+        <Title>Solari.Titan.Loki</Title>
+        <PackageId>Solari.Titan.Loki</PackageId>
+        <PackageDescription>Loki sink</PackageDescription>
+        <PackageTags>C#; DotnetCore; Logging; Serilog; Loki</PackageTags>
+        <LangVersion>8</LangVersion>
+        <RootNamespace>Solari.Titan.Loki</RootNamespace>
+        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="Serilog.Sinks.Loki" Version="2.0.0" />
+    </ItemGroup>
+
+</Project>

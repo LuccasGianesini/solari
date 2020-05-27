@@ -22,7 +22,7 @@ namespace Solari.Titan.Framework
             config
                 .ConfigureConsole(options)
                 .ConfigureFile(options.File, contentRootPath)
-                .ConfigureLoki(options.Loki, appOptions.ApplicationName, appOptions.ApplicationEnvironment);
+                .ConfigureLoki(options.Loki);
         }
 
         private static void ConfigureEnrich(LoggerConfiguration config, ApplicationOptions appOptions)

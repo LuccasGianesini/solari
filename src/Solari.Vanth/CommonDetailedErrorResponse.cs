@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Newtonsoft.Json;
 using Solari.Sol.Utils;
 
 namespace Solari.Vanth
@@ -28,20 +29,21 @@ namespace Solari.Vanth
         public bool HasException => Exception != null;
 
 
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder()
-                               .Append("Detail:").AppendLine()
-                               .Append($"{nameof(Code)}: {Code}").AppendLine()
-                               .Append($"{nameof(Message)}: {Message}").AppendLine()
-                               .Append($"{nameof(Target)}: {Target}").AppendLine()
-                               .Append($"{nameof(Source)}: {Source}").AppendLine();
-            if (Exception != null)
-                sb.Append("Exception:").AppendLine()
-                  .Append($"Exception Message: {Exception.Message}")
-                  .Append($"Source: {Exception.Source}");
-            return sb.ToString();
-        }
+        // public override string ToString()
+        // {
+        //     StringBuilder sb = new StringBuilder()
+        //                        .Append("Detail:").AppendLine()
+        //                        .Append($"{nameof(Code)}: {Code}").AppendLine()
+        //                        .Append($"{nameof(Message)}: {Message}").AppendLine()
+        //                        .Append($"{nameof(Target)}: {Target}").AppendLine()
+        //                        .Append($"{nameof(Source)}: {Source}").AppendLine();
+        //     if (Exception != null)
+        //         sb.Append("Exception:").AppendLine()
+        //           .Append($"Exception Message: {Exception.Message}")
+        //           .Append($"Source: {Exception.Source}");
+        //     return sb.ToString();
+        // }
+        public override string ToString() { return JsonConvert.SerializeObject(this); }
 
         /// <summary>
         ///     Tries to get the Exception.

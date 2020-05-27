@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Solari.Callisto.Connector\Solari.Callisto.Connector.csproj" />
+    <ProjectReference Include="..\..\src\Solari.Callisto.Integrations.MassTransit\Solari.Callisto.Integrations.MassTransit.csproj" />
     <ProjectReference Include="..\..\src\Solari.Callisto.Tracer\Solari.Callisto.Tracer.csproj" />
     <ProjectReference Include="..\..\src\Solari.Callisto\Solari.Callisto.csproj" />
     <ProjectReference Include="..\..\src\Solari.Ceres\Solari.Ceres.csproj" />
@@ -16,12 +17,17 @@
     <ProjectReference Include="..\..\src\Solari.Io\Solari.Io.csproj" />
     <ProjectReference Include="..\..\src\Solari.Juno\Solari.Juno.csproj" />
     <ProjectReference Include="..\..\src\Solari.Oberon\Solari.Oberon.csproj" />
+    <ProjectReference Include="..\..\src\Solari.Rhea\Solari.Rhea.csproj" />
     <ProjectReference Include="..\..\src\Solari.Themis\Solari.Themis.csproj" />
     <ProjectReference Include="..\..\src\Solari.Titan\Solari.Titan.csproj" />
     <ProjectReference Include="..\..\src\Solari.Vanth\Solari.Vanth.csproj" />
     <ProjectReference Include="..\..\tests\Solari.Vanth.Tests\Solari.Vanth.Tests\Solari.Vanth.Tests.csproj" />
     <ProjectReference Include="..\..\src\Solari.Hyperion.ConfigurationProvider\Solari.Hyperion.ConfigurationProvider.csproj" />
     <ProjectReference Include="..\..\src\Solari.Hyperion\Solari.Hyperion.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit.Analyzers" Version="6.3.2" />
   </ItemGroup>
 
 </Project>

@@ -21,7 +21,7 @@ namespace Solari.Samples.Domain.Person
         public DateTimeOffset CreatedAt { get; set; }
 
         public List<PersonAttribute> Attributes { get; set; }
-        public ObjectId Id { get; set; }
+        public Guid Id { get; set; }
 
         public Person AddAttributes(IEnumerable<PersonAttribute> attributes)
         {

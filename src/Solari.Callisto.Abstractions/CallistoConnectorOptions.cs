@@ -7,6 +7,7 @@ namespace Solari.Callisto.Abstractions
 {
     public class CallistoConnectorOptions
     {
+        public string ConnectionString { get; set; }
         public string ConnectTimeout { get; set; }
 
         public string HeartbeatInterval { get; set; }

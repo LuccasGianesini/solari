@@ -4,19 +4,48 @@ using System.Reflection;
 using MassTransit;
 using Solari.Sol.Extensions;
 
+// ReSharper disable UnusedMember.Global
+
 namespace Solari.Sol
 {
     public class ApplicationOptions
     {
+        private string _appName;
+        private string _appEnv;
+        private string _appInstanceId;
+        private string _appId;
+
         /// <summary>
         ///     The instance id of the application.
         /// </summary>
-        public string ApplicationInstanceId { get; } = $"{NewId.Next()}";
+        public string ApplicationInstanceId
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_appInstanceId))
+                {
+                    _appInstanceId = $"{NewId.Next()}";
+                }
+
+                return _appInstanceId;
+            }
+        }
 
         /// <summary>
         ///     The application name.
         /// </summary>
-        public string ApplicationName { get; set; } = (Assembly.GetEntryAssembly()?.GetName(false).Name?.Replace(".", "-"))?.ToLowerInvariant();
+        public string ApplicationName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_appName))
+                {
+                    _appName = Assembly.GetEntryAssembly()?.GetName(false).Name?.Replace(".", "-").ToLowerInvariant();
+                }
+
+                return _appName;
+            }
+        }
 
         /// <summary>
         ///     The version of the application
@@ -26,9 +55,31 @@ namespace Solari.Sol
         /// <summary>
         ///     The environment that the application is running.
         /// </summary>
-        public string ApplicationEnvironment => GetEnvironment().ToLowerInvariant();
+        public string ApplicationEnvironment
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_appEnv))
+                {
+                    _appEnv = GetEnvironment().ToLowerInvariant();
+                }
 
-        public string ApplicationId => GetApplicationId();
+                return _appEnv;
+            }
+        }
+
+        public string ApplicationId
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_appId))
+                {
+                    _appId = GetApplicationId();
+                }
+
+                return _appId;
+            }
+        }
 
         public List<string> Tags { get; set; } = new List<string>();
         private string AspNetCoreEnvironment { get; } = Environment.GetEnvironmentVariable(SolariConstants.ASPNETCORE_ENVIRONMENT);

@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <AssemblyName>Solari.Callisto.Integrations.MassTransit</AssemblyName>
+        <Authors>Lauth</Authors>
+        <Title>Solari.Callisto.Integrations.MassTransit</Title>
+        <PackageId>Solari.Callisto.Integrations.MassTransit</PackageId>
+        <PackageDescription>Callisto MassTransit integration</PackageDescription>
+        <PackageTags>C#; DotnetCore; MongoDb; Callisto; Solari</PackageTags>
+        <LangVersion>8</LangVersion>
+        <RootNamespace>Solari.Callisto.Integrations.MassTransit</RootNamespace>
+        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+        <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MassTransit.MongoDb" Version="6.3.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Solari.Callisto.Abstractions\Solari.Callisto.Abstractions.csproj" />
+      <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
+    </ItemGroup>
+
+</Project>
