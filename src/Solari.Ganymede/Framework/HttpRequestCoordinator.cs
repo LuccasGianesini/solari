@@ -11,12 +11,12 @@ namespace Solari.Ganymede.Framework
     public class HttpRequestCoordinator
     {
         private readonly HttpClient _client;
-        private readonly PipelineDescriptor _descriptor;
+        private readonly PipelineContext _context;
 
-        public HttpRequestCoordinator(HttpClient client, PipelineDescriptor descriptor)
+        public HttpRequestCoordinator(HttpClient client, PipelineContext context)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
-            _descriptor = descriptor;
+            _context = context;
         }
 
         public async ValueTask<GanymedeHttpResponse> Send(HttpRequestMessage requestMessage)
@@ -32,7 +32,7 @@ namespace Solari.Ganymede.Framework
 
         private bool CanMessageBeSent(HttpRequestMessage requestMessage)
         {
-            return requestMessage.Headers.All(requestMessageHeader => _descriptor.Resource.RequiredHeaders.Contains(requestMessageHeader.Key));
+            return requestMessage.Headers.All(requestMessageHeader => _context.Resource.RequiredHeaders.Contains(requestMessageHeader.Key));
         }
     }
 }

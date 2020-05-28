@@ -2,6 +2,6 @@
 {
     public interface IPipelineStage
     {
-        PipelineDescriptor PipelineDescriptor { get; }
+        PipelineContext PipelineContext { get; }
     }
 }

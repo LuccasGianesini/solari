@@ -12,20 +12,20 @@ namespace Solari.Ganymede.Pipeline
     public class PipelineManager
     {
         private readonly HttpClient _client;
-        private PipelineDescriptor _currentDescriptor;
+        private PipelineContext _currentContext;
         private bool _messageConfigured;
         private bool _uriConfigured;
 
         public PipelineManager(HttpClient client, GanymedeRequestResource resource)
         {
             _client = client;
-            _currentDescriptor = new PipelineDescriptor(resource);
+            _currentContext = new PipelineContext(resource);
         }
 
         public PipelineManager(HttpClient client, string uri)
         {
             _client = client;
-            _currentDescriptor = new PipelineDescriptor(uri);
+            _currentContext = new PipelineContext(uri);
         }
 
         /// <summary>
@@ -33,9 +33,9 @@ namespace Solari.Ganymede.Pipeline
         /// </summary>
         /// <param name="messageStage">Function to be invoked</param>
         /// <returns></returns>
-        public PipelineManager ConfigureHttpMessage(Func<MessageStage, PipelineDescriptor> messageStage)
+        public PipelineManager ConfigureHttpMessage(Func<MessageStage, PipelineContext> messageStage)
         {
-            _currentDescriptor = messageStage(new MessageStage(_currentDescriptor));
+            _currentContext = messageStage(new MessageStage(_currentContext));
             _messageConfigured = true;
 
             return this;
@@ -46,9 +46,9 @@ namespace Solari.Ganymede.Pipeline
         /// </summary>
         /// <param name="contentStage">Function to be invoked</param>
         /// <returns></returns>
-        public PipelineManager ConfigureRequestContent(Func<ContentStage, PipelineDescriptor> contentStage)
+        public PipelineManager ConfigureRequestContent(Func<ContentStage, PipelineContext> contentStage)
         {
-            _currentDescriptor = contentStage(new ContentStage(_currentDescriptor));
+            _currentContext = contentStage(new ContentStage(_currentContext));
 
             return this;
         }
@@ -58,9 +58,9 @@ namespace Solari.Ganymede.Pipeline
         /// </summary>
         /// <param name="headerStage">Function to be invoked</param>
         /// <returns></returns>
-        public PipelineManager ConfigureRequestHeaders(Func<HeaderStage, PipelineDescriptor> headerStage)
+        public PipelineManager ConfigureRequestHeaders(Func<HeaderStage, PipelineContext> headerStage)
         {
-            _currentDescriptor = headerStage(new HeaderStage(_currentDescriptor));
+            _currentContext = headerStage(new HeaderStage(_currentContext));
 
             return this;
         }
@@ -70,9 +70,9 @@ namespace Solari.Ganymede.Pipeline
         /// </summary>
         /// <param name="uriStage">Function to be invoked</param>
         /// <returns></returns>
-        public PipelineManager ConfigureRequestUri(Func<UriStage, PipelineDescriptor> uriStage)
+        public PipelineManager ConfigureRequestUri(Func<UriStage, PipelineContext> uriStage)
         {
-            _currentDescriptor = uriStage(new UriStage(_currentDescriptor));
+            _currentContext = uriStage(new UriStage(_currentContext));
             _uriConfigured = true;
 
             return this;
@@ -81,7 +81,7 @@ namespace Solari.Ganymede.Pipeline
         public ValueTask<GanymedeHttpResponse> Send()
         {
             _executeDefaultActions();
-            return new HttpRequestCoordinator(_client, _currentDescriptor).Send(_currentDescriptor.RequestMessage);
+            return new HttpRequestCoordinator(_client, _currentContext).Send(_currentContext.RequestMessage);
         }
 
         private void _executeDefaultActions()

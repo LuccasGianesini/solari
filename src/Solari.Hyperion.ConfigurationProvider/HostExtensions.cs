@@ -11,7 +11,7 @@ namespace Solari.Hyperion.ConfigurationProvider
 {
     public static class HostExtensions
     {
-        public static IConfigurationBuilder UseHyperion(this IConfigurationBuilder builder, Func<HyperionOptions, HyperionOptions> func)
+        private static IConfigurationBuilder UseHyperion(this IConfigurationBuilder builder, Func<HyperionOptions, HyperionOptions> func)
         {
             IConfigurationRoot configRoot = builder.Build();
 
@@ -28,38 +28,40 @@ namespace Solari.Hyperion.ConfigurationProvider
             return builder;
         }
 
-        public static IWebHostBuilder UseHyperion(this IWebHostBuilder builder)
+        public static IWebHostBuilder UseHyperion(this IWebHostBuilder builder, bool addHyperionServices)
         {
             builder.ConfigureAppConfiguration(configurationBuilder => configurationBuilder.UseHyperion(null))
-                   .ConfigureServices((context, collection) => { AddHyperion(collection, context.Configuration); });
+                   .ConfigureServices((context, collection) => { AddHyperion(collection, context.Configuration, addHyperionServices); });
             return builder;
         }
 
-        public static IHostBuilder UseHyperion(this IHostBuilder builder)
+        public static IHostBuilder UseHyperion(this IHostBuilder builder,bool addHyperionServices)
         {
             builder.ConfigureAppConfiguration(configurationBuilder => configurationBuilder.UseHyperion(null))
-                   .ConfigureServices((context, collection) => { AddHyperion(collection, context.Configuration); });
+                   .ConfigureServices((context, collection) => { AddHyperion(collection, context.Configuration, addHyperionServices); });
             return builder;
         }
 
-        public static IWebHostBuilder UseHyperion(this IWebHostBuilder builder, Func<HyperionOptions, HyperionOptions> options)
+        public static IWebHostBuilder UseHyperion(this IWebHostBuilder builder, Func<HyperionOptions, HyperionOptions> options, bool addHyperionServices)
         {
             builder.ConfigureAppConfiguration(configurationBuilder => configurationBuilder.UseHyperion(options))
-                   .ConfigureServices((context, collection) => { AddHyperion(collection, context.Configuration); });
+                   .ConfigureServices((context, collection) => { AddHyperion(collection, context.Configuration, addHyperionServices); });
             ;
             return builder;
         }
 
-        public static IHostBuilder UseHyperion(this IHostBuilder builder, Func<HyperionOptions, HyperionOptions> options)
+        public static IHostBuilder UseHyperion(this IHostBuilder builder, Func<HyperionOptions, HyperionOptions> options, bool addHyperionServices)
         {
             builder.ConfigureAppConfiguration(configurationBuilder => configurationBuilder.UseHyperion(options))
-                   .ConfigureServices((context, collection) => { AddHyperion(collection, context.Configuration); });
+                   .ConfigureServices((context, collection) => { AddHyperion(collection, context.Configuration, addHyperionServices); });
             return builder;
         }
 
 
-        private static void AddHyperion(IServiceCollection collection, IConfiguration configuration)
+        private static void AddHyperion(IServiceCollection collection, IConfiguration configuration, bool addHyperionServices)
         {
+            if(!addHyperionServices)
+                return;
             HyperionOptions options = SolariBuilderExtensions.ConfigureHyperionOptions(collection, configuration);
             SolariBuilderExtensions.AddHyperionCoreServices(collection, options);
             SolariBuilderExtensions.RegisterApplication(collection, options);

@@ -8,11 +8,11 @@ namespace Solari.Ganymede.Pipeline
 {
     public class ContentStage : IPipelineStage
     {
-        public ContentStage(PipelineDescriptor pipelineDescriptor) { PipelineDescriptor = pipelineDescriptor; }
+        public ContentStage(PipelineContext pipelineContext) { PipelineContext = pipelineContext; }
 
-        public PipelineDescriptor PipelineDescriptor { get; }
+        public PipelineContext PipelineContext { get; }
 
-        public static implicit operator PipelineDescriptor(ContentStage contentStage) { return contentStage.PipelineDescriptor; }
+        public static implicit operator PipelineContext(ContentStage contentStage) { return contentStage.PipelineContext; }
 
         /// <summary>
         ///     Use the <see cref="GanymedeRequestResource" /> object to set the necessary attribute values.
@@ -20,10 +20,10 @@ namespace Solari.Ganymede.Pipeline
         /// <returns></returns>
         public ContentStage UseGanymedeEndpointOptions()
         {
-            if (PipelineDescriptor.Resource == null) return this;
+            if (PipelineContext.Resource == null) return this;
 
-            WithContentSerializer(PipelineDescriptor.Resource.GetSerializer());
-            WithContentDeserializer(PipelineDescriptor.Resource.GetDeserializer());
+            WithContentSerializer(PipelineContext.Resource.GetSerializer());
+            WithContentDeserializer(PipelineContext.Resource.GetDeserializer());
 
             return this;
         }
@@ -37,7 +37,7 @@ namespace Solari.Ganymede.Pipeline
         /// <returns></returns>
         public ContentStage SerializeContent(object content, string contentType = "", Encoding encoding = null)
         {
-            PipelineDescriptor.RequestMessage.Content = SerializerManager.SendToSerializer(content, PipelineDescriptor.RequestMessage,
+            PipelineContext.RequestMessage.Content = SerializerManager.SendToSerializer(content, PipelineContext.RequestMessage,
                                                                                            contentType, encoding);
 
             return this;
@@ -58,7 +58,7 @@ namespace Solari.Ganymede.Pipeline
         /// <param name="contentSerializer">Serializer class instance</param>
         public ContentStage WithContentDeserializer(IContentDeserializer contentSerializer)
         {
-            PipelineDescriptor.RequestMessage.SetContentDeserializer(contentSerializer);
+            PipelineContext.RequestMessage.SetContentDeserializer(contentSerializer);
 
             return this;
         }
@@ -78,7 +78,7 @@ namespace Solari.Ganymede.Pipeline
         /// <param name="contentSerializer">Serializer class instance</param>
         public ContentStage WithContentSerializer(IContentSerializer contentSerializer)
         {
-            PipelineDescriptor.RequestMessage.SetContentSerializer(contentSerializer);
+            PipelineContext.RequestMessage.SetContentSerializer(contentSerializer);
 
             return this;
         }

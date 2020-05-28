@@ -6,7 +6,7 @@ namespace Solari.Ganymede.Framework
 {
     public static class StreamHelper
     {
-        //TODO - Use Sytem.Text.Json
+        
         public static T DeserializeJsonFromStream<T>(Stream stream, string rootNode)
         {
             if (stream == null || stream.CanRead == false)

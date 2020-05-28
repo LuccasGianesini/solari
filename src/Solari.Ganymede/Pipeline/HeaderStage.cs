@@ -14,15 +14,15 @@ namespace Solari.Ganymede.Pipeline
     {
         private readonly HttpRequestMessageHeaderBuilder _headerBuilder;
 
-        public HeaderStage(PipelineDescriptor pipeline)
+        public HeaderStage(PipelineContext pipeline)
         {
-            PipelineDescriptor = pipeline;
+            PipelineContext = pipeline;
             _headerBuilder = new HttpRequestMessageHeaderBuilder(pipeline.RequestMessage);
         }
 
-        public PipelineDescriptor PipelineDescriptor { get; }
+        public PipelineContext PipelineContext { get; }
 
-        public static implicit operator PipelineDescriptor(HeaderStage headerStage) { return headerStage.PipelineDescriptor; }
+        public static implicit operator PipelineContext(HeaderStage headerStage) { return headerStage.PipelineContext; }
 
         public HeaderStage Accept(string value, double? quality = null)
         {
@@ -68,7 +68,7 @@ namespace Solari.Ganymede.Pipeline
 
         public HeaderStage CorrelationContext(ICorrelationContextManager manager, string messageId = "")
         {
-            PipelineDescriptor.RequestMessage.AddCorrelationContext(manager.GetOrCreateAndSet(messageId));
+            PipelineContext.RequestMessage.AddCorrelationContext(manager.GetOrCreateAndSet(messageId));
             return this;
         }
 
@@ -183,9 +183,9 @@ namespace Solari.Ganymede.Pipeline
         /// <returns></returns>
         public HeaderStage UseGanymedeEndpointOptions()
         {
-            if (PipelineDescriptor.Resource.ResourceHeaders.Count <= 0) return this;
+            if (PipelineContext.Resource.ResourceHeaders.Count <= 0) return this;
 
-            foreach (GanymedeRequestHeader headerOptions in PipelineDescriptor.Resource.ResourceHeaders)
+            foreach (GanymedeRequestHeader headerOptions in PipelineContext.Resource.ResourceHeaders)
             {
                 IHeaderBuilderCommand headerCommand = CommandTypeRegistry.Instance.TryGetCommandType(headerOptions.Name.Trim().ToUpperInvariant());
                 headerCommand?.Execute(_headerBuilder, headerOptions.KeyOrQuality, headerOptions.Value);
