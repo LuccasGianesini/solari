@@ -3,15 +3,15 @@ using Solari.Ganymede.Domain.Options;
 
 namespace Solari.Ganymede.Pipeline
 {
-    public class PipelineDescriptor
+    public class PipelineContext
     {
-        public PipelineDescriptor(GanymedeRequestResource resource)
+        public PipelineContext(GanymedeRequestResource resource)
         {
             Resource = resource;
             ConfigureInstance(resource.Uri);
         }
 
-        public PipelineDescriptor(string uri) { ConfigureInstance(uri); }
+        public PipelineContext(string uri) { ConfigureInstance(uri); }
 
         public GanymedeRequestResource Resource { get; }
         public HttpRequestMessage RequestMessage { get; private set; }

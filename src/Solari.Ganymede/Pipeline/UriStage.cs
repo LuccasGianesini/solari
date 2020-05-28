@@ -15,19 +15,19 @@ namespace Solari.Ganymede.Pipeline
         private readonly StringBuilder _stringBuilder;
         private bool _inited;
 
-        public UriStage(PipelineDescriptor pipelineDescriptor)
+        public UriStage(PipelineContext pipelineContext)
         {
-            PipelineDescriptor = pipelineDescriptor;
-            _stringBuilder = new StringBuilder(pipelineDescriptor.TargetUri);
+            PipelineContext = pipelineContext;
+            _stringBuilder = new StringBuilder(pipelineContext.TargetUri);
         }
 
-        public PipelineDescriptor PipelineDescriptor { get; }
+        public PipelineContext PipelineContext { get; }
 
-        public static implicit operator PipelineDescriptor(UriStage uriStage)
+        public static implicit operator PipelineContext(UriStage uriStage)
         {
-            uriStage.PipelineDescriptor.RequestMessage.RequestUri = new Uri(uriStage._stringBuilder.ToString(), UriKind.RelativeOrAbsolute);
+            uriStage.PipelineContext.RequestMessage.RequestUri = new Uri(uriStage._stringBuilder.ToString(), UriKind.RelativeOrAbsolute);
 
-            return uriStage.PipelineDescriptor;
+            return uriStage.PipelineContext;
         }
 
         /// <summary>

@@ -14,10 +14,10 @@ namespace Solari.Sol.Utils
         /// <returns><see cref="IEnumerable{T}" />. T being <see cref="Assembly" /></returns>
         public static IEnumerable<Assembly> GetAssembliesFromAppDomain()
         {
-            //TODO Find a more efficient way
-            return Assembly.GetEntryAssembly()
-                           ?.GetReferencedAssemblies().AsEnumerable()
-                           .Select(assemblyName => AssemblyLoadContext.Default.LoadFromAssemblyName(assemblyName)).ToList();
+            return AppDomain.CurrentDomain.GetAssemblies();
+            // return Assembly.GetEntryAssembly()
+            //                ?.GetReferencedAssemblies().AsEnumerable()
+            //                .Select(assemblyName => AssemblyLoadContext.Default.LoadFromAssemblyName(assemblyName)).ToList();
         }
 
         /// <summary>

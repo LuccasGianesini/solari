@@ -35,7 +35,6 @@ namespace Solari.Themis
 
         public void TraceException(Exception exception, string customMessage = null, LogLevel level = LogLevel.Error)
         {
-            //TODO TEST IF STACK TRACE IS LOGGED.
             _logger.Log(level, exception, string.IsNullOrEmpty(customMessage) ? exception.Message : customMessage);
             _metrics.Measure.Counter.Increment(MetricsRegistry.ErrorMetrics.CatchExceptionTotal);
             BuildExceptionSpan(TraceOperation("Exception"), exception);
