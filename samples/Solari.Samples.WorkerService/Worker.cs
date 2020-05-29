@@ -25,7 +25,7 @@ namespace Solari.Samples.WorkerService
             long i = 0;
             while (!stoppingToken.IsCancellationRequested)
             {
-            
+                await Task.Delay(100, stoppingToken);
                 i++;
             }
         }

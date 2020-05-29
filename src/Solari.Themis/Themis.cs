@@ -12,49 +12,24 @@ namespace Solari.Themis
     {
         private readonly IMetrics _metrics;
         private readonly ITracer _tracer;
-        private readonly ILogger<Themis> _logger;
+        private readonly IThemis _themis;
 
-
-        public Themis(IMetrics metrics, ITracer tracer, ILogger<Themis> logger)
+        public Themis(IMetrics metrics, ITracer tracer, ILogger<ThemisNoMetrics> logger)
         {
             _metrics = metrics;
             _tracer = tracer;
-            _logger = logger;
+            _themis = new ThemisNoMetrics(tracer, logger);
         }
 
         public ISpan TraceOperation(string operationName)
         {
-            IScope activeScope = _tracer.ScopeManager.Active;
-            ISpanBuilder spanBuilder = _tracer.BuildSpan(operationName);
-            return activeScope?.Span is null
-                       ? spanBuilder.StartActive(true).Span
-                       : spanBuilder
-                         .AsChildOf(_tracer.ScopeManager.Active.Span)
-                         .Start();
+            return _themis.TraceOperation(operationName);
         }
 
         public void TraceException(Exception exception, string customMessage = null, LogLevel level = LogLevel.Error)
         {
-            _logger.Log(level, exception, string.IsNullOrEmpty(customMessage) ? exception.Message : customMessage);
+            _themis.TraceException(exception, customMessage, level);
             _metrics.Measure.Counter.Increment(MetricsRegistry.ErrorMetrics.CatchExceptionTotal);
-            BuildExceptionSpan(TraceOperation("Exception"), exception);
-        }
-
-
-        private static ISpan BuildExceptionSpan(ISpan span, Exception exception)
-        {
-            return span.SetTag(Tags.Error, true)
-                       .SetTag("catch", true)
-                       .Log(ExtractExceptionInfo(exception));
-        }
-
-        private static IDictionary<string, object> ExtractExceptionInfo(Exception ex)
-        {
-            return new Dictionary<string, object>
-            {
-                {"Message", ex.Message},
-                {"StackTrace", ex.StackTrace}
-            };
         }
     }
 }
