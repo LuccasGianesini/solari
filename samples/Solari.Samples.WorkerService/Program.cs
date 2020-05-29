@@ -4,9 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Solari.Deimos;
 using Solari.Ganymede.DependencyInjection;
+using Solari.Hyperion.ConfigurationProvider;
 using Solari.Oberon;
 using Solari.Sol;
-using Solari.Titan.DependencyInjection;
 
 namespace Solari.Samples.WorkerService
 {
@@ -15,7 +15,7 @@ namespace Solari.Samples.WorkerService
         public static async Task Main(string[] args)
         {
             IHost host = CreateHostBuilder(args)
-                         .UseTitan()
+                         .UseHyperion(false)
                          .Build();
             try
             {

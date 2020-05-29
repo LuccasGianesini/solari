@@ -9,18 +9,12 @@ namespace Solari.Callisto.Connector
     {
         public ICallistoConnection Make(CallistoConnectorOptions callistoOptions, ApplicationOptions appOptions)
         {
-            if (string.IsNullOrEmpty(callistoOptions.ConnectionString))
-                return new CallistoConnectionBuilder()
-                       .WithMongoClient(builder => builder.WithCallistoConnectionOptions(callistoOptions, appOptions.ApplicationName)
-                                                          .WithConnectionString(callistoOptions.ConnectionString)
-                                                          .Build())
-                       .WithDataBaseName(callistoOptions.Database)
-                       .Build();
-
-            return new CallistoConnectionBuilder().WithMongoClient(builder => builder
-                                                                       .Build())
-                                                  .WithDataBaseName(callistoOptions.Database)
-                                                  .Build();
+            return new CallistoConnectionBuilder()
+                   .WithMongoClient(builder => builder.WithCallistoConnectionOptions(callistoOptions, appOptions.ApplicationName)
+                                                      .WithConnectionString(callistoOptions.ConnectionString)
+                                                      .Build())
+                   .WithDataBaseName(callistoOptions.Database)
+                   .Build();
         }
 
         public ICallistoConnection Make(Func<CallistoConnectionBuilder, CallistoConnection> builder)

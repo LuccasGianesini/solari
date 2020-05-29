@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/.idea.Solari/.idea/.idea.Solari.iml" filepath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/.idea.Solari.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/.idea.Solari/riderModule.iml" filepath="$PROJECT_DIR$/.idea/.idea.Solari/riderModule.iml" />
     </modules>
   </component>

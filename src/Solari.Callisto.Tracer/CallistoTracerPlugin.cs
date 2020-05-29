@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using OpenTracing;
 using Solari.Callisto.Abstractions;
@@ -26,8 +27,19 @@ namespace Solari.Callisto.Tracer
             {
                 Action = provider =>
                 {
-                    var hook = provider.GetRequiredService<ICallistoClientHook>();
-                    hook.AddHook();
+                    try
+                    {
+                        var hook = provider.GetService<ICallistoClientHook>();
+                        if(hook is null)
+                            return;
+                        hook.AddHook();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
+                    
                 }
             });
         }
