@@ -23,14 +23,14 @@ namespace Solari.Callisto.Connector.DependencyInjection
             //     ICallistoConnection connection = factory.Make(callistoOptions.Value, appOptions.Value);
             //     return connection as CallistoConnection;
             // });
-            solariBuilder.AddBuildAction(new BuildAction("Callisto.Connector (CreateMongoDbConnection)")
+            solariBuilder.AddBuildAction(new BuildAction("Solari.Callisto.Connector (CreateMongoDbConnection)")
             {
                 Action = provider =>
                 {
-                    var factory = provider.GetService<ICallistoConnectionFactory>();
                     var appOptions = provider.GetService<IOptions<ApplicationOptions>>();
                     var callistoOptions = provider.GetService<IOptions<CallistoConnectorOptions>>();
                     var conn = provider.GetService<ICallistoConnection>();
+                    CallistoLogger.ConnectionLogger.CreatingConnection();
                     MongoClient client = new MongoClientBuilder()
                                          .WithConnectorOptions(callistoOptions.Value)
                                          .WithConnectionString(callistoOptions.Value.ConnectionString)
@@ -38,6 +38,7 @@ namespace Solari.Callisto.Connector.DependencyInjection
                                          .Build();
                     conn.AddClient(client);
                     conn.ChangeDatabase(callistoOptions.Value.Database);
+                    
                 }
             });
             return solariBuilder;

@@ -46,22 +46,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f4ec7eb1-8286-4aa8-a378-790d381b8ce1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/.idea.Solari.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/indexLayout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Solari/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solari/riderModule.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Solari.sln.DotSettings" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/samples/Solari.Samples.WorkerService/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/samples/Solari.Samples.WorkerService/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Solari.Callisto.Connector/CallistoConnectionFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Callisto.Connector/CallistoConnectionFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Solari.Callisto.Abstractions/CallistoLogger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Callisto.Abstractions/CallistoLogger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Solari.Callisto.Connector/CallistoConnection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Callisto.Connector/CallistoConnection.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Solari.Callisto.Connector/DependencyInjection/Extensions.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Solari.Callisto.Connector/DependencyInjection/SolariBuilderExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Callisto.Connector/DependencyInjection/SolariBuilderExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Solari.Callisto.Connector/MongoClientBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Callisto.Connector/MongoClientBuilder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Solari.Callisto.Tracer/CallistoTracerPlugin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Callisto.Tracer/CallistoTracerPlugin.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Solari.Sol/SolariMarshalExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Sol/SolariMarshalExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Solari.Titan.Abstractions/JaegerEnricher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Titan.Abstractions/JaegerEnricher.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,19 +61,28 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Abstractions/CallistoLogger.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/ICallistoConnection.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/samples/Solari.Samples.WebApi/Startup.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/CallistoConnectionFactory.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto/DependencyInjection/SolariBuilderExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/CallistoConnectionBuilder.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/DependencyInjection/SolariBuilderExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Sol/Framework/SolariMarshal.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/MongoClientBuilder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Sol/SolariMarshalExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Vanth/ExceptionHandlingMiddleware.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/CallistoConnection.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Sol/ApplicationOptions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto/DependencyInjection/SolariBuilderExtensions.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/Solari.Callisto.Connector/CallistoConnectionFactory.cs" />
-        <option value="$PROJECT_DIR$/src/Solari.Callisto.Connector/DependencyInjection/SolariBuilderExtensions.cs" />
         <option value="$PROJECT_DIR$/src/Solari.Callisto.Connector/MongoClientBuilder.cs" />
+        <option value="$PROJECT_DIR$/src/Solari.Callisto.Abstractions/CallistoLogger.cs" />
+        <option value="$PROJECT_DIR$/src/Solari.Callisto.Connector/CallistoConnection.cs" />
+        <option value="$PROJECT_DIR$/src/Solari.Callisto.Connector/DependencyInjection/SolariBuilderExtensions.cs" />
       </list>
     </option>
   </component>
@@ -96,6 +94,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.35010707" />
+    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.29978585" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -144,7 +144,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1590767747999</updated>
-      <workItem from="1590767774251" duration="526000" />
+      <workItem from="1590767774251" duration="1381000" />
     </task>
     <servers />
   </component>
@@ -168,6 +168,86 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state width="1899" height="377" key="GridCell.Tab.0.bottom" timestamp="1590768741152">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.0.bottom/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768741152" />
+    <state width="1899" height="377" key="GridCell.Tab.0.center" timestamp="1590768741152">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.0.center/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768741152" />
+    <state width="1899" height="377" key="GridCell.Tab.0.left" timestamp="1590768741152">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.0.left/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768741152" />
+    <state width="1899" height="377" key="GridCell.Tab.0.right" timestamp="1590768741152">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.0.right/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768741152" />
+    <state width="1899" height="377" key="GridCell.Tab.1.bottom" timestamp="1590768722198">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.1.bottom/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722198" />
+    <state width="1899" height="377" key="GridCell.Tab.1.center" timestamp="1590768722198">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.1.center/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722198" />
+    <state width="1899" height="377" key="GridCell.Tab.1.left" timestamp="1590768722198">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.1.left/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722198" />
+    <state width="1899" height="377" key="GridCell.Tab.1.right" timestamp="1590768722198">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.1.right/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722198" />
+    <state width="1899" height="377" key="GridCell.Tab.2.bottom" timestamp="1590768722199">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.2.bottom/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722199" />
+    <state width="1899" height="377" key="GridCell.Tab.2.center" timestamp="1590768722198">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.2.center/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722198" />
+    <state width="1899" height="377" key="GridCell.Tab.2.left" timestamp="1590768722198">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.2.left/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722198" />
+    <state width="1899" height="377" key="GridCell.Tab.2.right" timestamp="1590768722198">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.2.right/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722198" />
+    <state width="1899" height="377" key="GridCell.Tab.3.bottom" timestamp="1590768722199">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.3.bottom/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722199" />
+    <state width="1899" height="377" key="GridCell.Tab.3.center" timestamp="1590768722199">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.3.center/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722199" />
+    <state width="1899" height="377" key="GridCell.Tab.3.left" timestamp="1590768722199">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.3.left/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722199" />
+    <state width="1899" height="377" key="GridCell.Tab.3.right" timestamp="1590768722199">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.3.right/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722199" />
+    <state width="1899" height="377" key="GridCell.Tab.4.bottom" timestamp="1590768722199">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.4.bottom/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722199" />
+    <state width="1899" height="377" key="GridCell.Tab.4.center" timestamp="1590768722199">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.4.center/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722199" />
+    <state width="1899" height="377" key="GridCell.Tab.4.left" timestamp="1590768722199">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.4.left/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722199" />
+    <state width="1899" height="377" key="GridCell.Tab.4.right" timestamp="1590768722199">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1899" height="377" key="GridCell.Tab.4.right/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722199" />
     <state x="494" y="188" width="932" height="737" key="SettingsEditor" timestamp="1590767884029">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
@@ -181,10 +261,10 @@
           <line>28</line>
           <properties documentPath="$PROJECT_DIR$/src/Solari.Callisto.Connector/DependencyInjection/SolariBuilderExtensions.cs" initialLine="27">
             <startOffsets>
-              <option value="1632" />
+              <option value="1639" />
             </startOffsets>
             <endOffsets>
-              <option value="1633" />
+              <option value="1640" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="1" />
