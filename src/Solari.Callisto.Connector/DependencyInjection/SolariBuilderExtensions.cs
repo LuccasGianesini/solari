@@ -14,15 +14,33 @@ namespace Solari.Callisto.Connector.DependencyInjection
                                                                        .AppConfiguration
                                                                        .GetSection(CallistoConstants.ConnectorAppSettingsSection));
             solariBuilder.Services.AddSingleton<ICallistoConnectionFactory, CallistoConnectionFactory>();
-            solariBuilder.Services.AddSingleton<ICallistoConnection, CallistoConnection>(provider =>
+            solariBuilder.Services.AddSingleton<ICallistoConnection, CallistoConnection>();
+            // solariBuilder.Services.AddSingleton<ICallistoConnection, CallistoConnection>(provider =>
+            // {
+            //     var factory = provider.GetService<ICallistoConnectionFactory>();
+            //     var appOptions = provider.GetService<IOptions<ApplicationOptions>>();
+            //     var callistoOptions = provider.GetService<IOptions<CallistoConnectorOptions>>();
+            //     ICallistoConnection connection = factory.Make(callistoOptions.Value, appOptions.Value);
+            //     return connection as CallistoConnection;
+            // });
+            solariBuilder.AddBuildAction(new BuildAction("Solari.Callisto.Connector (CreateMongoDbConnection)")
             {
-                var factory = provider.GetService<ICallistoConnectionFactory>();
-                var appOptions = provider.GetService<IOptions<ApplicationOptions>>();
-                var callistoOptions = provider.GetService<IOptions<CallistoConnectorOptions>>();
-                ICallistoConnection connection = factory.Make(callistoOptions.Value, appOptions.Value);
-                return connection as CallistoConnection;
+                Action = provider =>
+                {
+                    var appOptions = provider.GetService<IOptions<ApplicationOptions>>();
+                    var callistoOptions = provider.GetService<IOptions<CallistoConnectorOptions>>();
+                    var conn = provider.GetService<ICallistoConnection>();
+                    CallistoLogger.ConnectionLogger.CreatingConnection();
+                    MongoClient client = new MongoClientBuilder()
+                                         .WithConnectorOptions(callistoOptions.Value)
+                                         .WithConnectionString(callistoOptions.Value.ConnectionString)
+                                         .WithApplicationName(appOptions.Value.ApplicationName)
+                                         .Build();
+                    conn.AddClient(client);
+                    conn.ChangeDatabase(callistoOptions.Value.Database);
+                    
+                }
             });
-
             return solariBuilder;
         }
     }

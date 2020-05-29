@@ -26,8 +26,10 @@ namespace Solari.Callisto.Connector
 
         public ICallistoConnection AddClient(IMongoClient mongoClient)
         {
-            if (mongoClient == null) throw new ArgumentNullException(nameof(mongoClient));
+            if (mongoClient == null) throw new CallistoException($"Null {nameof(IMongoClient)} is not accepted in the connection dictionary");
+            
             _client.TryAdd(CallistoConstants.CallistoConnectorCacheKey, mongoClient);
+            CallistoLogger.ConnectionLogger.AddingMongoClient();
             return this;
         }
 

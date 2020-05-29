@@ -12,6 +12,11 @@ namespace Solari.Callisto.Abstractions
             {
                 Log.Debug($"{Prefix}Updating the current MongoClient. A connection with different settings was created. The current stored client will be updated");
             }
+            
+            public static void AddingMongoClient()
+            {
+                Log.Debug($"{Prefix}Adding a IMongoClient into the dictionary");
+            }
 
             public static void ChangingDatabase(string database)
             {
@@ -21,6 +26,11 @@ namespace Solari.Callisto.Abstractions
             public static void ConnectionStatus(string connectionState, string pingResult)
             {
                 Log.Debug($"{Prefix}MongoDb connection state is: {connectionState}. Ping result is: {pingResult}");
+            }
+
+            public static void CreatingConnection()
+            {
+                Log.Debug($"{Prefix}Creating callisto mongodb connection");
             }
         }
 

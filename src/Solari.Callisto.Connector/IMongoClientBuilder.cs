@@ -26,5 +26,7 @@ namespace Solari.Callisto.Connector
         /// <param name="options"></param>
         /// <returns></returns>
         IMongoClientBuilder WithConnectorOptions(CallistoConnectorOptions options);
+
+        IMongoClientBuilder WithApplicationName(string appName);
     }
 }

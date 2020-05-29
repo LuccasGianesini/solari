@@ -13,6 +13,7 @@ namespace Solari.Callisto.Connector
         private MongoClientSettings _mongoClientSettings;
         private MongoUrl _mongoUrl;
         private CallistoConnectorOptions _options;
+        private string _appName;
 
         public IMongoClientBuilder WithCallistoConnectionOptions(CallistoConnectorOptions connectorOptions, string applicationName)
         {
@@ -49,6 +50,11 @@ namespace Solari.Callisto.Connector
             return this;
         }
 
+        public IMongoClientBuilder WithApplicationName(string appName)
+        {
+            _appName = appName;
+            return this;
+        }
         public IMongoClientBuilder WithMongoClientSettings(MongoClientSettings clientSettings)
         {
             _mongoClientSettings = clientSettings;
@@ -113,7 +119,7 @@ namespace Solari.Callisto.Connector
             {
                 MongoClientSettings settings = new MongoClient(_connectionString).Settings.Clone();
                 settings.GuidRepresentation = _options?.GetGuidRepresentation() ?? GuidRepresentation.Standard;
-
+                settings.ApplicationName = _appName; 
                 {
                     mongoClient = new MongoClient(settings);
                     return true;

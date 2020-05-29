@@ -7,24 +7,28 @@ namespace Solari.Sol
 {
     public static class SolariMarshalExtensions
     {
-        public static ISolariMarshal UseSol(this IServiceProvider provider, Func<IServiceProvider, ISolariMarshal> func) { return func(provider); }
-
-        public static ISolariMarshal UseSol(this IApplicationBuilder builder, Func<IServiceProvider, ISolariMarshal> func)
+        public static IApplicationBuilder UseSol(this IApplicationBuilder applicationBuilder)
         {
-            return builder.ApplicationServices.UseSol(func);
+            applicationBuilder.ApplicationServices.UseSol(applicationBuilder);
+            return applicationBuilder;
         }
 
-        public static ISolariMarshal UseSol(this IHost host, Func<IServiceProvider, ISolariMarshal> func) { return host.Services.UseSol(func); }
-
-        public static ISolariMarshal UseSol(this IApplicationBuilder app) { return app.ApplicationServices.UseSol(app); }
-
-        public static ISolariMarshal UseSol(this IHost host) { return host.Services.UseSol(host: host); }
-
-        private static ISolariMarshal UseSol(this IServiceProvider provider, IApplicationBuilder applicationBuilder = null, IHost host = null)
+        public static IHost UseSol(this IHost host)
         {
-            return provider.UseSol(sp => sp.GetRequiredService<ISolariMarshal>()
-                                           .ConfigureApplication(provider, applicationBuilder, host)
-                                           .ExecuteBuildActions());
+            host.Services.UseSol(host: host);
+            return host;
+        }
+
+        public static IServiceProvider UseSol(this IServiceProvider provider)
+        {
+            return provider.UseSol();
+        }
+
+        private static IServiceProvider UseSol(this IServiceProvider provider, IApplicationBuilder applicationBuilder = null
+                                             , IHost host = null)
+        {
+            provider.GetRequiredService<ISolariMarshal>().ConfigureApplication(provider, applicationBuilder, host).ExecuteBuildActions();
+            return provider;
         }
     }
 }
