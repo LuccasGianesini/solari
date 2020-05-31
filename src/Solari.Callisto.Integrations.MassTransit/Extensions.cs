@@ -1,8 +1,11 @@
 using MassTransit;
+using MassTransit.Configuration;
 using MassTransit.MessageData;
+using MassTransit.MessageData.Conventions;
 using MassTransit.MongoDbIntegration;
 using MassTransit.MongoDbIntegration.MessageData;
 using MassTransit.MongoDbIntegration.Saga;
+using MassTransit.Transformation.TransformConfigurators;
 using Microsoft.Extensions.Configuration;
 using Solari.Callisto.Abstractions;
 using Solari.Callisto.Abstractions.Exceptions;
@@ -12,8 +15,9 @@ namespace Solari.Callisto.Integrations.MassTransit
 {
     public static class Extensions
     {
-        public static ISagaRegistrationConfigurator<TSaga> MongoDbRepositoryWithCallisto<TSaga>(this ISagaRegistrationConfigurator<TSaga> configurator,
-                                                                                                IConfiguration configuration)
+        public static ISagaRegistrationConfigurator<TSaga> MongoDbRepositoryWithCallisto<TSaga>(
+            this ISagaRegistrationConfigurator<TSaga> configurator,
+            IConfiguration configuration)
             where TSaga : class, IVersionedSaga
         {
             CallistoConnectorOptions options = GetCallistoConnectionOptions(configuration);
@@ -37,7 +41,19 @@ namespace Solari.Callisto.Integrations.MassTransit
             return options;
         }
 
-        public static IMessageDataRepository MessageDataRepositoryWithCallisto(this IMessageDataRepository config, IConfiguration configuration)
+        public static void UseMessageDataRepositoryWithCallisto(this IBusFactoryConfigurator configurator, IConfiguration
+                                                                    appConfiguration)
+        {
+            IMessageDataRepository repository = MessageDataRepositoryWithCallisto(appConfiguration);
+            if (configurator.ConsumeTopology.TryAddConvention(new MessageDataConsumeTopologyConvention(repository))
+             && configurator.SendTopology.TryAddConvention(new MessageDataSendTopologyConvention(repository)))
+            {
+                // Courier does not use ConsumeContext, so it needs to be special
+                var observer = new CourierMessageDataConfigurationObserver(configurator, repository, false);
+            }
+        }
+
+        private static IMessageDataRepository MessageDataRepositoryWithCallisto(IConfiguration configuration)
         {
             CallistoConnectorOptions options = GetCallistoConnectionOptions(configuration);
             return new MongoDbMessageDataRepository(options.ConnectionString, options.Database);

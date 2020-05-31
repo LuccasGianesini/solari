@@ -47,7 +47,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f4ec7eb1-8286-4aa8-a378-790d381b8ce1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/DeserializationStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/DeserializationStage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Solari.Callisto.Integrations.MassTransit/Extensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Callisto.Integrations.MassTransit/Extensions.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +62,7 @@
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/IGanymedeRequest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/ContentSerializers/IContentDeserializer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Abstractions/CallistoLogger.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/ContentSerializers/JsonContent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/ICallistoConnection.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/CallistoConnectionFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/A85FC8FE-59F0-4086-875E-669991D7ED54/1/AutomatonymousStateMachine.cs" root0="SKIP_HIGHLIGHTING" />
@@ -93,6 +94,7 @@
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/DeserializationStage.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Framework/Commands/CustomHeaderCommand.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Callisto/DependencyInjection/SolariBuilderExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Integrations.MassTransit/Extensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/DependencyInjection/HttpClientActions.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -104,6 +106,7 @@
         <option value="$PROJECT_DIR$/src/Solari.Callisto.Connector/CallistoConnection.cs" />
         <option value="$PROJECT_DIR$/src/Solari.Callisto.Connector/DependencyInjection/SolariBuilderExtensions.cs" />
         <option value="$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/DeserializationStage.cs" />
+        <option value="$PROJECT_DIR$/src/Solari.Callisto.Integrations.MassTransit/Extensions.cs" />
       </list>
     </option>
   </component>
@@ -121,6 +124,12 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Solari.Samples.WebApi">
@@ -166,6 +175,7 @@
       <option name="presentableId" value="Default" />
       <updated>1590767747999</updated>
       <workItem from="1590767774251" duration="1381000" />
+      <workItem from="1590959624399" duration="472000" />
     </task>
     <servers />
   </component>
