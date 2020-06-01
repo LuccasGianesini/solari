@@ -1,8 +1,17 @@
+<#
+ .SYNOPSIS
+ This is a script that builds the next version of the packages.
+ .DESCRIPTION
+  This ps1 script will read the tag in the git repo and build the next version, based on the the current 
+  repository state.  
+#>
+
 [CmdletBinding()]
 param (
   $BRANCH_NAME,
   $BUILD_ARTIFACT_DIR
 )
+
 # Fix current prod version pointing to beta.
 # rev list not counting number of commits.
 

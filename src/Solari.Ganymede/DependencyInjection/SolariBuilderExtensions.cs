@@ -27,9 +27,9 @@ namespace Solari.Ganymede.DependencyInjection
             builder.Services.Configure<GanymedePolicyOptions>(builder.AppConfiguration.GetSection(GanymedeConstants.HttpPolicies));
             builder
                 .Services
-                .AddSingleton<GanymedePolicyRegistry>()
+                .AddSingleton<IGanymedePolicyRegistry, GanymedePolicyRegistry>()
                 .AddPolicyRegistry();
-            builder.Services.TryAddSingleton(provider => provider.GetRequiredService<GanymedePolicyRegistry>());
+            builder.Services.TryAddSingleton(provider => provider.GetRequiredService<IGanymedePolicyRegistry>());
         }
     }
 }

@@ -22,9 +22,8 @@ namespace Solari.Ganymede.ContentSerializers
                 Converters =
                 {
                     new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
-                },
-                WriteIndented = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                }
+              , WriteIndented = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
         }
 
@@ -32,7 +31,8 @@ namespace Solari.Ganymede.ContentSerializers
         {
             if (content == null) return Maybe<TModel>.None;
 
-            var model = await System.Text.Json.JsonSerializer.DeserializeAsync<TModel>(await content.ReadAsStreamAsync(), _serializerOptions);
+            var model =
+                await System.Text.Json.JsonSerializer.DeserializeAsync<TModel>(await content.ReadAsStreamAsync(), _serializerOptions);
 
             return model == null ? Maybe<TModel>.None : Maybe<TModel>.Some(model);
         }
@@ -42,7 +42,10 @@ namespace Solari.Ganymede.ContentSerializers
     {
         private readonly JsonSerializer _serializer;
 
-        public JsonContentSerializer(JsonSerializerSettings jsonSerializerSettings = null) { _serializer = _createJsonSerializer(jsonSerializerSettings); }
+        public JsonContentSerializer(JsonSerializerSettings jsonSerializerSettings = null)
+        {
+            _serializer = _createJsonSerializer(jsonSerializerSettings);
+        }
 
         public HttpContent Serialize(object content, string contentType, Encoding encoding = null)
         {

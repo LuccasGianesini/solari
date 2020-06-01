@@ -88,7 +88,7 @@ namespace Solari.Ganymede.Pipeline
         /// </param>
         public MessageStage WithHttpVersion(Version version)
         {
-            PipelineContext.RequestMessage.Version = version ?? throw new ArgumentNullException(nameof(version));
+            PipelineContext.RequestMessage.Version = version ?? Version.Parse("1.1");
 
             return this;
         }

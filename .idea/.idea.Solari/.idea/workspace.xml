@@ -8,11 +8,6 @@
       </path>
       <path>
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:releases" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
       </path>
       <path>
@@ -45,9 +40,21 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4ec7eb1-8286-4aa8-a378-790d381b8ce1" name="Default Changelist" comment="">
+    <list default="true" id="fcc02a9c-d01d-42b5-a0c1-898a055c4556" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Solari.Ganymede/Framework/IGanymedePolicyRegistry.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Solari.Callisto.Integrations.MassTransit/Extensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Callisto.Integrations.MassTransit/Extensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Solari/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solari/riderModule.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/version.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/version.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Solari.Ganymede/ContentSerializers/JsonContent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Ganymede/ContentSerializers/JsonContent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Solari.Ganymede/DependencyInjection/HttpClientActions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Ganymede/DependencyInjection/HttpClientConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Solari.Ganymede/DependencyInjection/PolicyActions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Ganymede/DependencyInjection/PolicyActions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Solari.Ganymede/DependencyInjection/SolariBuilderExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Ganymede/DependencyInjection/SolariBuilderExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Solari.Ganymede/Domain/Exceptions/NullGanymedeRequestSettingsException.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Solari.Ganymede/Framework/GanymedePolicyRegistry.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Ganymede/Framework/GanymedePolicyRegistry.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Solari.Ganymede/GanymedeRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Ganymede/GanymedeRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/HeaderStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/HeaderStage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/MessageStage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/MessageStage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Solari.Ganymede/Requester.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Ganymede/Requester.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,71 +65,72 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/GanymedeClient.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/IGanymedeRequest.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/ContentSerializers/IContentDeserializer.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Abstractions/CallistoLogger.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/ContentSerializers/JsonContent.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/ICallistoConnection.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/CallistoConnectionFactory.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/A85FC8FE-59F0-4086-875E-669991D7ED54/1/AutomatonymousStateMachine.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/CallistoConnectionBuilder.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Domain/Options/GanymedeRequestHeader.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/DependencyInjection/SolariBuilderExtensions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/MongoClientBuilder.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Domain/Exceptions/GanymedeHttpException.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/EF678F8C-63C9-4FC3-B1A1-798AD3E23221/b3/9a3c290a/ValueTask.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/CallistoConnection.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/IPipelineStage.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/HeaderStage.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Abstractions/Conventions/CallistoGuidConvention.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/MessageStage.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/PipelineContext.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/PipelineManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/samples/Solari.Samples.WebApi/Program.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/UriStage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Framework/SerializerManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Framework/GanymedePolicyRegistry.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Framework/CommandTypeRegistry.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/samples/Solari.Samples.WebApi/Startup.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Framework/GanymedeHeaderBuilder.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/samples/Solari.Samples.Application/Person/PersonStateMachine.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Sol/Framework/SolariMarshal.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Sol/SolariMarshalExtensions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/samples/Solari.Samples.Domain/GitHubClient.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Vanth/ExceptionHandlingMiddleware.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Sol/ApplicationOptions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/samples/Solari.Samples.WorkerService/TestClient.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CBF033CF-D1BB-46A4-A2DD-CC0A4A438684/3f/92d61441/ImmutableDictionary.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/ContentStage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/HeaderStage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/MessageStage.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/DeserializationStage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/PipelineManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/DependencyInjection/SolariBuilderExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Domain/Exceptions/GanymedeHttpException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Domain/Exceptions/RequestNotFoundException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/DependencyInjection/PolicyActions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Tracer/CallistoTracerPlugin.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Builders/HttpRequestMessageHeaderBuilder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Extensions/HttpRequestMessageExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/ContentSerializers/JsonContent.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/ContentSerializers/XmlContent.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Tracer/CallistoTracerOptions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/DependencyInjection/HttpClientConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/ContentSerializers/IContentSerializer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Domain/Exceptions/CommandNotAvailableException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Extensions/HttpClientExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/ContentSerializers/IContentDeserializer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/ContentSerializers/UrlEncoded.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Domain/Exceptions/InvalidRequestMessageException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Domain/Exceptions/RequestResourceNotFoundException.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Framework/Commands/CustomHeaderCommand.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto/DependencyInjection/SolariBuilderExtensions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Integrations.MassTransit/Extensions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/DependencyInjection/HttpClientActions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Domain/Options/GanymedeRequestHeader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/GanymedeRequest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Domain/Options/GanymedeRequestSpecification.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/GanymedeClient.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Requester.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Framework/IGanymedePolicyRegistry.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Domain/Exceptions/GanymedeMessageValidationException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/IGanymedeRequest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/PipelineContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/CA709A73-74E4-4510-86C5-FD52F93DECDF/6/PollyServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Solari.Callisto.Connector/CallistoConnectionFactory.cs" />
-        <option value="$PROJECT_DIR$/src/Solari.Callisto.Connector/MongoClientBuilder.cs" />
-        <option value="$PROJECT_DIR$/src/Solari.Callisto.Abstractions/CallistoLogger.cs" />
-        <option value="$PROJECT_DIR$/src/Solari.Callisto.Connector/CallistoConnection.cs" />
-        <option value="$PROJECT_DIR$/src/Solari.Callisto.Connector/DependencyInjection/SolariBuilderExtensions.cs" />
-        <option value="$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/DeserializationStage.cs" />
-        <option value="$PROJECT_DIR$/src/Solari.Callisto.Integrations.MassTransit/Extensions.cs" />
+        <option value="$PROJECT_DIR$/src/Solari.Ganymede/GanymedeRequest.cs" />
+        <option value="$PROJECT_DIR$/src/Solari.Ganymede/Requester.cs" />
+        <option value="$PROJECT_DIR$/src/Solari.Ganymede/DependencyInjection/HttpClientConfiguration.cs" />
+        <option value="$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/PipelineContext.cs" />
+        <option value="$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/MessageStage.cs" />
+        <option value="$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/HeaderStage.cs" />
+        <option value="$PROJECT_DIR$/src/Solari.Ganymede/ContentSerializers/JsonContent.cs" />
+        <option value="$PROJECT_DIR$/src/Solari.Ganymede/Framework/IGanymedePolicyRegistry.cs" />
+        <option value="$PROJECT_DIR$/src/Solari.Ganymede/Framework/GanymedePolicyRegistry.cs" />
+        <option value="$PROJECT_DIR$/src/Solari.Ganymede/DependencyInjection/PolicyActions.cs" />
+        <option value="$PROJECT_DIR$/src/Solari.Ganymede/DependencyInjection/SolariBuilderExtensions.cs" />
+        <option value="$PROJECT_DIR$/scripts/version.ps1" />
       </list>
     </option>
   </component>
-  <component name="ProjectId" id="1caXbCm4Geas1GpI5gttFJI5Owy" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="1cjEgtEdCL784tRqKbmEeuJJkYa" />
   <component name="ProjectViewState">
     <option name="autoscrollToSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.35010707" />
-    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.29978585" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -130,7 +138,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Solari.Samples.WebApi">
     <configuration name="Solari.Samples.WebApi" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
@@ -169,20 +177,19 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f4ec7eb1-8286-4aa8-a378-790d381b8ce1" name="Default Changelist" comment="" />
-      <created>1590767747999</created>
+      <changelist id="fcc02a9c-d01d-42b5-a0c1-898a055c4556" name="Default Changelist" comment="" />
+      <created>1591033716305</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1590767747999</updated>
-      <workItem from="1590767774251" duration="1381000" />
-      <workItem from="1590959624399" duration="472000" />
+      <updated>1591033716305</updated>
+      <workItem from="1591033723000" duration="5696000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
   </component>
-  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -194,118 +201,30 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1899" height="377" key="GridCell.Tab.0.bottom" timestamp="1590768741152">
-      <screen x="0" y="27" width="1920" height="1053" />
+    <state x="696" y="369" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1" timestamp="1591038132240">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1899" height="377" key="GridCell.Tab.0.bottom/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768741152" />
-    <state width="1899" height="377" key="GridCell.Tab.0.center" timestamp="1590768741152">
-      <screen x="0" y="27" width="1920" height="1053" />
+    <state x="696" y="369" key="ANALYSIS_DLG_com.jetbrains.rider.actions.impl.cleanup.RiderCodeCleanupAction$actionPerformed$dlg$1/0.0.1920.1050/-1366.304.1366.738@0.0.1920.1050" timestamp="1591038132240" />
+    <state x="491" y="169" key="SettingsEditor" timestamp="1591042562698">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1899" height="377" key="GridCell.Tab.0.center/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768741152" />
-    <state width="1899" height="377" key="GridCell.Tab.0.left" timestamp="1590768741152">
-      <screen x="0" y="27" width="1920" height="1053" />
+    <state x="491" y="169" key="SettingsEditor/0.0.1920.1050/-1366.304.1366.738@0.0.1920.1050" timestamp="1591042562698" />
+    <state x="601" y="251" width="700" height="530" key="recent.locations.popup" timestamp="1591037327622">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1899" height="377" key="GridCell.Tab.0.left/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768741152" />
-    <state width="1899" height="377" key="GridCell.Tab.0.right" timestamp="1590768741152">
-      <screen x="0" y="27" width="1920" height="1053" />
+    <state x="601" y="251" width="700" height="530" key="recent.locations.popup/0.0.1920.1050/-1366.304.1366.738@0.0.1920.1050" timestamp="1591037327622" />
+    <state x="616" y="243" key="run.anything.popup" timestamp="1591038687718">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1899" height="377" key="GridCell.Tab.0.right/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768741152" />
-    <state width="1899" height="377" key="GridCell.Tab.1.bottom" timestamp="1590768722198">
-      <screen x="0" y="27" width="1920" height="1053" />
+    <state x="616" y="243" key="run.anything.popup/0.0.1920.1050/-1366.304.1366.738@0.0.1920.1050" timestamp="1591038687718" />
+    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1591039483179">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1899" height="377" key="GridCell.Tab.1.bottom/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722198" />
-    <state width="1899" height="377" key="GridCell.Tab.1.center" timestamp="1590768722198">
-      <screen x="0" y="27" width="1920" height="1053" />
-    </state>
-    <state width="1899" height="377" key="GridCell.Tab.1.center/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722198" />
-    <state width="1899" height="377" key="GridCell.Tab.1.left" timestamp="1590768722198">
-      <screen x="0" y="27" width="1920" height="1053" />
-    </state>
-    <state width="1899" height="377" key="GridCell.Tab.1.left/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722198" />
-    <state width="1899" height="377" key="GridCell.Tab.1.right" timestamp="1590768722198">
-      <screen x="0" y="27" width="1920" height="1053" />
-    </state>
-    <state width="1899" height="377" key="GridCell.Tab.1.right/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722198" />
-    <state width="1899" height="377" key="GridCell.Tab.2.bottom" timestamp="1590768722199">
-      <screen x="0" y="27" width="1920" height="1053" />
-    </state>
-    <state width="1899" height="377" key="GridCell.Tab.2.bottom/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722199" />
-    <state width="1899" height="377" key="GridCell.Tab.2.center" timestamp="1590768722198">
-      <screen x="0" y="27" width="1920" height="1053" />
-    </state>
-    <state width="1899" height="377" key="GridCell.Tab.2.center/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722198" />
-    <state width="1899" height="377" key="GridCell.Tab.2.left" timestamp="1590768722198">
-      <screen x="0" y="27" width="1920" height="1053" />
-    </state>
-    <state width="1899" height="377" key="GridCell.Tab.2.left/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722198" />
-    <state width="1899" height="377" key="GridCell.Tab.2.right" timestamp="1590768722198">
-      <screen x="0" y="27" width="1920" height="1053" />
-    </state>
-    <state width="1899" height="377" key="GridCell.Tab.2.right/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722198" />
-    <state width="1899" height="377" key="GridCell.Tab.3.bottom" timestamp="1590768722199">
-      <screen x="0" y="27" width="1920" height="1053" />
-    </state>
-    <state width="1899" height="377" key="GridCell.Tab.3.bottom/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722199" />
-    <state width="1899" height="377" key="GridCell.Tab.3.center" timestamp="1590768722199">
-      <screen x="0" y="27" width="1920" height="1053" />
-    </state>
-    <state width="1899" height="377" key="GridCell.Tab.3.center/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722199" />
-    <state width="1899" height="377" key="GridCell.Tab.3.left" timestamp="1590768722199">
-      <screen x="0" y="27" width="1920" height="1053" />
-    </state>
-    <state width="1899" height="377" key="GridCell.Tab.3.left/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722199" />
-    <state width="1899" height="377" key="GridCell.Tab.3.right" timestamp="1590768722199">
-      <screen x="0" y="27" width="1920" height="1053" />
-    </state>
-    <state width="1899" height="377" key="GridCell.Tab.3.right/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722199" />
-    <state width="1899" height="377" key="GridCell.Tab.4.bottom" timestamp="1590768722199">
-      <screen x="0" y="27" width="1920" height="1053" />
-    </state>
-    <state width="1899" height="377" key="GridCell.Tab.4.bottom/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722199" />
-    <state width="1899" height="377" key="GridCell.Tab.4.center" timestamp="1590768722199">
-      <screen x="0" y="27" width="1920" height="1053" />
-    </state>
-    <state width="1899" height="377" key="GridCell.Tab.4.center/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722199" />
-    <state width="1899" height="377" key="GridCell.Tab.4.left" timestamp="1590768722199">
-      <screen x="0" y="27" width="1920" height="1053" />
-    </state>
-    <state width="1899" height="377" key="GridCell.Tab.4.left/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722199" />
-    <state width="1899" height="377" key="GridCell.Tab.4.right" timestamp="1590768722199">
-      <screen x="0" y="27" width="1920" height="1053" />
-    </state>
-    <state width="1899" height="377" key="GridCell.Tab.4.right/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722199" />
-    <state x="494" y="188" width="932" height="737" key="SettingsEditor" timestamp="1590767884029">
-      <screen x="0" y="27" width="1920" height="1053" />
-    </state>
-    <state x="494" y="188" width="932" height="737" key="SettingsEditor/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590767884029" />
-    <state x="620" y="252" key="run.anything.popup" timestamp="1590861346616">
-      <screen x="0" y="18" width="1920" height="1062" />
-    </state>
-    <state x="620" y="252" key="run.anything.popup/0.18.1920.1062/1920.0.1920.1080@0.18.1920.1062" timestamp="1590861346616" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/src/Solari.Callisto.Connector/DependencyInjection/SolariBuilderExtensions.cs</url>
-          <line>28</line>
-          <properties documentPath="$PROJECT_DIR$/src/Solari.Callisto.Connector/DependencyInjection/SolariBuilderExtensions.cs" initialLine="27">
-            <startOffsets>
-              <option value="1639" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1640" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <state x="623" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1920.1050/-1366.304.1366.738@0.0.1920.1050" timestamp="1591039483179" />
   </component>
 </project>
