@@ -1,13 +1,17 @@
 ﻿using System;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Bson.Serialization.Serializers;
 using Solari.Callisto.Abstractions.Serializers;
 
 namespace Solari.Callisto.Abstractions.Conventions
 {
     public class CallistoDateTimeConvention : ConventionBase, IMemberMapConvention
     {
-        public CallistoDateTimeConvention() : base("Solari.Callisto.DateTimeConvention") { }
+        public CallistoDateTimeConvention() : base("Solari.Callisto.DateTimeConvention")
+        {
+        }
 
         public void Apply(BsonMemberMap memberMap)
         {
@@ -25,7 +29,8 @@ namespace Solari.Callisto.Abstractions.Conventions
         private static void MapDateTimeOffset(BsonMemberMap memberMap)
         {
             if (memberMap.MemberType != typeof(DateTimeOffset) && memberMap.MemberType != typeof(DateTimeOffset?)) return;
-            memberMap.SetSerializer(new DateTimeOffsetSerializerCustom());
+            memberMap.SetSerializer(new DateTimeOffsetSerializerCustom(memberMap.MemberType
+                                                                     , new DateTimeOffsetSerializer(BsonType.Document)));
             CallistoLogger.ConventionsLogger.DateTimeOffset(memberMap.ClassMap.ClassType.Name, memberMap.MemberName);
         }
     }
