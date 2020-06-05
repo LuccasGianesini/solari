@@ -67,28 +67,31 @@ function isPreRelease($version) {
   $match = [regex]::Match($version, $global:preReleaseRegex)
   return $match.Success
 }
-function getCommitsSinceLastTag {
-  try {
-    $commits = ([regex]::match((git describe --tags), '-([0-9])-').Groups[1].Value)
-    if($commits -eq '')
-    {
-      Write-Host('Found 0 commits since last tag.')
-    }else{
-      Write-Host('Found ' + $commits + ' commits since last tag.')
-    }
+try
+        {
+            $commits = ([regex]::match((git describe --tags), '-([0-9])-').Groups[1].Value)
+            $lastCommitCount = ([regex]::match($global:currentVersion, $global:preReleaseRegex)).value.split(".");
+            if ($commits -eq '')
+            {
+                Write-Host('Found 0 commits since last tag.')
+            }
+            else
+            {
+                Write-Host('Found ' + $commits + ' commits since last tag.')
+            }
 
-    if($commits -eq '')
-    {
-      return '0'
-    }
-
-    return $commits
+            if ($commits -eq '')
+            {
+                return '0'
+            }
+            Write-Host($lastCommitCount);
+            return ($lastCommitCount[1] -as [int]) + $commits
+        }
+        catch
+        {
+            return '0'
+        }
   }
-  catch {
-    return '0'
-  }
-
-}
 # Extracts the semver part of the string x.x.x-xxx.xxx
 # Removes the v
 function extractVersionFromTag ($version) {
