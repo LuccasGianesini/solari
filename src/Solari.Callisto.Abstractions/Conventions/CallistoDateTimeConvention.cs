@@ -28,9 +28,9 @@ namespace Solari.Callisto.Abstractions.Conventions
 
         private static void MapDateTimeOffset(BsonMemberMap memberMap)
         {
+            //TODO - Test serialization.
             if (memberMap.MemberType != typeof(DateTimeOffset) && memberMap.MemberType != typeof(DateTimeOffset?)) return;
-            memberMap.SetSerializer(new DateTimeOffsetSerializerCustom(memberMap.MemberType
-                                                                     , new DateTimeOffsetSerializer(BsonType.Document)));
+            memberMap.SetSerializer(new DateTimeOffsetSerializerCustom(memberMap.MemberType, new DateTimeOffsetSerializer(BsonType.Document)));
             CallistoLogger.ConventionsLogger.DateTimeOffset(memberMap.ClassMap.ClassType.Name, memberMap.MemberName);
         }
     }
