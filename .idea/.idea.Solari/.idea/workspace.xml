@@ -41,8 +41,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fcc02a9c-d01d-42b5-a0c1-898a055c4556" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Solari.Callisto.Abstractions/Conventions/CallistoDateTimeConvention.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Callisto.Abstractions/Conventions/CallistoDateTimeConvention.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Solari.Callisto.Abstractions/Serializers/DateTimeOffsetSerializerCustom.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Callisto.Abstractions/Serializers/DateTimeOffsetSerializerCustom.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,11 +54,13 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Framework/SerializerManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Callisto/Framework/CallistoConventionRegistry.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto/Framework/ConventionPackBuilder.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Framework/GanymedePolicyRegistry.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Abstractions/Conventions/CallistoDateTimeConvention.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Framework/CommandTypeRegistry.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Abstractions/Serializers/DateTimeOffsetSerializerCustom.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CBF033CF-D1BB-46A4-A2DD-CC0A4A438684/3f/92d61441/ImmutableDictionary.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto/CallistoTypeHelper.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/ContentStage.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/HeaderStage.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/MessageStage.cs" root0="FORCE_HIGHLIGHTING" />
@@ -115,6 +116,7 @@
         <option value="$PROJECT_DIR$/scripts/version.ps1" />
         <option value="$PROJECT_DIR$/src/Solari.Callisto.Abstractions/Serializers/DateTimeOffsetSerializerCustom.cs" />
         <option value="$PROJECT_DIR$/src/Solari.Callisto.Abstractions/Conventions/CallistoDateTimeConvention.cs" />
+        <option value="$PROJECT_DIR$/src/Solari.Callisto/Framework/CallistoConventionRegistry.cs" />
       </list>
     </option>
   </component>
@@ -179,7 +181,7 @@
       <option name="presentableId" value="Default" />
       <updated>1591033716305</updated>
       <workItem from="1591033723000" duration="5696000" />
-      <workItem from="1591218395576" duration="298000" />
+      <workItem from="1591218395576" duration="631000" />
     </task>
     <servers />
   </component>
