@@ -26,6 +26,12 @@ jobs:
       clean: resources
     cancelTimeoutInMinutes: 5
     steps:
+      - task: PowerShell@2
+        displayName: 'Create Nuget version'
+        inputs:
+          filePath: './scripts/version.ps1'
+          arguments: '-BRANCH_NAME $(Build.SourceBranchName)'
+      
       - task: DotNetCoreCLI@2
         displayName: 'Build solution'
         inputs:
@@ -35,11 +41,7 @@ jobs:
           arguments: '--configuration $(buildConfiguration)'
           versioningScheme: off
 
-      - task: PowerShell@2
-        displayName: 'Create Nuget version'
-        inputs:
-          filePath: './scripts/version.ps1'
-          arguments: '-BRANCH_NAME $(Build.SourceBranchName)'
+      
       - task: PowerShell@2
         displayName: 'Create Nuget packages'
         inputs:
