@@ -34,5 +34,20 @@ namespace Solari.Sol.Extensions
         {
             return BinderHelper.BindOptions<TOptions>(section);
         }
+
+
+        public static ApplicationOptions GetApplicationOptions(this IConfiguration configuration)
+        {
+            IConfigurationSection section = configuration.GetSection(SolariConstants.ApplicationAppSettingsSection);
+            if (!section.Exists())
+            {
+                throw new SolException("The Application section was not found in the AppSettings file");
+            }
+
+            var options = configuration.GetOptions<ApplicationOptions>(section);
+            if (string.IsNullOrEmpty(options.ApplicationName))
+                throw new SolException($"{nameof(ApplicationOptions.ApplicationName)} is a required value!");
+            return options;
+        }
     }
 }

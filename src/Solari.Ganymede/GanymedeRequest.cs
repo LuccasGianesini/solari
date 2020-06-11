@@ -20,18 +20,23 @@ namespace Solari.Ganymede
 
         public GanymedeRequestResource GetResource(string resourceName)
         {
-            if (string.IsNullOrEmpty(resourceName)) throw new ArgumentException("Value cannot be null or empty.", nameof(resourceName));
+            if (string.IsNullOrEmpty(resourceName))
+                throw new GanymedeException("Unable to search a resource with the given term.", new
+                                                ArgumentNullException("Value cannot be null or empty.", nameof(resourceName)));
             if (!_resources.ContainsKey(resourceName))
-                throw new RequestResourceNotFoundException($"The Resource {resourceName} does not exists in the current resource dictionary");
+                throw new GanymedeException("The resource dictionary does not contains the given key.",
+                                                new RequestResourceNotFoundException($"Search key:{resourceName}"));
+                    
 
             return _resources.FirstOrDefault(a => a.Key == resourceName).Value;
         }
 
-        private IImmutableDictionary<string, GanymedeRequestResource> BuildResourceDictionary(GanymedeRequestSpecification requestSpecification)
+        private IImmutableDictionary<string, GanymedeRequestResource> BuildResourceDictionary(
+            GanymedeRequestSpecification requestSpecification)
         {
             if (requestSpecification == null)
-                throw new NullGanymedeRequestSettingsException($"Unable to create resource dictionary because{nameof(requestSpecification)} is null");
-
+                throw new GanymedeException($"The request specification for {nameof(TClientImplementation)} is null.");
+            
             return requestSpecification.Resources.ToImmutableDictionary(pair => pair.Name, pair => pair);
         }
     }

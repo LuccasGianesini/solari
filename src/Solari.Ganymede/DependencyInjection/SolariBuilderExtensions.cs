@@ -17,19 +17,19 @@ namespace Solari.Ganymede.DependencyInjection
         {
             AddCoreServices(builder);
             configurePoliceRegistry?.Invoke(new PolicyActions(builder));
-            configureClients(new HttpClientActions(builder, builder.AppConfiguration));
+            configureClients(new HttpClientActions(builder, builder.Configuration));
 
             return builder;
         }
 
         private static void AddCoreServices(ISolariBuilder builder)
         {
-            builder.Services.Configure<GanymedePolicyOptions>(builder.AppConfiguration.GetSection(GanymedeConstants.HttpPolicies));
+            builder.Services.Configure<GanymedePolicyOptions>(builder.Configuration.GetSection(GanymedeConstants.HttpPolicies));
             builder
                 .Services
-                .AddSingleton<GanymedePolicyRegistry>()
+                .AddSingleton<IGanymedePolicyRegistry, GanymedePolicyRegistry>()
                 .AddPolicyRegistry();
-            builder.Services.TryAddSingleton(provider => provider.GetRequiredService<GanymedePolicyRegistry>());
+            builder.Services.TryAddSingleton(provider => provider.GetRequiredService<IGanymedePolicyRegistry>());
         }
     }
 }

@@ -9,13 +9,13 @@ using Solari.Vanth.Builders;
 namespace Solari.Vanth
 {
     [Serializable]
-    public class CommonResponse<TResult>
+    public class CommonResponse<TData>
     {
         public CommonResponse() { Errors = new Stack<CommonErrorResponse>(2); }
 
         public Stack<CommonErrorResponse> Errors { get; private set; }
 
-        public TResult Result { get; private set; }
+        public TData Data { get; private set; }
 
         /// <summary>
         ///     Indicates if the Stack contains any errors in it.
@@ -26,7 +26,7 @@ namespace Solari.Vanth
         ///     Indicates if the result property is different then null.
         ///     It does not check if the property is a primitive, string, DateTime, Timespan, etc. and then checks the value.
         /// </summary>
-        public bool HasResult => Result != null;
+        public bool HasResult => Data != null;
 
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Solari.Vanth
         /// <returns>
         ///     <see cref="CommonResponse{TResult}" />
         /// </returns>
-        public CommonResponse<TResult> AddError(CommonErrorResponse errorResponse)
+        public CommonResponse<TData> AddError(CommonErrorResponse errorResponse)
         {
             Errors.Push(errorResponse);
             return this;
@@ -50,7 +50,7 @@ namespace Solari.Vanth
         /// <returns>
         ///     <see cref="CommonResponse{TResult}" />
         /// </returns>
-        public CommonResponse<TResult> AddErrors(Stack<CommonErrorResponse> errorResponse)
+        public CommonResponse<TData> AddErrors(Stack<CommonErrorResponse> errorResponse)
         {
             if (errorResponse == null) throw new ArgumentNullException(nameof(errorResponse));
             foreach (CommonErrorResponse commonErrorResponse in errorResponse) Errors.Push(commonErrorResponse);
@@ -65,7 +65,7 @@ namespace Solari.Vanth
         /// <returns>
         ///     <see cref="CommonResponse{TResult}" />
         /// </returns>
-        public CommonResponse<TResult> AddError(Func<ICommonErrorResponseBuilder, CommonErrorResponse> builder)
+        public CommonResponse<TData> AddError(Func<ICommonErrorResponseBuilder, CommonErrorResponse> builder)
         {
             Errors.Push(builder(new CommonErrorResponseBuilder()));
             return this;
@@ -78,9 +78,9 @@ namespace Solari.Vanth
         /// <returns>
         ///     <see cref="CommonResponse{TResult}" />
         /// </returns>
-        public CommonResponse<TResult> AddResult(TResult result)
+        public CommonResponse<TData> AddResult(TData result)
         {
-            Result = result;
+            Data = result;
             return this;
         }
 
@@ -108,16 +108,16 @@ namespace Solari.Vanth
         /// </summary>
         /// <param name="result">The result wrapped in a <see cref="Maybe{T}" /></param>
         /// <returns>True if the HasResult property is true. False if it is not</returns>
-        public bool TryGetResult(out Maybe<TResult> result)
+        public bool TryGetResult(out Maybe<TData> result)
         {
             if (HasResult)
             {
-                result = Maybe<TResult>.Some(Result);
+                result = Maybe<TData>.Some(Data);
 
                 return true;
             }
 
-            result = Maybe<TResult>.None;
+            result = Maybe<TData>.None;
 
             return false;
         }

@@ -23,10 +23,10 @@ namespace Solari.Vanth.DependencyInjection
         /// </returns>
         public static ISolariBuilder AddVanth(this ISolariBuilder builder)
         {
-            IConfigurationSection section = builder.AppConfiguration.GetSection(VanthLibConstants.AppSettingsSection);
+            IConfigurationSection section = builder.Configuration.GetSection(VanthLibConstants.AppSettingsSection);
             if (!section.Exists())
                 throw new VanthException("Unable to find Vanth AppSettings section");
-            var opt = builder.AppConfiguration.GetOptions<VanthOptions>(section);
+            var opt = builder.Configuration.GetOptions<VanthOptions>(section);
             builder.Services.AddSingleton<ICommonResponseFactory, CommonResponseFactory>();
             ConfigureFluentValidation(opt, builder);
             ConfigureExceptionMiddleware(opt, builder, section);
@@ -54,7 +54,7 @@ namespace Solari.Vanth.DependencyInjection
             if (!options.UseFluentValidation) return;
             builder.Services.AddSingleton<IVanthValidationService, VanthValidationService>();
             builder.Services.AddSingleton<IValidatorFactory, VanthValidatorFactory>();
-            builder.Services.AddValidatorsFromAssemblies(builder.ApplicationAssemblies.Where(a => !a.IsDynamic));
+            builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies().Where(a => !a.IsDynamic));
         }
     }
 }

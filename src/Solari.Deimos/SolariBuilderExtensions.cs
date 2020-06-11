@@ -12,11 +12,11 @@ namespace Solari.Deimos
     {
         public static ISolariBuilder AddDeimos(this ISolariBuilder solariBuilder, Action<ITracerPluginManager> plugins = null)
         {
-            IConfigurationSection section = solariBuilder.AppConfiguration.GetSection(DeimosConstants.TracingAppSettingsSection);
+            IConfigurationSection section = solariBuilder.Configuration.GetSection(DeimosConstants.TracingAppSettingsSection);
             if (!section.Exists())
                 throw new DeimosException("Deimos AppSettings section not found!");
 
-            var options = solariBuilder.AppConfiguration.GetOptions<DeimosOptions>(section);
+            var options = solariBuilder.Configuration.GetOptions<DeimosOptions>(section);
             solariBuilder.Services.Configure<DeimosOptions>(section);
 
             ConfigureTracing(solariBuilder, options);

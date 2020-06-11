@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using Solari.Ganymede.Domain.Exceptions;
 using Solari.Ganymede.Domain.Options;
 using Solari.Ganymede.Pipeline;
 
@@ -22,7 +23,7 @@ namespace Solari.Ganymede
 
         public PipelineManager ForResource(GanymedeRequestResource resource)
         {
-            if (resource == null) throw new ArgumentNullException(nameof(resource));
+            if (resource == null) throw new GanymedeException($"Cannot create a request using ForResource method with a null {nameof(GanymedeRequestResource)}");
 
             return new PipelineManager(_httpClient, resource);
         }
