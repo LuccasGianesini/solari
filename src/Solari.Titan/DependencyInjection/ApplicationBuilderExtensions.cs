@@ -18,7 +18,7 @@ namespace Solari.Titan.DependencyInjection
         {
             return webHostBuilder.UseSerilog((context, config) =>
             {
-                ApplicationOptions appOptions = GetApplicationOptions(context.Configuration);
+                ApplicationOptions appOptions = context.Configuration.GetApplicationOptions();
                 TitanOptions options = GetOptions(context.Configuration);
                 LoggingDefaultConfig.BuildDefaultConfig(config, options, appOptions, AppDomain.CurrentDomain.BaseDirectory);
             });
@@ -28,16 +28,10 @@ namespace Solari.Titan.DependencyInjection
         {
             return hostBuilder.UseSerilog((context, config) =>
             {
-                ApplicationOptions appOptions = GetApplicationOptions(context.Configuration);
+                ApplicationOptions appOptions = context.Configuration.GetApplicationOptions();
                 TitanOptions options = GetOptions(context.Configuration);
                 LoggingDefaultConfig.BuildDefaultConfig(config, options, appOptions, AppDomain.CurrentDomain.BaseDirectory);
             });
-        }
-
-        private static ApplicationOptions GetApplicationOptions(IConfiguration configuration)
-        {
-            IConfigurationSection section = configuration.GetSection(SolariConstants.ApplicationAppSettingsSection);
-            return configuration.GetOptions<ApplicationOptions>(section) ?? new ApplicationOptions();
         }
 
 

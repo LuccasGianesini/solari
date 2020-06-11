@@ -11,7 +11,7 @@ namespace Solari.Juno
     {
         public static ISolariBuilder AddJuno(this ISolariBuilder builder)
         {
-            builder.Services.AddJuno(builder.AppConfiguration);
+            builder.Services.AddJuno(builder.Configuration);
             return builder;
         }
 
@@ -39,12 +39,6 @@ namespace Solari.Juno
         {
             IConfigurationSection section = configuration.GetSection(JunoConstants.AppSettingsSection);
             return !section.Exists() ? new JunoOptions() : configuration.GetOptions<JunoOptions>(section);
-        }
-
-        public static ApplicationOptions GetApplicationOptions(IConfiguration configuration)
-        {
-            IConfigurationSection section = configuration.GetSection(SolariConstants.ApplicationAppSettingsSection);
-            return !section.Exists() ? new ApplicationOptions() : configuration.GetOptions<ApplicationOptions>(section);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Solari.Hyperion.ConfigurationProvider
 
             SolariBuilderExtensions.GetHyperionOptions(configRoot, out HyperionOptions options);
 
-            var app = configRoot.GetOptions<ApplicationOptions>(SolariConstants.ApplicationAppSettingsSection);
+            ApplicationOptions app = configRoot.GetApplicationOptions();
 
             var src = new HyperionConfigurationSource
             {

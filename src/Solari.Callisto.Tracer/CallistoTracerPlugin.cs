@@ -14,7 +14,7 @@ namespace Solari.Callisto.Tracer
     {
         public void Configure()
         {
-            Builder.Services.Configure<CallistoTracerOptions>(Builder.AppConfiguration.GetSection(CallistoConstants.TracerAppSettingsSection));
+            Builder.Services.Configure<CallistoTracerOptions>(Builder.Configuration.GetSection(CallistoConstants.TracerAppSettingsSection));
             Builder.Services.AddSingleton<ICallistoClientHook, CallistoClientHook>();
             Builder.Services.AddTransient<IEventFilter, EventFilter>();
             Builder.Services.AddSingleton<ICallistoEventListener>(provider =>
@@ -27,19 +27,10 @@ namespace Solari.Callisto.Tracer
             {
                 Action = provider =>
                 {
-                    try
-                    {
-                        var hook = provider.GetService<ICallistoClientHook>();
-                        if(hook is null)
-                            return;
-                        hook.AddHook();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                        throw;
-                    }
-                    
+                    var hook = provider.GetService<ICallistoClientHook>();
+                    if (hook is null)
+                        return;
+                    hook.AddHook();
                 }
             });
         }

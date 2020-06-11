@@ -13,17 +13,17 @@ namespace Solari.Ceres.DependencyInjection
     {
         public static ISolariBuilder AddCeres(this ISolariBuilder builder)
         {
-            IConfigurationSection section = builder.AppConfiguration.GetSection(CeresConstants.AppSettingsSection);
+            IConfigurationSection section = builder.Configuration.GetSection(CeresConstants.AppSettingsSection);
             if (!section.Exists())
                 throw new CeresException("Ceres AppSettings section not found!");
 
-            var options = builder.AppConfiguration.GetOptions<CeresOptions>(section);
+            var options = builder.Configuration.GetOptions<CeresOptions>(section);
 
             ApplicationOptions appOptions = builder.GetAppOptions();
             var metricsBuilder = new MetricsBuilder();
             if (!options.Enabled) return builder;
 
-            builder.Services.Configure<CeresOptions>(builder.AppConfiguration.GetSection(CeresConstants.AppSettingsSection));
+            builder.Services.Configure<CeresOptions>(builder.Configuration.GetSection(CeresConstants.AppSettingsSection));
 
             ConfigureMetricsBuilder(metricsBuilder, options, appOptions);
             builder.Services.AddMetrics(metricsBuilder.Build());

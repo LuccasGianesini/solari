@@ -2,6 +2,7 @@ namespace Solari.Titan.Abstractions
 {
     public class TitanOptions
     {
+
         public string DefaultLevel { get; set; }
         public LokiOptions Loki { get; set; }
         public FileOptions File { get; set; }

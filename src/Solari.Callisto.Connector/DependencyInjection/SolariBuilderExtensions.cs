@@ -11,7 +11,7 @@ namespace Solari.Callisto.Connector.DependencyInjection
         public static ISolariBuilder AddCallistoConnector(this ISolariBuilder solariBuilder)
         {
             solariBuilder.Services.Configure<CallistoConnectorOptions>(solariBuilder
-                                                                       .AppConfiguration
+                                                                       .Configuration
                                                                        .GetSection(CallistoConstants.ConnectorAppSettingsSection));
             solariBuilder.Services.AddSingleton<ICallistoConnectionFactory, CallistoConnectionFactory>();
             solariBuilder.Services.AddSingleton<ICallistoConnection, CallistoConnection>();

@@ -20,7 +20,7 @@ namespace Solari.Juno
             webHostBuilder.ConfigureAppConfiguration((context, configurationBuilder) =>
             {
                 IConfigurationRoot conf = configurationBuilder.Build();
-                ApplicationOptions app = SolariBuilderExtensions.GetApplicationOptions(conf);
+                ApplicationOptions app = conf.GetApplicationOptions();
                 JunoOptions opt = SolariBuilderExtensions.GetOptions(conf);
                 IDictionary<string, string> data = new JsonParser()
                     .Parse(JObject.FromObject(SolariBuilderExtensions.BuildClient(opt, app)
@@ -43,7 +43,7 @@ namespace Solari.Juno
             builder.ConfigureAppConfiguration((context, configurationBuilder) =>
             {
                 IConfigurationRoot conf = configurationBuilder.Build();
-                ApplicationOptions app = SolariBuilderExtensions.GetApplicationOptions(conf);
+                ApplicationOptions app = conf.GetApplicationOptions();
                 JunoOptions opt = SolariBuilderExtensions.GetOptions(conf);
                 IDictionary<string, string> data = new JsonParser()
                     .Parse(JObject.FromObject(SolariBuilderExtensions.BuildClient(opt, app)

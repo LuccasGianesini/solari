@@ -6,7 +6,6 @@ namespace Solari.Juno.Abstractions
     {
         IJunoClientBuilder WithAddress(string address);
         IJunoClientBuilder WithAuthMethod(IAuthMethodInfo authMethodInfo);
-        IJunoClientBuilder WithSecretsPath(string path);
         IJunoClient Build();
     }
 }

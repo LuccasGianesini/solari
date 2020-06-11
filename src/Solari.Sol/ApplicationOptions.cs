@@ -34,18 +34,18 @@ namespace Solari.Sol
         /// <summary>
         ///     The application name.
         /// </summary>
-        public string ApplicationName
-        {
-            get
+        public string ApplicationName {
+            get => _appName;
+            set
             {
-                if (string.IsNullOrEmpty(_appName))
-                {
-                    _appName = Assembly.GetEntryAssembly()?.GetName(false).Name?.Replace(".", "-").ToLowerInvariant();
-                }
-
-                return _appName;
+                if(string.IsNullOrEmpty(value))
+                    throw new SolException("The application name was not provided.");
+                _appName = value.ToKebabCase();
             }
         }
+
+
+        public string Project { get; set; }
 
         /// <summary>
         ///     The version of the application

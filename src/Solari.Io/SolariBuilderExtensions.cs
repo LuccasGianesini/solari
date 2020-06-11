@@ -15,10 +15,10 @@ namespace Solari.Io
     {
         public static ISolariBuilder AddIo(this ISolariBuilder builder, Action<IHealthChecksBuilder> addChecks = null)
         {
-            IConfigurationSection section = builder.AppConfiguration.GetSection(IoConstants.AppSettingsSection);
+            IConfigurationSection section = builder.Configuration.GetSection(IoConstants.AppSettingsSection);
             if (!section.Exists())
                 throw new IOException("Io AppSettings section not found!");
-            var options = builder.AppConfiguration.GetOptions<IoOptions>(section);
+            var options = builder.Configuration.GetOptions<IoOptions>(section);
             builder.Services.Configure<IoOptions>(section);
             if (!options.Enabled)
                 return builder;

@@ -42,7 +42,7 @@ namespace Solari.Vanth
             return new CommonResponse<TResult>().AddError(error);
         }
 
-        public CommonResponse<Empty> CreateEmpty() { return new CommonResponseBuilder<Empty>().WithResult(new Empty()).Build(); }
+        public CommonResponse<None> CreateEmpty() { return new CommonResponseBuilder<None>().WithResult(new None()).Build(); }
 
         public CommonResponse<TResult> CreateErrorFromException<TResult>(Exception exception, string errorCode = "", string errorMessage = "")
         {

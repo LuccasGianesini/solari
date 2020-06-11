@@ -29,9 +29,8 @@ namespace Solari.Titan.Framework
         {
             config.Enrich.FromLogContext()
                   .Enrich.WithExceptionDetails()
-                  .Enrich.WithThreadId()
-                  .Enrich.WithThreadName()
                   .Enrich.With<JaegerEnricher>()
+                  .Enrich.WithProperty("project", appOptions.Project)
                   .Enrich.WithProperty("app", appOptions.ApplicationName)
                   .Enrich.WithProperty("version", appOptions.ApplicationVersion)
                   .Enrich.WithProperty("env", appOptions.ApplicationEnvironment);

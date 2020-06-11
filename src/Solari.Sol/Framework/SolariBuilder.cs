@@ -16,16 +16,12 @@ namespace Solari.Sol.Framework
         public SolariBuilder(IServiceCollection services, IConfiguration configuration)
         {
             Services = services;
-            AppConfiguration = configuration;
-            BuildActions = new Queue<BuildAction>(5);
-            HostEnvironment = GetHostEnvironment();
-            ApplicationAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
-            _applicationOptions = LoadApplicationOptions();
+            Configuration = configuration;
+            BuildActions = new Queue<BuildAction>(10);
+            _applicationOptions = Configuration.GetApplicationOptions();
         }
 
-
-        public List<Assembly> ApplicationAssemblies { get; }
-        public IConfiguration AppConfiguration { get; }
+        public IConfiguration Configuration { get; }
         public Queue<BuildAction> BuildActions { get; }
 
         public IServiceCollection Services { get; }
@@ -37,18 +33,11 @@ namespace Solari.Sol.Framework
             BuildActions.Enqueue(action);
         }
 
-        /// <summary>
-        ///     Get the <see cref="IHostEnvironment" />. This property requires the <see cref="IServiceProvider" /> to be built.
-        /// </summary>
-        public IHostEnvironment HostEnvironment { get; }
-
-        public ApplicationOptions GetAppOptions() { return _applicationOptions; }
-
-        private ApplicationOptions LoadApplicationOptions()
+        public ApplicationOptions GetAppOptions()
         {
-            IConfigurationSection section = AppConfiguration.GetSection(SolariConstants.ApplicationAppSettingsSection);
-            return !section.Exists() ? new ApplicationOptions() : AppConfiguration.GetOptions<ApplicationOptions>(section);
+            return _applicationOptions;
         }
+
 
         private IHostEnvironment GetHostEnvironment()
         {

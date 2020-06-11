@@ -10,7 +10,7 @@ namespace Solari.Hyperion
     {
         public static ISolariBuilder AddHyperion(this ISolariBuilder builder)
         {
-            HyperionOptions options = ConfigureHyperionOptions(builder.Services, builder.AppConfiguration);
+            HyperionOptions options = ConfigureHyperionOptions(builder.Services, builder.Configuration);
             AddHyperionCoreServices(builder.Services, options);
             RegisterApplication(builder.Services, options);
             return builder;
@@ -45,7 +45,7 @@ namespace Solari.Hyperion
 
         public static void RegisterApplication(IServiceCollection serviceCollection, HyperionOptions hyperionOptions)
         {
-            if (!hyperionOptions.Register)
+            if (!hyperionOptions.RegisterService)
                 return;
             serviceCollection.AddHostedService<HyperionStartupProcedure>();
         }
