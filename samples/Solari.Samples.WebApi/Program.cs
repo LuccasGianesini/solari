@@ -27,7 +27,7 @@ namespace Solari.Samples.WebApi
             return Host.CreateDefaultBuilder(args)
                        .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
                        .UseHyperion(false)
-                       .UseJuno(false)
+                       // .UseJuno(false)
                        .UseTitan();
         }
     }

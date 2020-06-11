@@ -38,10 +38,9 @@ namespace Solari.Samples.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddMetrics();
-            
+
             services.AddSol(Configuration)
                     .AddVanth()
-                    // .AddOberon()
                     .AddGanymede(requests => requests.AddGanymedeClient<IGitHubClient, GitHubClient>("GitHub"))
                     .AddCallistoWithDefaults(callistoConfiguration => callistoConfiguration
                                                  .RegisterScopedCollection<IPersonRepository, PersonRepository, Person>("person"))
@@ -49,7 +48,7 @@ namespace Solari.Samples.WebApi
                                health => health.AddCallistoHealthCheck());
 
             services.AddScoped<IPersonOperations, PersonOperations>();
-            
+
             services.AddOpenApiDocument(cfg => cfg.PostProcess = d => d.Info.Title = "Solari Sample Api");
             services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
             services.AddMassTransit(cfg =>
