@@ -75,7 +75,7 @@ namespace Solari.Vanth.Tests
         public void BuildCommonResponse_Result_ShouldBeEqualsPrivateProperty()
         {
             CommonResponse<string> response = new CommonResponseBuilder<string>().WithResult(Result).Build();
-            Assert.Equal(Result, response.Result);
+            Assert.Equal(Result, response.Data);
         }
 
         [Fact]

@@ -18,7 +18,8 @@ namespace Solari.Vanth
         public static CommonResponse<TNewGenericType> Transform<TNewGenericType, TOldGenericType>(
             this CommonResponse<TOldGenericType> commonResponse, TNewGenericType newTypeValue, bool addErrors)
         {
-            if (commonResponse == null) throw new ArgumentNullException(nameof(commonResponse));
+            if (commonResponse is null)
+                throw new VanthException("Common response cannot be null.", new ArgumentNullException(nameof(commonResponse)));
 
             ICommonResponseBuilder<TNewGenericType> builder = new CommonResponseBuilder<TNewGenericType>().WithResult(newTypeValue);
             if (commonResponse.HasErrors && addErrors)
@@ -27,6 +28,13 @@ namespace Solari.Vanth
             }
 
             return builder.Build();
+        }
+
+        public static T Map<T, TData>(this CommonResponse<TData> response, Func<CommonResponse<TData>, T> mappingFunction)
+        {
+            if (mappingFunction is null)
+                throw new VanthException("Cannot invoke a null mapping function", new ArgumentNullException(nameof(mappingFunction)));
+            return mappingFunction(response);
         }
     }
 }

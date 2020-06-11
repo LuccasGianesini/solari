@@ -47,7 +47,9 @@
   <component name="ChangeListManager">
     <list default="true" id="f4ec7eb1-8286-4aa8-a378-790d381b8ce1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Solari/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Solari.Callisto.Integrations.MassTransit/Extensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Callisto.Integrations.MassTransit/Extensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Solari.Vanth/CommonResponse.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Vanth/CommonResponse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Solari.Vanth/CommonResponseExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solari.Vanth/CommonResponseExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Solari.Vanth.Tests/Solari.Vanth.Tests/CommonResponseTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Solari.Vanth.Tests/Solari.Vanth.Tests/CommonResponseTests.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,41 +63,52 @@
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/GanymedeClient.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/IGanymedeRequest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/ContentSerializers/IContentDeserializer.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Abstractions/CallistoLogger.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/ContentSerializers/JsonContent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/ICallistoConnection.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/CallistoConnectionFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/A85FC8FE-59F0-4086-875E-669991D7ED54/1/AutomatonymousStateMachine.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/CallistoConnectionBuilder.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Domain/Options/GanymedeRequestHeader.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/DependencyInjection/SolariBuilderExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/MongoClientBuilder.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Domain/Exceptions/GanymedeHttpException.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/EF678F8C-63C9-4FC3-B1A1-798AD3E23221/b3/9a3c290a/ValueTask.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/CallistoConnection.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/IPipelineStage.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/HeaderStage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Vanth/VanthOptions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Vanth/CommonErrorCode.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Abstractions/Conventions/CallistoGuidConvention.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/MessageStage.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/PipelineContext.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/PipelineManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Vanth/CommonDetailedErrorResponse.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Vanth/ICommonResponseFactory.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Vanth/CommonResponse.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Vanth/VanthLibConstants.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/samples/Solari.Samples.WebApi/Program.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/UriStage.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Framework/CommandTypeRegistry.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Vanth/CommonResponseExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Vanth/ExceptionHelper.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/samples/Solari.Samples.WebApi/Startup.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Framework/GanymedeHeaderBuilder.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/samples/Solari.Samples.Application/Person/PersonStateMachine.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Sol/Framework/SolariMarshal.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Vanth/VanthException.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Sol/SolariMarshalExtensions.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/samples/Solari.Samples.Domain/GitHubClient.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Vanth/ExceptionHandlingMiddleware.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Sol/ApplicationOptions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/samples/Solari.Samples.WorkerService/TestClient.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/DeserializationStage.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Framework/Commands/CustomHeaderCommand.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto/DependencyInjection/SolariBuilderExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Integrations.MassTransit/Extensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/DependencyInjection/HttpClientActions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Abstractions/CallistoLogger.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Domain/Options/GanymedeRequestHeader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto.Connector/DependencyInjection/SolariBuilderExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Domain/Exceptions/GanymedeHttpException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/EF678F8C-63C9-4FC3-B1A1-798AD3E23221/b3/9a3c290a/ValueTask.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Vanth/Builders/ICommonDetailedErrorResponseBuilder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Vanth/Exceptions/NullOrEmptyErrorMessageException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/IPipelineStage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/HeaderStage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/MessageStage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/PipelineContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/PipelineManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/UriStage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Framework/CommandTypeRegistry.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Framework/GanymedeHeaderBuilder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/samples/Solari.Samples.Application/Person/PersonStateMachine.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Sol/Framework/SolariMarshal.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/samples/Solari.Samples.Domain/GitHubClient.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Ganymede/Framework/Commands/CustomHeaderCommand.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Solari.Callisto/DependencyInjection/SolariBuilderExtensions.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -107,6 +120,8 @@
         <option value="$PROJECT_DIR$/src/Solari.Callisto.Connector/DependencyInjection/SolariBuilderExtensions.cs" />
         <option value="$PROJECT_DIR$/src/Solari.Ganymede/Pipeline/DeserializationStage.cs" />
         <option value="$PROJECT_DIR$/src/Solari.Callisto.Integrations.MassTransit/Extensions.cs" />
+        <option value="$PROJECT_DIR$/src/Solari.Vanth/CommonResponse.cs" />
+        <option value="$PROJECT_DIR$/src/Solari.Vanth/CommonResponseExtensions.cs" />
       </list>
     </option>
   </component>
@@ -130,7 +145,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Solari.Samples.WebApi">
     <configuration name="Solari.Samples.WebApi" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
@@ -175,7 +190,9 @@
       <option name="presentableId" value="Default" />
       <updated>1590767747999</updated>
       <workItem from="1590767774251" duration="1381000" />
-      <workItem from="1590959624399" duration="472000" />
+      <workItem from="1590959624399" duration="1839000" />
+      <workItem from="1591556962098" duration="266000" />
+      <workItem from="1591557303310" duration="1533000" />
     </task>
     <servers />
   </component>
@@ -280,9 +297,10 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state width="1899" height="377" key="GridCell.Tab.4.right/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590768722199" />
-    <state x="494" y="188" width="932" height="737" key="SettingsEditor" timestamp="1590767884029">
-      <screen x="0" y="27" width="1920" height="1053" />
+    <state x="494" y="180" width="932" height="737" key="SettingsEditor" timestamp="1591557223938">
+      <screen x="0" y="18" width="1920" height="1062" />
     </state>
+    <state x="494" y="180" key="SettingsEditor/0.18.1920.1062/1920.0.1920.1080@0.18.1920.1062" timestamp="1591557223938" />
     <state x="494" y="188" width="932" height="737" key="SettingsEditor/0.27.1920.1053/1920.0.1920.1080@0.27.1920.1053" timestamp="1590767884029" />
     <state x="620" y="252" key="run.anything.popup" timestamp="1590861346616">
       <screen x="0" y="18" width="1920" height="1062" />
