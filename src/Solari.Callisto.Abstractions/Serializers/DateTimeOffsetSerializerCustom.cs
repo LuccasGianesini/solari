@@ -5,20 +5,31 @@ using MongoDB.Bson.Serialization.Serializers;
 
 namespace Solari.Callisto.Abstractions.Serializers
 {
-    public class DateTimeOffsetSerializerCustom : DateTimeOffsetSerializer
+    public class DateTimeOffsetSerializerCustom : IBsonSerializer
     {
-        public override DateTimeOffset Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
+        private readonly DateTimeOffsetSerializer _serializer;
+        public DateTimeOffsetSerializerCustom(Type valueType, DateTimeOffsetSerializer serializer)
         {
-            if (context.Reader.CurrentBsonType != BsonType.Null)
-                return DateTimeHelper.BuildDateTimeOffset(base.Deserialize(context, args));
+            ValueType = valueType;
+            _serializer = serializer;
+        }
+        public object Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
+        {
+            if (context.Reader.CurrentBsonType != BsonType.Null) return DateTimeHelper.BuildDateTimeOffset(_serializer.Deserialize(context, args));
+
             context.Reader.ReadNull();
 
             return DateTimeHelper.DefaultDateTimeOffsetValue;
         }
 
-        public override void Serialize(BsonSerializationContext context, BsonSerializationArgs args, DateTimeOffset value)
+        public void Serialize(BsonSerializationContext context, BsonSerializationArgs args, object value)
         {
-            base.Serialize(context, args, DateTimeHelper.BuildDateTimeOffset(value));
+            if (!(value is DateTimeOffset)) return;
+
+            DateTimeOffset offset = DateTimeHelper.BuildDateTimeOffset((DateTimeOffset) value);
+            _serializer.Serialize(context, args, offset);
         }
+
+        public Type ValueType { get; }
     }
 }

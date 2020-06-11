@@ -10,6 +10,8 @@ using Solari.Ganymede.Framework;
 
 namespace Solari.Ganymede.Pipeline
 {
+    //TODO - PUT X-Ganymede-Deserializer header when sending a message.
+    //TODO - Read message headers and search for X-Ganymede-Deserializer. If not available, use JSON. 
     public class HeaderStage : IPipelineStage
     {
         private readonly HttpRequestMessageHeaderBuilder _headerBuilder;
@@ -61,7 +63,7 @@ namespace Solari.Ganymede.Pipeline
 
         public HeaderStage BasicAuthorization(string username, SecureString password)
         {
-            Authorization(GanymedeConstants.Basic, Convert.ToBase64String(Encoding.ASCII.GetBytes(username + ":" + password)));
+            Authorization(GanymedeConstants.Basic, Convert.ToBase64String(Encoding.UTF8.GetBytes(username + ":" + password)));
 
             return this;
         }
