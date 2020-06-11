@@ -44,13 +44,7 @@ namespace Solari.Callisto.Integrations.MassTransit
         public static void UseMessageDataRepositoryWithCallisto(this IBusFactoryConfigurator configurator, IConfiguration
                                                                     appConfiguration)
         {
-            IMessageDataRepository repository = MessageDataRepositoryWithCallisto(appConfiguration);
-            if (configurator.ConsumeTopology.TryAddConvention(new MessageDataConsumeTopologyConvention(repository))
-             && configurator.SendTopology.TryAddConvention(new MessageDataSendTopologyConvention(repository)))
-            {
-                // Courier does not use ConsumeContext, so it needs to be special
-                var observer = new CourierMessageDataConfigurationObserver(configurator, repository, false);
-            }
+            configurator.UseMessageData(MessageDataRepositoryWithCallisto(appConfiguration));
         }
 
         private static IMessageDataRepository MessageDataRepositoryWithCallisto(IConfiguration configuration)
