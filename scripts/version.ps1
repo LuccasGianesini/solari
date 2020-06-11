@@ -23,7 +23,8 @@ param (
 $global:targetMajor = '1' # Can be changed.
 $global:targetMinor = '10' # Can be changed.
 $global:targetPatch = $null #Patch is auto incremented.
-$global:tags = (git tag --sort=refname)
+# $global:tags = (git tag --sort=refname)
+$global:tags=(git for-each-ref --sort=creatordate --format '%(refname) %(creatordate)' refs/tags)
 $global:hasNoReleases = $null
 $global:isCurrentVersionPreRelease = $null
 $global:currentVersion = $null
