@@ -39,7 +39,7 @@ namespace Solari.Ceres.DependencyInjection
 
         private static void ConfigureInfluxDb(ISolariBuilder builder, CeresOptions options, IMetricsBuilder metricsBuilder)
         {
-            if (options.InfluxDb == null || !options.InfluxDb.Enabled)
+            if (options.InfluxDb is null || !options.InfluxDb.Enabled)
                 return;
             ConfigureReporters.ConfigureInfluxDbReporter(options, metricsBuilder);
             builder.Services.AddMetricsReportingHostedService();
@@ -69,7 +69,7 @@ namespace Solari.Ceres.DependencyInjection
                 a.AddEnvTag();
                 a.GlobalTags.Add("app", appOptions.ApplicationName);
                 a.DefaultContextLabel = appOptions.ApplicationName;
-                a.ReportingEnabled = options.InfluxDb.Enabled;
+                a.ReportingEnabled = options.InfluxDb?.Enabled ?? false;
             });
         }
 
