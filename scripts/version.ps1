@@ -23,7 +23,7 @@ param (
 $global:targetMajor = '1' # Can be changed.
 $global:targetMinor = '10' # Can be changed.
 $global:targetPatch = $null #Patch is auto incremented.
-$global:tags = (git tag --sort = refname)
+$global:tags = (git tag --sort=refname)
 $global:hasNoReleases = $null
 $global:isCurrentVersionPreRelease = $null
 $global:currentVersion = $null
@@ -41,11 +41,6 @@ $global:isCurrentBranchRegex = '^\* (.*)'
 
 $global:productionVersionRegex = '(([0-9]+)\.([0-9]+)\.([0-9]+)?)'
 $global:versionExtractionRegex = '(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-(?:0|[1-9]\d*|[\da-z-]*[a-z-][\da-z-]*)(?:\.(?:0|[1-9]\d*|[\da-z-]*[a-z-][\da-z-]*))*)?(?:\+[\da-z-]+(?:\.[\da-z-]+)*)?'
-
-# TEST no branch input
-# TEST with develop
-# TEST with master
-# TEST with releases/
 
 
 function isCurrentBranch($branch)
