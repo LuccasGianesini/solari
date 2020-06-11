@@ -13,7 +13,7 @@ namespace Solari.Titan.Framework
         internal static LoggerConfiguration ConfigureLoki(this LoggerConfiguration configuration, LokiOptions lokiOptions)
         {
             if (lokiOptions is null)
-                throw new TitanException("Cannot configure Loki sink because LokiOptions is null.");
+                return configuration;
             if (lokiOptions.Enabled is false)
                 return configuration;
 
