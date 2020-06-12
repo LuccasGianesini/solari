@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="MassTransit.AspNetCore" Version="6.3.2" />
-    <PackageReference Include="NSwag.AspNetCore" Version="13.6.0" />
+    <PackageReference Include="NSwag.AspNetCore" Version="13.6.1" />
   </ItemGroup>
 
 
