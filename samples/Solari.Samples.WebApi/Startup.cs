@@ -1,5 +1,7 @@
 using MassTransit;
+using MassTransit.ConsumeConfigurators;
 using MassTransit.Definition;
+using MassTransit.Mediator;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -51,13 +53,13 @@ namespace Solari.Samples.WebApi
 
             services.AddOpenApiDocument(cfg => cfg.PostProcess = d => d.Info.Title = "Solari Sample Api");
             services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
-            services.AddMassTransit(cfg =>
+            services.AddMediator(mediator =>
             {
-                cfg.AddConsumer<CreatePersonConsumer>();
-                cfg.AddRequestClient<CreatePersonCommand>();
-                cfg.AddSagaStateMachine<PersonStateMachine, PersonState>()
+                mediator.SetKebabCaseEndpointNameFormatter();
+                mediator.AddConsumer<CreatePersonConsumer>();
+                mediator.AddRequestClient<CreatePersonCommand>();
+                mediator.AddSagaStateMachine<PersonStateMachine, PersonState>()
                    .MongoDbRepositoryWithCallisto(Configuration);
-                cfg.AddMediator();
             });
         }
 

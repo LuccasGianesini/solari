@@ -17,10 +17,7 @@
   * MongoDb Integration
   * MongoDb Tracing
   * Jaeger Integration
-  * ElasticApm Tracing
-  * Elasticsearch backend for logs
   * Http requests as code
-  * CQRS tooling
 
 ### Projects
 
