@@ -21,7 +21,7 @@ namespace Solari.Vanth.Validation
             else
             {
                 var validatorFactory = context.HttpContext.RequestServices.GetRequiredService<IValidatorFactory>();
-                var response = new CommonResponse<object>();
+                var response = new Result<object>();
                 foreach ((string key, object value) in context.ActionArguments)
                 {
                     if (value == null) continue;
@@ -29,7 +29,7 @@ namespace Solari.Vanth.Validation
                     if (validator == null) continue;
                     ValidationResult result = validator.Validate(value);
                     if (!result.Errors.Any()) continue;
-                    CommonErrorResponse error = new CommonErrorResponseBuilder()
+                    Error error = new ErrorBuilder()
                                                 .WithCode(CommonErrorCode.ValidationErrorCode)
                                                 .WithErrorType(CommonErrorType.ValidationError)
                                                 .WithMessage("Invalid Model State!")

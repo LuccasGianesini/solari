@@ -4,7 +4,7 @@ using Solari.Vanth.Exceptions;
 
 namespace Solari.Vanth.Builders
 {
-    public class CommonDetailedErrorResponseBuilder : ICommonDetailedErrorResponseBuilder
+    public class ErrorDetailBuilder : IErrorDetailBuilder
     {
         private string _code;
         private Exception _exception;
@@ -13,47 +13,47 @@ namespace Solari.Vanth.Builders
         private string _target;
 
 
-        public ICommonDetailedErrorResponseBuilder WithErrorCode(string code)
+        public IErrorDetailBuilder WithErrorCode(string code)
         {
             _code = code;
             return this;
         }
 
-        public ICommonDetailedErrorResponseBuilder WithException(Exception exception)
+        public IErrorDetailBuilder WithException(Exception exception)
         {
             _exception = exception;
             return this;
         }
 
-        public ICommonDetailedErrorResponseBuilder WithMessage(string message)
+        public IErrorDetailBuilder WithMessage(string message)
         {
             _message = message;
             return this;
         }
 
-        public ICommonDetailedErrorResponseBuilder WithMessage(StringBuilder stringBuilder)
+        public IErrorDetailBuilder WithMessage(StringBuilder stringBuilder)
         {
             if (stringBuilder == null) throw new ArgumentNullException(nameof(stringBuilder));
             _message = stringBuilder.ToString();
             return this;
         }
 
-        public ICommonDetailedErrorResponseBuilder WithTarget(string target)
+        public IErrorDetailBuilder WithTarget(string target)
         {
             _target = target;
             return this;
         }
 
-        public ICommonDetailedErrorResponseBuilder WithSource(string source)
+        public IErrorDetailBuilder WithSource(string source)
         {
             _source = source;
             return this;
         }
 
-        public CommonDetailedErrorResponse Build()
+        public ErrorDetail Build()
         {
             if (string.IsNullOrEmpty(_message)) throw new NullOrEmptyErrorMessageException();
-            return new CommonDetailedErrorResponse(_code, _message, _target, _source, _exception);
+            return new ErrorDetail(_code, _message, _target, _source, _exception);
         }
     }
 }

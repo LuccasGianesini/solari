@@ -5,13 +5,13 @@ using Solari.Vanth.Builders;
 
 namespace Solari.Vanth
 {
-    public interface ICommonResponseFactory
+    public interface IResultFactory
     {
-        CommonResponse<TModel> CreateResult<TModel>(TModel model);
-        CommonResponse<TModel> CreateError<TModel>(CommonErrorResponse errorResponse);
-        CommonResponse<TModel> CreateError<TModel>(Func<ICommonErrorResponseBuilder, CommonErrorResponse> builder);
-        CommonResponse<None> CreateEmpty();
-        CommonResponse<TModel> CreateErrorFromException<TModel>(Exception exception, string errorCode = "", string errorMessage = "");
-        CommonResponse<TResult> CreateError<TResult>(ValidationResult result);
+        Result<TData> Success<TData>(TData model);
+        Result<TData> Error<TData>(Error errorResponse);
+        Result<TData> Error<TData>(Func<IErrorBuilder, Error> builder);
+        Result<None> CreateEmpty();
+        Result<TData> ExceptionError<TData>(Exception exception, string errorCode = "", string errorMessage = "");
+        Result<TData> ValidationError<TData>(ValidationResult result);
     }
 }

@@ -4,7 +4,7 @@
     <Authors>Lauth</Authors>
     <Title>Solari.Io</Title>
     <PackageId>Solari.Io</PackageId>
-    <PackageDescription>Hashicorp Vault Library</PackageDescription>
+    <PackageDescription>Health Checks</PackageDescription>
     <PackageTags>Extensions;DotnetCore;C#;Vault</PackageTags>
     <LangVersion>8</LangVersion>
     <RootNamespace>Solari.Io</RootNamespace>

@@ -19,11 +19,11 @@ namespace Solari.Samples.WebApi.Controllers
     public class PersonController : ControllerBase
     {
         private readonly IRequestClient<CreatePersonCommand> _createPersonClient;
-        private readonly ICommonResponseFactory _factory;
+        private readonly IResultFactory _factory;
         private readonly ILogger<PersonController> _logger;
 
 
-        public PersonController(IRequestClient<CreatePersonCommand> createPersonClient,ICommonResponseFactory factory, ILogger<PersonController> logger)
+        public PersonController(IRequestClient<CreatePersonCommand> createPersonClient,IResultFactory factory, ILogger<PersonController> logger)
         {
             _createPersonClient = createPersonClient;
             _factory = factory;
@@ -32,9 +32,9 @@ namespace Solari.Samples.WebApi.Controllers
 
         [HttpPost]
         [VanthValidator]
-        [ProducesResponseType(typeof(CommonResponse<CreatePersonResult>), 200)]
-        [ProducesResponseType(typeof(CommonResponse<object>), 400)]
-        [ProducesResponseType(typeof(CommonResponse<CreatePersonResult>), 500)]
+        [ProducesResponseType(typeof(Result<CreatePersonResult>), 200)]
+        [ProducesResponseType(typeof(Result<object>), 400)]
+        [ProducesResponseType(typeof(Result<CreatePersonResult>), 500)]
         public async Task<IActionResult> Insert([FromBody] CreatePersonCommand command)
         {
             try
@@ -42,7 +42,7 @@ namespace Solari.Samples.WebApi.Controllers
                 Response<IPersonCreatedEvent> response =  
                     await _createPersonClient.GetResponse<IPersonCreatedEvent>(command);
 
-                return Ok(_factory.CreateResult(response.Message));
+                return Ok(_factory.Success(response.Message));
             }
             catch (MongoWriteException exception)
             {
@@ -80,7 +80,7 @@ namespace Solari.Samples.WebApi.Controllers
         private IActionResult CreateExceptionError(Exception exception, string code, string message)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, 
-                              _factory.CreateErrorFromException<CreatePersonResult>(exception, code, message));
+                              _factory.ExceptionError<CreatePersonResult>(exception, code, message));
         }
     }
 }

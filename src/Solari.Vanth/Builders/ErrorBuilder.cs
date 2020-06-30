@@ -4,70 +4,70 @@ using Solari.Vanth.Exceptions;
 
 namespace Solari.Vanth.Builders
 {
-    public class CommonErrorResponseBuilder : ICommonErrorResponseBuilder
+    public class ErrorBuilder : IErrorBuilder
     {
         private string _code;
-        private readonly List<CommonDetailedErrorResponse> _details = new List<CommonDetailedErrorResponse>();
+        private readonly List<ErrorDetail> _details = new List<ErrorDetail>();
         private string _errorType;
         private object _innerError;
         private string _message;
         private string _target;
 
 
-        public ICommonErrorResponseBuilder WithMessage(string message)
+        public IErrorBuilder WithMessage(string message)
         {
             _message = message;
             return this;
         }
 
-        public ICommonErrorResponseBuilder WithCode(string code)
+        public IErrorBuilder WithCode(string code)
         {
             _code = code;
             return this;
         }
 
-        public ICommonErrorResponseBuilder WithErrorType(string type)
+        public IErrorBuilder WithErrorType(string type)
         {
             _errorType = type;
             return this;
         }
 
-        public ICommonErrorResponseBuilder WithInnerError(object innerError)
+        public IErrorBuilder WithInnerError(object innerError)
         {
             _innerError = innerError;
             return this;
         }
 
-        public ICommonErrorResponseBuilder WithTarget(string target)
+        public IErrorBuilder WithTarget(string target)
         {
             _target = target;
             return this;
         }
 
-        public ICommonErrorResponseBuilder WithDetail(CommonDetailedErrorResponse detail)
+        public IErrorBuilder WithDetail(ErrorDetail detail)
         {
             _details.Add(detail);
             return this;
         }
 
-        public ICommonErrorResponseBuilder WithDetail(IEnumerable<CommonDetailedErrorResponse> details)
+        public IErrorBuilder WithDetail(IEnumerable<ErrorDetail> details)
         {
             _details.AddRange(details);
             return this;
         }
 
 
-        public ICommonErrorResponseBuilder WithDetail(Func<ICommonDetailedErrorResponseBuilder, CommonDetailedErrorResponse> builder)
+        public IErrorBuilder WithDetail(Func<IErrorDetailBuilder, ErrorDetail> builder)
         {
             if (builder == null) throw new ArgumentNullException(nameof(builder), "Cannot invoke a null func");
-            _details.Add(builder(new CommonDetailedErrorResponseBuilder()));
+            _details.Add(builder(new ErrorDetailBuilder()));
             return this;
         }
 
-        public CommonErrorResponse Build()
+        public Error Build()
         {
             if (string.IsNullOrEmpty(_message)) throw new NullOrEmptyErrorMessageException();
-            return new CommonErrorResponse(_code, _details, _errorType, _innerError, _message, _target);
+            return new Error(_code, _details, _errorType, _innerError, _message, _target);
         }
     }
 }

@@ -5,7 +5,7 @@
         <Authors>Lauth</Authors>
         <Title>Solari.Rhea</Title>
         <PackageId>Solari.Rhea</PackageId>
-        <PackageDescription>Helath Check library</PackageDescription>
+        <PackageDescription></PackageDescription>
         <PackageTags>Tools;Classes;DotnetCore;C#;Helth Checks</PackageTags>
         <LangVersion>8</LangVersion>
         <RootNamespace>Solari.Rhea</RootNamespace>

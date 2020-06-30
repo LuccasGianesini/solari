@@ -6,9 +6,9 @@ using Solari.Sol.Utils;
 namespace Solari.Vanth
 {
     [Serializable]
-    public class CommonDetailedErrorResponse
+    public class ErrorDetail
     {
-        public CommonDetailedErrorResponse(string code, string message, string target, string source, Exception exception)
+        public ErrorDetail(string code, string message, string target, string source, Exception exception)
         {
             Code = code;
             Message = message;

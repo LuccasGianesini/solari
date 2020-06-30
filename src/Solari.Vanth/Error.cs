@@ -8,9 +8,9 @@ using Solari.Vanth.Builders;
 namespace Solari.Vanth
 {
     [Serializable]
-    public class CommonErrorResponse
+    public class Error
     {
-        public CommonErrorResponse(string code, List<CommonDetailedErrorResponse> details, string errorType, object innerError, string message,
+        public Error(string code, List<ErrorDetail> details, string errorType, object innerError, string message,
                                    string target)
         {
             Code = code;
@@ -21,10 +21,10 @@ namespace Solari.Vanth
             Target = target;
         }
 
-        public CommonErrorResponse() { }
+        public Error() { }
 
         public string Code { get; }
-        public List<CommonDetailedErrorResponse> Details { get; } = new List<CommonDetailedErrorResponse>(2);
+        public List<ErrorDetail> Details { get; } = new List<ErrorDetail>(2);
         public string ErrorType { get; }
         public object InnerError { get; }
         public string Message { get; }
@@ -43,42 +43,42 @@ namespace Solari.Vanth
         public bool HasInnerError => InnerError != null;
 
         /// <summary>
-        ///     Adds an <see cref="CommonDetailedErrorResponse" /> into the details list.
+        ///     Adds an <see cref="ErrorDetail" /> into the details list.
         /// </summary>
         /// <param name="detailedError">The detail of error</param>
         /// <returns>
-        ///     <see cref="CommonErrorResponse" />
+        ///     <see cref="Error" />
         /// </returns>
-        public CommonErrorResponse AddDetailedError(CommonDetailedErrorResponse detailedError)
+        public Error AddDetailedError(ErrorDetail detailedError)
         {
             Details.Add(detailedError);
             return this;
         }
 
         /// <summary>
-        ///     Adds and <see cref="IEnumerable{T}" /> of <see cref="CommonDetailedErrorResponse" /> into the details list.
+        ///     Adds and <see cref="IEnumerable{T}" /> of <see cref="ErrorDetail" /> into the details list.
         ///     It does not clears the list.
         /// </summary>
         /// <param name="detailedErrors"></param>
         /// <returns>
-        ///     <see cref="CommonErrorResponse" />
+        ///     <see cref="Error" />
         /// </returns>
-        public CommonErrorResponse AddDetailedError(IEnumerable<CommonDetailedErrorResponse> detailedErrors)
+        public Error AddDetailedError(IEnumerable<ErrorDetail> detailedErrors)
         {
             Details.AddRange(detailedErrors);
             return this;
         }
 
         /// <summary>
-        ///     Adds an <see cref="CommonDetailedErrorResponse" /> into the details list.
+        ///     Adds an <see cref="ErrorDetail" /> into the details list.
         /// </summary>
-        /// <param name="detailedErrors"><see cref="ICommonDetailedErrorResponseBuilder" /> delegate</param>
+        /// <param name="detailedErrors"><see cref="IErrorDetailBuilder" /> delegate</param>
         /// <returns>
-        ///     <see cref="CommonErrorResponse" />
+        ///     <see cref="Error" />
         /// </returns>
-        public CommonErrorResponse AddDetailedError(Func<ICommonDetailedErrorResponseBuilder, CommonDetailedErrorResponse> detailedErrors)
+        public Error AddDetailedError(Func<IErrorDetailBuilder, ErrorDetail> detailedErrors)
         {
-            AddDetailedError(detailedErrors(new CommonDetailedErrorResponseBuilder()));
+            AddDetailedError(detailedErrors(new ErrorDetailBuilder()));
             return this;
         }
 
@@ -96,18 +96,18 @@ namespace Solari.Vanth
         /// <summary>
         ///     Tries to get the list of details.
         /// </summary>
-        /// <param name="errorStack">List of <see cref="CommonDetailedErrorResponse" /> wrapped in a <see cref="Maybe{T}" /></param>
+        /// <param name="errorStack">List of <see cref="ErrorDetail" /> wrapped in a <see cref="Maybe{T}" /></param>
         /// <returns>True if the property HasDetails is true. False if it is false</returns>
-        public bool TryGetDetails(out Maybe<List<CommonDetailedErrorResponse>> errorStack)
+        public bool TryGetDetails(out Maybe<List<ErrorDetail>> errorStack)
         {
             if (HasDetails)
             {
-                errorStack = Maybe<List<CommonDetailedErrorResponse>>.Some(Details);
+                errorStack = Maybe<List<ErrorDetail>>.Some(Details);
 
                 return true;
             }
 
-            errorStack = Maybe<List<CommonDetailedErrorResponse>>.None;
+            errorStack = Maybe<List<ErrorDetail>>.None;
 
             return false;
         }

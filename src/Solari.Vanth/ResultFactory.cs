@@ -6,28 +6,28 @@ using Solari.Vanth.Builders;
 
 namespace Solari.Vanth
 {
-    public class CommonResponseFactory : ICommonResponseFactory
+    public class ResultFactory : IResultFactory
     {
-        public CommonResponse<TResult> CreateResult<TResult>(TResult model) { return new CommonResponseBuilder<TResult>().WithResult(model).Build(); }
+        public Result<TData> Success<TData>(TData data) { return new ResultBuilder<TData>().WithResult(data).Build(); }
 
-        public CommonResponse<TResult> CreateError<TResult>(CommonErrorResponse errorResponse)
+        public Result<TData> Error<TData>(Error error)
         {
-            return new CommonResponseBuilder<TResult>().WithError(errorResponse).Build();
+            return new ResultBuilder<TData>().WithError(error).Build();
         }
 
-        public CommonResponse<TResult> CreateError<TResult>(Func<ICommonErrorResponseBuilder, CommonErrorResponse> builder)
+        public Result<TData> Error<TData>(Func<IErrorBuilder, Error> builder)
         {
-            return new CommonResponseBuilder<TResult>().WithError(builder).Build();
+            return new ResultBuilder<TData>().WithError(builder).Build();
         }
 
-        public CommonResponse<TResult> CreateError<TResult>(ValidationResult result)
+        public Result<TData> ValidationError<TData>(ValidationResult result)
         {
             if (result == null) throw new ArgumentNullException(nameof(result));
             if (!result.Errors.Any())
-                return CreateEmpty<TResult>();
+                return Empty<TData>();
 
 
-            CommonErrorResponse error = new CommonErrorResponseBuilder()
+            Error error = new ErrorBuilder()
                                         .WithCode(CommonErrorCode.ValidationErrorCode)
                                         .WithErrorType(CommonErrorType.ValidationError)
                                         .WithMessage("Invalid Model State!")
@@ -39,23 +39,23 @@ namespace Solari.Vanth
                                                          .WithTarget(failure.PropertyName)
                                                          .Build());
 
-            return new CommonResponse<TResult>().AddError(error);
+            return new Result<TData>().AddError(error);
         }
 
-        public CommonResponse<None> CreateEmpty() { return new CommonResponseBuilder<None>().WithResult(new None()).Build(); }
+        public Result<None> CreateEmpty() { return new ResultBuilder<None>().WithResult(new None()).Build(); }
 
-        public CommonResponse<TResult> CreateErrorFromException<TResult>(Exception exception, string errorCode = "", string errorMessage = "")
+        public Result<TData> ExceptionError<TData>(Exception exception, string errorCode = "", string errorMessage = "")
         {
             if (exception == null) throw new ArgumentNullException(nameof(exception), "Cannot create exception error from a null exception object");
 
-            ICommonErrorResponseBuilder error = new CommonErrorResponseBuilder()
+            IErrorBuilder error = new ErrorBuilder()
                                                 .WithCode(errorCode)
                                                 .WithErrorType(CommonErrorType.Exception)
                                                 .WithMessage(string.IsNullOrEmpty(errorMessage) ? exception.Message : errorMessage)
                                                 .WithDetail(exception.ExtractDetailsFromException());
-            return new CommonResponse<TResult>().AddError(error.Build());
+            return new Result<TData>().AddError(error.Build());
         }
 
-        public CommonResponse<TResult> CreateEmpty<TResult>() { return new CommonResponseBuilder<TResult>().Build(); }
+        public Result<TData> Empty<TData>() { return new ResultBuilder<TData>().Build(); }
     }
 }

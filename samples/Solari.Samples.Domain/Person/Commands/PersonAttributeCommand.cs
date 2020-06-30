@@ -10,6 +10,6 @@ namespace Solari.Samples.Domain.Person.Commands
     {
         public string PersonId { get; set; }
         public List<PersonAttributeDto> Values { get; set; }
-        public CommonResponse<object> Result { get; set; }
+        public Result<object> Result { get; set; }
     }
 }

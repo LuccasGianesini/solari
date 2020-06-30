@@ -6,5 +6,6 @@
         public const string Exception = "Exception";
         public const string ApplicationError = "Application-Error";
         public const string IntegrationError = "Integration-Error";
+        public const string DatabaseError = "Database-Error";
     }
 }

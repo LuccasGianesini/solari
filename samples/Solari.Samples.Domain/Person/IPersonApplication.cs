@@ -8,6 +8,6 @@ namespace Solari.Samples.Domain.Person
     public interface IPersonApplication
     {
         Task<CreatePersonResult> InsertPerson(CreatePersonCommand command);
-        Task<CommonResponse<long>> AddAttributeToPerson(PersonAttributeCommand command);
+        Task<Result<long>> AddAttributeToPerson(PersonAttributeCommand command);
     }
 }

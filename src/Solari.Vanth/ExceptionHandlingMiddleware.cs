@@ -48,14 +48,14 @@ namespace Solari.Vanth
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
 
-            ICommonDetailedErrorResponseBuilder detail = new CommonDetailedErrorResponseBuilder().WithMessage(exception.Message);
+            IErrorDetailBuilder detail = new ErrorDetailBuilder().WithMessage(exception.Message);
             if (shouldReturnFullException)
             {
                 detail.WithException(exception);
             }
 
 
-            CommonErrorResponse error = new CommonErrorResponseBuilder()
+            Error error = new ErrorBuilder()
                                         .WithCode(context.Response.StatusCode.ToString())
                                         .WithDetail(detail.Build())
                                         .WithMessage("An exception happened during the request")
@@ -63,7 +63,7 @@ namespace Solari.Vanth
                                         .Build();
 
             
-            return context.Response.WriteAsync(new CommonResponse<string>().AddError(error).ToString());
+            return context.Response.WriteAsync(new Result<string>().AddError(error).ToString());
         }
     }
 }
