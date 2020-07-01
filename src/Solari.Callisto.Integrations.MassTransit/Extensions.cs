@@ -15,42 +15,20 @@ namespace Solari.Callisto.Integrations.MassTransit
 {
     public static class Extensions
     {
-        public static ISagaRegistrationConfigurator<TSaga> MongoDbRepositoryWithCallisto<TSaga>(
+        public static ISagaRegistrationConfigurator<TSaga> CallistoSagaRepository<TSaga>(
             this ISagaRegistrationConfigurator<TSaga> configurator,
             IConfiguration configuration)
             where TSaga : class, IVersionedSaga
         {
-            CallistoConnectorOptions options = GetCallistoConnectionOptions(configuration);
-
-            configurator.MongoDbRepository(options.ConnectionString, repositoryConfigurator =>
-            {
-                repositoryConfigurator.Connection = options.ConnectionString;
-                repositoryConfigurator.DatabaseName = options.Database;
-            });
-            return configurator;
+            return SagaConfiguration.AddSagaWithCallisto(configurator, configuration);
         }
 
-        private static CallistoConnectorOptions GetCallistoConnectionOptions(IConfiguration configuration)
+
+        public static void CallistoMessageDataRepository(this IBusFactoryConfigurator configurator, IConfiguration configuration)
         {
-            IConfigurationSection section = configuration.GetSection(CallistoConstants.ConnectorAppSettingsSection);
-            if (!section.Exists())
-                throw new CallistoException("The callisto section does not exists in the AppSettings file.");
-            var options = configuration.GetOptions<CallistoConnectorOptions>(section);
-            if (string.IsNullOrEmpty(options.ConnectionString))
-                throw new CallistoException("The current MassTransit integration requires a mongodb connection string");
-            return options;
+            configurator.UseMessageData(MessageDataConfiguration.MessageDataRepositoryWithCallisto(configuration));
         }
 
-        public static void UseMessageDataRepositoryWithCallisto(this IBusFactoryConfigurator configurator, IConfiguration
-                                                                    appConfiguration)
-        {
-            configurator.UseMessageData(MessageDataRepositoryWithCallisto(appConfiguration));
-        }
 
-        private static IMessageDataRepository MessageDataRepositoryWithCallisto(IConfiguration configuration)
-        {
-            CallistoConnectorOptions options = GetCallistoConnectionOptions(configuration);
-            return new MongoDbMessageDataRepository(options.ConnectionString, options.Database);
-        }
     }
 }
