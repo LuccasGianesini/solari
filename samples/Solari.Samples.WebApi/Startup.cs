@@ -42,12 +42,13 @@ namespace Solari.Samples.WebApi
             services.AddControllers().AddMetrics();
 
             services.AddSol(Configuration)
-                    .AddVanth()
+                    // .AddVanth()
                     .AddGanymede(requests => requests.AddGanymedeClient<IGitHubClient, GitHubClient>("GitHub"))
-                    .AddCallistoWithDefaults(callistoConfiguration => callistoConfiguration
-                                                 .RegisterScopedCollection<IPersonRepository, PersonRepository, Person>("person"))
-                    .AddThemis(tracing => tracing.AddCallistoTracing(),
-                               health => health.AddCallistoHealthCheck());
+                    .AddCallistoWithDefaults(ServiceLifetime.Scoped,
+                                             collections => collections
+                                                 .RegisterScopedCollection<IPersonRepository, PersonRepository, Person>("person"));
+                    // .AddThemis(tracing => tracing.AddCallistoTracing(),
+                    //            health => health.AddCallistoHealthCheck());
 
             services.AddScoped<IPersonOperations, PersonOperations>();
 

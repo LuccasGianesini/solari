@@ -8,12 +8,12 @@ using Solari.Callisto.Abstractions.Exceptions;
 
 namespace Solari.Callisto.Framework.Operators
 {
-    public sealed class ReplaceOperator<TEntity> where TEntity : class, IDocumentRoot
+    public sealed class ReplaceOperator<T> where T : class, IDocumentRoot
     {
-        private readonly IMongoCollection<TEntity> _collection;
+        private readonly IMongoCollection<T> _collection;
         private readonly ICallistoReplaceOperationFactory _factory;
 
-        public ReplaceOperator(IMongoCollection<TEntity> collection, ICallistoReplaceOperationFactory factory)
+        public ReplaceOperator(IMongoCollection<T> collection, ICallistoReplaceOperationFactory factory)
         {
             _collection = collection;
             _factory = factory;
@@ -24,7 +24,7 @@ namespace Solari.Callisto.Framework.Operators
         /// </summary>
         /// <param name="factory">Operation factory</param>
         /// <returns></returns>
-        public async Task<ReplaceOneResult> One(Func<ICallistoReplaceOperationFactory, ICallistoReplace<TEntity>> factory) { return await One(factory(_factory)); }
+        public async Task<ReplaceOneResult> One(Func<ICallistoReplaceOperationFactory, ICallistoReplace<T>> factory) { return await One(factory(_factory)); }
 
         /// <summary>
         ///     Replace one document by id.
@@ -32,7 +32,7 @@ namespace Solari.Callisto.Framework.Operators
         /// <param name="id">The id of the document</param>
         /// <param name="replacement">The replacement entity</param>
         /// <returns></returns>
-        public async Task<ReplaceOneResult> OneVyId(Guid id, TEntity replacement) { return await One(_factory.CreateReplaceById(replacement, id)); }
+        public async Task<ReplaceOneResult> OneVyId(Guid id, T replacement) { return await One(_factory.CreateReplaceById(replacement, id)); }
 
         /// <summary>
         ///     Replace one document from the collection.
@@ -46,7 +46,7 @@ namespace Solari.Callisto.Framework.Operators
         /// <returns>
         ///     <see cref="DeleteResult" />
         /// </returns>
-        public async Task<ReplaceOneResult> One(ICallistoReplace<TEntity> operation)
+        public async Task<ReplaceOneResult> One(ICallistoReplace<T> operation)
         {
             CallistoOperationHelper.PreExecutionCheck(operation);
             if (operation.ClientSessionHandle is null)

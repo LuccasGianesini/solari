@@ -7,12 +7,12 @@ using Solari.Callisto.Abstractions.Exceptions;
 
 namespace Solari.Callisto.Framework.Operators
 {
-    public sealed class UpdateOperator<TEntity> where TEntity : class, IDocumentRoot
+    public sealed class UpdateOperator<T> where T : class, IDocumentRoot
     {
-        private readonly IMongoCollection<TEntity> _collection;
+        private readonly IMongoCollection<T> _collection;
         private readonly ICallistoUpdateOperationFactory _factory;
 
-        public UpdateOperator(IMongoCollection<TEntity> collection, ICallistoUpdateOperationFactory factory)
+        public UpdateOperator(IMongoCollection<T> collection, ICallistoUpdateOperationFactory factory)
         {
             _collection = collection;
             _factory = factory;
@@ -28,7 +28,7 @@ namespace Solari.Callisto.Framework.Operators
         /// <returns>
         ///     <see cref="UpdateResult" />
         /// </returns>
-        public async Task<UpdateResult> Many(Func<ICallistoUpdateOperationFactory, ICallistoUpdate<TEntity>> factory) { return await Many(factory(_factory)); }
+        public async Task<UpdateResult> Many(Func<ICallistoUpdateOperationFactory, ICallistoUpdate<T>> factory) { return await Many(factory(_factory)); }
 
         /// <summary>
         ///     Update a single document.
@@ -40,7 +40,7 @@ namespace Solari.Callisto.Framework.Operators
         /// <returns>
         ///     <see cref="UpdateResult" />
         /// </returns>
-        public async Task<UpdateResult> One(Func<ICallistoUpdateOperationFactory, ICallistoUpdate<TEntity>> factory) { return await One(factory(_factory)); }
+        public async Task<UpdateResult> One(Func<ICallistoUpdateOperationFactory, ICallistoUpdate<T>> factory) { return await One(factory(_factory)); }
 
         /// <summary>
         ///     Update a single document.
@@ -52,7 +52,7 @@ namespace Solari.Callisto.Framework.Operators
         /// <returns>
         ///     <see cref="UpdateResult" />
         /// </returns>
-        public async Task<UpdateResult> One(ICallistoUpdate<TEntity> operation)
+        public async Task<UpdateResult> One(ICallistoUpdate<T> operation)
         {
             CallistoOperationHelper.PreExecutionCheck(operation);
 
@@ -61,7 +61,7 @@ namespace Solari.Callisto.Framework.Operators
                                                         operation.UpdateDefinition,
                                                         operation.UpdateOptions,
                                                         operation.CancellationToken).ConfigureAwait(false);
-            
+
             return await _collection.UpdateOneAsync(operation.ClientSessionHandle,
                                                     operation.FilterDefinition,
                                                     operation.UpdateDefinition,
@@ -79,7 +79,7 @@ namespace Solari.Callisto.Framework.Operators
         /// <returns>
         ///     <see cref="UpdateResult" />
         /// </returns>
-        public async Task<UpdateResult> Many(ICallistoUpdate<TEntity> operation)
+        public async Task<UpdateResult> Many(ICallistoUpdate<T> operation)
         {
             CallistoOperationHelper.PreExecutionCheck(operation);
             if (operation.ClientSessionHandle is null)
@@ -87,7 +87,7 @@ namespace Solari.Callisto.Framework.Operators
                                                          operation.UpdateDefinition,
                                                          operation.UpdateOptions,
                                                          operation.CancellationToken).ConfigureAwait(false);
-            
+
             return await _collection.UpdateManyAsync(operation.ClientSessionHandle,
                                                      operation.FilterDefinition,
                                                      operation.UpdateDefinition,

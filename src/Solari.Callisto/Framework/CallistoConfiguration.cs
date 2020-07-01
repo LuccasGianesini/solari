@@ -8,6 +8,7 @@ using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
 using Solari.Callisto.Connector;
+using Solari.Callisto.Framework.Operators;
 using Solari.Sol;
 
 namespace Solari.Callisto.Framework
@@ -16,7 +17,10 @@ namespace Solari.Callisto.Framework
     {
         private readonly ISolariBuilder _solariBuilder;
 
-        public CallistoConfiguration(ISolariBuilder solariBuilder) { _solariBuilder = solariBuilder; }
+        public CallistoConfiguration(ISolariBuilder solariBuilder)
+        {
+            _solariBuilder = solariBuilder;
+        }
 
         /// <summary>
         ///     Configure the convention pack.
@@ -65,20 +69,40 @@ namespace Solari.Callisto.Framework
         /// <param name="lifetime">Lifetime of the repository service.</param>
         /// <typeparam name="TService">Repository interface</typeparam>
         /// <typeparam name="TImplementation">Repository Implementation</typeparam>
-        /// <typeparam name="TCollection">Root document</typeparam>
+        /// <typeparam name="TDocumentRoot">Root document</typeparam>
         /// <returns></returns>
-        public ICallistoConfiguration RegisterCollection<TService, TImplementation, TCollection>(string collectionName, ServiceLifetime lifetime)
-            where TCollection : class, IDocumentRoot
-            where TImplementation : CallistoRepository<TCollection>, TService
+        public ICallistoConfiguration RegisterCollection<TService, TImplementation, TDocumentRoot>(
+            string collectionName, ServiceLifetime lifetime)
+            where TDocumentRoot : class, IDocumentRoot
+            where TImplementation : CallistoRepository<TDocumentRoot>, TService
 
         {
             _solariBuilder.Services.Add(ServiceDescriptor.Describe(typeof(TService), provider =>
             {
                 // ReSharper disable once ConvertToLambdaExpression
                 CallistoLogger.CollectionLogger.CallingRepository(collectionName, lifetime.ToString());
+
                 var connection = provider.GetService<ICallistoConnection>();
-                IMongoCollection<TCollection> collection = connection.GetDataBase().GetCollection<TCollection>(collectionName);
-                var context = new CallistoContext<TCollection>(collection, connection);
+
+                IMongoCollection<TDocumentRoot> collection = connection.GetDataBase().GetCollection<TDocumentRoot>(collectionName);
+
+                var deleteOperator =
+                    new DeleteOperator<TDocumentRoot>(collection, provider.GetRequiredService<ICallistoDeleteOperationFactory>());
+                var replaceOperator =
+                    new ReplaceOperator<TDocumentRoot>(collection, provider.GetRequiredService<ICallistoReplaceOperationFactory>());
+                var queryOperator =
+                    new QueryOperator<TDocumentRoot>(collection, provider.GetRequiredService<ICallistoQueryOperationFactory>());
+                var updateOperator =
+                    new UpdateOperator<TDocumentRoot>(collection, provider.GetRequiredService<ICallistoUpdateOperationFactory>());
+                var insertOperator =
+                    new InsertOperator<TDocumentRoot>(collection, provider.GetRequiredService<ICallistoInsertOperationFactory>());
+
+                var operators = new CollectionOperators<TDocumentRoot>(deleteOperator, replaceOperator,
+                                                                       insertOperator, queryOperator,
+                                                                       updateOperator);
+
+                var context = new CallistoCollectionContext<TDocumentRoot>(collection, connection, operators);
+
                 return ActivatorUtilities.CreateInstance<TImplementation>(provider, context);
             }, lifetime));
 

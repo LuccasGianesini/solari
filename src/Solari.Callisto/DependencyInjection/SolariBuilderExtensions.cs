@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Solari.Callisto.Abstractions;
 using Solari.Callisto.Connector.DependencyInjection;
 using Solari.Callisto.Framework;
@@ -15,9 +16,10 @@ namespace Solari.Callisto.DependencyInjection
         /// <param name="solariBuilder"></param>
         /// <param name="configure"></param>
         /// <returns></returns>
-        public static ISolariBuilder AddCallisto(this ISolariBuilder solariBuilder, Action<ICallistoConfiguration> configure)
+        public static ISolariBuilder AddCallisto(this ISolariBuilder solariBuilder, ServiceLifetime factoriesLifetime,
+                                                 Action<ICallistoConfiguration> configure)
         {
-            AddCoreServices(solariBuilder);
+            AddCoreServices(solariBuilder, factoriesLifetime);
             configure(new CallistoConfiguration(solariBuilder));
             return solariBuilder;
         }
@@ -30,22 +32,34 @@ namespace Solari.Callisto.DependencyInjection
         /// <param name="solariBuilder"></param>
         /// <param name="configure"></param>
         /// <returns></returns>
-        public static ISolariBuilder AddCallistoWithDefaults(this ISolariBuilder solariBuilder, Action<ICallistoConfiguration> configure)
+        public static ISolariBuilder AddCallistoWithDefaults(this ISolariBuilder solariBuilder,
+                                                             ServiceLifetime factoriesLifetime,
+                                                             Action<ICallistoConfiguration> configure)
         {
-            
-            AddCoreServices(solariBuilder);
+            AddCoreServices(solariBuilder, factoriesLifetime);
             configure(new CallistoConfiguration(solariBuilder).RegisterDefaultConventionPack().RegisterDefaultClassMaps());
             return solariBuilder;
         }
 
-        private static void AddCoreServices(this ISolariBuilder builder)
+        private static void AddCoreServices(this ISolariBuilder builder,
+                                            ServiceLifetime factoriesLifetime)
         {
             builder.AddCallistoConnector();
-            builder.Services.AddTransient<ICallistoUpdateOperationFactory, CallistoUpdateOperationFactory>();
-            builder.Services.AddTransient<ICallistoInsertOperationFactory, CallistoInsertOperationFactory>();
-            builder.Services.AddTransient<ICallistoDeleteOperationFactory, CallistoDeleteOperationFactory>();
-            builder.Services.AddTransient<ICallistoReplaceOperationFactory, CallistoReplaceOperationFactory>();
-            builder.Services.AddTransient<ICallistoQueryOperationFactory, CallistoQueryOperationFactory>();
+            AddFactories(builder.Services, factoriesLifetime);
+        }
+
+        private static void AddFactories(IServiceCollection services, ServiceLifetime lifetime)
+        {
+            services.Add(ServiceDescriptor.Describe(typeof(ICallistoUpdateOperationFactory),
+                                                    provider => new CallistoUpdateOperationFactory(), lifetime));
+            services.Add(ServiceDescriptor.Describe(typeof(ICallistoInsertOperationFactory),
+                                                    provider => new CallistoInsertOperationFactory(), lifetime));
+            services.Add(ServiceDescriptor.Describe(typeof(ICallistoDeleteOperationFactory),
+                                                    provider => new CallistoDeleteOperationFactory(), lifetime));
+            services.Add(ServiceDescriptor.Describe(typeof(ICallistoReplaceOperationFactory),
+                                                    provider => new CallistoReplaceOperationFactory(), lifetime));
+            services.Add(ServiceDescriptor.Describe(typeof(ICallistoQueryOperationFactory),
+                                                    provider => new CallistoQueryOperationFactory(), lifetime));
         }
     }
 }

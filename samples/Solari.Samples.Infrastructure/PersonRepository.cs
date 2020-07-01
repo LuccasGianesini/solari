@@ -12,7 +12,7 @@ namespace Solari.Samples.Infrastructure
     public class PersonRepository : CallistoRepository<Person>, IPersonRepository
     {
         private readonly ILogger<PersonRepository> _logger;
-        public PersonRepository(ICallistoContext<Person> context, ILogger<PersonRepository> logger) : base(context)
+        public PersonRepository(ICallistoCollectionContext<Person> collectionContext, ILogger<PersonRepository> logger) : base(collectionContext)
         { _logger = logger; }
 
         public async Task<CreatePersonResult> InsertPerson(ICallistoInsertOne<Person> insertOne)

@@ -7,6 +7,7 @@ namespace Solari.Callisto
 {
     public interface ICallistoConfiguration
     {
+
         /// <summary>
         ///     Configure the convention pack.
         /// </summary>
