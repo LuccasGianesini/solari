@@ -5,6 +5,7 @@ using MassTransit.MessageData.Conventions;
 using MassTransit.MongoDbIntegration;
 using MassTransit.MongoDbIntegration.MessageData;
 using MassTransit.MongoDbIntegration.Saga;
+using MassTransit.Saga;
 using MassTransit.Transformation.TransformConfigurators;
 using Microsoft.Extensions.Configuration;
 using Solari.Callisto.Abstractions;
@@ -18,7 +19,7 @@ namespace Solari.Callisto.Integrations.MassTransit
         public static ISagaRegistrationConfigurator<TSaga> CallistoSagaRepository<TSaga>(
             this ISagaRegistrationConfigurator<TSaga> configurator,
             IConfiguration configuration)
-            where TSaga : class, IVersionedSaga
+            where TSaga : class, ISagaVersion
         {
             return SagaConfiguration.AddSagaWithCallisto(configurator, configuration);
         }

@@ -1,5 +1,6 @@
 using MassTransit;
 using MassTransit.MongoDbIntegration.Saga;
+using MassTransit.Saga;
 using Microsoft.Extensions.Configuration;
 using Solari.Callisto.Abstractions;
 
@@ -8,7 +9,7 @@ namespace Solari.Callisto.Integrations.MassTransit
     internal static class SagaConfiguration
     {
         internal static ISagaRegistrationConfigurator<TSaga> AddSagaWithCallisto<TSaga>(ISagaRegistrationConfigurator<TSaga> configurator, IConfiguration configuration)
-            where TSaga : class, IVersionedSaga
+            where TSaga : class, ISagaVersion
         {
             CallistoConnectorOptions options = Helper.GetCallistoConnectionOptions(configuration);
 
@@ -30,7 +31,7 @@ namespace Solari.Callisto.Integrations.MassTransit
         private static void ConfigureSagaRepository<TSaga>(ISagaRegistrationConfigurator<TSaga> configurator,
                                                            string connectionString,
                                                            string database)
-            where TSaga : class, IVersionedSaga
+            where TSaga : class, ISagaVersion
         {
             configurator.MongoDbRepository(connectionString, repositoryConfigurator =>
             {
