@@ -9,12 +9,12 @@ using Solari.Callisto.Abstractions.Exceptions;
 
 namespace Solari.Callisto.Framework.Operators
 {
-    public sealed class QueryOperator<TEntity> where TEntity : class, IDocumentRoot
+    public sealed class QueryOperator<T> where T : class, IDocumentRoot
     {
-        private readonly IMongoCollection<TEntity> _collection;
+        private readonly IMongoCollection<T> _collection;
         private readonly ICallistoQueryOperationFactory _factory;
 
-        public QueryOperator(IMongoCollection<TEntity> collection, ICallistoQueryOperationFactory factory)
+        public QueryOperator(IMongoCollection<T> collection, ICallistoQueryOperationFactory factory)
         {
             _collection = collection;
             _factory = factory;
@@ -25,17 +25,17 @@ namespace Solari.Callisto.Framework.Operators
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public async Task<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public async Task<T> Find(Expression<Func<T, bool>> predicate)
         {
-            using (IAsyncCursor<TEntity> cursor = await _collection.FindAsync(predicate).ConfigureAwait(false))
+            using (IAsyncCursor<T> cursor = await _collection.FindAsync(predicate).ConfigureAwait(false))
             {
                 return cursor.FirstOrDefault();
             }
         }
 
-        public async Task<bool> Exists(Expression<Func<TEntity, bool>> predicate)
+        public async Task<bool> Exists(Expression<Func<T, bool>> predicate)
         {
-            using (IAsyncCursor<TEntity> result = await _collection.FindAsync(predicate).ConfigureAwait(false))
+            using (IAsyncCursor<T> result = await _collection.FindAsync(predicate).ConfigureAwait(false))
             {
                 return await result.AnyAsync().ConfigureAwait(false);
             }
@@ -46,9 +46,9 @@ namespace Solari.Callisto.Framework.Operators
         /// </summary>
         /// <param name="id">The id</param>
         /// <returns></returns>
-        public async Task<TEntity> FindById(Guid id)
+        public async Task<T> FindById(Guid id)
         {
-            return await Find(_factory.CreateQuery(Builders<TEntity>.Filter.Eq(a => a.Id, id),
+            return await Find(_factory.CreateQuery(Builders<T>.Filter.Eq(a => a.Id, id),
                                                    cursor => cursor.FirstOrDefault()));
         }
 
@@ -58,7 +58,7 @@ namespace Solari.Callisto.Framework.Operators
         /// </summary>
         /// <param name="factory">The operation factory</param>
         /// <returns></returns>
-        public async Task<TResult> Find<TResult>(Func<ICallistoQueryOperationFactory, ICallistoQuery<TEntity, TResult>> factory)
+        public async Task<TResult> Find<TResult>(Func<ICallistoQueryOperationFactory, ICallistoQuery<T, TResult>> factory)
         {
             return await Find(factory(_factory));
         }
@@ -70,11 +70,11 @@ namespace Solari.Callisto.Framework.Operators
         /// <typeparam name="TResult">The Result</typeparam>
         /// <returns></returns>
         /// <exception cref="NullCallistoOperationException"></exception>
-        public async Task<TResult> Find<TResult>(ICallistoQuery<TEntity, TResult> operation)
+        public async Task<TResult> Find<TResult>(ICallistoQuery<T, TResult> operation)
         {
             CallistoOperationHelper.PreExecutionCheck(operation);
             if (operation.ClientSessionHandle is null)
-                using (IAsyncCursor<TEntity> cursor = await _collection.FindAsync(operation.FilterDefinition,
+                using (IAsyncCursor<T> cursor = await _collection.FindAsync(operation.FilterDefinition,
                                                                                   operation.FindOptions,
                                                                                   operation.CancellationToken)
                                                                        .ConfigureAwait(false))
@@ -82,7 +82,7 @@ namespace Solari.Callisto.Framework.Operators
                     return operation.ResultFunction(cursor);
                 }
 
-            using (IAsyncCursor<TEntity> cursor = await _collection.FindAsync(operation.ClientSessionHandle,
+            using (IAsyncCursor<T> cursor = await _collection.FindAsync(operation.ClientSessionHandle,
                                                                               operation.FilterDefinition,
                                                                               operation.FindOptions,
                                                                               operation.CancellationToken)
@@ -101,7 +101,7 @@ namespace Solari.Callisto.Framework.Operators
         /// <returns></returns>
         /// <exception cref="NullCallistoOperationException"></exception>
         public async Task<TResult> Aggregate<TProjectionModel, TResult>(
-            Func<ICallistoQueryOperationFactory, ICallistoAggregation<TEntity, TProjectionModel, TResult>> factory)
+            Func<ICallistoQueryOperationFactory, ICallistoAggregation<T, TProjectionModel, TResult>> factory)
             where TProjectionModel : class
         {
             return await Aggregate(factory(_factory));
@@ -115,7 +115,7 @@ namespace Solari.Callisto.Framework.Operators
         /// <typeparam name="TResult">The final result type of the operation</typeparam>
         /// <returns></returns>
         /// <exception cref="NullCallistoOperationException"></exception>
-        public async Task<TResult> Aggregate<TProjectionModel, TResult>(ICallistoAggregation<TEntity, TProjectionModel, TResult> operation)
+        public async Task<TResult> Aggregate<TProjectionModel, TResult>(ICallistoAggregation<T, TProjectionModel, TResult> operation)
             where TProjectionModel : class
         {
             CallistoOperationHelper.PreExecutionCheck(operation);

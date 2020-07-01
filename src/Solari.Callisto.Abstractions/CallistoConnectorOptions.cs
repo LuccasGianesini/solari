@@ -9,48 +9,30 @@ namespace Solari.Callisto.Abstractions
     {
         public string ConnectionString { get; set; }
         public string ConnectTimeout { get; set; }
-
         public string HeartbeatInterval { get; set; }
-
         public MassTransitOptions MassTransitStorageConfiguration { get; set; }
         public string HeartbeatTimeout { get; set; }
-
         /// <summary>
         ///     List of host;port
         /// </summary>
         public List<string> Servers { get; set; }
-
         public bool Ipv6 { get; set; }
-
         public string LocalThreshold { get; set; }
-
         public string MaxConnectionIdleTime { get; set; }
-
         public string MaxConnectionLifeTime { get; set; }
-
         public int MaxConnectionPoolSize { get; set; }
-
         public int MinConnectionPoolSize { get; set; }
-
         public string Database { get; set; }
         public bool RetryWrites { get; set; }
-
         public string WriteConcern { get; set; }
-
         public bool RetryReads { get; set; }
         public string ReadConcern { get; set; }
         public string ReadPreference { get; set; }
-
         public string ServerSelectionTimeout { get; set; }
-
         public string SocketTimeout { get; set; }
-
         public string WaitQueueTimeout { get; set; }
-
         public string ConnectionMode { get; set; }
-
         public string GuidRepresentation { get; set; }
-
         public string ConnectionStringScheme { get; set; }
 
         public WriteConcern GetWriteConcern()
