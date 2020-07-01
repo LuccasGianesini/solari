@@ -11,8 +11,8 @@ namespace Solari.Hyperion.Abstractions
         public string Datacenter { get; set; } = "dc1";
         public string WaitTime { get; set; }
 
-        public HyperionHealthCheckOptions HealthCheck { get; set; } = new HyperionHealthCheckOptions();
-        public HyperionConfigurationProviderOptions ConfigurationProvider { get; set; } = new HyperionConfigurationProviderOptions();
+        public HyperionHealthCheckOptions HealthCheck { get; set; }
+        public HyperionConfigurationProviderOptions ConfigurationProvider { get; set; }
 
         public TimeSpan GetWaitTime() { return string.IsNullOrEmpty(WaitTime) ? TimeSpan.FromSeconds(30) : WaitTime.ToTimeSpan(); }
     }

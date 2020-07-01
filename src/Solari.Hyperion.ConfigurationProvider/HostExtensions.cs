@@ -17,6 +17,9 @@ namespace Solari.Hyperion.ConfigurationProvider
 
             SolariBuilderExtensions.GetHyperionOptions(configRoot, out HyperionOptions options);
 
+            if (options.ConfigurationProvider is null || !options.ConfigurationProvider.Enabled)
+                return builder;
+
             ApplicationOptions app = configRoot.GetApplicationOptions();
 
             var src = new HyperionConfigurationSource
@@ -35,7 +38,7 @@ namespace Solari.Hyperion.ConfigurationProvider
             return builder;
         }
 
-        public static IHostBuilder UseHyperion(this IHostBuilder builder,bool addHyperionServices)
+        public static IHostBuilder UseHyperion(this IHostBuilder builder, bool addHyperionServices)
         {
             builder.ConfigureAppConfiguration(configurationBuilder => configurationBuilder.UseHyperion(null))
                    .ConfigureServices((context, collection) => { AddHyperion(collection, context.Configuration, addHyperionServices); });

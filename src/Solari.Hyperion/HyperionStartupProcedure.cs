@@ -123,6 +123,9 @@ namespace Solari.Hyperion
 
         private AgentServiceCheck BuildServiceCheck(Uri appUri, IPAddress ip)
         {
+            if (_options.HealthCheck is null)
+                return default;
+
             if (_options.HealthCheck.AddHealthCheck)
                 return new AgentServiceCheck
                 {
