@@ -59,7 +59,7 @@ namespace Solari.Samples.WebApi
                 mediator.AddConsumer<CreatePersonConsumer>();
                 mediator.AddRequestClient<CreatePersonCommand>();
                 mediator.AddSagaStateMachine<PersonStateMachine, PersonState>()
-                   .MongoDbRepositoryWithCallisto(Configuration);
+                   .CallistoSagaRepository(Configuration);
             });
         }
 

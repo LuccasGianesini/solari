@@ -12,6 +12,7 @@ namespace Solari.Callisto.Abstractions
 
         public string HeartbeatInterval { get; set; }
 
+        public MassTransitOptions MassTransitStorageConfiguration { get; set; }
         public string HeartbeatTimeout { get; set; }
 
         /// <summary>

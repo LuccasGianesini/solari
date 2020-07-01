@@ -12,13 +12,11 @@ namespace Solari.Callisto.Connector
 {
     public sealed class CallistoConnection : ICallistoConnection
     {
-        private readonly ReaderWriterLockSlim _lockSlim;
         private readonly Dictionary<string, IMongoClient> _client;
         private IMongoDatabase _database;
 
         public CallistoConnection()
         {
-            _lockSlim = new ReaderWriterLockSlim();
             _client = new Dictionary<string, IMongoClient>(1);
         }
 
@@ -27,7 +25,7 @@ namespace Solari.Callisto.Connector
         public ICallistoConnection AddClient(IMongoClient mongoClient)
         {
             if (mongoClient == null) throw new CallistoException($"Null {nameof(IMongoClient)} is not accepted in the connection dictionary");
-            
+
             _client.TryAdd(CallistoConstants.CallistoConnectorCacheKey, mongoClient);
             CallistoLogger.ConnectionLogger.AddingMongoClient();
             return this;
