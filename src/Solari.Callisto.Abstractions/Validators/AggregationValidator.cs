@@ -1,6 +1,7 @@
 using System;
 using FluentValidation;
 using MongoDB.Driver;
+using Solari.Callisto.Abstractions.Contracts.CQR;
 using Solari.Callisto.Abstractions.CQR;
 
 namespace Solari.Callisto.Abstractions.Validators

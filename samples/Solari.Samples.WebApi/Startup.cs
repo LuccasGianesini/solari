@@ -32,7 +32,10 @@ namespace Solari.Samples.WebApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration) { Configuration = configuration; }
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
 
         public IConfiguration Configuration { get; }
 
@@ -42,13 +45,14 @@ namespace Solari.Samples.WebApi
             services.AddControllers().AddMetrics();
 
             services.AddSol(Configuration)
-                    // .AddVanth()
-                    .AddGanymede(requests => requests.AddGanymedeClient<IGitHubClient, GitHubClient>("GitHub"))
-                    .AddCallistoWithDefaults(ServiceLifetime.Scoped,
-                                             collections => collections
-                                                 .RegisterScopedCollection<IPersonRepository, PersonRepository, Person>("person"));
-                    // .AddThemis(tracing => tracing.AddCallistoTracing(),
-                    //            health => health.AddCallistoHealthCheck());
+                    .AddCallistoWithDefaults(configurator =>
+                                                 configurator.RegisterClient("localhost", collection => collection
+                                                                                 .ConfigureScopedCollection<
+                                                                                     PersonCollection,
+                                                                                     PersonCollection,
+                                                                                     Person>("solari-samples", "person"))
+                                           , ServiceLifetime.Scoped);
+
 
             services.AddScoped<IPersonOperations, PersonOperations>();
 
@@ -60,7 +64,7 @@ namespace Solari.Samples.WebApi
                 mediator.AddConsumer<CreatePersonConsumer>();
                 mediator.AddRequestClient<CreatePersonCommand>();
                 mediator.AddSagaStateMachine<PersonStateMachine, PersonState>()
-                   .CallistoSagaRepository(Configuration);
+                        .CallistoSagaRepository("localhost", "callisto-sagas");
             });
         }
 

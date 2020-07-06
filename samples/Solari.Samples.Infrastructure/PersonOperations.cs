@@ -2,8 +2,10 @@
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
+using Solari.Callisto.Abstractions.Contracts.CQR;
 using Solari.Callisto.Abstractions.CQR;
 using Solari.Callisto.Framework;
+using Solari.Callisto.Framework.Factories;
 using Solari.Samples.Domain.Person;
 using Solari.Samples.Domain.Person.Commands;
 using Solari.Samples.Domain.Person.Dtos;

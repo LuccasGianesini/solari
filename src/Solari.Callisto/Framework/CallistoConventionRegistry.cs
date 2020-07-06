@@ -1,37 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Conventions;
-using Solari.Callisto.Abstractions.Conventions;
+using Solari.Callisto.Abstractions;
+using Solari.Callisto.Abstractions.Contracts;
+using Solari.Callisto.Abstractions.Exceptions;
+using Solari.Callisto.Conventions;
 
 namespace Solari.Callisto.Framework
 {
-    internal class CallistoConventionRegistry
+    public class CallistoConventionRegistry : ICallistoConventionRegistry
     {
-        static CallistoConventionRegistry() { }
+        public ConventionPack ConventionPack { get; }
+        private readonly Func<Type, bool> _defaultFilter;
+        private readonly string _defaultName = "solari-callisto-default-conventions";
 
-        private CallistoConventionRegistry() { RegisteredConventions = new Queue<IConvention>(10); }
-
-        public static CallistoConventionRegistry Instance { get; } = new CallistoConventionRegistry();
-
-        internal Queue<IConvention> RegisteredConventions { get; }
-
-        public CallistoConventionRegistry AddConvention(IConvention convention)
+        public CallistoConventionRegistry()
         {
-            if (convention == null) throw new ArgumentNullException(nameof(convention));
-            RegisteredConventions.Enqueue(convention);
+            ConventionPack = new ConventionPack();
+            _defaultFilter = CallistoTypeSelector.IsCallistoDocument;
+        }
+
+        public ICallistoConventionRegistry AddDefaultConventions()
+        {
+            ConventionPack.Add(new ReadWriteMemberFinderConvention());
+            ConventionPack.Add(new CallistoIgnoreExtraElementsConvention());
+            ConventionPack.Add(new CallistoIdConvention());
+            ConventionPack.Add(new CallistoDateTimeConvention());
+            ConventionPack.Add(new EnumRepresentationConvention(BsonType.String));
+            ConventionPack.Add(new CallistoGuidConvention());
+            ConventionPack.Add(new CallistoDecimalConvention());
             return this;
         }
 
-        public void AddDefaultConventions()
+        public ICallistoConventionRegistry ConfigureConventionPack(Action<ConventionPack> configurationAction)
         {
-            RegisteredConventions.Enqueue(new ReadWriteMemberFinderConvention());
-            RegisteredConventions.Enqueue(new CallistoIgnoreExtraElementsConvention());
-            RegisteredConventions.Enqueue(new CallistoIdConvention());
-            RegisteredConventions.Enqueue(new CallistoDateTimeConvention());
-            RegisteredConventions.Enqueue(new EnumRepresentationConvention(BsonType.String));
-            RegisteredConventions.Enqueue(new CallistoGuidConvention());
-            RegisteredConventions.Enqueue(new CallistoDecimalConvention());
+            if (configurationAction is null)
+                throw new CallistoException("Cannot invoke a null action during the configuration of a convention pack.");
+            configurationAction(ConventionPack);
+            return this;
+        }
+
+        public void RegisterConventionPack()
+        {
+            RegisterConventionPack(_defaultName, _defaultFilter);
+        }
+
+        public void RegisterConventionPack(string name, Func<Type, bool> filter)
+        {
+            if(string.IsNullOrEmpty(name))
+                throw new CallistoException("A convention pack must have a name.");
+            if(filter == null)
+                throw new CallistoException("A convention pack must have a filter. To apply the convention pack to all classes use '_ => true'. " +
+                                            "Keep in mind that this is not advised.");
+            ConventionRegistry.Register(name, ConventionPack, filter);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation.Results;
 using MongoDB.Driver;
+using Solari.Callisto.Abstractions.Contracts.CQR;
 using Solari.Callisto.Abstractions.Exceptions;
 using Solari.Callisto.Abstractions.Validators;
 

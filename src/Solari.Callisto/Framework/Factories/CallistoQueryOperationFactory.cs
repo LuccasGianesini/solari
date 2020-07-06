@@ -1,12 +1,11 @@
 using System;
-using System.Text;
-using System.Threading;
 using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
+using Solari.Callisto.Abstractions.Contracts.CQR;
 using Solari.Callisto.Abstractions.CQR;
 using Solari.Callisto.Abstractions.Exceptions;
 
-namespace Solari.Callisto.Framework
+namespace Solari.Callisto.Framework.Factories
 {
     public class CallistoQueryOperationFactory : ICallistoQueryOperationFactory
     {

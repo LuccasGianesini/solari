@@ -1,4 +1,5 @@
 using Solari.Callisto.Abstractions;
+using Solari.Callisto.Framework;
 using Solari.Callisto.Framework.Operators;
 
 namespace Solari.Callisto
@@ -11,17 +12,17 @@ namespace Solari.Callisto
                                    QueryOperator<T> queryOperator,
                                    UpdateOperator<T> updateOperator)
         {
-            DeleteOperator = deleteOperator;
-            ReplaceOperator = replaceOperator;
-            InsertOperator = insertOperator;
-            QueryOperator = queryOperator;
-            UpdateOperator = updateOperator;
+            Delete = deleteOperator;
+            Replace = replaceOperator;
+            Insert = insertOperator;
+            Query = queryOperator;
+            Update = updateOperator;
         }
 
-        public DeleteOperator<T> DeleteOperator { get; }
-        public ReplaceOperator<T> ReplaceOperator { get; }
-        public InsertOperator<T> InsertOperator { get; }
-        public QueryOperator<T> QueryOperator { get; }
-        public UpdateOperator<T> UpdateOperator { get; }
+        public DeleteOperator<T> Delete { get; }
+        public ReplaceOperator<T> Replace { get; }
+        public InsertOperator<T> Insert { get; }
+        public QueryOperator<T> Query { get; }
+        public UpdateOperator<T> Update { get; }
     }
 }

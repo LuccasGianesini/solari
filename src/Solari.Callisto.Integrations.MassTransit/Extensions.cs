@@ -17,19 +17,16 @@ namespace Solari.Callisto.Integrations.MassTransit
     public static class Extensions
     {
         public static ISagaRegistrationConfigurator<TSaga> CallistoSagaRepository<TSaga>(
-            this ISagaRegistrationConfigurator<TSaga> configurator,
-            IConfiguration configuration)
+            this ISagaRegistrationConfigurator<TSaga> configurator, string clientName, string database)
             where TSaga : class, ISagaVersion
         {
-            return SagaConfiguration.AddSagaWithCallisto(configurator, configuration);
+            return SagaConfiguration.AddSagaWithCallisto(configurator, clientName, database);
         }
 
 
-        public static void CallistoMessageDataRepository(this IBusFactoryConfigurator configurator, IConfiguration configuration)
+        public static void CallistoMessageDataRepository(this IBusFactoryConfigurator configurator, string clientName, string database)
         {
-            configurator.UseMessageData(MessageDataConfiguration.MessageDataRepositoryWithCallisto(configuration));
+            configurator.UseMessageData(MessageDataConfiguration.MessageDataRepositoryWithCallisto(clientName, database));
         }
-
-
     }
 }

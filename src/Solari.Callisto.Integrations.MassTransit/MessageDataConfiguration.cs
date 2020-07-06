@@ -2,23 +2,17 @@ using MassTransit.MessageData;
 using MassTransit.MongoDbIntegration.MessageData;
 using Microsoft.Extensions.Configuration;
 using Solari.Callisto.Abstractions;
+using Solari.Callisto.Abstractions.Contracts;
+using Solari.Callisto.Connector;
 
 namespace Solari.Callisto.Integrations.MassTransit
 {
     internal static class MessageDataConfiguration
     {
-        public static IMessageDataRepository MessageDataRepositoryWithCallisto(IConfiguration configuration)
+        public static IMessageDataRepository MessageDataRepositoryWithCallisto(string clientName, string database)
         {
-            CallistoConnectorOptions options = Helper.GetCallistoConnectionOptions(configuration);
-            if (options.MassTransitStorageConfiguration is null)
-            {
-                return new MongoDbMessageDataRepository(options.ConnectionString, options.Database);
-            }
-
-            string db = string.IsNullOrEmpty(options.MassTransitStorageConfiguration.MessageDataDb)
-                            ? options.Database
-                            : options.MassTransitStorageConfiguration.MessageDataDb;
-            return new MongoDbMessageDataRepository(options.ConnectionString, db);
+            ICallistoClient client = CallistoClientRegistry.Instance.GetClient(clientName);
+            return new MongoDbMessageDataRepository(client.ConnectionString, database);
         }
     }
 }

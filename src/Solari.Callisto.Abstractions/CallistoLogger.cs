@@ -12,7 +12,7 @@ namespace Solari.Callisto.Abstractions
             {
                 Log.Debug($"{Prefix}Updating the current MongoClient. A connection with different settings was created. The current stored client will be updated");
             }
-            
+
             public static void AddingMongoClient()
             {
                 Log.Debug($"{Prefix}Adding a IMongoClient into the dictionary");
@@ -63,16 +63,10 @@ namespace Solari.Callisto.Abstractions
                 Log.Debug($"{Prefix}Using default ClassMaps");
             }
 
-            public static void IdentifiedRoot(string className)
+            public static void IdentifiedType(string className)
             {
-                Log.Debug($"{Prefix}Got document root with name {className}");
+                Log.Debug($"{Prefix}Got callisto type with name '{className}'");
             }
-
-            public static void IdentifiedNode(string className)
-            {
-                Log.Debug($"{Prefix}Got document node with name {className}");
-            }
-
             public static void RegisteredClassMap(string fullName)
             {
                 Log.Debug($"{Prefix}Registered a class map for type {fullName}");

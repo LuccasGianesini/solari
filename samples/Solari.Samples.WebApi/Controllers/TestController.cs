@@ -17,23 +17,23 @@ namespace Solari.Samples.WebApi.Controllers
     public class TestController : ControllerBase
     {
         private readonly IHyperionClient _client;
-        private readonly IPersonRepository _repository;
+        private readonly IPersonCollection _collection;
         private readonly IGitHubClient _hubClient;
         private readonly ILogger<TestController> _logger;
         private readonly IPersonOperations _operations;
 
-        public TestController(ILogger<TestController> logger,  IPersonOperations operations, IHyperionClient client, IPersonRepository repository)
+        public TestController(ILogger<TestController> logger,  IPersonOperations operations, IHyperionClient client, IPersonCollection collection)
         {
             _logger = logger;
             _operations = operations;
             _client = client;
-            _repository = repository;
+            _collection = collection;
         }
 
         [HttpPost]
         public async Task<IActionResult> Get([FromBody] UpdatePersonDto dto)
         {
-           await _repository.InsertPerson(_operations.CreateInsertOperation(new CreatePersonCommand
+           await _collection.InsertPerson(_operations.CreateInsertOperation(new CreatePersonCommand
             {
                 Name = "Test"
             }));

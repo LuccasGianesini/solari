@@ -4,8 +4,10 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
+using Solari.Callisto.Abstractions.Contracts.CQR;
 using Solari.Callisto.Abstractions.CQR;
 using Solari.Callisto.Abstractions.Exceptions;
+using Solari.Callisto.Framework.Factories;
 
 namespace Solari.Callisto.Framework.Operators
 {
@@ -72,7 +74,7 @@ namespace Solari.Callisto.Framework.Operators
         /// <exception cref="NullCallistoOperationException"></exception>
         public async Task<TResult> Find<TResult>(ICallistoQuery<T, TResult> operation)
         {
-            CallistoOperationHelper.PreExecutionCheck(operation);
+            Helper.PreExecutionCheck(operation);
             if (operation.ClientSessionHandle is null)
                 using (IAsyncCursor<T> cursor = await _collection.FindAsync(operation.FilterDefinition,
                                                                                   operation.FindOptions,
@@ -118,7 +120,7 @@ namespace Solari.Callisto.Framework.Operators
         public async Task<TResult> Aggregate<TProjectionModel, TResult>(ICallistoAggregation<T, TProjectionModel, TResult> operation)
             where TProjectionModel : class
         {
-            CallistoOperationHelper.PreExecutionCheck(operation);
+            Helper.PreExecutionCheck(operation);
             if (operation.ClientSessionHandle is null)
                 using (IAsyncCursor<TProjectionModel> cursor = await _collection.AggregateAsync(operation.PipelineDefinition,
                                                                                                 operation.AggregateOptions,

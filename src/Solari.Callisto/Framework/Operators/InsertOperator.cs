@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
+using Solari.Callisto.Abstractions.Contracts.CQR;
 using Solari.Callisto.Abstractions.CQR;
 using Solari.Callisto.Abstractions.Exceptions;
+using Solari.Callisto.Framework.Factories;
 
 namespace Solari.Callisto.Framework.Operators
 {
@@ -47,7 +49,7 @@ namespace Solari.Callisto.Framework.Operators
         /// <returns>The inserted entities with id</returns>
         /// <exception cref="NullCallistoOperationException">When <see cref="ICallistoInsertOne{T}"/> is null</exception>
         /// <exception cref="NullOrEmptyValueException">When the values array is null or empty</exception>
-        /// 
+        ///
         public async Task<TEntity> One(TEntity entity) { return await One(_factory.CreateInsertOne(entity)); }
 
         /// <summary>
@@ -59,7 +61,7 @@ namespace Solari.Callisto.Framework.Operators
         /// <exception cref="NullOrEmptyValueException">When the values array is null or empty</exception>
         public async Task<TEntity> One(ICallistoInsertOne<TEntity> operation)
         {
-            CallistoOperationHelper.PreExecutionCheck(operation);
+            Helper.PreExecutionCheck(operation);
             if (operation.ClientSessionHandle is null)
             {
                 await _collection.InsertOneAsync(operation.Value,
@@ -97,7 +99,7 @@ namespace Solari.Callisto.Framework.Operators
         /// <exception cref="NullOrEmptyValueException">When the values array is null or empty</exception>
         public async Task<IEnumerable<TEntity>> Many(ICallistoInsertMany<TEntity> operation)
         {
-            CallistoOperationHelper.PreExecutionCheck(operation);
+            Helper.PreExecutionCheck(operation);
 
             if (operation.ClientSessionHandle is null)
             {

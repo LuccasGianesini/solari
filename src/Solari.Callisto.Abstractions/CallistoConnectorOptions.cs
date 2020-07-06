@@ -7,22 +7,25 @@ namespace Solari.Callisto.Abstractions
 {
     public class CallistoConnectorOptions
     {
+        public CallistoConnectorOptions()
+        {
+
+        }
+        public string ApplicationName { get; set; }
+        public string Name { get; set; }
+        public bool Trace { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
         public string ConnectionString { get; set; }
         public string ConnectTimeout { get; set; }
         public string HeartbeatInterval { get; set; }
-        public MassTransitOptions MassTransitStorageConfiguration { get; set; }
         public string HeartbeatTimeout { get; set; }
-        /// <summary>
-        ///     List of host;port
-        /// </summary>
-        public List<string> Servers { get; set; }
         public bool Ipv6 { get; set; }
         public string LocalThreshold { get; set; }
         public string MaxConnectionIdleTime { get; set; }
         public string MaxConnectionLifeTime { get; set; }
         public int MaxConnectionPoolSize { get; set; }
         public int MinConnectionPoolSize { get; set; }
-        public string Database { get; set; }
         public bool RetryWrites { get; set; }
         public string WriteConcern { get; set; }
         public bool RetryReads { get; set; }

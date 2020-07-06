@@ -17,7 +17,7 @@
     <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Solari.Callisto.Connector\Solari.Callisto.Connector.csproj" />
+    <ProjectReference Include="..\Solari.Callisto.Abstractions\Solari.Callisto.Abstractions.csproj" />
     <ProjectReference Include="..\Solari.Deimos\Solari.Deimos.csproj" />
   </ItemGroup>
 
