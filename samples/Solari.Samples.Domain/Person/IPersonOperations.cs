@@ -1,6 +1,7 @@
 ﻿using System;
 using MongoDB.Bson;
 using Solari.Callisto.Abstractions;
+using Solari.Callisto.Abstractions.Contracts.CQR;
 using Solari.Callisto.Abstractions.CQR;
 using Solari.Samples.Domain.Person.Commands;
 using Solari.Samples.Domain.Person.Dtos;

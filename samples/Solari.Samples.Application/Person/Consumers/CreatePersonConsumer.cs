@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using MassTransit;
+using Solari.Callisto.Abstractions.Contracts.CQR;
 using Solari.Callisto.Abstractions.CQR;
 using Solari.Samples.Domain.Person;
 using Solari.Samples.Domain.Person.Commands;
@@ -10,19 +11,19 @@ namespace Solari.Samples.Application.Person.Consumers
 {
     public class CreatePersonConsumer : IConsumer<CreatePersonCommand>
     {
-        private readonly IPersonRepository _personRepository;
+        private readonly IPersonCollection _personCollection;
         private readonly IPersonOperations _operations;
 
-        public CreatePersonConsumer(IPersonRepository personRepository, IPersonOperations operations)
+        public CreatePersonConsumer(IPersonCollection personCollection, IPersonOperations operations)
         {
-            _personRepository = personRepository;
+            _personCollection = personCollection;
             _operations = operations;
         }
 
         public async Task Consume(ConsumeContext<CreatePersonCommand> context)
         {
             ICallistoInsertOne<Domain.Person.Person> insertOperation = _operations.CreateInsertOperation(context.Message);
-            CreatePersonResult dbResult = await _personRepository.InsertPerson(insertOperation);
+            CreatePersonResult dbResult = await _personCollection.InsertPerson(insertOperation);
             if (dbResult.Success)
             {
                 await context.Publish<IPersonCreatedEvent>(new

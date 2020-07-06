@@ -1,9 +1,10 @@
 using System;
 using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
+using Solari.Callisto.Abstractions.Contracts.CQR;
 using Solari.Callisto.Abstractions.CQR;
 
-namespace Solari.Callisto.Framework
+namespace Solari.Callisto.Framework.Factories
 {
     public interface ICallistoQueryOperationFactory
     {

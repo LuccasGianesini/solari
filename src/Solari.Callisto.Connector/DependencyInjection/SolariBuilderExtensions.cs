@@ -1,47 +1,31 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using MongoDB.Driver;
+using OpenTracing;
 using Solari.Callisto.Abstractions;
+using Solari.Callisto.Abstractions.Contracts;
+using Solari.Callisto.Tracer;
+using Solari.Callisto.Tracer.Framework;
 using Solari.Sol;
+using Solari.Sol.Utils;
 
 namespace Solari.Callisto.Connector.DependencyInjection
 {
     public static class SolariBuilderExtensions
     {
-        public static ISolariBuilder AddCallistoConnector(this ISolariBuilder solariBuilder)
+        public static ISolariBuilder AddConnectorCoreServices(this ISolariBuilder builder)
         {
-            solariBuilder.Services.Configure<CallistoConnectorOptions>(solariBuilder
-                                                                       .Configuration
-                                                                       .GetSection(CallistoConstants.ConnectorAppSettingsSection));
-            solariBuilder.Services.AddSingleton<ICallistoConnectionFactory, CallistoConnectionFactory>();
-            solariBuilder.Services.AddSingleton<ICallistoConnection, CallistoConnection>();
-            // solariBuilder.Services.AddSingleton<ICallistoConnection, CallistoConnection>(provider =>
-            // {
-            //     var factory = provider.GetService<ICallistoConnectionFactory>();
-            //     var appOptions = provider.GetService<IOptions<ApplicationOptions>>();
-            //     var callistoOptions = provider.GetService<IOptions<CallistoConnectorOptions>>();
-            //     ICallistoConnection connection = factory.Make(callistoOptions.Value, appOptions.Value);
-            //     return connection as CallistoConnection;
-            // });
-            solariBuilder.AddBuildAction(new BuildAction("Solari.Callisto.Connector (CreateMongoDbConnection)")
+            builder.Services.AddSingleton(provider => CallistoClientRegistry.Instance);
+
+            builder.Services.AddTransient<IEventFilter, EventFilter>();
+            builder.Services.Configure<CallistoTracerOptions>(builder.Configuration.GetSection(CallistoConstants.TracerAppSettingsSection));
+            builder.Services.AddSingleton<ICallistoEventListener>(provider =>
             {
-                Action = provider =>
-                {
-                    var appOptions = provider.GetService<IOptions<ApplicationOptions>>();
-                    var callistoOptions = provider.GetService<IOptions<CallistoConnectorOptions>>();
-                    var conn = provider.GetService<ICallistoConnection>();
-                    CallistoLogger.ConnectionLogger.CreatingConnection();
-                    MongoClient client = new MongoClientBuilder()
-                                         .WithConnectorOptions(callistoOptions.Value)
-                                         .WithConnectionString(callistoOptions.Value.ConnectionString)
-                                         .WithApplicationName(appOptions.Value.ApplicationName)
-                                         .Build();
-                    conn.AddClient(client);
-                    conn.ChangeDatabase(callistoOptions.Value.Database);
-                    
-                }
+                var eventFilter = provider.GetService<IEventFilter>();
+                var callistoTracerOptions = provider.GetService<IOptions<CallistoTracerOptions>>();
+                return new CallistoJaegerEventListener(provider.GetService<ITracer>(), eventFilter, callistoTracerOptions);
             });
-            return solariBuilder;
+            return builder;
         }
+
     }
 }

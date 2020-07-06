@@ -2,8 +2,10 @@
 using System.Threading.Tasks;
 using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
+using Solari.Callisto.Abstractions.Contracts.CQR;
 using Solari.Callisto.Abstractions.CQR;
 using Solari.Callisto.Abstractions.Exceptions;
+using Solari.Callisto.Framework.Factories;
 
 namespace Solari.Callisto.Framework.Operators
 {
@@ -54,7 +56,7 @@ namespace Solari.Callisto.Framework.Operators
         /// </returns>
         public async Task<UpdateResult> One(ICallistoUpdate<T> operation)
         {
-            CallistoOperationHelper.PreExecutionCheck(operation);
+            Helper.PreExecutionCheck(operation);
 
             if (operation.ClientSessionHandle is null)
                 return await _collection.UpdateOneAsync(operation.FilterDefinition,
@@ -81,7 +83,7 @@ namespace Solari.Callisto.Framework.Operators
         /// </returns>
         public async Task<UpdateResult> Many(ICallistoUpdate<T> operation)
         {
-            CallistoOperationHelper.PreExecutionCheck(operation);
+            Helper.PreExecutionCheck(operation);
             if (operation.ClientSessionHandle is null)
                 return await _collection.UpdateManyAsync(operation.FilterDefinition,
                                                          operation.UpdateDefinition,

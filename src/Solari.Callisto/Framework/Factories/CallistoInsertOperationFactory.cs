@@ -2,12 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
+using Solari.Callisto.Abstractions.Contracts.CQR;
 using Solari.Callisto.Abstractions.CQR;
 using Solari.Callisto.Abstractions.Exceptions;
+
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable MemberCanBeMadeStatic.Global
 
-namespace Solari.Callisto.Framework
+namespace Solari.Callisto.Framework.Factories
 {
     public class CallistoInsertOperationFactory : ICallistoInsertOperationFactory
     {

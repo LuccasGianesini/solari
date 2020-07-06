@@ -1,23 +1,22 @@
 ﻿using MongoDB.Driver;
 using SharpCompress;
 using Solari.Callisto.Abstractions;
+using Solari.Callisto.Abstractions.Contracts;
 using Solari.Callisto.Connector;
 
 namespace Solari.Callisto.Framework
 {
     public class CallistoCollectionContext<T> : ICallistoCollectionContext<T> where T : class, IDocumentRoot
     {
-        public CallistoCollectionContext(IMongoCollection<T> collection,
-                                         ICallistoConnection connection,
-                                         ICollectionOperators<T> operators)
+        public CallistoCollectionContext(ICallistoClient callistoClient, IMongoCollection<T> collection, IMongoDatabase database)
         {
+            CallistoClient = callistoClient;
             Collection = collection;
-            Connection = connection;
-            Operators = operators;
+            Database = database;
         }
 
-        public ICallistoConnection Connection { get; }
+        public ICallistoClient CallistoClient { get; }
         public IMongoCollection<T> Collection { get; }
-        public ICollectionOperators<T> Operators { get; }
+        public IMongoDatabase Database { get; }
     }
 }
