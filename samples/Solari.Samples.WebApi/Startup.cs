@@ -64,7 +64,7 @@ namespace Solari.Samples.WebApi
                 mediator.AddConsumer<CreatePersonConsumer>();
                 mediator.AddRequestClient<CreatePersonCommand>();
                 mediator.AddSagaStateMachine<PersonStateMachine, PersonState>()
-                        .CallistoSagaRepository("localhost", "callisto-sagas");
+                        .CallistoSagaRepository("localhost", "callisto-sagas", Configuration);
             });
         }
 

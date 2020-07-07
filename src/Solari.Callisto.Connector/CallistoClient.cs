@@ -11,13 +11,11 @@ namespace Solari.Callisto.Connector
 {
     public class CallistoClient : ICallistoClient
     {
-        public string ConnectionString { get; }
         public IMongoClient MongoClient { get; }
 
         public CallistoClient(IMongoClient mongoClient)
         {
             MongoClient = mongoClient;
-            ConnectionString = mongoClient.Settings.ToString();
         }
 
         public async Task<CallistoConnectionCheck> IsConnected(string database = "admin", CancellationToken? cancellationToken = null)
