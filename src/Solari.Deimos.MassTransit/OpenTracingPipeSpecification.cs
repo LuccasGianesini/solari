@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using GreenPipes;
+using MassTransit;
 
-namespace MassTransit.OpenTracing
+namespace Solari.Deimos.MassTransit
 {
     //COPIED FROM https://github.com/yesmarket/MassTransit.OpenTracing
     public class OpenTracingPipeSpecification : IPipeSpecification<ConsumeContext>, IPipeSpecification<PublishContext>
