@@ -39,10 +39,10 @@ namespace Solari.Samples.WebApi.Controllers
         {
             try
             {
-                Response<IPersonCreatedEvent> response =  
+                Response<IPersonCreatedEvent> response =
                     await _createPersonClient.GetResponse<IPersonCreatedEvent>(command);
 
-                return Ok(_factory.Success(response.Message));
+                return Ok(_factory.FromData(response.Message));
             }
             catch (MongoWriteException exception)
             {
@@ -79,8 +79,8 @@ namespace Solari.Samples.WebApi.Controllers
 
         private IActionResult CreateExceptionError(Exception exception, string code, string message)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, 
-                              _factory.ExceptionError<CreatePersonResult>(exception, code, message));
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                              _factory.ExceptionError<CreatePersonResult>(exception,false ,code, message));
         }
     }
 }

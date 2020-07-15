@@ -9,7 +9,6 @@ namespace Solari.Vanth.Builders
         IErrorBuilder WithMessage(string message);
         IErrorBuilder WithCode(string code);
         IErrorBuilder WithErrorType(string type);
-        IErrorBuilder WithInnerError(object innerError);
         IErrorBuilder WithTarget(string target);
         IErrorBuilder WithDetail(ErrorDetail detail);
         IErrorBuilder WithDetail(IEnumerable<ErrorDetail> details);

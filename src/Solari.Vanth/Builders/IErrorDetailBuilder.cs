@@ -7,7 +7,6 @@ namespace Solari.Vanth.Builders
     public interface IErrorDetailBuilder
     {
         IErrorDetailBuilder WithErrorCode(string code);
-        IErrorDetailBuilder WithException(Exception exception);
         IErrorDetailBuilder WithMessage(string message);
         IErrorDetailBuilder WithMessage(StringBuilder stringBuilder);
         IErrorDetailBuilder WithTarget(string target);
@@ -22,5 +21,7 @@ namespace Solari.Vanth.Builders
         ErrorDetail Build();
 
         IErrorDetailBuilder WithSource(string source);
+        IErrorDetailBuilder WithHelpUrl(string helpUrl);
+        IErrorDetailBuilder WithStackTrace(string stackTrace);
     }
 }

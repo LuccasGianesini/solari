@@ -11,23 +11,14 @@ namespace Solari.Vanth
     [Serializable]
     public class Result<TData>
     {
-        public Result() { Errors = new Stack<Error>(2); }
+        public Result()
+        {
+            Errors = new List<Error>(2);
+        }
 
-        public Stack<Error> Errors { get; private set; }
+        public List<Error> Errors { get; set; }
 
-        public TData Data { get; private set; }
-
-        /// <summary>
-        ///     Indicates if the Stack contains any errors in it.
-        /// </summary>
-        public bool HasErrors => Errors.Any();
-
-        /// <summary>
-        ///     Indicates if the result property is different then null.
-        ///     It does not check if the property is a primitive, string, DateTime, Timespan, etc. and then checks the value.
-        /// </summary>
-        public bool HasData => Data != null;
-
+        public TData Data { get; set; }
 
         /// <summary>
         ///     Adds <see cref="Error" /> into the stack.
@@ -38,7 +29,7 @@ namespace Solari.Vanth
         /// </returns>
         public Result<TData> AddError(Error errorResponse)
         {
-            Errors.Push(errorResponse);
+            Errors.Add(errorResponse);
             return this;
         }
 
@@ -50,10 +41,10 @@ namespace Solari.Vanth
         /// <returns>
         ///     <see cref="Result{TResult}" />
         /// </returns>
-        public Result<TData> AddErrors(Stack<Error> errorResponse)
+        public Result<TData> AddErrors(List<Error> errorResponse)
         {
             if (errorResponse == null) throw new ArgumentNullException(nameof(errorResponse));
-            foreach (Error commonErrorResponse in errorResponse) Errors.Push(commonErrorResponse);
+            foreach (Error commonErrorResponse in errorResponse) Errors.Add(commonErrorResponse);
 
             return this;
         }
@@ -67,7 +58,7 @@ namespace Solari.Vanth
         /// </returns>
         public Result<TData> AddError(Func<IErrorBuilder, Error> builder)
         {
-            Errors.Push(builder(new ErrorBuilder()));
+            Errors.Add(builder(new ErrorBuilder()));
             return this;
         }
 
@@ -83,50 +74,6 @@ namespace Solari.Vanth
             Data = result;
             return this;
         }
-
-        /// <summary>
-        ///     Try to get the errors in the stack.
-        /// </summary>
-        /// <param name="commonErrorResponse">The error stack wrapped in a <see cref="Maybe{T}" /></param>
-        /// <returns>True if there is errors in the current stack. False if there is not</returns>
-        public bool TryGetErrors(out Maybe<Stack<Error>> commonErrorResponse)
-        {
-            if (HasErrors)
-            {
-                commonErrorResponse = Maybe<Stack<Error>>.Some(Errors);
-
-                return true;
-            }
-
-            commonErrorResponse = Maybe<Stack<Error>>.None;
-
-            return false;
-        }
-
-        /// <summary>
-        ///     Tries to get the result of the <see cref="Result{TResult}" />
-        /// </summary>
-        /// <param name="result">The result wrapped in a <see cref="Maybe{T}" /></param>
-        /// <returns>True if the HasResult property is true. False if it is not</returns>
-        public bool TryGetResult(out Maybe<TData> result)
-        {
-            if (HasData)
-            {
-                result = Maybe<TData>.Some(Data);
-
-                return true;
-            }
-
-            result = Maybe<TData>.None;
-
-            return false;
-        }
-
-        /// <summary>
-        ///     Returns the Errors stack as an <see cref="ImmutableList{T}" />.
-        /// </summary>
-        /// <returns></returns>
-        public IImmutableList<Error> ErrorsAsList() { return Errors.ToImmutableList(); }
 
         /// <summary>
         ///     Clear the error stack. This method also clear the details o each error in the stack.

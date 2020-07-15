@@ -11,6 +11,8 @@ namespace Solari.Vanth.Builders
         private string _message;
         private string _source;
         private string _target;
+        private string _helpUrl;
+        private string _stackTrace;
 
 
         public IErrorDetailBuilder WithErrorCode(string code)
@@ -18,10 +20,14 @@ namespace Solari.Vanth.Builders
             _code = code;
             return this;
         }
-
-        public IErrorDetailBuilder WithException(Exception exception)
+        public IErrorDetailBuilder WithHelpUrl(string helpUrl)
         {
-            _exception = exception;
+            _helpUrl = helpUrl;
+            return this;
+        }
+        public IErrorDetailBuilder WithStackTrace(string stackTrace)
+        {
+            _stackTrace = stackTrace;
             return this;
         }
 
@@ -53,7 +59,15 @@ namespace Solari.Vanth.Builders
         public ErrorDetail Build()
         {
             if (string.IsNullOrEmpty(_message)) throw new NullOrEmptyErrorMessageException();
-            return new ErrorDetail(_code, _message, _target, _source, _exception);
+            return new ErrorDetail
+            {
+                Code = _code,
+                Message = _message,
+                Target = _target,
+                Source = _source,
+                HelpUrl = _helpUrl,
+                StackTrace = _stackTrace
+            };
         }
     }
 }

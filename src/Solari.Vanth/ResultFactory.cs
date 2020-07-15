@@ -8,23 +8,23 @@ namespace Solari.Vanth
 {
     public class ResultFactory : IResultFactory
     {
-        public Result<TData> Success<TData>(TData data) { return new ResultBuilder<TData>().WithResult(data).Build(); }
+        public Result<TData> FromData<TData>(TData data) { return new ResultBuilder<TData>().WithData(data).Build(); }
 
-        public Result<TData> Error<TData>(Error error)
+        public Result<TData> FromError<TData>(Error error)
         {
             return new ResultBuilder<TData>().WithError(error).Build();
         }
 
-        public Result<TData> Error<TData>(Func<IErrorBuilder, Error> builder)
+        public Result<TData> FromError<TData>(Func<IErrorBuilder, Error> builder)
         {
             return new ResultBuilder<TData>().WithError(builder).Build();
         }
 
-        public Result<TData> ValidationError<TData>(ValidationResult result)
+        public Result<TData> FromError<TData>(ValidationResult result)
         {
-            if (result == null) throw new ArgumentNullException(nameof(result));
+            if (result == null) throw new VanthException("Cannot create a validation error without the results.");
             if (!result.Errors.Any())
-                return Empty<TData>();
+                return new Result<TData>();
 
 
             Error error = new ErrorBuilder()
@@ -34,7 +34,7 @@ namespace Solari.Vanth
                                         .Build();
 
             foreach (ValidationFailure failure in result.Errors)
-                error.AddDetailedError(builder => builder.WithErrorCode(failure.ErrorCode)
+                error.AddErrorDetail(builder => builder.WithErrorCode(failure.ErrorCode)
                                                          .WithMessage(failure.ErrorMessage)
                                                          .WithTarget(failure.PropertyName)
                                                          .Build());
@@ -42,9 +42,9 @@ namespace Solari.Vanth
             return new Result<TData>().AddError(error);
         }
 
-        public Result<None> CreateEmpty() { return new ResultBuilder<None>().WithResult(new None()).Build(); }
+        public Result<Nothing> FromNothing() { return new ResultBuilder<Nothing>().WithData(new Nothing()).Build(); }
 
-        public Result<TData> ExceptionError<TData>(Exception exception, string errorCode = "", string errorMessage = "")
+        public Result<TData> ExceptionError<TData>(Exception exception,bool shouldAddStackTrace, string errorCode = "", string errorMessage = "")
         {
             if (exception == null) throw new ArgumentNullException(nameof(exception), "Cannot create exception error from a null exception object");
 
@@ -52,10 +52,8 @@ namespace Solari.Vanth
                                                 .WithCode(errorCode)
                                                 .WithErrorType(CommonErrorType.Exception)
                                                 .WithMessage(string.IsNullOrEmpty(errorMessage) ? exception.Message : errorMessage)
-                                                .WithDetail(exception.ExtractDetailsFromException());
+                                                .WithDetail(exception.ExtractDetailsFromException(shouldAddStackTrace));
             return new Result<TData>().AddError(error.Build());
         }
-
-        public Result<TData> Empty<TData>() { return new ResultBuilder<TData>().Build(); }
     }
 }
