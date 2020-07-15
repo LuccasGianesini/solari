@@ -14,17 +14,8 @@ namespace Solari.Themis
                                                Action<IHealthChecksBuilder> healthChecks = null)
         {
             builder.AddIo(healthChecks);
-            // builder.AddCeres();
             builder.AddDeimos(tracingPlugins);
             builder.Services.AddTransient<IThemis, Themis>();
-            return builder;
-        }
-
-        public static ISolariBuilder AddThemisWithDeimosOnly(this ISolariBuilder builder, Action<ITracerPluginManager>
-                                                                 tracingPlugins = null)
-        {
-            builder.Services.AddTransient<IThemis, ThemisNoMetrics>();
-            builder.AddDeimos(tracingPlugins);
             return builder;
         }
     }
