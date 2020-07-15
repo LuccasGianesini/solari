@@ -21,4 +21,12 @@
   <ItemGroup>
     <PackageReference Include="MassTransit" Version="7.0.1" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt">
+      <Pack>true</Pack>
+      <PackagePath>LICENSE.txt</PackagePath>
+      <Link>LICENSE.txt</Link>
+    </None>
+  </ItemGroup>
 </Project>
