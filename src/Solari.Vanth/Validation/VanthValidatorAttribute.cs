@@ -37,15 +37,13 @@ namespace Solari.Vanth.Validation
                                                 .Build();
 
                     foreach (ValidationFailure failure in result.Errors)
-                        error.AddDetailedError(builder => builder.WithErrorCode(failure.ErrorCode)
+                        error.AddErrorDetail(builder => builder.WithErrorCode(failure.ErrorCode)
                                                                  .WithMessage(failure.ErrorMessage)
                                                                  .WithTarget(failure.PropertyName)
                                                                  .Build());
-
                     response.AddError(error);
                 }
-
-                if (!response.HasErrors)
+                if (!response.HasErrors())
                 {
                     await next();
                 }

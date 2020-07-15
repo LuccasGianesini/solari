@@ -6,10 +6,17 @@ namespace Solari.Vanth
 {
     public static class ExceptionHelper
     {
-        public static IEnumerable<ErrorDetail> ExtractDetailsFromException(this Exception ex)
+        public static IEnumerable<ErrorDetail> ExtractDetailsFromException(this Exception ex, bool addStackTrace)
         {
-            if (ex == null) yield break;
-            yield return new ErrorDetail("", ex.Message, ex.TargetSite?.Name, ex.Source, null);
+            if (ex is null) yield break;
+            yield return new ErrorDetail
+            {
+                Message = ex.Message,
+                Target = ex.TargetSite.Name,
+                Source = ex.Source,
+                StackTrace = addStackTrace? ex.StackTrace : "",
+                HelpUrl = ex.HelpLink
+            };
 
 
             IEnumerable<Exception> innerExceptions = Enumerable.Empty<Exception>();
@@ -19,7 +26,14 @@ namespace Solari.Vanth
             else if (ex.InnerException != null) innerExceptions = new[] {ex.InnerException};
 
             foreach (Exception innerEx in innerExceptions)
-                yield return new ErrorDetail("", innerEx.Message, innerEx.TargetSite?.Name, innerEx.Source, null);
+                yield return new ErrorDetail
+                {
+                    Message = innerEx.Message,
+                    Target = innerEx.TargetSite.Name,
+                    Source = innerEx.Source,
+                    StackTrace = addStackTrace? ex.StackTrace : "",
+                    HelpUrl = innerEx.HelpLink
+                };
         }
     }
 }

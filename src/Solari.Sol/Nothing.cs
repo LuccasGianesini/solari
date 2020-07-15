@@ -3,7 +3,7 @@
     /// <summary>
     ///     Empty object placeholder
     /// </summary>
-    public sealed class None
+    public sealed class Nothing
     {
     }
 }

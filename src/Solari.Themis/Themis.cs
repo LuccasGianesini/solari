@@ -10,26 +10,46 @@ namespace Solari.Themis
 {
     public class Themis : IThemis
     {
-        private readonly IMetrics _metrics;
+        // private readonly IMetrics _metrics;
         private readonly ITracer _tracer;
-        private readonly IThemis _themis;
+        private readonly ILogger<Themis> _logger;
 
-        public Themis(IMetrics metrics, ITracer tracer, ILogger<ThemisNoMetrics> logger)
+        public Themis(ITracer tracer, ILogger<Themis> logger)
         {
-            _metrics = metrics;
             _tracer = tracer;
-            _themis = new ThemisNoMetrics(tracer, logger);
+            _logger = logger;
         }
 
         public ISpan TraceOperation(string operationName)
         {
-            return _themis.TraceOperation(operationName);
+            IScope activeScope = _tracer.ScopeManager.Active;
+            ISpanBuilder spanBuilder = _tracer.BuildSpan(operationName);
+            return activeScope?.Span is null
+                       ? spanBuilder.StartActive(true).Span
+                       : spanBuilder
+                         .AsChildOf(_tracer.ScopeManager.Active.Span)
+                         .Start();
         }
 
         public void TraceException(Exception exception, string customMessage = null, LogLevel level = LogLevel.Error)
         {
-            _themis.TraceException(exception, customMessage, level);
-            _metrics.Measure.Counter.Increment(MetricsRegistry.ErrorMetrics.CatchExceptionTotal);
+            _logger.Log(level, exception, string.IsNullOrEmpty(customMessage) ? exception.Message : customMessage);
+            BuildExceptionSpan(TraceOperation("Exception"), exception);
+        }
+
+        private static ISpan BuildExceptionSpan(ISpan span, Exception exception)
+        {
+            return span.SetTag(Tags.Error, true)
+                       .SetTag("catch", true)
+                       .Log(ExtractExceptionInfo(exception));
+        }
+
+        private static IDictionary<string, object> ExtractExceptionInfo(Exception ex)
+        {
+            return new Dictionary<string, object>
+            {
+                {"Message", ex.Message}, {"StackTrace", ex.StackTrace}
+            };
         }
     }
 }

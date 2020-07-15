@@ -21,8 +21,8 @@ namespace Solari.Vanth
             if (commonResponse is null)
                 throw new VanthException("Common response cannot be null.", new ArgumentNullException(nameof(commonResponse)));
 
-            IResultBuilder<TNewGenericType> builder = new ResultBuilder<TNewGenericType>().WithResult(newTypeValue);
-            if (commonResponse.HasErrors && addErrors)
+            IResultBuilder<TNewGenericType> builder = new ResultBuilder<TNewGenericType>().WithData(newTypeValue);
+            if (commonResponse.HasErrors() && addErrors)
             {
                 builder.WithErrors(commonResponse.Errors);
             }

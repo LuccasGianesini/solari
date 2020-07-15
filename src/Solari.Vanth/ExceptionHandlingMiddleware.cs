@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -17,7 +18,7 @@ namespace Solari.Vanth
         private readonly VanthOptions _options;
 
 
-        public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger, IOptions<VanthOptions> options, 
+        public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger, IOptions<VanthOptions> options,
         IOptions<ApplicationOptions> appOptions)
         {
             _next = next;
@@ -25,7 +26,7 @@ namespace Solari.Vanth
             _appOptions = appOptions.Value;
             _options = options.Value;
         }
- 
+
         public async Task InvokeAsync(HttpContext httpContext)
         {
             try
@@ -38,31 +39,23 @@ namespace Solari.Vanth
                 if(_appOptions.IsInDevelopment())
                     await HandleExceptionAsync(httpContext, ex, true);
                 await HandleExceptionAsync(httpContext, ex, _options.ReturnFullExceptionInProduction);
-                
+
             }
         }
- 
-        private Task HandleExceptionAsync(HttpContext context, Exception exception, bool shouldReturnFullException)
+
+        private Task HandleExceptionAsync(HttpContext context, Exception exception, bool shouldReturnStackTrace)
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-
-
-            IErrorDetailBuilder detail = new ErrorDetailBuilder().WithMessage(exception.Message);
-            if (shouldReturnFullException)
-            {
-                detail.WithException(exception);
-            }
-
-
+            IEnumerable<ErrorDetail> details = exception.ExtractDetailsFromException(shouldReturnStackTrace);
             Error error = new ErrorBuilder()
-                                        .WithCode(context.Response.StatusCode.ToString())
-                                        .WithDetail(detail.Build())
-                                        .WithMessage("An exception happened during the request")
-                                        .WithErrorType(CommonErrorType.Exception)
-                                        .Build();
+                          .WithCode(context.Response.StatusCode.ToString())
+                          .WithDetail(details)
+                          .WithMessage("An exception happened during the request")
+                          .WithErrorType(CommonErrorType.Exception)
+                          .Build();
 
-            
+
             return context.Response.WriteAsync(new Result<string>().AddError(error).ToString());
         }
     }

@@ -32,12 +32,6 @@ namespace Solari.Vanth.Builders
             return this;
         }
 
-        public IErrorBuilder WithInnerError(object innerError)
-        {
-            _innerError = innerError;
-            return this;
-        }
-
         public IErrorBuilder WithTarget(string target)
         {
             _target = target;
@@ -67,7 +61,13 @@ namespace Solari.Vanth.Builders
         public Error Build()
         {
             if (string.IsNullOrEmpty(_message)) throw new NullOrEmptyErrorMessageException();
-            return new Error(_code, _details, _errorType, _innerError, _message, _target);
+            return new Error
+            {
+                Code = _code,
+                ErrorType = _errorType,
+                Message = _message,
+                Target = _target
+            }.AddErrorDetail(_details);
         }
     }
 }

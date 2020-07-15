@@ -6,39 +6,39 @@ namespace Solari.Vanth.Builders
 {
     public class ResultBuilder<TResult> : IResultBuilder<TResult>
     {
-        private readonly Stack<Error> _errors = new Stack<Error>(2);
-        private TResult _model;
+        private readonly List<Error> _errors = new List<Error>(2);
+        private TResult _data;
 
-        public IResultBuilder<TResult> WithResult(TResult model)
+        public IResultBuilder<TResult> WithData(TResult model)
         {
-            _model = model;
+            _data = model;
             return this;
         }
 
         public IResultBuilder<TResult> WithError(Error errorResponse)
         {
-            _errors.Push(errorResponse);
+            _errors.Add(errorResponse);
             return this;
         }
 
         public IResultBuilder<TResult> WithError(Func<IErrorBuilder, Error> builder)
         {
             if (builder == null) throw new ArgumentNullException(nameof(builder), "Cannot invoke a null func");
-            _errors.Push(builder(new ErrorBuilder()));
+            _errors.Add(builder(new ErrorBuilder()));
             return this;
         }
 
-        public IResultBuilder<TResult> WithErrors(Stack<Error> errors)
+        public IResultBuilder<TResult> WithErrors(List<Error> errors)
         {
-            foreach (Error commonErrorResponse in errors) _errors.Push(commonErrorResponse);
+            foreach (Error commonErrorResponse in errors) _errors.Add(commonErrorResponse);
 
             return this;
         }
 
         public Result<TResult> Build()
         {
-            if (_model == null && _errors == null) return new Result<TResult>();
-            return _errors.Any() ? new Result<TResult>().AddErrors(_errors) : new Result<TResult>().AddResult(_model);
+            if (_data == null && _errors == null) return new Result<TResult>();
+            return new Result<TResult>().AddErrors(_errors).AddResult(_data);
         }
     }
 }
