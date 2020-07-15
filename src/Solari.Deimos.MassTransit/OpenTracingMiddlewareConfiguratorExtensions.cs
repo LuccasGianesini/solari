@@ -1,4 +1,6 @@
-namespace MassTransit.OpenTracing
+using MassTransit;
+
+namespace Solari.Deimos.MassTransit
 {
     //COPIED FROM https://github.com/yesmarket/MassTransit.OpenTracing
     public static class OpenTracingMiddlewareConfiguratorExtensions

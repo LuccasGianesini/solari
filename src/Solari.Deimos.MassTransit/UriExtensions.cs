@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MassTransit.OpenTracing
+namespace Solari.Deimos.MassTransit
 {
     //COPIED FROM https://github.com/yesmarket/MassTransit.OpenTracing
     public static class UriExtensions

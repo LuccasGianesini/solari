@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MassTransit;
 using OpenTracing;
 using OpenTracing.Propagation;
 
-namespace MassTransit.OpenTracing
+namespace Solari.Deimos.MassTransit
 {
     //COPIED FROM https://github.com/yesmarket/MassTransit.OpenTracing
     public class MassTransitTextMapInjectAdapter : ITextMap

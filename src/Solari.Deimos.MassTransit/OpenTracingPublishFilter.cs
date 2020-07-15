@@ -1,10 +1,11 @@
 using System.Threading.Tasks;
 using GreenPipes;
+using MassTransit;
 using OpenTracing;
 using OpenTracing.Propagation;
 using OpenTracing.Util;
 
-namespace MassTransit.OpenTracing
+namespace Solari.Deimos.MassTransit
 {
     //COPIED FROM https://github.com/yesmarket/MassTransit.OpenTracing
     public class OpenTracingPublishFilter : IFilter<PublishContext>
