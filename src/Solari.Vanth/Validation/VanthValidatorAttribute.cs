@@ -27,7 +27,7 @@ namespace Solari.Vanth.Validation
                     if (value == null) continue;
                     IValidator validator = validatorFactory.GetValidator(value.GetType());
                     if (validator == null) continue;
-                    ValidationResult result = validator.Validate(value);
+                    ValidationResult result = await validator.ValidateAsync(new ValidationContext<object>(value));
                     if (!result.Errors.Any()) continue;
                     Error error = new ErrorBuilder()
                                                 .WithCode(CommonErrorCode.ValidationErrorCode)
