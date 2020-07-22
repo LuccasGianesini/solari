@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Solari.Callisto.Abstractions
 {
@@ -15,22 +16,29 @@ namespace Solari.Callisto.Abstractions
         /// <returns></returns>
         ICallistoCollectionConfigurator ConfigureCollection<TInterface, TConcrete, TDocumentRoot>(string database,
                                                                                                   string collection,
-                                                                                                  ServiceLifetime lifetime)
+                                                                                                  ServiceLifetime lifetime,
+                                                                                                  Func<IServiceProvider, object[]> extraDependencies = null)
             where TDocumentRoot : class, IDocumentRoot
             where TConcrete : CallistoCollection<TDocumentRoot>, TInterface;
 
-        ICallistoCollectionConfigurator ConfigureScopedCollection<TInterface, TConcrete, TDocumentRoot>(string database,
-                                                                                                        string collection)
+        ICallistoCollectionConfigurator ConfigureScopedCollection<TInterface, TConcrete,
+                                                                  TDocumentRoot>(string database,
+                                                                                 string collection,
+                                                                                 Func<IServiceProvider, object[]> extraDependencies = null)
             where TDocumentRoot : class, IDocumentRoot
             where TConcrete : CallistoCollection<TDocumentRoot>, TInterface;
 
-        ICallistoCollectionConfigurator ConfigureTransientCollection<TInterface, TConcrete, TDocumentRoot>(string database,
-                                                                                                           string collection)
+        ICallistoCollectionConfigurator ConfigureTransientCollection<TInterface, TConcrete,
+                                                                     TDocumentRoot>(string database,
+                                                                                    string collection,
+                                                                                    Func<IServiceProvider, object[]> extraDependencies = null)
             where TDocumentRoot : class, IDocumentRoot
             where TConcrete : CallistoCollection<TDocumentRoot>, TInterface;
 
-        ICallistoCollectionConfigurator ConfigureSingletonCollection<TInterface, TConcrete, TDocumentRoot>(string database,
-                                                                                                           string collection)
+        ICallistoCollectionConfigurator ConfigureSingletonCollection<TInterface, TConcrete,
+                                                                     TDocumentRoot>(string database,
+                                                                                    string collection,
+                                                                                    Func<IServiceProvider, object[]> extraDependencies = null)
             where TDocumentRoot : class, IDocumentRoot
             where TConcrete : CallistoCollection<TDocumentRoot>, TInterface;
     }

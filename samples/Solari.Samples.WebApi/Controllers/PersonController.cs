@@ -23,11 +23,9 @@ namespace Solari.Samples.WebApi.Controllers
         private readonly ILogger<PersonController> _logger;
 
 
-        public PersonController(IRequestClient<CreatePersonCommand> createPersonClient,IResultFactory factory, ILogger<PersonController> logger)
+        public PersonController()
         {
-            _createPersonClient = createPersonClient;
-            _factory = factory;
-            _logger = logger;
+
         }
 
         [HttpPost]

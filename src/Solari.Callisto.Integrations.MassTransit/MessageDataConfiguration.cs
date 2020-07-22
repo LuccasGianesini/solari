@@ -3,12 +3,17 @@ using System.Linq;
 using MassTransit.MessageData;
 using MassTransit.MongoDbIntegration.MessageData;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using OpenTracing.Util;
 using Solari.Callisto.Abstractions;
 using Solari.Callisto.Abstractions.Contracts;
 using Solari.Callisto.Abstractions.Exceptions;
 using Solari.Callisto.Connector;
+using Solari.Callisto.Tracer;
+using Solari.Callisto.Tracer.Framework;
 using Solari.Sol;
 using Solari.Sol.Extensions;
+using Solari.Sol.Utils;
 
 namespace Solari.Callisto.Integrations.MassTransit
 {

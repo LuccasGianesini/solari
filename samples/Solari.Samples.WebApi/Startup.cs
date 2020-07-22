@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using Solari.Callisto.Connector;
 using Solari.Callisto.DependencyInjection;
+using Solari.Callisto.Identity;
 using Solari.Callisto.Tracer;
 using Solari.Eris;
 using Solari.Ganymede.DependencyInjection;
@@ -45,27 +46,29 @@ namespace Solari.Samples.WebApi
             services.AddControllers().AddMetrics();
 
             services.AddSol(Configuration)
+                    .AddVanth()
                     .AddCallistoWithDefaults(configurator =>
                                                  configurator.RegisterClient("localhost", collection => collection
                                                                                  .ConfigureScopedCollection<
                                                                                      PersonCollection,
                                                                                      PersonCollection,
                                                                                      Person>("solari-samples", "person"))
-                                           , ServiceLifetime.Scoped);
+                                           , ServiceLifetime.Scoped)
+                    .AddCallistoIdentityProvider<PersonId>("localhost-identity", "solari-samples");
 
 
             services.AddScoped<IPersonOperations, PersonOperations>();
 
             services.AddOpenApiDocument(cfg => cfg.PostProcess = d => d.Info.Title = "Solari Sample Api");
             services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
-            services.AddMediator(mediator =>
-            {
-                mediator.SetKebabCaseEndpointNameFormatter();
-                mediator.AddConsumer<CreatePersonConsumer>();
-                mediator.AddRequestClient<CreatePersonCommand>();
-                mediator.AddSagaStateMachine<PersonStateMachine, PersonState>()
-                        .CallistoSagaRepository("localhost", "callisto-sagas", Configuration);
-            });
+            // services.AddMediator(mediator =>
+            // {
+            //     mediator.SetKebabCaseEndpointNameFormatter();
+            //     mediator.AddConsumer<CreatePersonConsumer>();
+            //     mediator.AddRequestClient<CreatePersonCommand>();
+            //     mediator.AddSagaStateMachine<PersonStateMachine, PersonState>()
+            //             .CallistoSagaRepository("localhost", "callisto-sagas", Configuration);
+            // });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

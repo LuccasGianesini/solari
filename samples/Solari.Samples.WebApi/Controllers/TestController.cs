@@ -22,12 +22,9 @@ namespace Solari.Samples.WebApi.Controllers
         private readonly ILogger<TestController> _logger;
         private readonly IPersonOperations _operations;
 
-        public TestController(ILogger<TestController> logger,  IPersonOperations operations, IHyperionClient client, IPersonCollection collection)
+        public TestController()
         {
-            _logger = logger;
-            _operations = operations;
-            _client = client;
-            _collection = collection;
+
         }
 
         [HttpPost]
@@ -37,7 +34,7 @@ namespace Solari.Samples.WebApi.Controllers
             {
                 Name = "Test"
             }));
-            
+
             return Ok();
         }
 

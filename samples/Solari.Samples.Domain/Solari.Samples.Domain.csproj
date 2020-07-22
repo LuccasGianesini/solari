@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Solari.Callisto.Connector\Solari.Callisto.Connector.csproj" />
+    <ProjectReference Include="..\..\src\Solari.Callisto.Identity\Solari.Callisto.Identity.csproj" />
     <ProjectReference Include="..\..\src\Solari.Callisto.Integrations.MassTransit\Solari.Callisto.Integrations.MassTransit.csproj" />
     <ProjectReference Include="..\..\src\Solari.Callisto.Tracer\Solari.Callisto.Tracer.csproj" />
     <ProjectReference Include="..\..\src\Solari.Callisto\Solari.Callisto.csproj" />
@@ -27,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit.Analyzers" Version="7.0.0" />
+    <PackageReference Include="MassTransit.Analyzers" Version="7.0.1" />
   </ItemGroup>
 
 </Project>

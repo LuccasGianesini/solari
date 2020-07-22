@@ -26,9 +26,11 @@ namespace Solari.Callisto.DependencyInjection
             _clientName = clientName;
         }
 
-        public ICallistoCollectionConfigurator ConfigureCollection<TInterface, TConcrete, TDocumentRoot>(string database,
-                                                                                                         string collection,
-                                                                                                         ServiceLifetime lifetime)
+        public ICallistoCollectionConfigurator ConfigureCollection<TInterface, TConcrete,
+                                                                   TDocumentRoot>(string database,
+                                                                                  string collection,
+                                                                                  ServiceLifetime lifetime,
+                                                                                  Func<IServiceProvider, object[]> extraDependencies = null)
             where TDocumentRoot : class, IDocumentRoot
             where TConcrete : CallistoCollection<TDocumentRoot>, TInterface
 
@@ -51,58 +53,53 @@ namespace Solari.Callisto.DependencyInjection
 
                 var context = new CallistoCollectionContext<TDocumentRoot>(callistoClient, mongoCollection, mongoDatabase);
 
-                return ActivatorUtilities.CreateInstance<TConcrete>(provider, context, operators);
+                if (extraDependencies is null)
+                    return ActivatorUtilities.CreateInstance<TConcrete>(provider, context, operators);
+
+                object[] extra = extraDependencies(provider);
+
+                return ActivatorUtilities.CreateInstance<TConcrete>(provider, context, operators, extra);
             }, lifetime));
 
             return this;
         }
 
-        public ICallistoCollectionConfigurator ConfigureScopedCollection<TInterface, TConcrete, TDocumentRoot>(string database,
-                                                                                                               string collection)
+        public ICallistoCollectionConfigurator ConfigureScopedCollection<TInterface, TConcrete,
+                                                                         TDocumentRoot>(string database,
+                                                                                        string collection,
+                                                                                        Func<IServiceProvider, object[]> extraDependencies = null)
             where TDocumentRoot : class, IDocumentRoot
             where TConcrete : CallistoCollection<TDocumentRoot>, TInterface
         {
-            return ConfigureCollection<TInterface, TConcrete, TDocumentRoot>(database, collection, ServiceLifetime.Scoped);
+            return ConfigureCollection<TInterface, TConcrete, TDocumentRoot>(database, collection,
+                                                                             ServiceLifetime.Scoped,
+                                                                             extraDependencies);
         }
 
-        public ICallistoCollectionConfigurator ConfigureTransientCollection<TService, TConcrete, TCollection>(string database,
-                                                                                                                    string collection)
-            where TCollection : class, IDocumentRoot
-            where TConcrete : CallistoCollection<TCollection>, TService
-        {
-            return ConfigureCollection<TService, TConcrete, TCollection>(database, collection, ServiceLifetime.Transient);
-        }
-
-        public ICallistoCollectionConfigurator ConfigureSingletonCollection<TService, TConcrete, TCollection>(string database,
-                                                                                                                    string collection)
+        public ICallistoCollectionConfigurator ConfigureTransientCollection<TService, TConcrete,
+                                                                            TCollection>(string database,
+                                                                                         string collection,
+                                                                                         Func<IServiceProvider, object[]> extraDependencies = null)
             where TCollection : class, IDocumentRoot
             where TConcrete : CallistoCollection<TCollection>, TService
         {
             return ConfigureCollection<TService, TConcrete, TCollection>(database, collection,
-                                                                               ServiceLifetime.Singleton);
+                                                                         ServiceLifetime.Transient,
+                                                                         extraDependencies);
         }
 
-        // private static IEnumerable<Type> GetRoots(IEnumerable<Type> domain)
-        // {
-        //     return domain
-        //            .Where(x => CallistoTypeSelector.IsDocumentRoot(x) && !x.IsInterface && !x.IsAbstract)
-        //            .Select(x =>
-        //            {
-        //                CallistoLogger.ClassMapsLogger.IdentifiedRoot(x.Name);
-        //                return x;
-        //            }).ToList();
-        // }
-        //
-        // private static IEnumerable<Type> GetNodes(IEnumerable<Type> domain)
-        // {
-        //     return domain
-        //            .Where(x => CallistoTypeSelector.IsDocumentNode(x) && !x.IsInterface && !x.IsAbstract)
-        //            .Select(x =>
-        //            {
-        //                CallistoLogger.ClassMapsLogger.IdentifiedNode(x.Name);
-        //                return x;
-        //            }).ToList();
-        // }
+        public ICallistoCollectionConfigurator ConfigureSingletonCollection<TService, TConcrete,
+                                                                            TCollection>(string database,
+                                                                                         string collection,
+                                                                                         Func<IServiceProvider, object[]> extraDependencies = null)
+            where TCollection : class, IDocumentRoot
+            where TConcrete : CallistoCollection<TCollection>, TService
+        {
+            return ConfigureCollection<TService, TConcrete, TCollection>(database, collection,
+                                                                         ServiceLifetime.Singleton,
+                                                                         extraDependencies);
+        }
+
 
         private static void ValidateCollectionRegistration<TInterface, TConcrete, TDocumentRoot>(string collection, string database)
             where TDocumentRoot : class, IDocumentRoot where TConcrete : CallistoCollection<TDocumentRoot>, TInterface
