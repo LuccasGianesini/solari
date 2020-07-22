@@ -10,10 +10,11 @@ using MongoDB.Driver;
 
 namespace Solari.Callisto.Identity
 {
+    // COPIED FROM https://github.com/matteofabbri/AspNetCore.Identity.Mongo
     public class RoleStore<TRole> :
         IRoleClaimStore<TRole>,
         IQueryableRoleStore<TRole>
-        
+
         where TRole : MongoRole
     {
         private readonly IMongoCollection<TRole> _collection;

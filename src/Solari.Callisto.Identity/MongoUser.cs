@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Solari.Callisto.Identity
 {
+    // COPIED FROM https://github.com/matteofabbri/AspNetCore.Identity.Mongo
     public class MongoUser : IdentityUser<Guid>
     {
         public MongoUser()

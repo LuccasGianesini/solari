@@ -10,6 +10,7 @@ using MongoDB.Driver;
 
 namespace Solari.Callisto.Identity
 {
+    // COPIED FROM https://github.com/matteofabbri/AspNetCore.Identity.Mongo
     public class UserStore<TUser, TRole> :
         IUserClaimStore<TUser>,
         IUserLoginStore<TUser>,

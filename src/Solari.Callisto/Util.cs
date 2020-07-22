@@ -1,14 +1,30 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
+using Solari.Callisto.Abstractions;
+using Solari.Sol.Extensions;
 
 namespace Solari.Callisto
 {
     public static class Util
     {
+
+        public static CallistoConnectorOptions GetCallistoConnectorOptions(this IEnumerable<CallistoConnectorOptions> clients, string clientName)
+        {
+            return clients.FirstOrDefault(a => a.Name.ToUpperInvariant().Equals(clientName.ToUpperInvariant()));
+        }
+        public static CallistoConnectorOptions GetCallistoConnectorOptions(this IConfiguration configuration, string clientName)
+        {
+            IConfigurationSection section = configuration.GetSection(CallistoConstants.ConnectorAppSettingsSection);
+            var options = configuration.GetOptions<List<CallistoConnectorOptions>>(section);
+            return options.GetCallistoConnectorOptions(clientName);
+        }
+
         public static FindOptions<TItem> LimitOption<TItem>(int limit)
             => new FindOptions<TItem>
             {

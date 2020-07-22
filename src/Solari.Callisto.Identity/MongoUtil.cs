@@ -15,6 +15,7 @@ using Solari.Sol.Utils;
 
 namespace Solari.Callisto.Identity
 {
+    // COPIED FROM https://github.com/matteofabbri/AspNetCore.Identity.Mongo
     public static class MongoUtil
     {
         private static FindOptions<TItem> LimitOneOption<TItem>()
