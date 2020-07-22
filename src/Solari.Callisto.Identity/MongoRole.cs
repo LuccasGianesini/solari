@@ -4,6 +4,7 @@ using MongoDB.Bson;
 
 namespace Solari.Callisto.Identity
 {
+    // COPIED FROM https://github.com/matteofabbri/AspNetCore.Identity.Mongo
     public class MongoRole : IdentityRole<ObjectId>
     {
         public MongoRole()

@@ -156,7 +156,7 @@ namespace Solari.Callisto.Identity
                 return user && role;
             });
             ApplicationOptions app = builder.GetAppOptions();
-            CallistoConnectorOptions options = GetOptions(clientName, builder.Configuration);
+            CallistoConnectorOptions options = builder.Configuration.GetCallistoConnectorOptions(clientName);
             IMongoCollection<TUser> users = MongoUtil.FromCallistoConnectorOptions<TUser>(options, app, usersCollection, database);
             IMongoCollection<TRole> roles = MongoUtil.FromCallistoConnectorOptions<TRole>(options, app, rolesCollection, database);
             builder.Services.AddSingleton(x => users);
@@ -176,11 +176,5 @@ namespace Solari.Callisto.Identity
             return url;
         }
 
-        private static CallistoConnectorOptions GetOptions(string clientName, IConfiguration configuration)
-        {
-            IConfigurationSection section = configuration.GetSection(CallistoConstants.ConnectorAppSettingsSection);
-            var options = configuration.GetOptions<List<CallistoConnectorOptions>>(section);
-            return options.FirstOrDefault(a => a.Name.Equals(clientName));
-        }
     }
 }

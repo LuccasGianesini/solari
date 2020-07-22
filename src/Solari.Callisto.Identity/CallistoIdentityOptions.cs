@@ -1,8 +1,9 @@
 ﻿namespace Solari.Callisto.Identity
 {
+    // COPIED from https://github.com/matteofabbri/AspNetCore.Identity.Mongo
 	public class CallistoIdentityOptions
 	{
-		public string ConnectionString { get; set; } = "mongodb://localhost/default";
+		public string ConnectionString { get; set; }
 
 	    public string UsersCollection { get; set; } = "Users";
 

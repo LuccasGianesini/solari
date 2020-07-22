@@ -53,8 +53,7 @@ namespace Solari.Callisto.DependencyInjection
             {
                 Action = provider =>
                 {
-                    CallistoConnectorOptions clientOptions = _clients.FirstOrDefault(a => a.Name.ToUpperInvariant()
-                                                                                           .Equals(clientName.ToUpperInvariant()));
+                    CallistoConnectorOptions clientOptions = _clients.GetCallistoConnectorOptions(clientName);
 
                     if(clientOptions is null)
                         throw new CallistoException($"The options for client '{clientName}' was not found. Check the AppSettings file.");
