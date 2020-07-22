@@ -12,7 +12,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Solari.Callisto.Abstractions\Solari.Callisto.Abstractions.csproj" />
       <ProjectReference Include="..\Solari.Callisto.Connector\Solari.Callisto.Connector.csproj" />
       <ProjectReference Include="..\Solari.Callisto\Solari.Callisto.csproj" />
     </ItemGroup>

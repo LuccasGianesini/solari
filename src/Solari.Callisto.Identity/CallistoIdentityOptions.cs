@@ -1,11 +1,15 @@
-namespace Solari.Callisto.Identity
+﻿namespace Solari.Callisto.Identity
 {
-    // COPIED FROM https://github.com/matteofabbri/AspNetCore.Identity.Mongo
-    public class CallistoIdentityOptions
-    {
-        public string RolesCollection { get; set; } = "roles";
-        public string UsersCollection { get; set; } = "users";
-        public string Database { get; set; }
+	public class CallistoIdentityOptions
+	{
+		public string ConnectionString { get; set; } = "mongodb://localhost/default";
+
+	    public string UsersCollection { get; set; } = "Users";
+
+	    public string RolesCollection { get; set; } = "Roles";
+
+	    public bool UseDefaultIdentity { get; set; } = true;
         public string ClientName { get; set; }
+        public string Database { get; set; }
     }
 }
