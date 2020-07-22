@@ -22,6 +22,9 @@ namespace Solari.Juno
                 IConfigurationRoot conf = configurationBuilder.Build();
                 ApplicationOptions app = conf.GetApplicationOptions();
                 JunoOptions opt = SolariBuilderExtensions.GetOptions(conf);
+                if (opt.ConfigurationProvider is null || !opt.ConfigurationProvider.Enabled)
+                    return;
+
                 IDictionary<string, string> data = new JsonParser()
                     .Parse(JObject.FromObject(SolariBuilderExtensions.BuildClient(opt, app)
                                                                      .GetAppSettingsSecrets()
@@ -45,6 +48,9 @@ namespace Solari.Juno
                 IConfigurationRoot conf = configurationBuilder.Build();
                 ApplicationOptions app = conf.GetApplicationOptions();
                 JunoOptions opt = SolariBuilderExtensions.GetOptions(conf);
+                if (opt.ConfigurationProvider is null || !opt.ConfigurationProvider.Enabled)
+                    return;
+
                 IDictionary<string, string> data = new JsonParser()
                     .Parse(JObject.FromObject(SolariBuilderExtensions.BuildClient(opt, app)
                                                                      .GetAppSettingsSecrets()

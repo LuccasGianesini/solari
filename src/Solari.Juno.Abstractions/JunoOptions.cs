@@ -11,7 +11,7 @@ namespace Solari.Juno.Abstractions
         public string Address { get; set; } = Environment.GetEnvironmentVariable(JunoConstants.VAULT_ADDR);
         public string AuthMethod { get; set; }
 
-        public string SecretsBasePath { get; set; } = "/kv/data";
+        public JunoConfigurationProviderOptions ConfigurationProvider { get; set; }
         public JunoAppRoleAuthMethodOptions AppRole { get; set; }
         public JunoTokenAuthMethodOptions Token { get; set; }
 
