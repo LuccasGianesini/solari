@@ -16,20 +16,22 @@ namespace Solari.Samples.WebApi.Controllers
     [Produces("application/json")]
     public class TestController : ControllerBase
     {
+        private readonly IKeycloakClient _keycloakClient;
         private readonly IHyperionClient _client;
         private readonly IPersonCollection _collection;
         private readonly IGitHubClient _hubClient;
         private readonly ILogger<TestController> _logger;
         private readonly IPersonOperations _operations;
 
-        public TestController()
+        public TestController(IKeycloakClient keycloakClient)
         {
-
+            _keycloakClient = keycloakClient;
         }
 
         [HttpPost]
         public async Task<IActionResult> Get([FromBody] UpdatePersonDto dto)
         {
+            await _keycloakClient.Signin(new AuthModel());
            await _collection.InsertPerson(_operations.CreateInsertOperation(new CreatePersonCommand
             {
                 Name = "Test"

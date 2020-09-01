@@ -9,79 +9,93 @@ using Solari.Sol.Extensions;
 
 namespace Solari.Ganymede.Framework
 {
-    public class GanymedePolicyRegistry : IGanymedePolicyRegistry
+    public class GanymedePolicyRegistry
     {
-        private readonly GanymedePolicyOptions _policyOptions;
-        private readonly IPolicyRegistry<string> _policyRegistry;
+        public IPolicyRegistry<string> PolicyRegistry { get; }
 
-        public GanymedePolicyRegistry(IPolicyRegistry<string> policyRegistry, IOptions<GanymedePolicyOptions> policyOptions)
+        public GanymedePolicyRegistry()
         {
-            _policyRegistry = policyRegistry;
-            _policyOptions = policyOptions.Value;
-            DefaultRetryPolicy();
-            DefaultCircuitBreakerPolicy();
+            PolicyRegistry = new PolicyRegistry();
         }
 
-        public IGanymedePolicyRegistry AddPolicy(string key, IAsyncPolicy policy)
+        public GanymedePolicyRegistry UseDefaultPolicies(bool retry, bool circuitBreaker)
         {
-            _policyRegistry.Add(key, policy);
+            var options = new GanymedePolicyOptions();
+            if (retry)
+                DefaultRetryPolicy(options.HttpRetry.BackOff, options.HttpRetry.Count);
+            if (circuitBreaker)
+                DefaultCircuitBreakerPolicy(options.HttpCircuitBreaker.NumberOfExceptionsBeforeBreaking, options.HttpCircuitBreaker.Duration);
+            return this;
+        }
+
+        public GanymedePolicyRegistry RetryPolicy(int backoff, int count)
+        {
+            DefaultRetryPolicy(backoff, count);
+            return this;
+        }
+
+        public GanymedePolicyRegistry CircuitBreakerPolicy(int numberOfExceptionsBeforeBreaking, string duration)
+        {
+            DefaultCircuitBreakerPolicy(numberOfExceptionsBeforeBreaking, duration);
+            return this;
+        }
+
+        public GanymedePolicyRegistry AddPolicy(string key, IAsyncPolicy policy)
+        {
+            PolicyRegistry.Add(key, policy);
 
             return this;
         }
 
-        public IGanymedePolicyRegistry AddPolicy<T>(string key, IAsyncPolicy<T> policy)
+        public GanymedePolicyRegistry AddPolicy<T>(string key, IAsyncPolicy<T> policy)
         {
-            _policyRegistry.Add(key, policy);
+            PolicyRegistry.Add(key, policy);
 
             return this;
         }
 
-        public IGanymedePolicyRegistry AddPolicy(string key, ISyncPolicy policy)
+        public GanymedePolicyRegistry AddPolicy(string key, ISyncPolicy policy)
         {
-            _policyRegistry.Add(key, policy);
+            PolicyRegistry.Add(key, policy);
 
             return this;
         }
 
-        public IGanymedePolicyRegistry AddPolicy<T>(string key, ISyncPolicy<T> policy)
+        public GanymedePolicyRegistry AddPolicy<T>(string key, ISyncPolicy<T> policy)
         {
-            _policyRegistry.Add(key, policy);
+            PolicyRegistry.Add(key, policy);
 
             return this;
         }
 
-        public IGanymedePolicyRegistry ClearRegistry()
+        public GanymedePolicyRegistry ClearRegistry()
         {
-            _policyRegistry.Clear();
+            PolicyRegistry.Clear();
 
             return this;
         }
 
-        public IGanymedePolicyRegistry RemovePolicy(string key)
+        public GanymedePolicyRegistry RemovePolicy(string key)
         {
-            _policyRegistry.Remove(key);
+            PolicyRegistry.Remove(key);
 
             return this;
         }
 
-        private void DefaultCircuitBreakerPolicy()
+        private void DefaultCircuitBreakerPolicy(int numberOfExceptionsBeforeBreaking, string duration)
         {
-            _policyRegistry
-                .Add(GanymedeConstants.HttpCircuitBraker,
+            PolicyRegistry
+                .Add(GanymedeConstants.HttpCircuitBreaker,
                      HttpPolicyExtensions.HandleTransientHttpError()
-                                         .CircuitBreaker(_policyOptions.HttpCircuitBreaker.NumberOfExceptionsBeforeBreaking,
-                                                         _policyOptions.HttpCircuitBreaker.Duration.ToTimeSpan()));
+                                         .CircuitBreaker(numberOfExceptionsBeforeBreaking, duration.ToTimeSpan()));
         }
 
-        private void DefaultRetryPolicy()
+        private void DefaultRetryPolicy(int backoff, int count)
         {
-            _policyRegistry
-                .Add(GanymedeConstants.HttpRetry, HttpPolicyExtensions
-                                                  .HandleTransientHttpError()
-                                                  .WaitAndRetryAsync(_policyOptions.HttpRetry.Count,
-                                                                     retryAttempt => 
-                                                                         TimeSpan.FromSeconds(Math.Pow(_policyOptions.HttpRetry.BackOff,
-                                                                                                       retryAttempt))));
+            PolicyRegistry.Add(GanymedeConstants.HttpRetry, HttpPolicyExtensions
+                                                             .HandleTransientHttpError()
+                                                             .WaitAndRetryAsync(count,
+                                                                                retryAttempt => TimeSpan.FromSeconds(Math.Pow(backoff, retryAttempt))));
         }
     }
 }

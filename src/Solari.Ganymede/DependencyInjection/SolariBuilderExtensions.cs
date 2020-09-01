@@ -11,25 +11,25 @@ namespace Solari.Ganymede.DependencyInjection
     public static class SolariBuilderExtensions
     {
         public static ISolariBuilder AddGanymede(this ISolariBuilder builder,
-                                                 Action<HttpClientActions> configureClients,
-                                                 Action<PolicyActions> configurePoliceRegistry = null,
-                                                 string yamlFile = GanymedeConstants.YamlFileName)
+                                                 Action<GanymedeClientActions> configureClients)
         {
-            AddCoreServices(builder);
-            configurePoliceRegistry?.Invoke(new PolicyActions(builder));
-            configureClients(new HttpClientActions(builder, builder.Configuration));
-
-            return builder;
+            return builder.AddGanymede(null, configureClients);
         }
 
-        private static void AddCoreServices(ISolariBuilder builder)
+        public static ISolariBuilder AddGanymede(this ISolariBuilder builder,
+                                                 Action<GanymedePolicyRegistry> configurePoliceRegistry,
+                                                 Action<GanymedeClientActions> configureClients)
         {
-            builder.Services.Configure<GanymedePolicyOptions>(builder.Configuration.GetSection(GanymedeConstants.HttpPolicies));
-            builder
-                .Services
-                .AddSingleton<IGanymedePolicyRegistry, GanymedePolicyRegistry>()
-                .AddPolicyRegistry();
-            builder.Services.TryAddSingleton(provider => provider.GetRequiredService<IGanymedePolicyRegistry>());
+
+            if (configurePoliceRegistry != null)
+            {
+                var registry = new GanymedePolicyRegistry();
+                configurePoliceRegistry.Invoke(registry);
+                builder.Services.AddPolicyRegistry(registry.PolicyRegistry);
+            }
+
+            configureClients(new GanymedeClientActions(builder, builder.Configuration));
+            return builder;
         }
     }
 }
