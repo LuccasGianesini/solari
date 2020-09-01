@@ -35,7 +35,7 @@ $global:currentPatch = $null;
 $global:branch = $null;
 
 #REGEX
-$global:preReleaseRegex = '\-[0-9a-zA-Z-]+\.[0-9]'
+$global:preReleaseRegex = '\-[0-9a-zA-Z-]+\.\d+'
 $global:developmentBranchRegex = '^dev(elop)?(ment)?$'
 $global:releasesBranchRegex = '^releases?[/-]'
 $global:isCurrentBranchRegex = '^\* (.*)'
