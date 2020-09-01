@@ -142,6 +142,11 @@ namespace Solari.Ganymede.Domain.Options
                        "JSON"        => new JsonContentSerializer(),
                        "XML"         => new XmlContentSerializer(),
                        "URL-ENCODED" => new UrlEncodedSerializer(),
+                       "json"        => new JsonContentSerializer(),
+                       "xml"         => new XmlContentSerializer(),
+                       "url-encoded" => new UrlEncodedSerializer(),
+                       "urlencoded"  => new UrlEncodedSerializer(),
+                       "url"         => new UrlEncodedSerializer(),
                        _             => new JsonContentSerializer()
                    };
         }
@@ -154,6 +159,11 @@ namespace Solari.Ganymede.Domain.Options
                        "JSON"        => new JsonContentDeserializer(),
                        "XML"         => new XmlContentDeserializer(),
                        "URL-ENCODED" => new UrlEncodedDeserializer(),
+                       "json"        => new JsonContentDeserializer(),
+                       "xml"         => new XmlContentDeserializer(),
+                       "url-encoded" => new UrlEncodedDeserializer(),
+                       "urlencoded"  => new UrlEncodedDeserializer(),
+                       "url"         => new UrlEncodedDeserializer(),
                        _             => new JsonContentDeserializer()
                    };
         }

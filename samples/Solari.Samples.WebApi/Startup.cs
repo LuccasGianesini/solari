@@ -43,10 +43,12 @@ namespace Solari.Samples.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddMetrics();
+            services.AddControllers();
 
             services.AddSol(Configuration)
                     .AddVanth()
+                    .AddGanymede(policy => policy.RetryPolicy(5, 5),
+                                 a => a.AddGanymedeClientWithRetryPolicy<IKeycloakClient, KeycloakClient>("Keycloak"))
                     .AddCallistoWithDefaults(configurator =>
                                                  configurator.RegisterClient("localhost", collection => collection
                                                                                  .ConfigureScopedCollection<

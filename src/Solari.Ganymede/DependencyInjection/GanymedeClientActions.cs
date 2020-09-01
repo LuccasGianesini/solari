@@ -15,12 +15,12 @@ using Solari.Sol.Extensions;
 
 namespace Solari.Ganymede.DependencyInjection
 {
-    public class HttpClientActions
+    public class GanymedeClientActions
     {
         private readonly ISolariBuilder _builder;
         private readonly IConfiguration _configuration;
 
-        public HttpClientActions(ISolariBuilder builder, IConfiguration configuration)
+        public GanymedeClientActions(ISolariBuilder builder, IConfiguration configuration)
         {
             _builder = builder;
             _configuration = configuration;
@@ -32,7 +32,7 @@ namespace Solari.Ganymede.DependencyInjection
         /// <typeparam name="TService">Service interface</typeparam>
         /// <typeparam name="TImplementation">Service concrete implementation</typeparam>
         /// <param name="section">Section key in AppSettings.json</param>
-        public HttpClientActions AddGanymedeClient<TService, TImplementation>(string section)
+        public GanymedeClientActions AddGanymedeClient<TService, TImplementation>(string section)
             where TService : class
             where TImplementation : class, TService
         {
@@ -47,12 +47,12 @@ namespace Solari.Ganymede.DependencyInjection
         /// <typeparam name="TService">Service interface</typeparam>
         /// <typeparam name="TImplementation">Service concrete implementation</typeparam>
         /// <param name="section">Section key in AppSettings.json</param>
-        public HttpClientActions AddGanymedeClientWithCircuitBreakerPolicy<TService, TImplementation>(string section)
+        public GanymedeClientActions AddGanymedeClientWithCircuitBreakerPolicy<TService, TImplementation>(string section)
             where TService : class
             where TImplementation : class, TService
         {
             ConfigureGanymedeHttpClientUsingAppSettings<TService, TImplementation>(section)
-                .AddPolicyHandlerFromRegistry(GanymedeConstants.HttpCircuitBraker);
+                .AddPolicyHandlerFromRegistry(GanymedeConstants.HttpCircuitBreaker);
 
             return this;
         }
@@ -64,7 +64,7 @@ namespace Solari.Ganymede.DependencyInjection
         /// <typeparam name="TImplementation">Service concrete implementation</typeparam>
         /// <param name="name">Section key in AppSettings.json</param>
         /// <param name="policyNames">Array of policy names</param>
-        public HttpClientActions AddGanymedeClientWithCustomPolicy<TService, TImplementation>(string name, IEnumerable<string> policyNames)
+        public GanymedeClientActions AddGanymedeClientWithCustomPolicy<TService, TImplementation>(string name, IEnumerable<string> policyNames)
             where TService : class
             where TImplementation : class, TService
         {
@@ -82,7 +82,7 @@ namespace Solari.Ganymede.DependencyInjection
         /// <typeparam name="TImplementation">Service concrete implementation</typeparam>
         /// <param name="name">Section key in AppSettings.json</param>
         /// <param name="policyName">Name of the policy inside the <see cref="IPolicyRegistry{TKey}" /></param>
-        public HttpClientActions AddGanymedeClientWithCustomPolicy<TService, TImplementation>(string name, string policyName)
+        public GanymedeClientActions AddGanymedeClientWithCustomPolicy<TService, TImplementation>(string name, string policyName)
             where TService : class
             where TImplementation : class, TService
         {
@@ -98,13 +98,13 @@ namespace Solari.Ganymede.DependencyInjection
         /// <typeparam name="TService">Service interface</typeparam>
         /// <typeparam name="TImplementation">Service concrete implementation</typeparam>
         /// <param name="name">Section key in AppSettings.json</param>
-        public HttpClientActions AddGanymedeClientWithPolicies<TService, TImplementation>(string name)
+        public GanymedeClientActions AddGanymedeClientWithPolicies<TService, TImplementation>(string name)
             where TService : class
             where TImplementation : class, TService
         {
             ConfigureGanymedeHttpClientUsingAppSettings<TService, TImplementation>(name)
                 .AddPolicyHandlerFromRegistry(GanymedeConstants.HttpRetry)
-                .AddPolicyHandlerFromRegistry(GanymedeConstants.HttpCircuitBraker);
+                .AddPolicyHandlerFromRegistry(GanymedeConstants.HttpCircuitBreaker);
 
             return this;
         }
@@ -115,7 +115,7 @@ namespace Solari.Ganymede.DependencyInjection
         /// <typeparam name="TService">Service interface</typeparam>
         /// <typeparam name="TImplementation">Service concrete implementation</typeparam>
         /// <param name="name">Section key in AppSettings.json</param>
-        public HttpClientActions AddGanymedeClientWithRetryPolicy<TService, TImplementation>(string name)
+        public GanymedeClientActions AddGanymedeClientWithRetryPolicy<TService, TImplementation>(string name)
             where TService : class
             where TImplementation : class, TService
         {
@@ -124,7 +124,7 @@ namespace Solari.Ganymede.DependencyInjection
 
             return this;
         }
-        
+
         private IHttpClientBuilder ConfigureGanymedeHttpClientUsingAppSettings<TService, TImplementation>(string section)
             where TService : class
             where TImplementation : class, TService
