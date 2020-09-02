@@ -32,6 +32,8 @@ namespace Solari.Ganymede.Framework
 
         private bool CanMessageBeSent(HttpRequestMessage requestMessage)
         {
+            if (!_context.Resource.RequiredHeaders.Any())
+                return true;
             return requestMessage.Headers.All(requestMessageHeader => _context.Resource.RequiredHeaders.Contains(requestMessageHeader.Key));
         }
     }

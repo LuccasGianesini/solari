@@ -2,6 +2,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Solari.Ganymede;
+using Solari.Ganymede.Domain;
 using Solari.Ganymede.Pipeline;
 
 namespace Solari.Samples.Domain
@@ -27,11 +28,11 @@ namespace Solari.Samples.Domain
             model.client_id = _options.ClientId;
             model.client_secret = _options.ClientSecret;
 
-            var result = await NewRequest.ForResource("signin")
-                                         .ConfigureRequestContent(a => a.SerializeContent(model, "application/x-www-form-urlencoded"))
-                                         .Send()
-                                         .As<IdentityModel>();
-            return result;
+
+            GanymedeHttpResponse result = await NewRequest.ForResource("signin")
+                                                          .ConfigureRequestContent(a => a.SerializeContent(model, "application/x-www-form-urlencoded"))
+                                                          .Send().AsTask();
+            return null;
         }
     }
 }
