@@ -32,10 +32,7 @@ namespace Solari.Samples.WebApi.Controllers
         public async Task<IActionResult> Get([FromBody] UpdatePersonDto dto)
         {
             await _keycloakClient.Signin(new AuthModel());
-           await _collection.InsertPerson(_operations.CreateInsertOperation(new CreatePersonCommand
-            {
-                Name = "Test"
-            }));
+
 
             return Ok();
         }
