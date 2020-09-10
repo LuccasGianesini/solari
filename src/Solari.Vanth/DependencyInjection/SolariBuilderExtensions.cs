@@ -25,9 +25,13 @@ namespace Solari.Vanth.DependencyInjection
         {
             IConfigurationSection section = builder.Configuration.GetSection(VanthLibConstants.AppSettingsSection);
             if (!section.Exists())
-                throw new VanthException("Unable to find Vanth AppSettings section");
+            {
+                builder.Services.AddSingleton<IResultFactory, ResultFactory>();
+                return builder;
+            }
+
             var opt = builder.Configuration.GetOptions<VanthOptions>(section);
-            builder.Services.AddSingleton<IResultFactory, ResultFactory>();
+
             ConfigureFluentValidation(opt, builder);
             ConfigureExceptionMiddleware(opt, builder, section);
             return builder;

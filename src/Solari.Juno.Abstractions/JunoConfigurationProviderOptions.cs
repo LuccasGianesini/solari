@@ -2,8 +2,8 @@ namespace Solari.Juno.Abstractions
 {
     public class JunoConfigurationProviderOptions
     {
-        public  bool Enabled { get; set; }
+        public bool Enabled { get; set; }
 
-            public string SecretsBasePath { get; set; } = "/kv/data";
+        public string SecretsBasePath { get; set; } = "/kv/data";
     }
 }
