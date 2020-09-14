@@ -56,7 +56,7 @@ namespace Solari.Vanth.Builders
             return this;
         }
 
-        public ErrorDetail Build()
+        public IErrorDetail Build()
         {
             if (string.IsNullOrEmpty(_message)) throw new NullOrEmptyErrorMessageException();
             return new ErrorDetail

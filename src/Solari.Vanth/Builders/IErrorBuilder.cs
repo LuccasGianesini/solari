@@ -10,9 +10,9 @@ namespace Solari.Vanth.Builders
         IErrorBuilder WithCode(string code);
         IErrorBuilder WithErrorType(string type);
         IErrorBuilder WithTarget(string target);
-        IErrorBuilder WithDetail(ErrorDetail detail);
-        IErrorBuilder WithDetail(IEnumerable<ErrorDetail> details);
-        IErrorBuilder WithDetail(Func<IErrorDetailBuilder, ErrorDetail> builder);
+        IErrorBuilder WithDetail(IErrorDetail detail);
+        IErrorBuilder WithDetail(IEnumerable<IErrorDetail> details);
+        IErrorBuilder WithDetail(Func<IErrorDetailBuilder, IErrorDetail> builder);
 
         /// <summary>
         ///     Build the response.
@@ -21,6 +21,6 @@ namespace Solari.Vanth.Builders
         /// <returns>
         ///     <see cref="Error" />
         /// </returns>
-        Error Build();
+        IError Build();
     }
 }

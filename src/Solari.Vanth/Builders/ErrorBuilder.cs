@@ -7,7 +7,7 @@ namespace Solari.Vanth.Builders
     public class ErrorBuilder : IErrorBuilder
     {
         private string _code;
-        private readonly List<ErrorDetail> _details = new List<ErrorDetail>();
+        private readonly List<IErrorDetail> _details = new List<IErrorDetail>();
         private string _errorType;
         private object _innerError;
         private string _message;
@@ -38,27 +38,27 @@ namespace Solari.Vanth.Builders
             return this;
         }
 
-        public IErrorBuilder WithDetail(ErrorDetail detail)
+        public IErrorBuilder WithDetail(IErrorDetail detail)
         {
             _details.Add(detail);
             return this;
         }
 
-        public IErrorBuilder WithDetail(IEnumerable<ErrorDetail> details)
+        public IErrorBuilder WithDetail(IEnumerable<IErrorDetail> details)
         {
             _details.AddRange(details);
             return this;
         }
 
 
-        public IErrorBuilder WithDetail(Func<IErrorDetailBuilder, ErrorDetail> builder)
+        public IErrorBuilder WithDetail(Func<IErrorDetailBuilder, IErrorDetail> builder)
         {
             if (builder == null) throw new ArgumentNullException(nameof(builder), "Cannot invoke a null func");
             _details.Add(builder(new ErrorDetailBuilder()));
             return this;
         }
 
-        public Error Build()
+        public IError Build()
         {
             if (string.IsNullOrEmpty(_message)) throw new NullOrEmptyErrorMessageException();
             return new Error

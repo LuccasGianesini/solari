@@ -8,6 +8,12 @@ namespace Solari.Vanth
 {
     public static class ResultExtensions
     {
+        public static bool HasData<TData>(this IResult<TData> result)
+        {
+            if (result.Data is null)
+                return false;
+            return true;
+        }
          /// <summary>
         ///     Adds <see cref="Error" /> into the stack.
         /// </summary>
@@ -15,7 +21,7 @@ namespace Solari.Vanth
         /// <returns>
         ///     <see cref="Result{TResult}" />
         /// </returns>
-        public static Result<TData> AddError<TData>(this Result<TData> result, Error errorResponse)
+        public static IResult<TData> AddError<TData>(this IResult<TData> result, IError errorResponse)
          {
              result.Errors.Add(errorResponse);
             return result;
@@ -29,7 +35,7 @@ namespace Solari.Vanth
         /// <returns>
         ///     <see cref="Result{TResult}" />
         /// </returns>
-        public static Result<TData> AddErrors<TData>(this Result<TData> result, List<Error> errorResponse)
+        public static IResult<TData> AddErrors<TData>(this IResult<TData> result, List<IError> errorResponse)
         {
             if (errorResponse == null) throw new ArgumentNullException(nameof(errorResponse));
             foreach (Error commonErrorResponse in errorResponse) result.Errors.Add(commonErrorResponse);
@@ -43,7 +49,7 @@ namespace Solari.Vanth
         /// <returns>
         ///     <see cref="Result{TResult}" />
         /// </returns>
-        public static Result<TData> AddError<TData>(this Result<TData> result, Func<IErrorBuilder, Error> builder)
+        public static IResult<TData> AddError<TData>(this IResult<TData> result, Func<IErrorBuilder, IError> builder)
         {
             result.Errors.Add(builder(new ErrorBuilder()));
             return result;
@@ -56,7 +62,7 @@ namespace Solari.Vanth
         /// <returns>
         ///     <see cref="Result{TResult}" />
         /// </returns>
-        public static Result<TData> AddResult<TData>(this Result<TData> result, TData data)
+        public static IResult<TData> AddResult<TData>(this IResult<TData> result, TData data)
         {
             result.Data = data;
             return result;
@@ -65,7 +71,7 @@ namespace Solari.Vanth
         /// <summary>
         ///     Clear the error stack. This method also clear the details o each error in the stack.
         /// </summary>
-        public static void ClearErrors<TData>(this Result<TData> result)
+        public static void ClearErrors<TData>(this IResult<TData> result)
         {
             if (!result.Errors.Any()) return;
             foreach (Error commonErrorResponse in result.Errors) commonErrorResponse.ClearDetails();
@@ -87,8 +93,8 @@ namespace Solari.Vanth
         /// <typeparam name="TOldGenericType">The old generic Type</typeparam>
         /// <returns>The <see cref="Result{TModel}" /> complete with errors and model in the new generic type</returns>
         /// <exception cref="ArgumentNullException">When commonResponse is null</exception>
-        public static Result<TNewGenericType> Transform<TNewGenericType, TOldGenericType>(
-            this Result<TOldGenericType> commonResponse, TNewGenericType newTypeValue, bool addErrors)
+        public static IResult<TNewGenericType> Transform<TNewGenericType, TOldGenericType>(
+            this IResult<TOldGenericType> commonResponse, TNewGenericType newTypeValue, bool addErrors)
         {
             if (commonResponse is null)
                 throw new VanthException("Common response cannot be null.", new ArgumentNullException(nameof(commonResponse)));

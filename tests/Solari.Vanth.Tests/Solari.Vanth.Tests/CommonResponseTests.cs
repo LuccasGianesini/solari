@@ -56,7 +56,7 @@ namespace Solari.Vanth.Tests
         [Fact]
         public void BuildCommonResponse_Error_ShouldContainOnlyOneError()
         {
-            Result<string> error = new ResultBuilder<string>().WithError(builder => builder.WithMessage(Error).Build()).Build();
+            IResult<string> error = new ResultBuilder<string>().WithError(builder => builder.WithMessage(Error).Build()).Build();
             Assert.True(error.HasErrors());
             Assert.False(error.HasData());
             Assert.NotEmpty(error.Errors);
@@ -66,7 +66,7 @@ namespace Solari.Vanth.Tests
         [Fact]
         public void BuildCommonResponse_Error_ShouldSerializeToJsonSuccessfully()
         {
-            Result<string> error = new ResultBuilder<string>().WithError(builder => builder.WithMessage(Error).Build()).Build();
+            IResult<string> error = new ResultBuilder<string>().WithError(builder => builder.WithMessage(Error).Build()).Build();
             string json = JsonConvert.SerializeObject(error);
             Assert.NotEqual(string.Empty, json);
         }
@@ -74,14 +74,14 @@ namespace Solari.Vanth.Tests
         [Fact]
         public void BuildCommonResponse_Result_ShouldBeEqualsPrivateProperty()
         {
-            Result<string> response = new ResultBuilder<string>().WithData(Result).Build();
+            IResult<string> response = new ResultBuilder<string>().WithData(Result).Build();
             Assert.Equal(Result, response.Data);
         }
 
         [Fact]
         public void BuildCommonResponse_Result_ShouldContainOnlyResult()
         {
-            Result<string> response = new ResultBuilder<string>().WithData(Result).Build();
+            IResult<string> response = new ResultBuilder<string>().WithData(Result).Build();
             Assert.True(response.HasData());
             Assert.False(response.HasErrors());
         }
@@ -89,7 +89,7 @@ namespace Solari.Vanth.Tests
         [Fact]
         public void BuildCommonResponse_Result_ShouldSerializeToJson_Successfully()
         {
-            Result<string> response = new ResultBuilder<string>().WithData(Result).Build();
+            IResult<string> response = new ResultBuilder<string>().WithData(Result).Build();
             string json = JsonConvert.SerializeObject(response);
             Assert.NotEqual(string.Empty, json);
         }

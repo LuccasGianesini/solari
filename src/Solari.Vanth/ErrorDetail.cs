@@ -6,7 +6,7 @@ using Solari.Sol.Utils;
 namespace Solari.Vanth
 {
     [Serializable]
-    public class ErrorDetail
+    public class ErrorDetail : IErrorDetail
     {
         public string Code { get; set; }
         public string StackTrace { get; set; }

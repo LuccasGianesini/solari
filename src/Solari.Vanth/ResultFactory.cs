@@ -8,26 +8,26 @@ namespace Solari.Vanth
 {
     public class ResultFactory : IResultFactory
     {
-        public Result<TData> FromData<TData>(TData data) { return new ResultBuilder<TData>().WithData(data).Build(); }
+        public IResult<TData> FromData<TData>(TData data) { return new ResultBuilder<TData>().WithData(data).Build(); }
 
-        public Result<TData> FromError<TData>(Error error)
+        public IResult<TData> FromError<TData>(IError error)
         {
             return new ResultBuilder<TData>().WithError(error).Build();
         }
 
-        public Result<TData> FromError<TData>(Func<IErrorBuilder, Error> builder)
+        public IResult<TData> FromError<TData>(Func<IErrorBuilder, IError> builder)
         {
             return new ResultBuilder<TData>().WithError(builder).Build();
         }
 
-        public Result<TData> FromError<TData>(ValidationResult result)
+        public IResult<TData> FromError<TData>(ValidationResult result)
         {
             if (result == null) throw new VanthException("Cannot create a validation error without the results.");
             if (!result.Errors.Any())
                 return new Result<TData>();
 
 
-            Error error = new ErrorBuilder()
+            IError error = new ErrorBuilder()
                                         .WithCode(CommonErrorCode.ValidationErrorCode)
                                         .WithErrorType(CommonErrorType.ValidationError)
                                         .WithMessage("Invalid Model State!")
@@ -42,9 +42,9 @@ namespace Solari.Vanth
             return new Result<TData>().AddError(error);
         }
 
-        public Result<Nothing> FromNothing() { return new ResultBuilder<Nothing>().WithData(new Nothing()).Build(); }
+        public IResult<Nothing> FromNothing() { return new ResultBuilder<Nothing>().WithData(new Nothing()).Build(); }
 
-        public Result<TData> ExceptionError<TData>(Exception exception,bool shouldAddStackTrace, string errorCode = "", string errorMessage = "")
+        public IResult<TData> ExceptionError<TData>(Exception exception,bool shouldAddStackTrace, string errorCode = "", string errorMessage = "")
         {
             if (exception == null) throw new ArgumentNullException(nameof(exception), "Cannot create exception error from a null exception object");
 
