@@ -29,7 +29,7 @@ namespace Solari.Vanth.Validation
                     if (validator == null) continue;
                     ValidationResult result = await validator.ValidateAsync(new ValidationContext<object>(value));
                     if (!result.Errors.Any()) continue;
-                    Error error = new ErrorBuilder()
+                    IError error = new ErrorBuilder()
                                                 .WithCode(CommonErrorCode.ValidationErrorCode)
                                                 .WithErrorType(CommonErrorType.ValidationError)
                                                 .WithMessage("Invalid Model State!")

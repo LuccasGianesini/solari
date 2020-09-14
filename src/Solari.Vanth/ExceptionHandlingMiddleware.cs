@@ -48,7 +48,7 @@ namespace Solari.Vanth
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             IEnumerable<ErrorDetail> details = exception.ExtractDetailsFromException(shouldReturnStackTrace);
-            Error error = new ErrorBuilder()
+            IError error = new ErrorBuilder()
                           .WithCode(context.Response.StatusCode.ToString())
                           .WithDetail(details)
                           .WithMessage("An exception happened during the request")

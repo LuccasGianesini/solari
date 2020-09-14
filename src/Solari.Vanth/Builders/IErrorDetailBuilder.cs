@@ -18,7 +18,7 @@ namespace Solari.Vanth.Builders
         /// <returns>
         ///     <see cref="Error" />
         /// </returns>
-        ErrorDetail Build();
+        IErrorDetail Build();
 
         IErrorDetailBuilder WithSource(string source);
         IErrorDetailBuilder WithHelpUrl(string helpUrl);

@@ -16,7 +16,7 @@ namespace Solari.Vanth
             return false;
         }
 
-        public static bool HasErrors<T>(this Result<T> result)
+        public static bool HasErrors<T>(this IResult<T> result)
         {
             if (result is null)
                 return false;
@@ -25,7 +25,7 @@ namespace Solari.Vanth
             return false;
         }
 
-        public static bool HasDetails(this Error error)
+        public static bool HasDetails(this IError error)
         {
             if (error is null)
                 return false;
@@ -35,7 +35,7 @@ namespace Solari.Vanth
         }
 
 
-        public static bool TryGetDetails(this Error error, out List<ErrorDetail> details)
+        public static bool TryGetDetails(this IError error, out List<IErrorDetail> details)
         {
             if (error.HasDetails())
             {
@@ -43,11 +43,11 @@ namespace Solari.Vanth
                 return true;
             }
 
-            details = new List<ErrorDetail>();
+            details = new List<IErrorDetail>();
             return false;
         }
 
-        public static bool TryGetData<T>(this Result<T> result, out T data)
+        public static bool TryGetData<T>(this IResult<T> result, out T data)
         {
             if (result.HasData())
             {
@@ -58,7 +58,7 @@ namespace Solari.Vanth
             return false;
         }
 
-        public static bool TryGetErrors<T>(this Result<T> result, out List<Error> errors)
+        public static bool TryGetErrors<T>(this IResult<T> result, out List<IError> errors)
         {
             if (result.HasErrors())
             {

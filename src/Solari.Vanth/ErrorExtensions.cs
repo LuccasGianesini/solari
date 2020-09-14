@@ -15,7 +15,7 @@ namespace Solari.Vanth
         /// <returns>
         ///     <see cref="Error" />
         /// </returns>
-        public static Error AddErrorDetail(this Error error, ErrorDetail detailedError)
+        public static IError AddErrorDetail(this IError error, IErrorDetail detailedError)
         {
             error.Details.Add(detailedError);
             return error;
@@ -29,7 +29,7 @@ namespace Solari.Vanth
         /// <returns>
         ///     <see cref="Error" />
         /// </returns>
-        public static Error AddErrorDetail(this Error error, IEnumerable<ErrorDetail> detailedErrors)
+        public static IError AddErrorDetail(this IError error, IEnumerable<IErrorDetail> detailedErrors)
         {
             error.Details.AddRange(detailedErrors);
             return error;
@@ -42,14 +42,14 @@ namespace Solari.Vanth
         /// <returns>
         ///     <see cref="Error" />
         /// </returns>
-        public static Error AddErrorDetail(this Error error, Func<IErrorDetailBuilder, ErrorDetail> detailedErrors)
+        public static IError AddErrorDetail(this IError error, Func<IErrorDetailBuilder, IErrorDetail> detailedErrors)
         {
             error.AddErrorDetail(detailedErrors(new ErrorDetailBuilder()));
             return error;
         }
 
 
-        public static string ToString(this Error error)
+        public static string ToString(this IError error)
         {
             return JsonConvert.SerializeObject(error);
         }
@@ -57,7 +57,7 @@ namespace Solari.Vanth
         /// <summary>
         ///     Clear the details list.
         /// </summary>
-        public static void ClearDetails(this Error error)
+        public static void ClearDetails(this IError error)
         {
             if (error.Details.Any())
                 error.Details.Clear();

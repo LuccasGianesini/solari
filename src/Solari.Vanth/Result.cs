@@ -9,9 +9,9 @@ using Solari.Vanth.Builders;
 namespace Solari.Vanth
 {
     [Serializable]
-    public class Result<TData>
+    public class Result<TData> : IResult<TData>
     {
-        public List<Error> Errors { get; set; } = new List<Error>();
+        public List<IError> Errors { get; set; } = new List<IError>();
         public TData Data { get; set; }
     }
 }

@@ -6,9 +6,9 @@ namespace Solari.Vanth.Builders
     public interface IResultBuilder<TData>
     {
         IResultBuilder<TData> WithData(TData model);
-        IResultBuilder<TData> WithError(Error errorResponse);
-        IResultBuilder<TData> WithError(Func<IErrorBuilder, Error> builder);
-        IResultBuilder<TData> WithErrors(List<Error> errors);
-        Result<TData> Build();
+        IResultBuilder<TData> WithError(IError errorResponse);
+        IResultBuilder<TData> WithError(Func<IErrorBuilder, IError> builder);
+        IResultBuilder<TData> WithErrors(List<IError> errors);
+        IResult<TData> Build();
     }
 }
