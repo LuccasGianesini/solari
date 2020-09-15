@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using OpenTracing;
@@ -8,6 +9,18 @@ namespace Solari.Deimos
 {
     public static class DeimosJaegerExtensions
     {
+        public static IDictionary<string, object> ExtractExceptionsDetails(this Exception exception)
+        {
+            return new Dictionary<string, object>
+            {
+                {"Event", "Exception"},
+                {"Type", exception.GetType().Name},
+                {"Message", exception.Message},
+                {"Stack-Trace", exception.StackTrace},
+                {"Source", exception.Source},
+            };
+
+        }
         /// <summary>
         ///     Extract the headers from a HttpRequest.
         /// </summary>

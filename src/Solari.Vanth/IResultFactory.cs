@@ -11,7 +11,7 @@ namespace Solari.Vanth
         IResult<TData> FromError<TData>(IError errorResponse);
         IResult<TData> FromError<TData>(Func<IErrorBuilder, IError> builder);
         IResult<Nothing> FromNothing();
-        IResult<TData> ExceptionError<TData>(Exception exception, bool shouldAddStackTrace, string errorCode = "", string errorMessage = "");
+        IResult<TData> FromException<TData>(Exception exception, bool shouldAddStackTrace, string errorCode = "", string errorMessage = "");
         IResult<TData> FromError<TData>(ValidationResult result);
     }
 }
