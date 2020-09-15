@@ -30,7 +30,7 @@ namespace Solari.Vanth
             IError error = new ErrorBuilder()
                                         .WithCode(CommonErrorCode.ValidationErrorCode)
                                         .WithErrorType(CommonErrorType.ValidationError)
-                                        .WithMessage("Invalid Model State!")
+                                        .WithMessage("The provided object did not pass the validation.")
                                         .Build();
 
             foreach (ValidationFailure failure in result.Errors)
@@ -44,7 +44,7 @@ namespace Solari.Vanth
 
         public IResult<Nothing> FromNothing() { return new ResultBuilder<Nothing>().WithData(new Nothing()).Build(); }
 
-        public IResult<TData> ExceptionError<TData>(Exception exception,bool shouldAddStackTrace, string errorCode = "", string errorMessage = "")
+        public IResult<TData> FromException<TData>(Exception exception,bool shouldAddStackTrace, string errorCode = "", string errorMessage = "")
         {
             if (exception == null) throw new ArgumentNullException(nameof(exception), "Cannot create exception error from a null exception object");
 

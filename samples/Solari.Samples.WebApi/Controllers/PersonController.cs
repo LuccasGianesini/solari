@@ -78,7 +78,7 @@ namespace Solari.Samples.WebApi.Controllers
         private IActionResult CreateExceptionError(Exception exception, string code, string message)
         {
             return StatusCode(StatusCodes.Status500InternalServerError,
-                              _factory.ExceptionError<CreatePersonResult>(exception,false ,code, message));
+                              _factory.FromException<CreatePersonResult>(exception,false ,code, message));
         }
     }
 }
