@@ -7,7 +7,6 @@ namespace Solari.Vanth.Builders
     public class ErrorDetailBuilder : IErrorDetailBuilder
     {
         private string _code;
-        private Exception _exception;
         private string _message;
         private string _source;
         private string _target;

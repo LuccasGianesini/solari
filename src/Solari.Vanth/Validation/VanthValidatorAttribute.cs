@@ -21,28 +21,18 @@ namespace Solari.Vanth.Validation
             else
             {
                 var validatorFactory = context.HttpContext.RequestServices.GetRequiredService<IValidatorFactory>();
-                var response = new Result<object>();
+                var resultFactory = context.HttpContext.RequestServices.GetRequiredService<IResultFactory>();
+                IResult<object> response = new Result<object>();
                 foreach ((string key, object value) in context.ActionArguments)
                 {
                     if (value == null) continue;
                     IValidator validator = validatorFactory.GetValidator(value.GetType());
                     if (validator == null) continue;
                     ValidationResult result = await validator.ValidateAsync(new ValidationContext<object>(value));
-                    if (!result.Errors.Any()) continue;
-                    IError error = new ErrorBuilder()
-                                                .WithCode(CommonErrorCode.ValidationErrorCode)
-                                                .WithErrorType(CommonErrorType.ValidationError)
-                                                .WithMessage("Invalid Model State!")
-                                                .WithTarget($"Action: {context.ActionDescriptor.DisplayName} ActionArgument: {key}")
-                                                .Build();
-
-                    foreach (ValidationFailure failure in result.Errors)
-                        error.AddErrorDetail(builder => builder.WithErrorCode(failure.ErrorCode)
-                                                                 .WithMessage(failure.ErrorMessage)
-                                                                 .WithTarget(failure.PropertyName)
-                                                                 .Build());
-                    response.AddError(error);
+                    if (result.IsValid || !result.Errors.Any()) continue;
+                    response = resultFactory.ValidationError<object>(result, $"Action: {context.ActionDescriptor.DisplayName} ActionArgument: {key}");
                 }
+
                 if (!response.HasErrors())
                 {
                     await next();

@@ -12,6 +12,7 @@ namespace Solari.Vanth
     public class Result<TData> : IResult<TData>
     {
         public List<IError> Errors { get; set; } = new List<IError>();
+        public int StatusCode { get; set; }
         public TData Data { get; set; }
     }
 }
