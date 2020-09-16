@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Solari.Ceres.DependencyInjection;
 using Solari.Deimos;
 using Solari.Deimos.Abstractions;
@@ -10,12 +11,15 @@ namespace Solari.Themis
 {
     public static class SolariBuilderExtensions
     {
-        public static ISolariBuilder AddThemis(this ISolariBuilder builder, Action<ITracerPluginManager> tracingPlugins = null,
+        public static ISolariBuilder AddThemis(this ISolariBuilder builder, bool addHealthChecks,
+                                               Action<ITracerPluginManager> tracingPlugins = null,
                                                Action<IHealthChecksBuilder> healthChecks = null)
         {
-            builder.AddIo(healthChecks);
+            if(addHealthChecks)
+                builder.AddIo(healthChecks);
+
             builder.AddDeimos(tracingPlugins);
-            builder.Services.AddTransient<IThemis, Themis>();
+            builder.Services.TryAdd(ServiceDescriptor.Singleton(typeof(IThemis<>), typeof(Themis<>)));
             return builder;
         }
     }

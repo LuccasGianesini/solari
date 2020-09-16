@@ -5,51 +5,44 @@ using Microsoft.Extensions.Logging;
 using OpenTracing;
 using OpenTracing.Tag;
 using Solari.Ceres.Abstractions;
+using Solari.Deimos;
 
 namespace Solari.Themis
 {
-    public class Themis : IThemis
+    public class Themis<T> : IThemis<T>
     {
-        // private readonly IMetrics _metrics;
-        private readonly ITracer _tracer;
-        private readonly ILogger<Themis> _logger;
+        public ITracer Tracer { get; }
+        public ILogger<T> Logger { get; }
 
-        public Themis(ITracer tracer, ILogger<Themis> logger)
+        public Themis(ITracer tracer, ILogger<T> logger)
         {
-            _tracer = tracer;
-            _logger = logger;
+            Tracer = tracer;
+            Logger = logger;
         }
 
         public ISpan TraceOperation(string operationName)
         {
-            IScope activeScope = _tracer.ScopeManager.Active;
-            ISpanBuilder spanBuilder = _tracer.BuildSpan(operationName);
+            IScope activeScope = Tracer.ScopeManager.Active;
+            ISpanBuilder spanBuilder = Tracer.BuildSpan(operationName);
             return activeScope?.Span is null
                        ? spanBuilder.StartActive(true).Span
                        : spanBuilder
-                         .AsChildOf(_tracer.ScopeManager.Active.Span)
+                         .AsChildOf(Tracer.ScopeManager.Active.Span)
                          .Start();
         }
 
-        public void TraceException(Exception exception, string customMessage = null, LogLevel level = LogLevel.Error)
+        public void TraceException(string operationName, Exception exception, string logMessage = null, LogLevel level = LogLevel.Error)
         {
-            _logger.Log(level, exception, string.IsNullOrEmpty(customMessage) ? exception.Message : customMessage);
-            BuildExceptionSpan(TraceOperation("Exception"), exception);
+            Logger.Log(level, exception, string.IsNullOrEmpty(logMessage) ? exception.Message : logMessage);
+            BuildExceptionSpan(TraceOperation(operationName), exception);
         }
 
         private static ISpan BuildExceptionSpan(ISpan span, Exception exception)
         {
             return span.SetTag(Tags.Error, true)
                        .SetTag("catch", true)
-                       .Log(ExtractExceptionInfo(exception));
+                       .Log(exception.ExtractExceptionsDetails());
         }
 
-        private static IDictionary<string, object> ExtractExceptionInfo(Exception ex)
-        {
-            return new Dictionary<string, object>
-            {
-                {"Message", ex.Message}, {"StackTrace", ex.StackTrace}
-            };
-        }
     }
 }
