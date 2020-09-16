@@ -25,7 +25,6 @@ namespace Solari.Samples.WebApi.Controllers
 
         public PersonController()
         {
-
         }
 
         [HttpPost]
@@ -78,7 +77,7 @@ namespace Solari.Samples.WebApi.Controllers
         private IActionResult CreateExceptionError(Exception exception, string code, string message)
         {
             return StatusCode(StatusCodes.Status500InternalServerError,
-                              _factory.Exception<CreatePersonResult>(exception,false ,code, message));
+                              _factory.Exception<CreatePersonResult>(exception, false));
         }
     }
 }
