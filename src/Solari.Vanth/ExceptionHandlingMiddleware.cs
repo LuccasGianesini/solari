@@ -50,6 +50,7 @@ namespace Solari.Vanth
             IEnumerable<ErrorDetail> details = exception.ExtractDetailsFromException(shouldReturnStackTrace);
             IError error = new ErrorBuilder()
                           .WithCode(context.Response.StatusCode.ToString())
+                          .WithTarget(context.Request.Path.ToString())
                           .WithDetail(details)
                           .WithMessage("An exception happened during the request")
                           .WithErrorType(CommonErrorType.Exception)

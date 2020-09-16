@@ -12,7 +12,7 @@ namespace Solari.Vanth
             yield return new ErrorDetail
             {
                 Message = ex.Message,
-                Target = ex.TargetSite.Name,
+                Target = ex.TargetSite?.Name,
                 Source = ex.Source,
                 StackTrace = addStackTrace? ex.StackTrace : "",
                 HelpUrl = ex.HelpLink
@@ -29,7 +29,7 @@ namespace Solari.Vanth
                 yield return new ErrorDetail
                 {
                     Message = innerEx.Message,
-                    Target = innerEx.TargetSite.Name,
+                    Target = innerEx.TargetSite?.Name,
                     Source = innerEx.Source,
                     StackTrace = addStackTrace? ex.StackTrace : "",
                     HelpUrl = innerEx.HelpLink
