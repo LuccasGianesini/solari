@@ -8,10 +8,17 @@ namespace Solari.Vanth.Builders
     {
         private readonly List<IError> _errors = new List<IError>(2);
         private TData _data;
+        private int _statusCode;
 
         public IResultBuilder<TData> WithData(TData model)
         {
             _data = model;
+            return this;
+        }
+
+        public IResultBuilder<TData> WithStatusCode(int statusCode)
+        {
+            _statusCode = statusCode;
             return this;
         }
 
@@ -28,17 +35,18 @@ namespace Solari.Vanth.Builders
             return this;
         }
 
-        public IResultBuilder<TData> WithErrors(List<IError> errors)
+        public IResultBuilder<TData> WithErrors(IEnumerable<IError> errors)
         {
-            foreach (Error commonErrorResponse in errors) _errors.Add(commonErrorResponse);
-
+            _errors.AddRange(errors);
             return this;
         }
 
         public IResult<TData> Build()
         {
             if (_data == null && _errors == null) return new Result<TData>();
-            return new Result<TData>().AddErrors(_errors).AddResult(_data);
+            return new Result<TData>().AddErrors(_errors)
+                                      .AddResult(_data)
+                                      .AddStatusCode(_statusCode);
         }
     }
 }
