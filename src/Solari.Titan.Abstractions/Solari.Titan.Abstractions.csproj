@@ -24,12 +24,13 @@
     <PackageReference Include="Serilog.Exceptions" Version="5.6.0" />
     <PackageReference Include="Serilog.Extensions.Hosting" Version="3.1.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.Debug" Version="1.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.8" />
+    <PackageReference Include="Serilog.Sinks.Graylog" Version="2.2.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
-    <ProjectReference Include="..\Solari.Titan.Graylog\Solari.Titan.Graylog.csproj" />
     <ProjectReference Include="..\Solari.Titan.Loki\Solari.Titan.Loki.csproj" />
   </ItemGroup>
 </Project>

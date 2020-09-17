@@ -12,10 +12,10 @@ namespace Solari.Titan.Abstractions
 
         public string HostnameOrAddress { get; set; }
 
-        public int Port { get; set; }
+        public int Port { get; set; } = 12201;
         public string TransportType { get; set; }
 
-        public int ShortMessageMaxLength { get; set; } = 500;
+        public int ShortMessageMaxLength { get; set; } = 1024;
 
         public int MaxMessageSizeInUdp { get; set; } = 8192;
 
@@ -23,7 +23,7 @@ namespace Solari.Titan.Abstractions
 
         public string Facility { get; set; } = "GELF";
 
-        public int StackTraceDepth { get; set; } = 10;
+        public int StackTraceDepth { get; set; } = 5;
         public string MessageGeneratorType { get; set; }
 
         public MessageIdGeneratorType GetMessageIdGeneratorType()
