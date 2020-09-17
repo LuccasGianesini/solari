@@ -1,5 +1,6 @@
 using System.Linq;
 using Serilog;
+using Serilog.Core;
 using Serilog.Exceptions;
 using Solari.Sol;
 using Solari.Titan.Abstractions;
@@ -22,7 +23,8 @@ namespace Solari.Titan.Framework
             config
                 .ConfigureConsole(options)
                 .ConfigureFile(options.File, contentRootPath)
-                .ConfigureLoki(options.Loki);
+                .ConfigureLoki(options.Loki, options.DynamicDefaultLevel)
+                .ConfigureGrayLog(options.Graylog, options.DynamicDefaultLevel);
         }
 
         private static void ConfigureEnrich(LoggerConfiguration config, ApplicationOptions appOptions)
@@ -38,8 +40,12 @@ namespace Solari.Titan.Framework
 
         private static void ConfigureMinimumLevels(LoggerConfiguration config, TitanOptions options)
         {
+            if (options.DynamicDefaultLevel)
+                config.MinimumLevel.ControlledBy(new LoggingLevelSwitch(TitanLibHelper.GetLogLevel(options.DefaultLevel)));
+            else
+                config.MinimumLevel.Is(TitanLibHelper.GetLogLevel(options.DefaultLevel));
+
             config
-                .MinimumLevel.Is(TitanLibHelper.GetLogLevel(options.DefaultLevel))
                 .MinimumLevel.Override("System", TitanLibHelper.GetLogLevel(options.Overrides.System))
                 .MinimumLevel.Override("Microsoft", TitanLibHelper.GetLogLevel(options.Overrides.Microsoft))
                 .MinimumLevel.Override("Microsoft.AspNetCore", TitanLibHelper.GetLogLevel(options.Overrides.AspNetCore))

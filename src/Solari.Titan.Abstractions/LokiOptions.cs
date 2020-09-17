@@ -1,5 +1,3 @@
-using Serilog.Sinks.Loki;
-
 namespace Solari.Titan.Abstractions
 {
     public class LokiOptions

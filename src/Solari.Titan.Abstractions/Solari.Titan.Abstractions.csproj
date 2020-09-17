@@ -29,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
+    <ProjectReference Include="..\Solari.Titan.Graylog\Solari.Titan.Graylog.csproj" />
     <ProjectReference Include="..\Solari.Titan.Loki\Solari.Titan.Loki.csproj" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 using System.Text;
 using Serilog;
 using Serilog.Formatting.Json;
+using Serilog.Sinks.Graylog;
 using Serilog.Sinks.Loki;
 using Solari.Sol.Extensions;
 using Solari.Titan.Abstractions;
@@ -10,11 +11,9 @@ namespace Solari.Titan.Framework
 {
     internal static class SinksConfiguration
     {
-        internal static LoggerConfiguration ConfigureLoki(this LoggerConfiguration configuration, LokiOptions lokiOptions)
+        internal static LoggerConfiguration ConfigureLoki(this LoggerConfiguration configuration, LokiOptions lokiOptions, bool dynamicLevel)
         {
-            if (lokiOptions is null)
-                return configuration;
-            if (lokiOptions.Enabled is false)
+            if (lokiOptions is null || lokiOptions.Enabled is false)
                 return configuration;
 
             if (string.IsNullOrEmpty(lokiOptions.Endpoint))
@@ -32,15 +31,13 @@ namespace Solari.Titan.Framework
             }
 
             configuration.WriteTo.TitanLoki(credentials, null, null, TitanLibHelper.GetLogLevel(lokiOptions.LogLevelRestriction),
-                                            lokiOptions.BatchSizeLimit, lokiOptions.Period.ToTimeSpan(), lokiOptions.QueueLimit);
+                                            lokiOptions.BatchSizeLimit, lokiOptions.Period.ToTimeSpan(), lokiOptions.QueueLimit, dynamicLevel);
             return configuration;
         }
 
         internal static LoggerConfiguration ConfigureConsole(this LoggerConfiguration configuration, TitanOptions options)
         {
-            if (options.Console is null)
-                return configuration;
-            if (options.Console.Enabled is false)
+            if (options.Console is null || options.Console.Enabled is false)
                 return configuration;
 
             configuration.WriteTo.Console(outputTemplate: options.Console.OutputTemplate,
@@ -52,7 +49,7 @@ namespace Solari.Titan.Framework
         internal static LoggerConfiguration ConfigureFile(this LoggerConfiguration configuration, FileOptions options,
                                                           string contentRootPath = "")
         {
-            if (options == null || options.Enabled is false) return configuration;
+            if (options is null || options.Enabled is false) return configuration;
 
             string path = options.UseContentRoot
                               ? TitanLibHelper.BuildPath(contentRootPath, "logs", ".json")
@@ -63,6 +60,15 @@ namespace Solari.Titan.Framework
                                        flushToDiskInterval: options.Period.ToTimeSpan(),
                                        rollOnFileSizeLimit: true, encoding: Encoding.UTF8);
 
+            return configuration;
+        }
+
+        internal static LoggerConfiguration ConfigureGrayLog(this LoggerConfiguration configuration, GraylogOptions options, bool dynamicLogLevel)
+        {
+            if (options is null || options.Enabled is false)
+                return configuration;
+
+            configuration.WriteTo.Graylog(options.ToGraylogSinkOptions(dynamicLogLevel));
             return configuration;
         }
     }

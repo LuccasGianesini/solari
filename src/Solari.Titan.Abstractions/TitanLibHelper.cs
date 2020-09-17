@@ -2,7 +2,7 @@ using System.IO;
 using Serilog;
 using Serilog.Events;
 
-namespace Solari.Titan.Framework
+namespace Solari.Titan.Abstractions
 {
     public static class TitanLibHelper
     {
@@ -23,7 +23,6 @@ namespace Solari.Titan.Framework
                        "ERROR"       => LogEventLevel.Error,
                        "ERR"         => LogEventLevel.Error,
                        "FATAL"       => LogEventLevel.Fatal,
-                       "CRITICAL"    => LogEventLevel.Fatal,
                        _             => LogEventLevel.Information
                    };
         }

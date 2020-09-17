@@ -1,13 +1,25 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace Solari.Sol.Extensions
 {
     public static class StringExtensions
     {
         private static readonly Regex RxDigits = new Regex(@"[\d]+");
+
+        public static string ToPascalCase(this string value)
+        {
+            TextInfo info = Thread.CurrentThread.CurrentCulture.TextInfo;
+            value = info.ToTitleCase(value);
+            string[] parts = value.Split(new char[] { }, StringSplitOptions.RemoveEmptyEntries);
+            string result = string.Join(string.Empty, parts);
+            return result;
+        }
+
 
         public static string ToKebabCase(this string value)
         {
@@ -29,8 +41,8 @@ namespace Solari.Sol.Extensions
 
         public static Guid AsGuid(this string value)
         {
-            var bytes = value.GetBytes().Concat(new byte[] { 5, 5, 5, 5 }).ToArray();
-            Guid gid = new Guid(bytes);
+            byte[] bytes = value.GetBytes().Concat(new byte[] { 5, 5, 5, 5 }).ToArray();
+            var gid = new Guid(bytes);
             return gid;
         }
 
@@ -252,6 +264,7 @@ namespace Solari.Sol.Extensions
             return lowered.StartsWith("d") ? TimeSpan.FromMilliseconds(ToLong(value)) : TimeSpan.MinValue;
         }
 
+        public static string DashToUpper(this string value) => value.Dash().ToUpperInvariant();
         public static string DashToLower(this string value) => value.Dash().ToLowerInvariant();
         public static string Dash(this string value) { return string.Concat(value.Select((x, i) => i > 0 && char.IsUpper(x) ? "-" + x : x.ToString())); }
     }

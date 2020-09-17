@@ -25,7 +25,7 @@ namespace Solari.Deimos.MassTransit
         public async Task Send(PublishContext context, IPipe<PublishContext> next)
         {
             DeimosOptions options = GetDeimosOptions();
-            if(options is null || !options.TracingEnabled)
+            if(options is null || !options.Enabled)
                 return;
 
             if(GlobalTracer.Instance is null)
