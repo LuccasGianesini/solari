@@ -23,16 +23,15 @@ namespace Solari.Samples.WebApi.Controllers
         private readonly ILogger<TestController> _logger;
         private readonly IPersonOperations _operations;
 
-        public TestController(IKeycloakClient keycloakClient)
+        public TestController(ILogger<TestController> logger)
         {
-            _keycloakClient = keycloakClient;
+            _logger = logger;
         }
 
         [HttpPost]
         public async Task<IActionResult> Get([FromBody] UpdatePersonDto dto)
         {
-            await _keycloakClient.Signin(new AuthModel());
-
+            _logger.LogInformation("TESTEAAAAAAAAAAAAAEEEEEEEEEEEE");
 
             return Ok();
         }

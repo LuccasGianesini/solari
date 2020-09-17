@@ -12,17 +12,22 @@ namespace Solari.Titan.Loki
     {
         public static LoggerConfiguration TitanLoki(this LoggerSinkConfiguration sinkConfiguration, LokiCredentials credentials,
                                                     ILogLabelProvider logLabelProvider, IHttpClient httpClient, LogEventLevel logLevelRestriction,
-                                                    int batchPostingLimit, TimeSpan period, int queueLimit)
+                                                    int batchPostingLimit, TimeSpan period, int queueLimit, bool dynamicLevel)
         {
-            var formatter = logLabelProvider != null
-                                ? new BatchFormatter(logLabelProvider.GetLabels())
-                                : new BatchFormatter();
+            BatchFormatter formatter = logLabelProvider != null
+                                           ? new BatchFormatter(logLabelProvider.GetLabels())
+                                           : new BatchFormatter();
 
-            var client = httpClient ?? new LokiHttpClient();
+            IHttpClient client = httpClient ?? new LokiHttpClient();
             if (client is LokiHttpClient c)
             {
                 c.SetAuthCredentials(credentials);
             }
+
+            if (dynamicLevel)
+                return sinkConfiguration.Http(LokiRouteBuilder.BuildPostUri(credentials.Url), batchFormatter: formatter, httpClient: client,
+                                              batchPostingLimit: batchPostingLimit, period: period,
+                                              queueLimit: queueLimit);
 
             return sinkConfiguration.Http(LokiRouteBuilder.BuildPostUri(credentials.Url), batchFormatter: formatter, httpClient: client,
                                           restrictedToMinimumLevel: logLevelRestriction, batchPostingLimit: batchPostingLimit, period: period,

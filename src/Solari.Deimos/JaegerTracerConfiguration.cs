@@ -19,7 +19,7 @@ namespace Solari.Deimos
     {
         public static ISolariBuilder AddJaeger(ISolariBuilder solariBuilder, DeimosOptions options)
         {
-            if (!options.TracingEnabled)
+            if (!options.Enabled)
                 return solariBuilder;
 
             ConfigureHttpOut(solariBuilder, options);
