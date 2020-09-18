@@ -42,10 +42,8 @@ namespace Solari.Deimos.MassTransit
 
             using (IScope scope = spanBuilder.StartActive())
             {
-                GlobalTracer.Instance.Inject(
-                   GlobalTracer.Instance.ActiveSpan.Context,
-                   BuiltinFormats.TextMap,
-                   new MassTransitTextMapInjectAdapter(context));
+                GlobalTracer.Instance.Inject(GlobalTracer.Instance.ActiveSpan.Context,
+                                             BuiltinFormats.TextMap, new MassTransitTextMapInjectAdapter(context));
 
                 await next.Send(context);
             }

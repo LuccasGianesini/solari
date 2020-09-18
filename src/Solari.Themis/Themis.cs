@@ -31,10 +31,10 @@ namespace Solari.Themis
                          .Start();
         }
 
-        public void TraceException(string operationName, Exception exception, string logMessage = null, LogLevel level = LogLevel.Error)
+        public ISpan TraceException(string operationName, Exception exception, string logMessage = null, LogLevel level = LogLevel.Error)
         {
             Logger.Log(level, exception, string.IsNullOrEmpty(logMessage) ? exception.Message : logMessage);
-            BuildExceptionSpan(TraceOperation(operationName), exception);
+            return BuildExceptionSpan(TraceOperation(operationName), exception);
         }
 
         private static ISpan BuildExceptionSpan(ISpan span, Exception exception)

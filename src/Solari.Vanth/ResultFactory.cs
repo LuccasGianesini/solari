@@ -157,8 +157,8 @@ namespace Solari.Vanth
         {
             IErrorBuilder error = new ErrorBuilder()
                                   .WithCode(errorCode)
-                                  .WithMessage(errorType)
-                                  .WithErrorType(errorMessage)
+                                  .WithMessage(errorMessage)
+                                  .WithErrorType(errorType)
                                   .WithTarget(target);
             return error;
         }
