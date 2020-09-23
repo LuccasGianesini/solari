@@ -9,14 +9,14 @@ namespace Solari.Callisto.Framework.Factories
 {
     public class CallistoUpdateOperationFactory : ICallistoUpdateOperationFactory
     {
-        
+
         public ICallistoUpdate<T> CreateUpdateById<T>(Guid id, UpdateDefinition<T> updateDefinition)
             where T : class, IDocumentRoot
         {
-            if (id == Guid.Empty)
-            {
-                throw new CallistoException("An empty ObjectId is invalid. Cannot create UpdateById operation.");
-            }
+            // if (id == Guid.Empty)
+            // {
+            //     throw new CallistoException("An empty ObjectId is invalid. Cannot create UpdateById operation.");
+            // }
 
             return CreateUpdate(updateDefinition, Builders<T>.Filter.Eq(a => a.Id, id), null, string.Empty);
         }
@@ -48,7 +48,6 @@ namespace Solari.Callisto.Framework.Factories
         /// <param name="updateDefinition">Update</param>
         /// <param name="updateOptions">Options</param>
         /// <typeparam name="T">Entity type</typeparam>
-        /// <exception cref="CallistoException">When the filter definition or the update definition are null.</exception>
         /// <returns>
         ///     <see cref="DefaultCallistoUpdate{T}" />
         /// </returns>
@@ -56,10 +55,10 @@ namespace Solari.Callisto.Framework.Factories
                                                   UpdateOptions updateOptions, string operationName)
             where T : class, IDocumentRoot
         {
-            if (updateDefinition is null)
-                throw new CallistoException($"An {nameof(ICallistoUpdate<T>)} requires an {nameof(UpdateDefinition<T>)}.");
-            if (filterDefinition is null)
-                throw new CallistoException($"An {nameof(ICallistoUpdate<T>)} requires an {nameof(FilterDefinition<T>)}.");
+            // if (updateDefinition is null)
+            //     throw new CallistoException($"An {nameof(ICallistoUpdate<T>)} requires an {nameof(UpdateDefinition<T>)}.");
+            // if (filterDefinition is null)
+            //     throw new CallistoException($"An {nameof(ICallistoUpdate<T>)} requires an {nameof(FilterDefinition<T>)}.");
 
             return new DefaultCallistoUpdate<T>(operationName, updateDefinition, filterDefinition, updateOptions);
         }

@@ -11,10 +11,10 @@ namespace Solari.Callisto.Framework.Factories
     {
         public ICallistoDelete<T> CreateDeleteById<T>(Guid id) where T : class, IDocumentRoot
         {
-            if (id == Guid.Empty)
-            {
-                throw new CallistoException("An empty ObjectId is invalid. Cannot create DeleteById operation.");
-            }
+            // if (id == Guid.Empty)
+            // {
+            //     throw new CallistoException("An empty ObjectId is invalid. Cannot create DeleteById operation.");
+            // }
 
             return CreateDelete(Builders<T>.Filter.Eq(a => a.Id, id));
         }
@@ -40,8 +40,8 @@ namespace Solari.Callisto.Framework.Factories
         public ICallistoDelete<T> CreateDelete<T>(FilterDefinition<T> filterDefinition, DeleteOptions deleteOptions, string operationName)
             where T : class, IDocumentRoot
         {
-            if (filterDefinition is null)
-                throw new CallistoException($"An {nameof(ICallistoDelete<T>)} requires an {nameof(FilterDefinition<T>)}.");
+            // if (filterDefinition is null)
+            //     throw new CallistoException($"An {nameof(ICallistoDelete<T>)} requires an {nameof(FilterDefinition<T>)}.");
             return new DefaultCallistoDelete<T>(operationName, filterDefinition, deleteOptions);
         }
     }

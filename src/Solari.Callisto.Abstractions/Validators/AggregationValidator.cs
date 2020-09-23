@@ -24,7 +24,7 @@ namespace Solari.Callisto.Abstractions.Validators
                 .WithSeverity(Severity.Error);
             RuleFor(a => a.ResultFunction)
                 .NotNull()
-                .WithMessage($"An {nameof(ICallistoQuery<T, TResult>)} requires an {nameof(Func<IAsyncCursor<TProjectionModel>, TResult>)} result function.")
+                .WithMessage($"An {nameof(ICallistoExecutableQuery<T, TResult>)} requires an {nameof(Func<IAsyncCursor<TProjectionModel>, TResult>)} result function.")
                 .WithName(a => a.OperationName)
                 .WithSeverity(Severity.Error);
         }

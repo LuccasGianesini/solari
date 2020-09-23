@@ -34,8 +34,8 @@ namespace Solari.Callisto.Framework.Factories
         public ICallistoInsertOne<T> CreateInsertOne<T>(T value, InsertOneOptions insertOneOptions, string operationName)
             where T : class, IDocumentRoot
         {
-            if (value is null)
-                throw new CallistoException($"No insert can be made with a null {nameof(T)} instance");
+            // if (value is null)
+            //     throw new CallistoException($"No insert can be made with a null {nameof(T)} instance");
             return new DefaultCallistoInsertOne<T>(operationName, value, insertOneOptions);
         }
 
@@ -60,10 +60,10 @@ namespace Solari.Callisto.Framework.Factories
         public  ICallistoInsertMany<T> CreateInsertMany<T>(IEnumerable<T> values, InsertManyOptions insertOneOptions, string operationName)
             where T : class, IDocumentRoot
         {
-            if (values is null)
-                throw new CallistoException($"No insert can be made with a null {nameof(T)} instance");
-            if (!values.Any())
-                throw new CallistoException("There is no need to insert an empty list of values into the database.");
+            // if (values is null)
+            //     throw new CallistoException($"No insert can be made with a null {nameof(T)} instance");
+            // if (!values.Any())
+            //     throw new CallistoException("There is no need to insert an empty list of values into the database.");
             return new DefaultCallistoInsertMany<T>(operationName, values, insertOneOptions);
         }
     }
