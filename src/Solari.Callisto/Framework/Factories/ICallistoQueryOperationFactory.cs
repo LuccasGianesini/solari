@@ -8,40 +8,53 @@ namespace Solari.Callisto.Framework.Factories
 {
     public interface ICallistoQueryOperationFactory
     {
-        ICallistoQuery<T, TResult> CreateQuery<T, TResult>(FilterDefinition<T> filterDefinition, Func<IAsyncCursor<T>, TResult> resultFunction)
+        ICallistoQuery<T> CreateQuery<T>(FilterDefinition<T> filterDefinition)
             where T : class, IDocumentRoot;
 
-        ICallistoQuery<T, TResult> CreateQuery<T, TResult>(FilterDefinition<T> filterDefinition, Func<IAsyncCursor<T>, TResult> resultFunction,
-                                                           string operationName)
+        ICallistoQuery<T> CreateQuery<T>(FilterDefinition<T> filterDefinition, string operationName)
             where T : class, IDocumentRoot;
 
-        ICallistoQuery<T, TResult> CreateQuery<T, TResult>(FilterDefinition<T> filterDefinition, Func<IAsyncCursor<T>, TResult> resultFunction,
-                                                           FindOptions<T> findOptions)
+        ICallistoQuery<T> CreateQuery<T>(FilterDefinition<T> filterDefinition, FindOptions<T> findOptions)
             where T : class, IDocumentRoot;
 
-        ICallistoQuery<T, TResult> CreateQuery<T, TResult>(FilterDefinition<T> filterDefinition, Func<IAsyncCursor<T>, TResult> resultFunction,
-                                                           FindOptions<T> findOptions, string operationName)
+        ICallistoQuery<T> CreateQuery<T>(FilterDefinition<T> filterDefinition, FindOptions<T> findOptions, string operationName)
             where T : class, IDocumentRoot;
 
-        ICallistoAggregation<T, TProjectionModel, TResult> CreateAggregation<T, TProjectionModel, TResult>(
-            PipelineDefinition<T, TProjectionModel> pipelineDefinition, Func<IAsyncCursor<TProjectionModel>, TResult> resultFunction)
+        ICallistoExecutableQuery<T, TResult> CreateExecutableQuery<T, TResult>(FilterDefinition<T> filterDefinition, Func<IAsyncCursor<T>, TResult> resultFunction)
+            where T : class, IDocumentRoot;
+
+        ICallistoExecutableQuery<T, TResult> CreateExecutableQuery<T, TResult>(FilterDefinition<T> filterDefinition, Func<IAsyncCursor<T>, TResult> resultFunction,
+                                                                     string operationName)
+            where T : class, IDocumentRoot;
+
+        ICallistoExecutableQuery<T, TResult> CreateExecutableQuery<T, TResult>(FilterDefinition<T> filterDefinition, Func<IAsyncCursor<T>, TResult> resultFunction,
+                                                                     FindOptions<T> findOptions)
+            where T : class, IDocumentRoot;
+
+        ICallistoExecutableQuery<T, TResult> CreateExecutableQuery<T, TResult>(FilterDefinition<T> filterDefinition, Func<IAsyncCursor<T>, TResult> resultFunction,
+                                                                     FindOptions<T> findOptions, string operationName)
+            where T : class, IDocumentRoot;
+
+        ICallistoAggregation<T, TProjectionModel, TResult> CreateAggregation<T, TProjectionModel, TResult>(PipelineDefinition<T, TProjectionModel> pipelineDefinition,
+                                                                                                           Func<IAsyncCursor<TProjectionModel>, TResult> resultFunction)
             where T : class, IDocumentRoot
             where TProjectionModel : class;
 
-        ICallistoAggregation<T, TProjectionModel, TResult> CreateAggregation<T, TProjectionModel, TResult>(
-            PipelineDefinition<T, TProjectionModel> pipelineDefinition, Func<IAsyncCursor<TProjectionModel>, TResult> resultFunction, string operationName)
+        ICallistoAggregation<T, TProjectionModel, TResult> CreateAggregation<T, TProjectionModel, TResult>(PipelineDefinition<T, TProjectionModel> pipelineDefinition,
+                                                                                                           Func<IAsyncCursor<TProjectionModel>, TResult> resultFunction,
+                                                                                                           string operationName)
             where T : class, IDocumentRoot
             where TProjectionModel : class;
 
-        ICallistoAggregation<T, TProjectionModel, TResult> CreateAggregation<T, TProjectionModel, TResult>(
-            PipelineDefinition<T, TProjectionModel> pipelineDefinition, Func<IAsyncCursor<TProjectionModel>, TResult> resultFunction,
-            AggregateOptions options)
+        ICallistoAggregation<T, TProjectionModel, TResult> CreateAggregation<T, TProjectionModel, TResult>(PipelineDefinition<T, TProjectionModel> pipelineDefinition,
+                                                                                                           Func<IAsyncCursor<TProjectionModel>, TResult> resultFunction,
+                                                                                                           AggregateOptions options)
             where T : class, IDocumentRoot
             where TProjectionModel : class;
 
-        ICallistoAggregation<T, TProjectionModel, TResult> CreateAggregation<T, TProjectionModel, TResult>(
-            PipelineDefinition<T, TProjectionModel> pipelineDefinition, Func<IAsyncCursor<TProjectionModel>, TResult> resultFunction,
-            AggregateOptions options, string operationName)
+        ICallistoAggregation<T, TProjectionModel, TResult> CreateAggregation<T, TProjectionModel, TResult>(PipelineDefinition<T, TProjectionModel> pipelineDefinition,
+                                                                                                           Func<IAsyncCursor<TProjectionModel>, TResult> resultFunction,
+                                                                                                           AggregateOptions options, string operationName)
             where T : class, IDocumentRoot
             where TProjectionModel : class;
     }

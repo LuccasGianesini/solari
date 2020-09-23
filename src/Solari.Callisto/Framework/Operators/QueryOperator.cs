@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using MongoDB.Bson;
+
 using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
 using Solari.Callisto.Abstractions.Contracts.CQR;
-using Solari.Callisto.Abstractions.CQR;
-using Solari.Callisto.Abstractions.Exceptions;
 using Solari.Callisto.Framework.Factories;
 
 namespace Solari.Callisto.Framework.Operators
@@ -50,7 +48,7 @@ namespace Solari.Callisto.Framework.Operators
         /// <returns></returns>
         public async Task<T> FindById(Guid id)
         {
-            return await Find(_factory.CreateQuery(Builders<T>.Filter.Eq(a => a.Id, id),
+            return await Find(_factory.CreateExecutableQuery(Builders<T>.Filter.Eq(a => a.Id, id),
                                                    cursor => cursor.FirstOrDefault()));
         }
 
@@ -60,7 +58,7 @@ namespace Solari.Callisto.Framework.Operators
         /// </summary>
         /// <param name="factory">The operation factory</param>
         /// <returns></returns>
-        public async Task<TResult> Find<TResult>(Func<ICallistoQueryOperationFactory, ICallistoQuery<T, TResult>> factory)
+        public async Task<TResult> Find<TResult>(Func<ICallistoQueryOperationFactory, ICallistoExecutableQuery<T, TResult>> factory)
         {
             return await Find(factory(_factory));
         }
@@ -71,24 +69,23 @@ namespace Solari.Callisto.Framework.Operators
         /// <param name="operation">The operation</param>
         /// <typeparam name="TResult">The Result</typeparam>
         /// <returns></returns>
-        /// <exception cref="NullCallistoOperationException"></exception>
-        public async Task<TResult> Find<TResult>(ICallistoQuery<T, TResult> operation)
+        public async Task<TResult> Find<TResult>(ICallistoExecutableQuery<T, TResult> operation)
         {
             Helper.PreExecutionCheck(operation);
             if (operation.ClientSessionHandle is null)
                 using (IAsyncCursor<T> cursor = await _collection.FindAsync(operation.FilterDefinition,
-                                                                                  operation.FindOptions,
-                                                                                  operation.CancellationToken)
-                                                                       .ConfigureAwait(false))
+                                                                            operation.FindOptions,
+                                                                            operation.CancellationToken)
+                                                                 .ConfigureAwait(false))
                 {
                     return operation.ResultFunction(cursor);
                 }
 
             using (IAsyncCursor<T> cursor = await _collection.FindAsync(operation.ClientSessionHandle,
-                                                                              operation.FilterDefinition,
-                                                                              operation.FindOptions,
-                                                                              operation.CancellationToken)
-                                                                   .ConfigureAwait(false))
+                                                                        operation.FilterDefinition,
+                                                                        operation.FindOptions,
+                                                                        operation.CancellationToken)
+                                                             .ConfigureAwait(false))
             {
                 return operation.ResultFunction(cursor);
             }
@@ -102,8 +99,7 @@ namespace Solari.Callisto.Framework.Operators
         /// <typeparam name="TResult">The final result type of the operation</typeparam>
         /// <returns></returns>
         /// <exception cref="NullCallistoOperationException"></exception>
-        public async Task<TResult> Aggregate<TProjectionModel, TResult>(
-            Func<ICallistoQueryOperationFactory, ICallistoAggregation<T, TProjectionModel, TResult>> factory)
+        public async Task<TResult> Aggregate<TProjectionModel, TResult>(Func<ICallistoQueryOperationFactory, ICallistoAggregation<T, TProjectionModel, TResult>> factory)
             where TProjectionModel : class
         {
             return await Aggregate(factory(_factory));
@@ -136,6 +132,14 @@ namespace Solari.Callisto.Framework.Operators
             {
                 return operation.ResultFunction(cursor);
             }
+        }
+
+        public async Task<IAsyncCursor<T>> Query(ICallistoQuery<T> operation)
+        {
+            Helper.PreExecutionCheck(operation);
+            if (operation.ClientSessionHandle is null)
+                return await _collection.FindAsync(operation.FilterDefinition, operation.FindOptions);
+            return await _collection.FindAsync(operation.ClientSessionHandle, operation.FilterDefinition, operation.FindOptions);
         }
     }
 }
