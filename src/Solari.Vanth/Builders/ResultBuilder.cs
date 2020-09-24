@@ -6,6 +6,7 @@ namespace Solari.Vanth.Builders
 {
     public class ResultBuilder<TData> : IResultBuilder<TData>
     {
+        public static ResultBuilder<TData> New => new ResultBuilder<TData>();
         private readonly List<IError> _errors = new List<IError>(2);
         private TData _data;
         private int _statusCode;
