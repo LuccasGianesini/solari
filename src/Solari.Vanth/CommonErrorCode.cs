@@ -11,5 +11,14 @@ namespace Solari.Vanth
         public const string ValidationError = "400";
         public const string ExceptionError = "500";
 
+
+        public const int GenericErrorCodeInteger = 1000;
+        public const int NullObjectErrorInteger = 0;
+        public const int DatabaseErrorInteger = 1;
+        public const int SerializationErrorInteger = 2;
+        public const int TransportErrorInteger = 3;
+        public const int IntegrationErrorInteger = 4;
+        public const int ValidationErrorInteger = 400;
+        public const int ExceptionErrorInteger = 500;
     }
 }

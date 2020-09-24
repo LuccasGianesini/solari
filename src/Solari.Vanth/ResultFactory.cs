@@ -15,22 +15,27 @@ namespace Solari.Vanth
 
         public IResult<TData> Data<TData>(TData data, int statusCode)
         {
-            return new ResultBuilder<TData>().WithData(data).WithStatusCode(statusCode).Build();
+            return ResultBuilder<TData>.New.WithData(data).WithStatusCode(statusCode).Build();
         }
 
         public IResult<TData> Error<TData>(IError error)
         {
-            return Error<TData>(error, Convert.ToInt32(CommonErrorCode.GenericErrorCode));
+            return Error<TData>(error, CommonErrorCode.GenericErrorCodeInteger);
         }
 
         public IResult<TData> Error<TData>(IError error, int statusCode)
         {
-            return new ResultBuilder<TData>().WithError(error).Build();
+            return ResultBuilder<TData>.New.WithError(error).Build();
         }
 
         public IResult<TData> Error<TData>(Func<IErrorBuilder, IError> builder)
         {
-            return new ResultBuilder<TData>().WithError(builder).Build();
+            return Error<TData>(builder, CommonErrorCode.GenericErrorCodeInteger);
+        }
+
+        public IResult<TData> Error<TData>(Func<IErrorBuilder, IError> builder, int statusCode)
+        {
+            return ResultBuilder<TData>.New.WithError(builder).WithStatusCode(statusCode).Build();
         }
 
         public IResult<TData> ValidationError<TData>(ValidationResult result, string target = "")
