@@ -41,10 +41,10 @@ namespace Solari.Themis
             return BuildExceptionSpan(activeSpan, exception);
         }
 
-        public ISpan TraceError(string errorMessage, LogLevel level = LogLevel.Error, params object[] args)
+        public ISpan TraceError(string logMessage, LogLevel level = LogLevel.Error, params object[] args)
         {
-            ISpan activeSpan = Tracer.ActiveSpan ?? TraceOperation(errorMessage);
-            Logger.Log(level, errorMessage, args);
+            ISpan activeSpan = Tracer.ActiveSpan ?? TraceOperation(logMessage);
+            Logger.Log(level, logMessage, args);
             return activeSpan;
         }
 
