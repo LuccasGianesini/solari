@@ -4,6 +4,7 @@ using App.Metrics;
 using Microsoft.Extensions.Logging;
 using OpenTracing;
 using OpenTracing.Tag;
+using OpenTracing.Util;
 using Solari.Ceres.Abstractions;
 using Solari.Deimos;
 
@@ -31,18 +32,27 @@ namespace Solari.Themis
                          .Start();
         }
 
-        public ISpan TraceException(string operationName, Exception exception, string logMessage = null, LogLevel level = LogLevel.Error)
+        public ISpan TraceException(Exception exception, string logMessage = null, LogLevel level = LogLevel.Critical, params object[] args)
         {
-            Logger.Log(level, exception, string.IsNullOrEmpty(logMessage) ? exception.Message : logMessage);
-            return BuildExceptionSpan(TraceOperation(operationName), exception);
+            string errorMessage = string.IsNullOrEmpty(logMessage) ? exception.Message : logMessage;
+
+            ISpan activeSpan = Tracer.ActiveSpan ?? TraceOperation(errorMessage);
+            Logger.Log(level, exception, errorMessage, args);
+            return BuildExceptionSpan(activeSpan, exception);
+        }
+
+        public ISpan TraceError(string errorMessage, LogLevel level = LogLevel.Error, params object[] args)
+        {
+            ISpan activeSpan = Tracer.ActiveSpan ?? TraceOperation(errorMessage);
+            Logger.Log(level, errorMessage, args);
+            return activeSpan;
         }
 
         private static ISpan BuildExceptionSpan(ISpan span, Exception exception)
         {
             return span.SetTag(Tags.Error, true)
                        .SetTag("catch", true)
-                       .Log(exception.ExtractExceptionsDetails());
+                       .Log(DateTimeOffset.UtcNow, exception.ExtractExceptionsDetails());
         }
-
     }
 }

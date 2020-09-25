@@ -68,7 +68,7 @@ namespace Solari.Vanth
         /// <returns>
         ///     <see cref="Result{TResult}" />
         /// </returns>
-        public static IResult<TData> AddResult<TData>(this IResult<TData> result, TData data)
+        public static IResult<TData> AddData<TData>(this IResult<TData> result, TData data)
         {
             result.Data = data;
             return result;
