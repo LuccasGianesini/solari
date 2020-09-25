@@ -46,7 +46,7 @@ namespace Solari.Vanth.Builders
         {
             if (_data == null && _errors == null) return new Result<TData>();
             return new Result<TData>().AddErrors(_errors)
-                                      .AddResult(_data)
+                                      .AddData(_data)
                                       .AddStatusCode(_statusCode);
         }
     }
