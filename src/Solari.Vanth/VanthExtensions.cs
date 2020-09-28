@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO.Pipelines;
 using System.Linq;
+using FluentValidation.Results;
 using Newtonsoft.Json;
 using Solari.Sol.Utils;
 using Solari.Vanth.Builders;
@@ -10,10 +11,18 @@ namespace Solari.Vanth
 {
     public static class VanthExtensions
     {
-        public static bool HasStatusCode<TData>(this IResult<TData> result)
+        public static IDictionary<string, string> ExtractValidationErrors(this ValidationResult validationResult)
+        {
+            if (validationResult.IsValid)
+                return null;
+            return validationResult.Errors.ToDictionary(key => key.PropertyName, value => value.ErrorMessage);
+        }
+
+        public static bool IsSuccessStatusCode<TData>(this IResult<TData> result)
         {
             return result.StatusCode >= 200 && result.StatusCode < 300;
         }
+
         public static IResult<TData> AddStatusCode<TData>(this IResult<TData> result, int statusCode)
         {
             result.StatusCode = statusCode;
