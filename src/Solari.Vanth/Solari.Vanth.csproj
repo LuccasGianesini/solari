@@ -23,8 +23,5 @@
      <PackageReference Include="FluentValidation.AspNetCore" Version="9.2.0" />
      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="9.2.0" />
    </ItemGroup>
-   <ItemGroup>
-     <Folder Include="Extensions" />
-   </ItemGroup>
 
 </Project>
