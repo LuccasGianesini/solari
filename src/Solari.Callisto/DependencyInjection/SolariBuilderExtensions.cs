@@ -15,6 +15,13 @@ namespace Solari.Callisto.DependencyInjection
 {
     public static class SolariBuilderExtensions
     {
+        public static ISolariBuilder AddCallisto(this ISolariBuilder builder, Action<ICallistoClassMapper> classMapAction,
+                                                 Action<ICallistoClientConfigurator> configure,
+                                                 ServiceLifetime factoriesLifetime)
+        {
+            return builder.AddCallisto(null, classMapAction, configure, factoriesLifetime);
+        }
+
         public static ISolariBuilder AddCallisto(this ISolariBuilder builder,
                                                  Action<ICallistoConventionRegistry> conventionPackAction,
                                                  Action<ICallistoClassMapper> classMapAction,
@@ -23,7 +30,7 @@ namespace Solari.Callisto.DependencyInjection
         {
             AddCoreServices(builder, factoriesLifetime);
             classMapAction?.Invoke(new CallistoClassMapper());
-            conventionPackAction.Invoke(new CallistoConventionRegistry());
+            conventionPackAction?.Invoke(new CallistoConventionRegistry());
 
 
             IConfigurationSection section = builder.Configuration.GetSection(CallistoConstants.ConnectorAppSettingsSection);
