@@ -24,6 +24,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
       <ProjectReference Include="..\Solari.Titan.Abstractions\Solari.Titan.Abstractions.csproj" />
+      <ProjectReference Include="..\Solari.Vanth\Solari.Vanth.csproj" />
     </ItemGroup>
 
 </Project>

@@ -26,6 +26,31 @@ namespace Solari.Callisto.DependencyInjection
             _clientName = clientName;
         }
 
+        /// <summary>
+        /// Registers the collection context.
+        /// You only need to call this method when theres no need for a repository to be registered.
+        /// </summary>
+        /// <param name="database"></param>
+        /// <param name="collection"></param>
+        /// <param name="lifetime"></param>
+        /// <typeparam name="TDocumentRoot"></typeparam>
+        /// <returns></returns>
+        public ICallistoCollectionConfigurator ConfigureCollectionContext<TDocumentRoot>(string database,
+                                                                                         string collection,
+                                                                                         ServiceLifetime lifetime)
+            where TDocumentRoot : class, IDocumentRoot
+        {
+            _solariBuilder.Services.Add(ServiceDescriptor.Describe(typeof(ICallistoCollectionContext<TDocumentRoot>), provider =>
+            {
+                var registry = provider.GetRequiredService<ICallistoClientRegistry>();
+                ICallistoClient callistoClient = registry.GetClient(_clientName);
+                IMongoDatabase mongoDatabase = callistoClient.MongoClient.GetDatabase(database);
+                IMongoCollection<TDocumentRoot> mongoCollection = mongoDatabase.GetCollection<TDocumentRoot>(collection);
+                return new CallistoCollectionContext<TDocumentRoot>(callistoClient, mongoCollection, mongoDatabase);
+            }, lifetime));
+            return this;
+        }
+
         public ICallistoCollectionConfigurator ConfigureCollection<TInterface, TConcrete,
                                                                    TDocumentRoot>(string database,
                                                                                   string collection,
@@ -35,32 +60,43 @@ namespace Solari.Callisto.DependencyInjection
             where TConcrete : CallistoCollection<TDocumentRoot>, TInterface
 
         {
+            ConfigureCollectionContext<TDocumentRoot>(database, collection, lifetime);
             _solariBuilder.Services.Add(ServiceDescriptor.Describe(typeof(TInterface), provider =>
             {
-                ValidateCollectionRegistration<TInterface, TConcrete, TDocumentRoot>(collection, database);
-
-
-                CallistoLogger.CollectionLogger.CallingRepository(collection, lifetime.ToString());
-
-                var registry = provider.GetRequiredService<ICallistoClientRegistry>();
-                ICallistoClient callistoClient = registry.GetClient(_clientName);
-                IMongoDatabase mongoDatabase = callistoClient.MongoClient.GetDatabase(database);
-                IMongoCollection<TDocumentRoot> mongoCollection = mongoDatabase.GetCollection<TDocumentRoot>(collection);
-
-
-                CollectionOperators<TDocumentRoot> operators =
-                    CreateCollectionOperators<TInterface, TConcrete, TDocumentRoot>(mongoCollection, provider);
-
-                var context = new CallistoCollectionContext<TDocumentRoot>(callistoClient, mongoCollection, mongoDatabase);
-
+                CallistoLogger.CollectionLogger.Registering(collection, lifetime.ToString());
+                var context = provider.GetRequiredService<ICallistoCollectionContext<TDocumentRoot>>();
+                CollectionOperators<TDocumentRoot> operators = CreateCollectionOperators<TInterface, TConcrete, TDocumentRoot>(context.Collection, provider);
                 if (extraDependencies is null)
                     return ActivatorUtilities.CreateInstance<TConcrete>(provider, context, operators);
-
                 object[] extra = extraDependencies(provider);
 
                 return ActivatorUtilities.CreateInstance<TConcrete>(provider, context, operators, extra);
             }, lifetime));
 
+            return this;
+        }
+
+        public ICallistoCollectionConfigurator ConfigureScopedCollectionContext<TDocumentRoot>(string database,
+                                                                                               string collection)
+            where TDocumentRoot : class, IDocumentRoot
+        {
+            ConfigureCollectionContext<TDocumentRoot>(database, collection, ServiceLifetime.Scoped);
+            return this;
+        }
+
+        public ICallistoCollectionConfigurator ConfigureTransientCollectionContext<TDocumentRoot>(string database,
+                                                                                                  string collection)
+            where TDocumentRoot : class, IDocumentRoot
+        {
+            ConfigureCollectionContext<TDocumentRoot>(database, collection, ServiceLifetime.Transient);
+            return this;
+        }
+
+        public ICallistoCollectionConfigurator ConfigureSingletonCollectionContext<TDocumentRoot>(string database,
+                                                                                                  string collection)
+            where TDocumentRoot : class, IDocumentRoot
+        {
+            ConfigureCollectionContext<TDocumentRoot>(database, collection, ServiceLifetime.Singleton);
             return this;
         }
 

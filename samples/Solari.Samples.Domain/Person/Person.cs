@@ -1,31 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using MongoDB.Bson;
+using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
+using Solari.Callisto.Abstractions.Contracts;
+using Solari.Callisto.Abstractions.Contracts.CQR;
+using Solari.Callisto.Abstractions.CQR;
 using Solari.Samples.Domain.Person.Commands;
 
 namespace Solari.Samples.Domain.Person
 {
-    public class Person : IDocumentRoot
+    public class Person : IDocumentRoot, IInsertableDocument, IUpdatableDocument<Person>
     {
         public Person(string name)
         {
             Name = name;
             Attributes = new List<PersonAttribute>(2);
             CreatedAt = DateTimeOffset.Now;
+            PendingUpdates = new Queue<UpdateOneModel<Person>>();
         }
 
-        public string Address { get; set; }
-        public string Name { get; set; }
-        public DateTimeOffset CreatedAt { get; set; }
-
-        public List<PersonAttribute> Attributes { get; set; }
         public Guid Id { get; set; }
+
+        public string Address { get; protected set; }
+        public string Name { get; protected set; }
+        public DateTimeOffset CreatedAt { get; protected set; }
+        public List<PersonAttribute> Attributes { get; protected set; }
 
         public Person AddAttributes(IEnumerable<PersonAttribute> attributes)
         {
             Attributes.AddRange(attributes);
+
             return this;
         }
 
@@ -45,5 +52,8 @@ namespace Solari.Samples.Domain.Person
 
             return person;
         }
+
+        public Queue<UpdateOneModel<Person>> PendingUpdates { get; }
+
     }
 }

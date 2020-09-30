@@ -77,9 +77,9 @@ namespace Solari.Callisto.Abstractions
         {
             private const string Prefix = "Solari.Callisto (CollectionContext): ";
 
-            public static void CallingRepository(string collectionName, string lifeTime)
+            public static void Registering(string collectionName, string lifeTime)
             {
-                Log.Debug($"{Prefix}Calling {collectionName} repository with {lifeTime} lifetime");
+                Log.Debug($"{Prefix}Registering {collectionName} repository with {lifeTime} lifetime");
             }
 
             public static void RegisteringCollection(string collectionName, string lifeTime)

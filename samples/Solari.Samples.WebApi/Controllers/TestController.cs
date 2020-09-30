@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MongoDB.Driver;
+using Solari.Callisto;
+using Solari.Callisto.Abstractions.Contracts;
 using Solari.Deimos.Abstractions;
 using Solari.Hyperion.Abstractions;
 using Solari.Samples.Domain;
@@ -21,19 +25,24 @@ namespace Solari.Samples.WebApi.Controllers
         private readonly IPersonCollection _collection;
         private readonly IGitHubClient _hubClient;
         private readonly ILogger<TestController> _logger;
+        private readonly ICallistoCollectionContext<Person> _context;
         private readonly IPersonOperations _operations;
 
-        public TestController(ILogger<TestController> logger)
+        public TestController(ILogger<TestController> logger, ICallistoCollectionContext<Person> context)
         {
             _logger = logger;
+            _context = context;
         }
 
         [HttpPost]
         public async Task<IActionResult> Get([FromBody] UpdatePersonDto dto)
         {
-            _logger.LogInformation("TESTEAAAAAAAAAAAAAEEEEEEEEEEEE");
+            Person person = await new Person("Luccas").ExecuteInsert(_context);
 
-            return Ok();
+            IAsyncCursor<Person> cursor = await _context.Collection.FindAsync(Builders<Person>.Filter.Eq(a => a.Id, person.Id));
+            Person result = await cursor.FirstOrDefaultAsync();
+
+            return Ok(result);
         }
 
         public async Task<IActionResult> Error()

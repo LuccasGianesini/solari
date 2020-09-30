@@ -99,7 +99,7 @@ namespace Solari.Callisto.Abstractions
 
         public GuidRepresentation GetGuidRepresentation()
         {
-            if (string.IsNullOrEmpty(GuidRepresentation)) return MongoDB.Bson.GuidRepresentation.Standard;
+            if (string.IsNullOrEmpty(GuidRepresentation)) return MongoDB.Bson.GuidRepresentation.Unspecified;
             return GuidRepresentation.ToLowerInvariant() switch
                    {
                        "unspecified"  => MongoDB.Bson.GuidRepresentation.Unspecified,
@@ -107,7 +107,7 @@ namespace Solari.Callisto.Abstractions
                        "csharplegacy" => MongoDB.Bson.GuidRepresentation.CSharpLegacy,
                        "javalegacy"   => MongoDB.Bson.GuidRepresentation.JavaLegacy,
                        "pythonlegacy" => MongoDB.Bson.GuidRepresentation.PythonLegacy,
-                       _              => MongoDB.Bson.GuidRepresentation.Standard
+                       _              => MongoDB.Bson.GuidRepresentation.Unspecified
                    };
         }
 

@@ -43,34 +43,19 @@ namespace Solari.Samples.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddSol(Configuration).AddVanth();
-            // services.AddSol(Configuration)
-            //         .AddVanth()
-            //         .AddGanymede(policy => policy.RetryPolicy(5, 5),
-            //                      a => a.AddGanymedeClientWithRetryPolicy<IKeycloakClient, KeycloakClient>("Keycloak"))
-            //         .AddCallistoWithDefaults(configurator =>
-            //                                      configurator.RegisterClient("localhost", collection => collection
-            //                                                                      .ConfigureScopedCollection<
-            //                                                                          PersonCollection,
-            //                                                                          PersonCollection,
-            //                                                                          Person>("solari-samples", "person"))
-            //                                , ServiceLifetime.Scoped)
-            //         .AddCallistoIdentityProvider<PersonId>("localhost-identity", "solari-samples");
+            services.AddControllers()
+                    .AddNewtonsoftJson(options =>
+                                           options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                                      );
 
+            services.AddSol(Configuration)
+                    .AddVanth()
+                    .AddCallisto(mapper => { mapper.RegisterClassMap(typeof(Person), PersonDbMapper.PersonMap); }, configurator =>
+                                     configurator.RegisterClient("localhost", coll => { coll.ConfigureScopedCollectionContext<Person>("solari-samples", "person"); })
+                               , ServiceLifetime.Scoped);
 
-            // services.AddScoped<IPersonOperations, PersonOperations>();
 
             services.AddOpenApiDocument(cfg => cfg.PostProcess = d => d.Info.Title = "Solari Sample Api");
-            // services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
-            // services.AddMediator(mediator =>
-            // {
-            //     mediator.SetKebabCaseEndpointNameFormatter();
-            //     mediator.AddConsumer<CreatePersonConsumer>();
-            //     mediator.AddRequestClient<CreatePersonCommand>();
-            //     mediator.AddSagaStateMachine<PersonStateMachine, PersonState>()
-            //             .CallistoSagaRepository("localhost", "callisto-sagas", Configuration);
-            // });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

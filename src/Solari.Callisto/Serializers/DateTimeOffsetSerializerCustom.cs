@@ -7,12 +7,20 @@ namespace Solari.Callisto.Serializers
 {
     public class DateTimeOffsetSerializerCustom : IBsonSerializer
     {
+        public static DateTimeOffsetSerializerCustom New => new DateTimeOffsetSerializerCustom(typeof(DateTimeOffset), new DateTimeOffsetSerializer(BsonType.Document));
+
+        private static DateTimeOffsetSerializerCustom __instance = New;
+        public static DateTimeOffsetSerializerCustom Instance => __instance;
+
         private readonly DateTimeOffsetSerializer _serializer;
+
+
         public DateTimeOffsetSerializerCustom(Type valueType, DateTimeOffsetSerializer serializer)
         {
             ValueType = valueType;
             _serializer = serializer;
         }
+
         public object Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
         {
             if (context.Reader.CurrentBsonType != BsonType.Null) return Helper.BuildDateTimeOffset(_serializer.Deserialize(context, args));
