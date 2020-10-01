@@ -11,15 +11,8 @@ namespace Solari.Sol.Extensions
     {
         private static readonly Regex RxDigits = new Regex(@"[\d]+");
 
-        public static string ToPascalCase(this string value)
-        {
-            TextInfo info = Thread.CurrentThread.CurrentCulture.TextInfo;
-            value = info.ToTitleCase(value);
-            string[] parts = value.Split(new char[] { }, StringSplitOptions.RemoveEmptyEntries);
-            string result = string.Join(string.Empty, parts);
-            return result;
-        }
-
+        public static bool IsEmpty(this string value) => Check.IsEmpty(value);
+        public static bool IsNullOrEmpty(this string value) => Check.IsNullOrEmpty(value);
 
         public static string ToKebabCase(this string value)
         {
@@ -41,12 +34,15 @@ namespace Solari.Sol.Extensions
 
         public static Guid AsGuid(this string value)
         {
-            byte[] bytes = value.GetBytes().Concat(new byte[] { 5, 5, 5, 5 }).ToArray();
+            byte[] bytes = value.GetBytes().Concat(new byte[] {5, 5, 5, 5}).ToArray();
             var gid = new Guid(bytes);
             return gid;
         }
 
-        public static bool ContainsOnly(this string @string, string allowed) { return @string.All(c => allowed.Contains(c.ToString())); }
+        public static bool ContainsOnly(this string @string, string allowed)
+        {
+            return @string.All(c => allowed.Contains(c.ToString()));
+        }
 
         /// <summary>
         ///     Removes all the non digit characters from a given string.
@@ -68,21 +64,30 @@ namespace Solari.Sol.Extensions
         /// </summary>
         /// <param name="value"></param>
         /// <returns>Decimal value or 0 if parsing failed</returns>
-        public static decimal ToDecimal(this string value) { return decimal.TryParse(CleanStringOfNonDigits(value), out decimal @decimal) ? @decimal : 0; }
+        public static decimal ToDecimal(this string value)
+        {
+            return decimal.TryParse(CleanStringOfNonDigits(value), out decimal @decimal) ? @decimal : 0;
+        }
 
         /// <summary>
         ///     Parses a string into a double.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>Double value or 0 if parsing failed</returns>
-        public static double ToDouble(this string value) { return double.TryParse(CleanStringOfNonDigits(value), out double @double) ? @double : 0; }
+        public static double ToDouble(this string value)
+        {
+            return double.TryParse(CleanStringOfNonDigits(value), out double @double) ? @double : 0;
+        }
 
         /// <summary>
         ///     Parses a string into a float.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>Float value or 0 if parsing failed</returns>
-        public static float ToFloat(this string value) { return float.TryParse(CleanStringOfNonDigits(value), out float @float) ? @float : 0; }
+        public static float ToFloat(this string value)
+        {
+            return float.TryParse(CleanStringOfNonDigits(value), out float @float) ? @float : 0;
+        }
 
         /// <summary>
         ///     '
@@ -90,14 +95,20 @@ namespace Solari.Sol.Extensions
         /// </summary>
         /// <param name="value"></param>
         /// <returns>Integer value or 0 if parsing failed</returns>
-        public static int ToInt(this string value) { return int.TryParse(CleanStringOfNonDigits(value), out int @int) ? @int : 0; }
+        public static int ToInt(this string value)
+        {
+            return int.TryParse(CleanStringOfNonDigits(value), out int @int) ? @int : 0;
+        }
 
         /// <summary>
         ///     Parses a string into a long.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>Long value or 0 if parsing failed</returns>
-        public static long ToLong(this string value) { return long.TryParse(CleanStringOfNonDigits(value), out long @long) ? @long : 0; }
+        public static long ToLong(this string value)
+        {
+            return long.TryParse(CleanStringOfNonDigits(value), out long @long) ? @long : 0;
+        }
 
         public static byte ToByte(this string value)
         {
@@ -266,6 +277,10 @@ namespace Solari.Sol.Extensions
 
         public static string DashToUpper(this string value) => value.Dash().ToUpperInvariant();
         public static string DashToLower(this string value) => value.Dash().ToLowerInvariant();
-        public static string Dash(this string value) { return string.Concat(value.Select((x, i) => i > 0 && char.IsUpper(x) ? "-" + x : x.ToString())); }
+
+        public static string Dash(this string value)
+        {
+            return string.Concat(value.Select((x, i) => i > 0 && char.IsUpper(x) ? "-" + x : x.ToString()));
+        }
     }
 }

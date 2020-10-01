@@ -11,14 +11,12 @@ namespace Solari.Callisto.Connector
     {
         private const string Description = "MongoDb connection state";
 
+
         public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = new CancellationToken())
         {
             try
             {
-                // CallistoConnectionCheck status = await _connection.IsConnected(cancellationToken);
-                // return !status.IsConnected
-                //            ? HealthCheckResult.Degraded(Description, data: BuildDataDictionary(status))
-                //            : HealthCheckResult.Healthy(Description, BuildDataDictionary(status));
+                //TODO IMPLEMENT NEW WAY OF CHECKING HEALTH
                 return HealthCheckResult.Healthy();
             }
             catch (MongoConnectionException e)

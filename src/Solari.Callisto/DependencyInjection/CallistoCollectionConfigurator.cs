@@ -42,6 +42,8 @@ namespace Solari.Callisto.DependencyInjection
         {
             _solariBuilder.Services.Add(ServiceDescriptor.Describe(typeof(ICallistoCollectionContext<TDocumentRoot>), provider =>
             {
+                Check.ThrowIfNullOrEmpty(collection, nameof(collection), new CallistoException("Collection name is required to create a ICollectionContext<T>"));
+                Check.ThrowIfNullOrEmpty(database, nameof(database), new CallistoException("Database name is required to create a ICollectionContext<T>"));
                 var registry = provider.GetRequiredService<ICallistoClientRegistry>();
                 ICallistoClient callistoClient = registry.GetClient(_clientName);
                 IMongoDatabase mongoDatabase = callistoClient.MongoClient.GetDatabase(database);
@@ -134,19 +136,6 @@ namespace Solari.Callisto.DependencyInjection
             return ConfigureCollection<TService, TConcrete, TCollection>(database, collection,
                                                                          ServiceLifetime.Singleton,
                                                                          extraDependencies);
-        }
-
-
-        private static void ValidateCollectionRegistration<TInterface, TConcrete, TDocumentRoot>(string collection, string database)
-            where TDocumentRoot : class, IDocumentRoot where TConcrete : CallistoCollection<TDocumentRoot>, TInterface
-        {
-            if (string.IsNullOrEmpty(collection))
-                throw new
-                    CallistoException($"Unable to create an instance of '{typeof(TInterface).Name}' without a collection being specified.");
-
-            if (string.IsNullOrEmpty(database))
-                throw new
-                    CallistoException($"Unable to create an instance of '{typeof(TInterface).Name}' without a database being specified.");
         }
 
         private static CollectionOperators<TDocumentRoot> CreateCollectionOperators<TInterface, TConcrete, TDocumentRoot>(

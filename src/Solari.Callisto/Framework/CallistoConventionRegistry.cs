@@ -5,6 +5,7 @@ using Solari.Callisto.Abstractions;
 using Solari.Callisto.Abstractions.Contracts;
 using Solari.Callisto.Abstractions.Exceptions;
 using Solari.Callisto.Conventions;
+using Solari.Sol;
 
 namespace Solari.Callisto.Framework
 {
@@ -34,8 +35,9 @@ namespace Solari.Callisto.Framework
 
         public ICallistoConventionRegistry ConfigureConventionPack(Action<ConventionPack> configurationAction)
         {
-            if (configurationAction is null)
-                throw new CallistoException("Cannot invoke a null action during the configuration of a convention pack.");
+            Check.ThrowIfNull(configurationAction, nameof(Action<ConventionPack>),
+                              new CallistoException("Cannot invoke a null action during the configuration of a convention pack."));
+
             configurationAction(ConventionPack);
             return this;
         }
@@ -47,11 +49,10 @@ namespace Solari.Callisto.Framework
 
         public void RegisterConventionPack(string name, Func<Type, bool> filter)
         {
-            if(string.IsNullOrEmpty(name))
-                throw new CallistoException("A convention pack must have a name.");
-            if(filter == null)
-                throw new CallistoException("A convention pack must have a filter. To apply the convention pack to all classes use '_ => true'. " +
-                                            "Keep in mind that this is not advised.");
+            Check.ThrowIfNullOrEmpty(name, nameof(name), new CallistoException("A convention pack must have a name."));
+            Check.ThrowIfNull(filter, nameof(Func<Type, bool>),
+                              new CallistoException("A convention pack must have a filter. To apply the convention pack to all classes use '_ => true'. " +
+                                                    "Keep in mind that this is not advised."));
             ConventionRegistry.Register(name, ConventionPack, filter);
         }
     }

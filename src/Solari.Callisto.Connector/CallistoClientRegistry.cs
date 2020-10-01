@@ -3,6 +3,7 @@ using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
 using Solari.Callisto.Abstractions.Contracts;
 using Solari.Callisto.Abstractions.Exceptions;
+using Solari.Sol;
 using Solari.Sol.Extensions;
 
 namespace Solari.Callisto.Connector
@@ -18,7 +19,6 @@ namespace Solari.Callisto.Connector
 
         static CallistoClientRegistry()
         {
-
         }
 
         private CallistoClientRegistry()
@@ -28,12 +28,8 @@ namespace Solari.Callisto.Connector
 
         public void AddClient(string clientName, ICallistoClient client)
         {
-            if (client is null)
-                throw new CallistoException($"A null instance of a '{nameof(ICallistoClient)}' is not acceptable.");
-
-            if (string.IsNullOrEmpty(clientName))
-                throw new CallistoException("To add a client to the registry, you must provide a key.");
-
+            Check.ThrowIfNull(client, nameof(ICallistoClient), new CallistoException($"A null instance of a '{nameof(ICallistoClient)}' is not acceptable."));
+            Check.ThrowIfNullOrEmpty(clientName, nameof(clientName), new CallistoException("To add a client to the registry, you must provide a key."));
             if (!_clients.TryAdd(clientName.ToUpperInvariant(), client))
                 throw new CallistoException($"The application was unable to add the client '{clientName}' into the registry.");
         }
@@ -64,13 +60,10 @@ namespace Solari.Callisto.Connector
 
         private string ValidateAndParseRegistryKey(string clientName)
         {
-            if (string.IsNullOrEmpty(clientName))
-                throw new CallistoException("The application is unable to read the registry without a valid key.");
+            Check.ThrowIfNullOrEmpty(clientName, nameof(clientName), new CallistoException("The application is unable to read the registry without a valid key."));
 
             string key = clientName.ToUpperInvariant();
-            if (!_clients.ContainsKey(key))
-                throw new CallistoException($"The registry does not contains the given key: {clientName}");
-
+            Check.ThrowIfKeyNotFound(_clients, key, new CallistoException($"The registry does not contains the given key: {clientName}"));
             return key;
         }
     }

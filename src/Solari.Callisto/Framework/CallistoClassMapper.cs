@@ -5,6 +5,7 @@ using MongoDB.Bson.Serialization;
 using Solari.Callisto.Abstractions;
 using Solari.Callisto.Abstractions.Contracts;
 using Solari.Callisto.Abstractions.Exceptions;
+using Solari.Sol;
 
 namespace Solari.Callisto.Framework
 {
@@ -28,9 +29,7 @@ namespace Solari.Callisto.Framework
 
         public BsonClassMap CreateBsonClassMap(Type type, Action<BsonClassMap> mapperAction)
         {
-            if (mapperAction is null)
-                throw new CallistoException("Cannot invoke a null 'mapperAction', please provide valid action.");
-
+            Check.ThrowIfNull(mapperAction, nameof(Action<BsonClassMap>), new CallistoException("Cannot invoke a null 'mapperAction', please provide valid action."));
             var map = new BsonClassMap(type);
             mapperAction(map);
             return map;

@@ -27,10 +27,8 @@ namespace Solari.Callisto.DependencyInjection
         public ICallistoClientConfigurator RegisterClient(string clientName, ICallistoClient client,
                                                           Action<ICallistoCollectionConfigurator> configureCollections)
         {
-            if(string.IsNullOrEmpty(clientName))
-                throw new CallistoException("Please provide the name of the client that should be registered.");
-            if(client is null)
-                throw new CallistoException("Please provide a valid instance of a 'ICallistoClient'");
+            Check.ThrowIfNullOrEmpty(clientName, nameof(clientName), new CallistoException("Please provide the name of the client that should be registered."));
+            Check.ThrowIfNull(client, nameof(ICallistoClient), new CallistoException("Please provide a valid instance of a 'ICallistoClient'"));
             _builder.AddBuildAction(new BuildAction($"Registering Callisto client with name: {clientName}")
             {
                 Action = provider =>
@@ -38,24 +36,21 @@ namespace Solari.Callisto.DependencyInjection
                     var registry = provider.GetRequiredService<ICallistoClientRegistry>();
                     registry.AddClient(clientName, client);
                 }
-
             });
             configureCollections?.Invoke(new CallistoCollectionConfigurator(_builder, clientName));
             return this;
         }
+
         public ICallistoClientConfigurator RegisterClient(string clientName, Action<ICallistoCollectionConfigurator> configureCollections)
         {
-
-            if(string.IsNullOrEmpty(clientName))
-                throw new CallistoException("Please provide the name of the client that should be registered.");
-
+            Check.ThrowIfNullOrEmpty(clientName, nameof(clientName), new CallistoException("Please provide the name of the client that should be registered."));
             _builder.AddBuildAction(new BuildAction($"Registering Callisto client with name: {clientName}")
             {
                 Action = provider =>
                 {
                     CallistoConnectorOptions clientOptions = _clients.GetCallistoConnectorOptions(clientName);
 
-                    if(clientOptions is null)
+                    if (clientOptions is null)
                         throw new CallistoException($"The options for client '{clientName}' was not found. Check the AppSettings file.");
 
                     var registry = provider.GetRequiredService<ICallistoClientRegistry>();

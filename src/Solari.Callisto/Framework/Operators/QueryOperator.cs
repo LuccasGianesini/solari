@@ -134,7 +134,7 @@ namespace Solari.Callisto.Framework.Operators
             }
         }
 
-        public async Task<IAsyncCursor<T>> Query(ICallistoQuery<T> operation)
+        public async Task<IAsyncCursor<T>> Find(ICallistoQuery<T> operation)
         {
             Helper.PreExecutionCheck(operation);
             if (operation.ClientSessionHandle is null)

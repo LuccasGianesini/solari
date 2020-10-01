@@ -32,7 +32,7 @@ namespace Solari.Samples.Domain.Person
         public Person AddAttributes(IEnumerable<PersonAttribute> attributes)
         {
             Attributes.AddRange(attributes);
-
+            PendingUpdates.Enqueue(new UpdateOneModel<Person>(null, Builders<Person>.Update.PushEach(a => a.Attributes, attributes)));
             return this;
         }
 
@@ -54,6 +54,5 @@ namespace Solari.Samples.Domain.Person
         }
 
         public Queue<UpdateOneModel<Person>> PendingUpdates { get; }
-
     }
 }
