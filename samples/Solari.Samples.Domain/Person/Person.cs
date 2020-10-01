@@ -23,7 +23,6 @@ namespace Solari.Samples.Domain.Person
         }
 
         public Guid Id { get; set; }
-
         public string Address { get; protected set; }
         public string Name { get; protected set; }
         public DateTimeOffset CreatedAt { get; protected set; }

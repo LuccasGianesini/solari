@@ -247,7 +247,7 @@ namespace Solari.Callisto
             where TDocument : class, IDocumentRoot, IUpdatableDocument<TDocument>
         {
             ValidateOperationParameters(document, context, "update-one");
-            return await Write(context, document.PendingUpdates, options);
+            return await Write(context, CheckPendingUpdatesListFilter(document), options);
         }
 
         /// <summary>
@@ -264,8 +264,10 @@ namespace Solari.Callisto
             where TDocument : class, IDocumentRoot, IUpdatableDocument<TDocument>
         {
             ValidateOperationParameters(document, context, "update-one");
-            return await WriteWithHandle(context, document.PendingUpdates, handle, options);
+
+            return await WriteWithHandle(context, CheckPendingUpdatesListFilter(document), handle, options);
         }
+
 
         /// <summary>
         /// Replace one document from the MongoDb collection.
@@ -337,6 +339,25 @@ namespace Solari.Callisto
             Check.ThrowIfNull(context,
                               nameof(ICallistoCollectionContext<T>),
                               new CallistoException($"Collection context instance cannot be null. Please provide a valid context instance to be able to execute the {operation}"));
+        }
+
+        private static IEnumerable<UpdateOneModel<TDocument>> CheckPendingUpdatesListFilter<TDocument>(TDocument document)
+            where TDocument : class, IDocumentRoot, IUpdatableDocument<TDocument>
+        {
+            document.PendingUpdates.Any(a => { Check.ThrowIfNull(a.Filter); return false; });
+            return document.PendingUpdates;
+        }
+
+        private static UpdateOneModel<TDocument> RecreateUpdateOneModel<TDocument>(TDocument document, UpdateOneModel<TDocument> a)
+            where TDocument : class, IDocumentRoot, IUpdatableDocument<TDocument>
+        {
+            return new UpdateOneModel<TDocument>(document.FilterById(), a.Update)
+            {
+                Collation = a.Collation,
+                Hint = a.Hint,
+                ArrayFilters = a.ArrayFilters,
+                IsUpsert = a.IsUpsert
+            };
         }
     }
 }
