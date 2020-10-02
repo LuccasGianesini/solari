@@ -144,9 +144,11 @@ namespace Solari.Callisto
                                                                                         IClientSessionHandle handle, BulkWriteOptions options = null)
             where TDocument : class, IDocumentRoot, IUpdatableDocument<TDocument>
         {
-            IEnumerable<TDocument> updatableDocuments = documents.ToList();
+            List<TDocument> updatableDocuments = documents.ToList();
             ValidateOperationParameters(updatableDocuments, context, "bulk-update");
-            return await WriteWithHandle(context, documents.SelectMany(a => a.PendingUpdates, (root, model) => model).ToList(), handle, options);
+            BulkWriteResult<TDocument> result = await WriteWithHandle(context, documents.SelectMany(a => a.PendingUpdates, (root, model) => model).ToList(), handle, options);
+            updatableDocuments.ForEach(a => a.PendingUpdates.Clear());
+            return result;
         }
 
         /// <summary>
@@ -161,9 +163,12 @@ namespace Solari.Callisto
                                                                                         IEnumerable<TDocument> documents, BulkWriteOptions options = null)
             where TDocument : class, IDocumentRoot, IUpdatableDocument<TDocument>
         {
-            IEnumerable<TDocument> updatableDocuments = documents.ToList();
+            List<TDocument> updatableDocuments = documents.ToList();
             ValidateOperationParameters(updatableDocuments, context, "bulk-update");
-            return await Write(context, updatableDocuments.SelectMany(a => a.PendingUpdates, (root, model) => model), options);
+
+            BulkWriteResult<TDocument> result = await Write(context, updatableDocuments.SelectMany(a => a.PendingUpdates, (root, model) => model), options);
+            updatableDocuments.ForEach(a => a.PendingUpdates.Clear());
+            return result;
         }
 
         /// <summary>
@@ -247,7 +252,9 @@ namespace Solari.Callisto
             where TDocument : class, IDocumentRoot, IUpdatableDocument<TDocument>
         {
             ValidateOperationParameters(document, context, "update-one");
-            return await Write(context, CheckPendingUpdatesListFilter(document), options);
+            BulkWriteResult<TDocument> result = await Write(context, CheckPendingUpdatesListFilter(document), options);
+            document.PendingUpdates.Clear();
+            return result;
         }
 
         /// <summary>
@@ -265,7 +272,9 @@ namespace Solari.Callisto
         {
             ValidateOperationParameters(document, context, "update-one");
 
-            return await WriteWithHandle(context, CheckPendingUpdatesListFilter(document), handle, options);
+            BulkWriteResult<TDocument> result = await WriteWithHandle(context, CheckPendingUpdatesListFilter(document), handle, options);
+            document.PendingUpdates.Clear();
+            return result;
         }
 
 
@@ -344,7 +353,11 @@ namespace Solari.Callisto
         private static IEnumerable<UpdateOneModel<TDocument>> CheckPendingUpdatesListFilter<TDocument>(TDocument document)
             where TDocument : class, IDocumentRoot, IUpdatableDocument<TDocument>
         {
-            document.PendingUpdates.Any(a => { Check.ThrowIfNull(a.Filter); return false; });
+            document.PendingUpdates.Any(a =>
+            {
+                Check.ThrowIfNull(a.Filter);
+                return false;
+            });
             return document.PendingUpdates;
         }
 
