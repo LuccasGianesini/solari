@@ -31,10 +31,24 @@ namespace Solari.Sol
         }
 
         /// <summary>
+        /// Checks the specified parameter to ensure it is not empty and if so, throws an <see cref="T:ArgumentException"/>.
+        /// </summary>
+        /// <param name="value">The parameter value to compare with null.</param>
+        /// <param name="parameterName">Name of the parameter.</param>
+        /// <param name="inner">The inner exception</param>
+        /// <exception cref="T:ArgumentNullException">The parameter is null.</exception>
+        public static void ThrowIfEmpty(Guid value, string parameterName = null, Exception inner = null)
+        {
+            if (value == Guid.Empty)
+                throw new ArgumentException($"{parameterName ?? "Value"} cannot be an empty guid.", parameterName, inner);
+        }
+
+        /// <summary>
         /// Checks the specified parameter to ensure it is not null and if so, throws an <see cref="T:ArgumentNullException"/>.
         /// </summary>
         /// <param name="value">The parameter value to compare with null.</param>
         /// <param name="parameterName">Name of the parameter.</param>
+        /// <param name="inner">The inner exception</param>
         /// <exception cref="T:ArgumentNullException">The parameter is null.</exception>
         public static void ThrowIfNull(object value, string parameterName = null, Exception inner = null)
         {
@@ -49,6 +63,7 @@ namespace Solari.Sol
         /// </summary>
         /// <param name="value">The parameter value to check.</param>
         /// <param name="parameterName">Name of the parameter.</param>
+        /// <param name="inner">The inner exception</param>
         /// <exception cref="T:ArgumentNullException">The parameter is null.</exception>
         /// <exception cref="T:ArgumentException">The parameter is an empty string or a string consisting of only whitespace.</exception>
         public static void ThrowIfNullOrEmpty(string value, string parameterName = null, Exception inner = null)
@@ -69,6 +84,7 @@ namespace Solari.Sol
         /// </summary>
         /// <param name="dictionary">The dictionary to be checked</param>
         /// <param name="keyToFind">The key to find in the dictionary</param>
+        /// <param name="inner">The inner exception</param>
         /// <typeparam name="TKey">Key type</typeparam>
         /// <typeparam name="TValue">Value type</typeparam>
         /// <exception cref="KeyNotFoundException"></exception>
@@ -88,6 +104,7 @@ namespace Solari.Sol
         /// </summary>
         /// <param name="value">The parameter value to check.</param>
         /// <param name="parameterName">Name of the parameter.</param>
+        /// <param name="inner">The inner exception</param>
         /// <exception cref="T:ArgumentNullException">The parameter is null.</exception>
         /// <exception cref="T:ArgumentException">The parameter is an empty string or a string consisting of only whitespace.</exception>
         public static void ThrowIfNullOrWhitespace(string value, string parameterName = null, Exception inner = null)
@@ -119,6 +136,7 @@ namespace Solari.Sol
         /// </summary>
         /// <param name="array">The parameter value to check.</param>
         /// <param name="parameterName">Name of the parameter.</param>
+        /// <param name="inner">The inner exception</param>
         /// <exception cref="T:ArgumentNullException">The parameter is null.</exception>
         /// <exception cref="T:ArgumentException">The parameter is an empty array.</exception>
         public static void ThrowIfNullOrEmpty(Array array, string parameterName = null, Exception inner = null)
@@ -145,6 +163,7 @@ namespace Solari.Sol
         /// </remarks>
         /// <param name="array">The array to check. Only the first dimension is checked.</param>
         /// <param name="parameterName">Name of the parameter.</param>
+        /// <param name="inner">The inner exception</param>
         /// <exception cref="T:ArgumentException">The array contains at least one null reference.</exception>
         public static void ThrowIfNullElement(Array array, string parameterName = null, Exception inner = null)
         {
@@ -174,6 +193,7 @@ namespace Solari.Sol
         /// </remarks>
         /// <param name="collection">The collection to check.</param>
         /// <param name="parameterName">Name of the parameter.</param>
+        /// <param name="inner">The inner exception</param>
         /// <exception cref="T:ArgumentException">The collection contains at least one null reference.</exception>
         public static void ThrowIfNullElement(System.Collections.IEnumerable collection, string parameterName = null, Exception inner = null)
         {
@@ -203,6 +223,7 @@ namespace Solari.Sol
         /// </remarks>
         /// <param name="collection">The collection to check.</param>
         /// <param name="parameterName">Name of the parameter.</param>
+        /// <param name="inner">The inner exception</param>
         /// <exception cref="T:ArgumentException">The collection contains at least one null reference.</exception>
         public static void ThrowIfNullElement<T>(IEnumerable<T> collection, string parameterName = null, Exception inner = null)
         {
@@ -234,6 +255,7 @@ namespace Solari.Sol
         /// </remarks>
         /// <param name="value">The parameter, which is not checked if it's null.</param>
         /// <param name="regex">The regular expression pattern to match.</param>
+        /// <param name="inner">The inner exception</param>
         /// <exception cref="T:ArgumentException"><paramref name="value"/> does not match the regular expression.</exception>
         public static void ThrowIfPatternFails(string value, string regex, Exception inner = null)
         {
