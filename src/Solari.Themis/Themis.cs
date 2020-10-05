@@ -41,6 +41,30 @@ namespace Solari.Themis
             return BuildExceptionSpan(activeSpan, exception);
         }
 
+        public bool TraceAndPropagate(Exception exception, string logMessage = null,
+                                      LogLevel level = LogLevel.Critical,
+                                      Action<ISpan> spanAction = null,
+                                      Action action = null,
+                                      params object[] args)
+        {
+            TraceException(exception, logMessage, level, args);
+            ISpan span = TraceException(exception, logMessage, level, args);
+            spanAction?.Invoke(span);
+            action?.Invoke();
+            return false;
+        }
+
+        public bool TraceAndHandle(Exception exception, string logMessage = null, LogLevel level = LogLevel.Critical,
+                                   Action<ISpan> spanAction = null,
+                                   Action action = null,
+                                   params object[] args)
+        {
+            ISpan span = TraceException(exception, logMessage, level, args);
+            spanAction?.Invoke(span);
+            action?.Invoke();
+            return true;
+        }
+
         public ISpan TraceError(string logMessage, IDictionary<string, object> spanLog = null, LogLevel level = LogLevel.Error, params object[] args)
         {
             ISpan activeSpan = Tracer.ActiveSpan ?? TraceOperation(logMessage);
