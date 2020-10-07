@@ -17,7 +17,8 @@ namespace Solari.Ganymede.ContentSerializers
 
             var serializer = new XmlSerializer(typeof(TModel));
 
-            using var sr = new StreamReader(await content.ReadAsStreamAsync());
+            await using Stream stream = await content.ReadAsStreamAsync().ConfigureAwait(false);
+            using var sr = new StreamReader(stream);
             var model = (TModel) serializer.Deserialize(sr);
 
             return model != null ? Maybe<TModel>.Some(model) : Maybe<TModel>.None;
