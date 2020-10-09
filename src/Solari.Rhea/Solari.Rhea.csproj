@@ -6,7 +6,7 @@
         <Title>Solari.Rhea</Title>
         <PackageId>Solari.Rhea</PackageId>
         <PackageDescription></PackageDescription>
-        <PackageTags>Tools;Classes;DotnetCore;C#;Helth Checks</PackageTags>
+        <PackageTags>Pipelines</PackageTags>
         <LangVersion>8</LangVersion>
         <RootNamespace>Solari.Rhea</RootNamespace>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
@@ -18,5 +18,9 @@
     <ItemGroup>
         <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
     </ItemGroup>
-    
+
+    <ItemGroup>
+      <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
+    </ItemGroup>
+
 </Project>

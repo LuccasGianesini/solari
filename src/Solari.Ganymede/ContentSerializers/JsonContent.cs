@@ -16,30 +16,6 @@ namespace Solari.Ganymede.ContentSerializers
         private readonly JsonSerializerSettings _settings;
 
         private readonly JsonSerializer _serializer;
-        // private readonly JsonSerializerOptions _serializerOptions;
-
-        // public JsonContentDeserializer(JsonSerializerOptions serializerOptions = null)
-        // {
-        //     _serializerOptions = serializerOptions ?? new JsonSerializerOptions
-        //     {
-        //         Converters =
-        //         {
-        //             new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
-        //         }
-        //       , WriteIndented = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        //     };
-        // }
-
-        // public async Task<Maybe<TModel>> Deserialize<TModel>(HttpContent content)
-        // {
-        //     if (content == null) return Maybe<TModel>.None;
-        //
-        //     var model =
-        //         await System.Text.Json.JsonSerializer.DeserializeAsync<TModel>(await content.ReadAsStreamAsync(), _serializerOptions);
-        //
-        //     return model == null ? Maybe<TModel>.None : Maybe<TModel>.Some(model);
-        // }
-
         public JsonContentDeserializer(JsonSerializerSettings settings = null)
         {
             _settings = settings;
