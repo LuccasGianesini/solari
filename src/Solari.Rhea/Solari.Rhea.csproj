@@ -5,7 +5,7 @@
         <Authors>Lauth</Authors>
         <Title>Solari.Rhea</Title>
         <PackageId>Solari.Rhea</PackageId>
-        <PackageDescription></PackageDescription>
+        <PackageDescription>Pipeline</PackageDescription>
         <PackageTags>Pipelines</PackageTags>
         <LangVersion>8</LangVersion>
         <RootNamespace>Solari.Rhea</RootNamespace>
