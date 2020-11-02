@@ -4,6 +4,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Solari.Sol;
 using Solari.Sol.Extensions;
 using Solari.Vanth.Validation;
@@ -26,7 +27,7 @@ namespace Solari.Vanth.DependencyInjection
             IConfigurationSection section = builder.Configuration.GetSection(VanthLibConstants.AppSettingsSection);
             if (!section.Exists())
             {
-                builder.Services.AddSingleton<IResultFactory, ResultFactory>();
+                builder.Services.TryAddTransient<IResultFactory, ResultFactory>();
                 return builder;
             }
 
@@ -56,8 +57,8 @@ namespace Solari.Vanth.DependencyInjection
         private static void ConfigureFluentValidation(VanthOptions options, ISolariBuilder builder)
         {
             if (!options.UseFluentValidation) return;
-            builder.Services.AddSingleton<IVanthValidationService, VanthValidationService>();
-            builder.Services.AddSingleton<IValidatorFactory, VanthValidatorFactory>();
+            builder.Services.TryAddSingleton<IVanthValidationService, VanthValidationService>();
+            builder.Services.TryAddSingleton<IValidatorFactory, VanthValidatorFactory>();
             builder.Services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies().Where(a => !a.IsDynamic));
         }
     }
