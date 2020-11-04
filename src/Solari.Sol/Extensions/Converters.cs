@@ -12,7 +12,7 @@ namespace Solari.Sol.Extensions
 {
     public static class Converters
     {
-        public static bool IsValidPrimitive(Type type)
+        public static bool IsValidPrimitive(this Type type)
         {
             switch (Type.GetTypeCode(type))
             {
