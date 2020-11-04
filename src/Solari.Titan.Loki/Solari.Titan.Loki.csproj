@@ -7,11 +7,12 @@
     <PackageId>Solari.Titan.Loki</PackageId>
     <PackageDescription>Loki sink</PackageDescription>
     <PackageTags>C#; DotnetCore; Logging; Serilog; Loki</PackageTags>
-    <LangVersion>8</LangVersion>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Titan.Loki</RootNamespace>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>

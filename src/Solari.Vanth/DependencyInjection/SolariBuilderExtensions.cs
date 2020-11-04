@@ -31,7 +31,7 @@ namespace Solari.Vanth.DependencyInjection
                 return builder;
             }
 
-            var opt = builder.Configuration.GetOptions<VanthOptions>(section);
+            var opt = section.GetOptions<VanthOptions>();
 
             ConfigureFluentValidation(opt, builder);
             ConfigureExceptionMiddleware(opt, builder, section);

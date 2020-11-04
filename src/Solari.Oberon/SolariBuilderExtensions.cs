@@ -13,7 +13,7 @@ namespace Solari.Oberon
             if (!section.Exists())
                 throw new OberonException("Oberon AppSettings section does not exists.");
 
-            var options = builder.Configuration.GetOptions<OberonOptions>(section);
+            var options = section.GetOptions<OberonOptions>();
             if (!options.Enabled)
                 return builder;
 

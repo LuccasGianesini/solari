@@ -1,23 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <AssemblyName>Solari.Deimos</AssemblyName>
-        <Authors>Lauth</Authors>
-        <Title>Solari.Deimos</Title>
-        <PackageId>Solari.Deimos</PackageId>
-        <PackageDescription>Tracing library for Dotnet Core 3.0 and 3.1</PackageDescription>
-        <PackageTags>C#; DotnetCore; Deimos</PackageTags>
-        <LangVersion>8</LangVersion>
-        <RootNamespace>Solari.Deimos</RootNamespace>
-        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-        <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-    </PropertyGroup>
-    <ItemGroup>
-        <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\Solari.Deimos.Abstractions\Solari.Deimos.Abstractions.csproj" />
-      <ProjectReference Include="..\Solari.Deimos.CorrelationId\Solari.Deimos.CorrelationId.csproj" />
-    </ItemGroup>
+  <PropertyGroup>
+    <AssemblyName>Solari.Deimos</AssemblyName>
+    <Authors>Lauth</Authors>
+    <Title>Solari.Deimos</Title>
+    <PackageId>Solari.Deimos</PackageId>
+    <PackageDescription>Tracing library for Dotnet Core 3.0 and 3.1</PackageDescription>
+    <PackageTags>C#; DotnetCore; Deimos</PackageTags>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>9</LangVersion>
+    <RootNamespace>Solari.Deimos</RootNamespace>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Solari.Deimos.Abstractions\Solari.Deimos.Abstractions.csproj"/>
+    <ProjectReference Include="..\Solari.Deimos.CorrelationId\Solari.Deimos.CorrelationId.csproj"/>
+  </ItemGroup>
 </Project>

@@ -34,7 +34,7 @@ namespace Solari.Callisto.DependencyInjection
 
 
             IConfigurationSection section = builder.Configuration.GetSection(CallistoConstants.ConnectorAppSettingsSection);
-            var options = builder.Configuration.GetOptions<List<CallistoConnectorOptions>>(section);
+            var options = section.GetOptions<List<CallistoConnectorOptions>>();
             configure?.Invoke(new CallistoClientConfigurator(builder, options));
             return builder;
         }

@@ -7,19 +7,19 @@
     <PackageId>Solari.Deimos.MassTransit</PackageId>
     <PackageDescription>MassTransit 7 integration with deimos. Copied from https://github.com/yesmarket/MassTransit.OpenTracing</PackageDescription>
     <PackageTags>C#; DotnetCore; MassTransit; Deimos</PackageTags>
-    <LangVersion>8</LangVersion>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Deimos.MassTransit</RootNamespace>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Solari.Deimos.Abstractions\Solari.Deimos.Abstractions.csproj" />
+    <ProjectReference Include="..\Solari.Deimos.Abstractions\Solari.Deimos.Abstractions.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit" Version="7.0.4" />
+    <PackageReference Include="MassTransit" Version="7.0.4"/>
   </ItemGroup>
 
   <ItemGroup>

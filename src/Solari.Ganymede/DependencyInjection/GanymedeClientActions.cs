@@ -136,7 +136,7 @@ namespace Solari.Ganymede.DependencyInjection
                    {
                        IConfigurationSection cfgSection = _configuration.GetSection(section);
                        if (cfgSection.Exists())
-                           return new GanymedeRequest<TImplementation>(_configuration.GetOptions<GanymedeRequestSpecification>(cfgSection));
+                           return new GanymedeRequest<TImplementation>(cfgSection.GetOptions<GanymedeRequestSpecification>());
                        throw new
                            RequestNotFoundException($"The request {section} was not found in the AppSettings.json file.");
                    })

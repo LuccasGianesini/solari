@@ -7,16 +7,16 @@
     <PackageId>Solari.Deimos.CorrelationId</PackageId>
     <PackageDescription>CorrelationId package for dotnet core 3</PackageDescription>
     <PackageTags>C#; DotnetCore; CorrelationId; Deimos</PackageTags>
-    <LangVersion>8</LangVersion>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Deimos.CorrelationId</RootNamespace>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Solari.Deimos.Abstractions\Solari.Deimos.Abstractions.csproj" />
+    <ProjectReference Include="..\Solari.Deimos.Abstractions\Solari.Deimos.Abstractions.csproj"/>
   </ItemGroup>
-  </Project>
+</Project>

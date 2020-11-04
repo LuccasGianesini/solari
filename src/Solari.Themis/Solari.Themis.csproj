@@ -1,9 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+      <AssemblyName>Solari.Themis</AssemblyName>
+      <Authors>Lauth</Authors>
+      <Title>Solari.Themis</Title>
+      <PackageId>Solari.Themis</PackageId>
+      <PackageDescription>Loggin library</PackageDescription>
+      <PackageTags>C#; APM </PackageTags>
+      <TargetFramework>net5.0</TargetFramework>
+      <LangVersion>9</LangVersion>
+      <RootNamespace>Solari.Themis</RootNamespace>
+      <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+      <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl><LangVersion>9</LangVersion>
     </PropertyGroup>
-
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>
+  </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Solari.Ceres\Solari.Ceres.csproj" />
       <ProjectReference Include="..\Solari.Deimos.CorrelationId\Solari.Deimos.CorrelationId.csproj" />

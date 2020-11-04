@@ -18,7 +18,7 @@ namespace Solari.Io
             IConfigurationSection section = builder.Configuration.GetSection(IoConstants.AppSettingsSection);
             if (!section.Exists())
                 throw new IOException("Io AppSettings section not found!");
-            var options = builder.Configuration.GetOptions<IoOptions>(section);
+            var options = section.GetOptions<IoOptions>();
             builder.Services.Configure<IoOptions>(section);
             if (!options.Enabled)
                 return builder;
@@ -78,9 +78,9 @@ namespace Solari.Io
 
             options.Endpoints.ForEach(a => settings.AddHealthCheckEndpoint(a.Name, a.Uri));
         }
-        
-        
 
-        
+
+
+
     }
 }

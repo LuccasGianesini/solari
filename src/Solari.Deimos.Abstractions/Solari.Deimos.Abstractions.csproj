@@ -1,30 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <AssemblyName>Solari.Deimos.Abstractions</AssemblyName>
-        <Authors>Lauth</Authors>
-        <Title>Solari.Deimos.Abstractions</Title>
-        <PackageId>Solari.Deimos.Abstractions</PackageId>
-        <PackageDescription>Abstractions library of Deimos</PackageDescription>
-        <PackageTags>C#; DotnetCore; Abstractions; Deimos</PackageTags>
-        <LangVersion>8</LangVersion>
-        <RootNamespace>Solari.Deimos.Abstractions</RootNamespace>
-        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-        <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-    </PropertyGroup>
-    <ItemGroup>
-        <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="Jaeger" Version="0.4.1" />
-        <PackageReference Include="OpenTracing" Version="0.12.1" />
-        <PackageReference Include="OpenTracing.Contrib.NetCore" Version="0.6.2" />
-    </ItemGroup>
+  <PropertyGroup>
+    <AssemblyName>Solari.Deimos.Abstractions</AssemblyName>
+    <Authors>Lauth</Authors>
+    <Title>Solari.Deimos.Abstractions</Title>
+    <PackageId>Solari.Deimos.Abstractions</PackageId>
+    <PackageDescription>Abstractions library of Deimos</PackageDescription>
+    <PackageTags>C#; DotnetCore; Abstractions; Deimos</PackageTags>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>9</LangVersion>
+    <RootNamespace>Solari.Deimos.Abstractions</RootNamespace>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Jaeger" Version="0.4.2" />
+    <PackageReference Include="OpenTracing" Version="0.12.1" />
+    <PackageReference Include="OpenTracing.Contrib.NetCore" Version="0.6.2" />
+  </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
-      <ProjectReference Include="..\Solari.Titan.Abstractions\Solari.Titan.Abstractions.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
+    <ProjectReference Include="..\Solari.Titan.Abstractions\Solari.Titan.Abstractions.csproj" />
+  </ItemGroup>
 </Project>

@@ -1,30 +1,31 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <AssemblyName>Solari.Callisto.Abstractions</AssemblyName>
-        <Authors>Lauth</Authors>
-        <Title>Solari.Callisto.Abstractions</Title>
-        <PackageId>Solari.Callisto.Abstractions</PackageId>
-        <PackageDescription>Callisto abstractions</PackageDescription>
-        <PackageTags>C#; DotnetCore; MongoDb; Callisto; Solari</PackageTags>
-        <LangVersion>8</LangVersion>
-        <RootNamespace>Solari.Callisto.Abstractions</RootNamespace>
-        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-        <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-    </PropertyGroup>
-    <ItemGroup>
-        <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
-    </ItemGroup>
+  <PropertyGroup>
+    <AssemblyName>Solari.Callisto.Abstractions</AssemblyName>
+    <Authors>Lauth</Authors>
+    <Title>Solari.Callisto.Abstractions</Title>
+    <PackageId>Solari.Callisto.Abstractions</PackageId>
+    <PackageDescription>Callisto abstractions</PackageDescription>
+    <PackageTags>C#; DotnetCore; MongoDb; Callisto; Solari</PackageTags>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>9</LangVersion>
+    <RootNamespace>Solari.Callisto.Abstractions</RootNamespace>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
 
-    <ItemGroup>
-      <PackageReference Include="MongoDB.Driver" Version="2.11.2" />
-    </ItemGroup>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+  </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
-      <ProjectReference Include="..\Solari.Titan.Abstractions\Solari.Titan.Abstractions.csproj" />
-      <ProjectReference Include="..\Solari.Vanth\Solari.Vanth.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="2.11.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
+    <ProjectReference Include="..\Solari.Titan.Abstractions\Solari.Titan.Abstractions.csproj" />
+    <ProjectReference Include="..\Solari.Vanth\Solari.Vanth.csproj" />
+  </ItemGroup>
 
 </Project>

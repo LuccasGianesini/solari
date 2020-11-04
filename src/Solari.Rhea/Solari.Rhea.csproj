@@ -1,27 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <AssemblyName>Solari.Rhea</AssemblyName>
-        <Authors>Lauth</Authors>
-        <Title>Solari.Rhea</Title>
-        <PackageId>Solari.Rhea</PackageId>
-        <PackageDescription>Pipeline</PackageDescription>
-        <PackageTags>Pipelines</PackageTags>
-        <LangVersion>8</LangVersion>
-        <RootNamespace>Solari.Rhea</RootNamespace>
-        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-        <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-    </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyName>Solari.Rhea</AssemblyName>
+    <Authors>Lauth</Authors>
+    <Title>Solari.Rhea</Title>
+    <PackageId>Solari.Rhea</PackageId>
+    <PackageDescription>Pipeline</PackageDescription>
+    <PackageTags>Pipelines</PackageTags>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>9</LangVersion>
+    <RootNamespace>Solari.Rhea</RootNamespace>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
-    </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>
+  </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
-      <ProjectReference Include="..\Solari.Vanth\Solari.Vanth.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj"/>
+    <ProjectReference Include="..\Solari.Vanth\Solari.Vanth.csproj"/>
+  </ItemGroup>
 
 </Project>

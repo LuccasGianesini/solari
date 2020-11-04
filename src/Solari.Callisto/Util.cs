@@ -21,7 +21,7 @@ namespace Solari.Callisto
         public static CallistoConnectorOptions GetCallistoConnectorOptions(this IConfiguration configuration, string clientName)
         {
             IConfigurationSection section = configuration.GetSection(CallistoConstants.ConnectorAppSettingsSection);
-            var options = configuration.GetOptions<List<CallistoConnectorOptions>>(section);
+            var options = section.GetOptions<List<CallistoConnectorOptions>>();
             return options.GetCallistoConnectorOptions(clientName);
         }
 

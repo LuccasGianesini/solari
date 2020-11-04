@@ -7,18 +7,19 @@
     <PackageId>Solari.Callisto.Tracer</PackageId>
     <PackageDescription>Callisto Tracer library</PackageDescription>
     <PackageTags>C#; DotnetCore; MongoDb; Callisto; Solari</PackageTags>
-    <LangVersion>8</LangVersion>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Callisto.Tracer</RootNamespace>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Solari.Callisto.Abstractions\Solari.Callisto.Abstractions.csproj" />
-    <ProjectReference Include="..\Solari.Deimos\Solari.Deimos.csproj" />
+    <ProjectReference Include="..\Solari.Callisto.Abstractions\Solari.Callisto.Abstractions.csproj"/>
+    <ProjectReference Include="..\Solari.Deimos\Solari.Deimos.csproj"/>
   </ItemGroup>
 
 </Project>

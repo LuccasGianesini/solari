@@ -6,18 +6,18 @@
     <PackageId>Solari.Io</PackageId>
     <PackageDescription>Health Checks</PackageDescription>
     <PackageTags>Extensions;DotnetCore;C#;Vault</PackageTags>
-    <LangVersion>8</LangVersion>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Io</RootNamespace>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Solari.Io.Abstractions\Solari.Io.Abstractions.csproj" />
+    <ProjectReference Include="..\Solari.Io.Abstractions\Solari.Io.Abstractions.csproj"/>
   </ItemGroup>
 
 </Project>

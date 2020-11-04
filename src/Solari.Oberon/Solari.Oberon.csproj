@@ -1,27 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <AssemblyName>Solari.Oberon</AssemblyName>
-        <Authors>Lauth</Authors>
-        <Title>Solari.Oberon</Title>
-        <PackageId>Solari.Oberon</PackageId>
-        <PackageDescription>Ridis</PackageDescription>
-        <PackageTags>C#; DotnetCore; Redis</PackageTags>
-        <LangVersion>8</LangVersion>
-        <RootNamespace>Solari.Oberon</RootNamespace>
-        <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
-        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-    </PropertyGroup>
-    <ItemGroup>
-        <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
-    </ItemGroup>
-    <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.8" />
-      <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
-    </ItemGroup>
+  <PropertyGroup>
+    <AssemblyName>Solari.Oberon</AssemblyName>
+    <Authors>Lauth</Authors>
+    <Title>Solari.Oberon</Title>
+    <PackageId>Solari.Oberon</PackageId>
+    <PackageDescription>Ridis</PackageDescription>
+    <PackageTags>C#; DotnetCore; Redis</PackageTags>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>9</LangVersion>
+    <RootNamespace>Solari.Oberon</RootNamespace>
+    <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="5.0.0-rc.2.20475.5" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
+  </ItemGroup>
 
 </Project>

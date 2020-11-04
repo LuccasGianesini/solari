@@ -14,11 +14,11 @@ namespace Solari.Titan.Framework
         {
             ConfigureMinimumLevels(config, options);
             ConfigureEnrich(config, appOptions);
-            AddSinks(config, options, appOptions, contentRootPath);
+            AddSinks(config, options, contentRootPath);
             return config;
         }
 
-        private static void AddSinks(LoggerConfiguration config, TitanOptions options, ApplicationOptions appOptions, string contentRootPath)
+        private static void AddSinks(LoggerConfiguration config, TitanOptions options, string contentRootPath)
         {
             config
                 .ConfigureConsole(options)

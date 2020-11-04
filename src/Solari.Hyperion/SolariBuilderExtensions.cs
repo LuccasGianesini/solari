@@ -29,7 +29,7 @@ namespace Solari.Hyperion
             IConfigurationSection section = configuration.GetSection(HyperionConstants.AppSettingsSection);
             if (!section.Exists())
                 throw new HyperionException("Hyperion AppSettings section not found!");
-            options = configuration.GetOptions<HyperionOptions>(section);
+            options = section.GetOptions<HyperionOptions>();
             return section;
         }
 

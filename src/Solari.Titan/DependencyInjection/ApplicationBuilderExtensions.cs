@@ -38,7 +38,7 @@ namespace Solari.Titan.DependencyInjection
         private static TitanOptions GetOptions(IConfiguration configuration)
         {
             IConfigurationSection section = configuration.GetSection(TitanConstants.TitanAppSettingsSection);
-            return configuration.GetOptions<TitanOptions>(section) ?? new TitanOptions();
+            return section.GetOptions<TitanOptions>() ?? new TitanOptions();
         }
     }
 }

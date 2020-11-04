@@ -1,14 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+      <AssemblyName>Solari.Callisto.Identity</AssemblyName>
+      <Authors>Lauth</Authors>
+      <Title>Solari.Callisto.Identity</Title>
+      <PackageId>Solari.Callisto.Identity</PackageId>
+      <PackageDescription>Callisto MassTransit integration</PackageDescription>
+      <PackageTags>C#; DotnetCore; MongoDb; Callisto; Solari</PackageTags>
+      <TargetFramework>net5.0</TargetFramework>
+      <LangVersion>9</LangVersion>
+      <RootNamespace>Solari.Callisto.Identity</RootNamespace>
+      <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+      <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
     </PropertyGroup>
-
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
+  </ItemGroup>
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
       <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-      <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="3.1.8" />
-      <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="3.1.8" />
+      <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.0-rc.2.20475.17" />
+      <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="5.0.0-rc.2.20475.17" />
     </ItemGroup>
 
     <ItemGroup>

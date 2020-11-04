@@ -1,23 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <AssemblyName>Solari.Ceres</AssemblyName>
-        <Authors>Lauth</Authors>
-        <Title>Solari.Ceres</Title>
-        <PackageId>Solari.Ceres</PackageId>
-        <PackageDescription>Metrics library for netcoreapps. Uses App.Metrics</PackageDescription>
-        <PackageTags>C#; DotnetCore; App.Metrics</PackageTags>
-        <LangVersion>8</LangVersion>
-        <RootNamespace>Solari.Ceres</RootNamespace>
-        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-        <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-    </PropertyGroup>
-    <ItemGroup>
-        <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\Solari.Ceres.Abstractions\Solari.Ceres.Abstractions.csproj" />
-    </ItemGroup>
+  <PropertyGroup>
+    <AssemblyName>Solari.Ceres</AssemblyName>
+    <Authors>Lauth</Authors>
+    <Title>Solari.Ceres</Title>
+    <PackageId>Solari.Ceres</PackageId>
+    <PackageDescription>Metrics library for netcoreapps. Uses App.Metrics</PackageDescription>
+    <PackageTags>C#; DotnetCore; App.Metrics</PackageTags>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>9</LangVersion>
+    <RootNamespace>Solari.Ceres</RootNamespace>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Solari.Ceres.Abstractions\Solari.Ceres.Abstractions.csproj"/>
+  </ItemGroup>
 
 </Project>

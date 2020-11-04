@@ -1,23 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <AssemblyName>Solari.Hyperion.ConfigurationProvider</AssemblyName>
-        <Authors>Lauth</Authors>
-        <Title>Solari.Hyperion.ConfigurationProvider</Title>
-        <PackageId>Solari.Hyperion.ConfigurationProvider</PackageId>
-        <PackageDescription>Hyperion Abstraction library</PackageDescription>
-        <PackageTags>C#; DotnetCore; Hyperion Configuration Provider</PackageTags>
-        <LangVersion>8</LangVersion>
-        <RootNamespace>Solari.Hyperion.ConfigurationProvider</RootNamespace>
-        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-        <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-    </PropertyGroup>
-    <ItemGroup>
-        <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\Solari.Hyperion\Solari.Hyperion.csproj" />
-    </ItemGroup>
- 
+  <PropertyGroup>
+    <AssemblyName>Solari.Hyperion.ConfigurationProvider</AssemblyName>
+    <Authors>Lauth</Authors>
+    <Title>Solari.Hyperion.ConfigurationProvider</Title>
+    <PackageId>Solari.Hyperion.ConfigurationProvider</PackageId>
+    <PackageDescription>Hyperion Abstraction library</PackageDescription>
+    <PackageTags>C#; DotnetCore; Hyperion Configuration Provider</PackageTags>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>9</LangVersion>
+    <RootNamespace>Solari.Hyperion.ConfigurationProvider</RootNamespace>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Solari.Hyperion\Solari.Hyperion.csproj"/>
+  </ItemGroup>
+
 </Project>

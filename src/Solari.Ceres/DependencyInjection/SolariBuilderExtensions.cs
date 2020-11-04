@@ -17,7 +17,7 @@ namespace Solari.Ceres.DependencyInjection
             if (!section.Exists())
                 throw new CeresException("Ceres AppSettings section not found!");
 
-            var options = builder.Configuration.GetOptions<CeresOptions>(section);
+            var options = section.GetOptions<CeresOptions>();
 
             ApplicationOptions appOptions = builder.GetAppOptions();
             var metricsBuilder = new MetricsBuilder();

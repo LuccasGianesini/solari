@@ -6,11 +6,12 @@
         <PackageId>Solari.Sol</PackageId>
         <PackageDescription>Application bootstrapper</PackageDescription>
         <PackageTags>C#; DotnetCore; Bootstrapper</PackageTags>
-        <LangVersion>8</LangVersion>
+        
         <RootNamespace>Solari.Sol</RootNamespace>
         <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>net5.0</TargetFramework>
+        <LangVersion>9</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <ItemGroup>
@@ -21,15 +22,15 @@
         <PackageReference Include="Fluent-Json.NET" Version="0.2.0" />
         <PackageReference Include="FluentValidation" Version="9.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.8" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0-rc.2.20475.5" />
         <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-        <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.8" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.1.8" />
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.8" />
-        <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.8" />
-        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.8" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0-rc.2.20475.5" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0-rc.2.20475.5" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0-rc.2.20475.5" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0-rc.2.20475.5" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0-rc.2.20475.5" />
         <PackageReference Include="NewId" Version="3.0.2" />
-        <PackageReference Include="Scrutor" Version="3.2.2" />
+        <PackageReference Include="Scrutor" Version="3.3.0" />
         <PackageReference Include="Serilog" Version="2.10.0" />
     </ItemGroup>
 

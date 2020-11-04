@@ -1,25 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <AssemblyName>Solari.Juno.Abstractions</AssemblyName>
-        <Authors>Lauth</Authors>
-        <Title>Solari.Juno.Abstractions</Title>
-        <PackageId>Solari.Juno.Abstractions</PackageId>
-        <PackageDescription>Abstractions of Juno Library</PackageDescription>
-        <PackageTags>C#; DotnetCore; Vault, Abstractions</PackageTags>
-        <LangVersion>8</LangVersion>
-        <RootNamespace>Solari.Juno.Abstractions</RootNamespace>
-        <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
-        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-    </PropertyGroup>
-    <ItemGroup>
-        <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
-    </ItemGroup>
-    <ItemGroup>
-      <PackageReference Include="VaultSharp" Version="1.4.0.5" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
-    </ItemGroup>
+  <PropertyGroup>
+    <AssemblyName>Solari.Juno.Abstractions</AssemblyName>
+    <Authors>Lauth</Authors>
+    <Title>Solari.Juno.Abstractions</Title>
+    <PackageId>Solari.Juno.Abstractions</PackageId>
+    <PackageDescription>Abstractions of Juno Library</PackageDescription>
+    <PackageTags>C#; DotnetCore; Vault, Abstractions</PackageTags>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>9</LangVersion>
+    <RootNamespace>Solari.Juno.Abstractions</RootNamespace>
+    <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="VaultSharp" Version="1.4.0.5"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj"/>
+  </ItemGroup>
 </Project>

@@ -1,23 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <AssemblyName>Solari.Juno</AssemblyName>
-        <Authors>Lauth</Authors>
-        <Title>Solari.Juno</Title>
-        <PackageId>Solari.Juno</PackageId>
-        <PackageDescription>Hashicorp Vault library for Solari secret management</PackageDescription>
-        <PackageTags>C#; DotnetCore; Vault, Abstractions</PackageTags>
-        <LangVersion>8</LangVersion>
-        <RootNamespace>Solari.Juno</RootNamespace>
-        <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
-        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-    </PropertyGroup>
-    <ItemGroup>
-        <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\Solari.Juno.Abstractions\Solari.Juno.Abstractions.csproj" />
-    </ItemGroup>
+  <PropertyGroup>
+    <AssemblyName>Solari.Juno</AssemblyName>
+    <Authors>Lauth</Authors>
+    <Title>Solari.Juno</Title>
+    <PackageId>Solari.Juno</PackageId>
+    <PackageDescription>Hashicorp Vault library for Solari secret management</PackageDescription>
+    <PackageTags>C#; DotnetCore; Vault, Abstractions</PackageTags>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>9</LangVersion>
+    <RootNamespace>Solari.Juno</RootNamespace>
+    <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Solari.Juno.Abstractions\Solari.Juno.Abstractions.csproj"/>
+  </ItemGroup>
 
 </Project>

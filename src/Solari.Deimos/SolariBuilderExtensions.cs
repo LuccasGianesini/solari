@@ -16,11 +16,11 @@ namespace Solari.Deimos
             if (!section.Exists())
                 throw new DeimosException("Deimos AppSettings section not found!");
 
-            var options = solariBuilder.Configuration.GetOptions<DeimosOptions>(section);
+            var options = section.GetOptions<DeimosOptions>();
             solariBuilder.Services.Configure<DeimosOptions>(section);
 
             ConfigureTracing(solariBuilder, options);
-            
+
             if (plugins == null) return solariBuilder;
             var manager = new TracerPluginManager(solariBuilder);
             plugins(manager);

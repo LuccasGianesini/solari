@@ -29,7 +29,7 @@ namespace Solari.Sol.Extensions
         /// <param name="section">Configuration section name</param>
         /// <typeparam name="TOptions">Resulting object</typeparam>
         /// <returns>Instance of TOptions</returns>
-        public static TOptions GetOptions<TOptions>(this IConfiguration configuration, IConfigurationSection section)
+        public static TOptions GetOptions<TOptions>(this IConfigurationSection section)
             where TOptions : class, new()
         {
             return BinderHelper.BindOptions<TOptions>(section);
@@ -44,7 +44,7 @@ namespace Solari.Sol.Extensions
                 throw new SolException("The Application section was not found in the AppSettings file");
             }
 
-            var options = configuration.GetOptions<ApplicationOptions>(section);
+            var options = section.GetOptions<ApplicationOptions>();
             if (string.IsNullOrEmpty(options.ApplicationName))
                 throw new SolException($"{nameof(ApplicationOptions.ApplicationName)} is a required value!");
             return options;

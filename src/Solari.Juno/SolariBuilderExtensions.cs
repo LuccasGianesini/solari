@@ -38,7 +38,7 @@ namespace Solari.Juno
         public static JunoOptions GetOptions(IConfiguration configuration)
         {
             IConfigurationSection section = configuration.GetSection(JunoConstants.AppSettingsSection);
-            return !section.Exists() ? new JunoOptions() : configuration.GetOptions<JunoOptions>(section);
+            return !section.Exists() ? new JunoOptions() : section.GetOptions<JunoOptions>();
         }
     }
 }
