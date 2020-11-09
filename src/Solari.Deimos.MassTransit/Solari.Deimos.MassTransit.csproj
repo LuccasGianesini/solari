@@ -15,11 +15,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Solari.Deimos.Abstractions\Solari.Deimos.Abstractions.csproj"/>
+    <ProjectReference Include="..\Solari.Deimos.Abstractions\Solari.Deimos.Abstractions.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit" Version="7.0.4"/>
+    <PackageReference Include="MassTransit" Version="7.0.6" />
   </ItemGroup>
 
   <ItemGroup>

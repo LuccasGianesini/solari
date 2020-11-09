@@ -15,17 +15,17 @@
 
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit.MongoDb" Version="7.0.4"/>
+    <PackageReference Include="MassTransit.MongoDb" Version="7.0.6" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Solari.Callisto.Abstractions\Solari.Callisto.Abstractions.csproj"/>
-    <ProjectReference Include="..\Solari.Callisto.Connector\Solari.Callisto.Connector.csproj"/>
-    <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj"/>
+    <ProjectReference Include="..\Solari.Callisto.Abstractions\Solari.Callisto.Abstractions.csproj" />
+    <ProjectReference Include="..\Solari.Callisto.Connector\Solari.Callisto.Connector.csproj" />
+    <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
   </ItemGroup>
 
 </Project>
