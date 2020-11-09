@@ -1,15 +1,17 @@
+pr:
+ branches:
+   exclude:
+    - releases/*
+    - master
+    - develop
+    - dependabot/*
 trigger:
   branches:
     exclude:
       - releases/*
       - master
       - develop
-  pr:
-    branches:
-      exclude:
-        - releases/*
-        - master
-        - develop
+      - dependabot/*
 pool:
   vmImage: 'Windows-2019'
 jobs:
