@@ -25,6 +25,12 @@ jobs:
       clean: resources
     cancelTimeoutInMinutes: 5
     steps:
+      - task: UseDotNet@2
+        displayName: "Use .Net 5 sdk"
+        inputs:
+          packageType: sdk
+          version: "5.0.100-rc.2"
+          includePreviewVersions: true
       - task: DotNetCoreCLI@2
         displayName: 'Build solution'
         inputs:
