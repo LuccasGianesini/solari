@@ -5,8 +5,8 @@
       <Authors>Lauth</Authors>
       <Title>Solari.Callisto.Identity</Title>
       <PackageId>Solari.Callisto.Identity</PackageId>
-      <PackageDescription>Callisto MassTransit integration</PackageDescription>
-      <PackageTags>C#; DotnetCore; MongoDb; Callisto; Solari</PackageTags>
+      <PackageDescription>Callisto Identity</PackageDescription>
+      <PackageTags>C#; DotnetCore; MongoDb; Callisto; Solari; Identity</PackageTags>
       <TargetFramework>net5.0</TargetFramework>
       <LangVersion>9</LangVersion>
       <RootNamespace>Solari.Callisto.Identity</RootNamespace>

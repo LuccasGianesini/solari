@@ -5,8 +5,8 @@
       <Authors>Lauth</Authors>
       <Title>Solari.Vanth</Title>
       <PackageId>Solari.Vanth</PackageId>
-      <PackageDescription>Common response objects</PackageDescription>
-      <PackageTags>C#; DotnetCore; CommonReponse</PackageTags>
+      <PackageDescription>Common result library</PackageDescription>
+      <PackageTags>C#; DotnetCore; Result; Solari; Vanth</PackageTags>
      <TargetFramework>net5.0</TargetFramework>
      <LangVersion>9</LangVersion>
       <RootNamespace>Solari.Vanth</RootNamespace>

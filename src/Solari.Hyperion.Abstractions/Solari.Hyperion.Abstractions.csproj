@@ -6,7 +6,7 @@
     <Title>Solari.Hyperion.Abstractions</Title>
     <PackageId>Solari.Hyperion.Abstractions</PackageId>
     <PackageDescription>Hyperion Abstraction library</PackageDescription>
-    <PackageTags>C#; DotnetCore; Hyperion Abstractions</PackageTags>
+    <PackageTags>C#; DotnetCore; Consul; Hyperion Abstractions; Solari</PackageTags>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Hyperion.Abstractions</RootNamespace>

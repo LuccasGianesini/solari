@@ -6,7 +6,7 @@
     <Title>Solari.Titan.Loki</Title>
     <PackageId>Solari.Titan.Loki</PackageId>
     <PackageDescription>Loki sink</PackageDescription>
-    <PackageTags>C#; DotnetCore; Logging; Serilog; Loki</PackageTags>
+    <PackageTags>C#; DotnetCore; Logging; Serilog; Loki; Solari; Titan</PackageTags>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Titan.Loki</RootNamespace>

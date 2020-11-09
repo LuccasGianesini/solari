@@ -5,14 +5,14 @@
     <Authors>Lauth</Authors>
     <Title>Solari.Ceres.Abstractions</Title>
     <PackageId>Solari.Ceres.Abstractions</PackageId>
-    <PackageDescription>Abstractions of ceres library. Uses App.Metrics</PackageDescription>
-    <PackageTags>C#; DotnetCore; App.Metrics</PackageTags>
+    <PackageDescription>Ceres abstractions</PackageDescription>
+    <PackageTags>C#; DotnetCore; Ceres; Solari; Metrics; AppMetrics; Abstractions</PackageTags>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Ceres.Abstractions</RootNamespace>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
-        
+
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>

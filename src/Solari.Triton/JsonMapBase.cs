@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Solari.Sol.Extensions;
 using Solari.Triton.Compat;
 
 namespace Solari.Triton

@@ -5,8 +5,8 @@
     <Authors>Lauth</Authors>
     <Title>Solari.Deimos.CorrelationId</Title>
     <PackageId>Solari.Deimos.CorrelationId</PackageId>
-    <PackageDescription>CorrelationId package for dotnet core 3</PackageDescription>
-    <PackageTags>C#; DotnetCore; CorrelationId; Deimos</PackageTags>
+    <PackageDescription>CorrelationId for deimos</PackageDescription>
+    <PackageTags>C#; DotnetCore; CorrelationId; Deimos; Jaeger; Opentracing; Solari</PackageTags>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Deimos.CorrelationId</RootNamespace>

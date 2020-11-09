@@ -5,8 +5,8 @@
     <Authors>Lauth</Authors>
     <Title>Solari.Deimos</Title>
     <PackageId>Solari.Deimos</PackageId>
-    <PackageDescription>Tracing library for Dotnet Core 3.0 and 3.1</PackageDescription>
-    <PackageTags>C#; DotnetCore; Deimos</PackageTags>
+    <PackageDescription>Tracing library</PackageDescription>
+    <PackageTags>C#; DotnetCore; Jaeger; Deimos; Solari; Opentracing</PackageTags>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Deimos</RootNamespace>

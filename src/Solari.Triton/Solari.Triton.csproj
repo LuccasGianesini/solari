@@ -6,7 +6,7 @@
     <Title>Solari.Triton</Title>
     <PackageId>Solari.Triton</PackageId>
     <PackageDescription>Fluent JSON.Net port to netcoreapp5.0</PackageDescription>
-    <PackageTags>C#; FluentJsonNet;</PackageTags>
+    <PackageTags>C#; FluentJsonNet; DotNetCore; Solari; Triton;</PackageTags>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Triton</RootNamespace>
@@ -19,6 +19,9 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
   </ItemGroup>
 
 </Project>

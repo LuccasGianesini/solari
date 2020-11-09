@@ -6,7 +6,7 @@
     <Title>Solari.Juno.Abstractions</Title>
     <PackageId>Solari.Juno.Abstractions</PackageId>
     <PackageDescription>Abstractions of Juno Library</PackageDescription>
-    <PackageTags>C#; DotnetCore; Vault, Abstractions</PackageTags>
+    <PackageTags>C#; DotnetCore; Juno; Solari; Vault; Abstractions</PackageTags>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Juno.Abstractions</RootNamespace>

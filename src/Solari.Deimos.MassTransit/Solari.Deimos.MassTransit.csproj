@@ -6,7 +6,7 @@
     <Title>Solari.Deimos.MassTransit</Title>
     <PackageId>Solari.Deimos.MassTransit</PackageId>
     <PackageDescription>MassTransit 7 integration with deimos. Copied from https://github.com/yesmarket/MassTransit.OpenTracing</PackageDescription>
-    <PackageTags>C#; DotnetCore; MassTransit; Deimos</PackageTags>
+    <PackageTags>C#; DotnetCore; MassTransit; Deimos; Jaeger; Opentracing; Solari</PackageTags>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Deimos.MassTransit</RootNamespace>

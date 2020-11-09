@@ -6,7 +6,7 @@
     <Title>Solari.Callisto.Tracer</Title>
     <PackageId>Solari.Callisto.Tracer</PackageId>
     <PackageDescription>Callisto Tracer library</PackageDescription>
-    <PackageTags>C#; DotnetCore; MongoDb; Callisto; Solari</PackageTags>
+    <PackageTags>C#; DotnetCore; MongoDb; Callisto; Solari; Tracer; Opentracing</PackageTags>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Callisto.Tracer</RootNamespace>

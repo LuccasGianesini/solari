@@ -6,7 +6,7 @@
       <Title>Solari.Io.Abstractions</Title>
       <PackageId>Solari.Io.Abstractions</PackageId>
       <PackageDescription>Health Checks</PackageDescription>
-      <PackageTags>C#, HealthChecks, Abstractions, IO</PackageTags>
+      <PackageTags>C#; DotnetCore; Solari; Health; Abstractions; Io</PackageTags>
       <TargetFramework>net5.0</TargetFramework>
       <LangVersion>9</LangVersion>
       <RootNamespace>Solari.Io.Abstractions</RootNamespace>

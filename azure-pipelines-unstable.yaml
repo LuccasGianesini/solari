@@ -4,12 +4,12 @@ trigger:
       - releases/*
       - master
       - develop
-pr:
-  branches:
-    exclude:
-      - releases/*
-      - master
-      - develop
+  pr:
+    branches:
+      exclude:
+        - releases/*
+        - master
+        - develop
 pool:
   vmImage: 'Windows-2019'
 jobs:
@@ -18,13 +18,19 @@ jobs:
       solution: '**/*.sln'
       buildPlatform: 'Any CPU'
       buildConfiguration: 'Release'
-      my_build_number: ''      
+      my_build_number: ''
     displayName: 'Build solution and create NuGet packages'
     continueOnError: false
     workspace:
       clean: resources
     cancelTimeoutInMinutes: 5
     steps:
+      - task: UseDotNet@2
+        displayName: "Use .Net 5 sdk"
+        inputs:
+          packageType: sdk
+          version: "5.0.100-rc.2"
+          includePreviewVersions: true
       - task: DotNetCoreCLI@2
         displayName: 'Build solution'
         inputs:
@@ -44,7 +50,7 @@ jobs:
         inputs:
           filePath: './scripts/packall.ps1'
           arguments: '-VERSION $(my_build_number) -BUILD_ARTIFACT_DIR $(Build.ArtifactStagingDirectory)'
-            
+
       - task: NuGetCommand@2
         continueOnError: false
         displayName: 'Push Nuget Packages'
@@ -59,12 +65,12 @@ jobs:
         inputs:
           gitHubConnection: 'github.com_azpipelines'
           repositoryName: '$(Build.Repository.Name)'
-          action: 'create'   
+          action: 'create'
           target: '$(Build.SourceVersion)'
           tagSource: 'userSpecifiedTag'
           tag: 'v$(my_build_number)'
           title: 'Version $(my_build_number)'
           releaseNotesSource: 'inline'
-          releaseNotesInline: 'Changelog: https://github.com/LuccasGianesini/solari/wiki/Changelog' 
+          releaseNotesInline: 'Changelog: https://github.com/LuccasGianesini/solari/wiki/Changelog'
           assets: false
           addChangeLog: true

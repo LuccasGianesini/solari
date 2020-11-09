@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Solari.Sol;
+using Solari.Sol.Extensions;
 using Solari.Triton.JetBrains.Annotations;
 using Solari.Triton.Utils;
 
@@ -14,31 +16,28 @@ namespace Solari.Triton
     {
         private readonly List<JsonMapBase> maps;
 
-        public JsonMapsConverter([NotNull] IEnumerable<JsonMapBase> jsonMaps)
+        public JsonMapsConverter(IEnumerable<JsonMapBase> jsonMaps)
         {
-            if (jsonMaps == null)
-                throw new ArgumentNullException(nameof(jsonMaps));
+            Check.ThrowIfNull(jsonMaps, nameof(IEnumerable<JsonMapBase>));
 
-            this.maps = new List<JsonMapBase>(jsonMaps);
-
-            this.jsonMapsTree = this.GetJsonMapsTree();
+            maps = new List<JsonMapBase>(jsonMaps);
+            jsonMapsTree = GetJsonMapsTree();
         }
 
-        public ReadOnlyCollection<JsonMapBase> Maps => new ReadOnlyCollection<JsonMapBase>(this.maps);
+        public ReadOnlyCollection<JsonMapBase> Maps => new ReadOnlyCollection<JsonMapBase>(maps);
 
-        [ThreadStatic]
         private int blockOnce;
 
         public override bool CanConvert(Type objectType)
         {
-            if (this.blockOnce == 1)
+            if (blockOnce == 1)
             {
-                this.blockOnce = 0;
+                blockOnce = 0;
                 return false;
             }
 
             // the question here is: is this objectType associated with any class hierarchy in the `JsonMap` list?
-            JsonMapsCache cachedData = this.GetInfoFromTypeCached(objectType);
+            JsonMapsCache cachedData = GetInfoFromTypeCached(objectType);
             return cachedData != null;
         }
 
@@ -49,15 +48,15 @@ namespace Solari.Triton
         private JsonMapsCache GetInfoFromTypeCached(Type objectType)
         {
             JsonMapsCache data;
-            lock (this.dicTypeData)
-                if (!this.dicTypeData.TryGetValue(objectType, out data))
+            lock (dicTypeData)
+                if (!dicTypeData.TryGetValue(objectType, out data))
                 {
-                    JsonMapBase[] listOfMappers = this.jsonMapsTree.GetMappers(objectType).ToArray();
-                    JsonMapBase[][] subMappers = this.jsonMapsTree.GetSubpathes(objectType).ToArray();
+                    JsonMapBase[] listOfMappers = jsonMapsTree.GetMappers(objectType).ToArray();
+                    JsonMapBase[][] subMappers = jsonMapsTree.GetSubpathes(objectType).ToArray();
                     if (listOfMappers.Length == 0 && subMappers.Length == 0)
-                        this.dicTypeData[objectType] = null;
+                        dicTypeData[objectType] = null;
                     else
-                        this.dicTypeData[objectType] = data = new JsonMapsCache { Mappers = listOfMappers, SubMappers = subMappers };
+                        dicTypeData[objectType] = data = new JsonMapsCache { Mappers = listOfMappers, SubMappers = subMappers };
                     return data;
                 }
                 else
@@ -70,13 +69,13 @@ namespace Solari.Triton
         {
             var dictionary = new Dictionary<Type, JsonMapsTreeNode>();
 
-            foreach (JsonMapBase jsonMapBase in this.maps)
+            foreach (JsonMapBase jsonMapBase in maps)
             {
                 Type current = jsonMapBase.SerializedType;
                 JsonMapsTreeNode node;
                 if (!dictionary.TryGetValue(current, out node))
                 {
-                    List<JsonMapBase> acceptedMaps = this.maps
+                    List<JsonMapBase> acceptedMaps = maps
                                                          .Where(x => x.AcceptsType(current))
                                                          .Where(x => x.SerializedType.GetTypeInfo().IsAssignableFrom(current.GetTypeInfo()))
                                                          .WithMax(x => -TypeDistance(x.SerializedType, current))
@@ -92,9 +91,9 @@ namespace Solari.Triton
                     Type? baseTypeInfo = current.GetTypeInfo().BaseType;
                     if (baseTypeInfo != null)
                     {
-                        List<JsonMapBase> acceptedParentMaps = this.maps
+                        List<JsonMapBase> acceptedParentMaps = maps
                                                                    .Where(x => x.AcceptsType(baseTypeInfo))
-                                                                   .Where(x => x.SerializedType.GetTypeInfo().IsAssignableFrom(baseTypeInfo.GetTypeInfo()))
+                                                                   .Where(x => x.SerializedType.CanBeAssignedFrom(baseTypeInfo))
                                                                    .WithMax(x => -TypeDistance(x.SerializedType, baseTypeInfo))
                                                                    .ToList();
 
@@ -102,14 +101,14 @@ namespace Solari.Triton
                             throw new Exception($"Ambiguous maps for the type `{current.GetTypeInfo().BaseType?.Name}`");
 
                         if (acceptedParentMaps.Count > 0 && jsonMapBase is JsonMap)
-                            throw new Exception($"Sub mappers must be subclasses of `{typeof(JsonSubclassMap).Name}`: `{jsonMapBase.GetType().Name}`");
+                            throw new Exception($"Sub mappers must be subclasses of `{nameof(JsonSubclassMap)}`: `{jsonMapBase.GetType().Name}`");
 
                         if (acceptedParentMaps.Count > 0)
                             parent = acceptedParentMaps[0].SerializedType;
                     }
 
-                    List<JsonMapBase> acceptedChildMaps = this.maps
-                                                              .Where(x => current.GetTypeInfo().IsAssignableFrom(x.SerializedType.GetTypeInfo()))
+                    List<JsonMapBase> acceptedChildMaps = maps
+                                                              .Where(x => current.CanBeAssignedFrom(x.SerializedType))
                                                               .Where(x => TypeDistance(current, x.SerializedType) == 1)
                                                               .ToList();
 
@@ -139,12 +138,12 @@ namespace Solari.Triton
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             Type objectType = value?.GetType();
-            JsonMapsCache cachedData = this.GetInfoFromTypeCached(objectType);
+            JsonMapsCache cachedData = GetInfoFromTypeCached(objectType);
 
-            while (this.blockOnce == 1)
+            while (blockOnce == 1)
                 throw new Exception("Writing is blocked but should not.");
 
-            this.blockOnce = 1;
+            blockOnce = 1;
             JObject jo = JObject.FromObject(value);
 
             // finding discriminator field names
@@ -191,9 +190,9 @@ namespace Solari.Triton
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             // the question here is: is this objectType associated with any class hierarchy in the `JsonMap` list?
-            JsonMapsCache cachedData = this.GetInfoFromTypeCached(objectType);
+            JsonMapsCache cachedData = GetInfoFromTypeCached(objectType);
 
-            while (this.blockOnce == 1)
+            while (blockOnce == 1)
                 throw new Exception("Writing is blocked but should not.");
 
             if (reader.TokenType == JsonToken.Null)
@@ -213,7 +212,7 @@ namespace Solari.Triton
 
             // STEP 1: match the discriminators of the type given by `objectType`
             string discriminatorFieldValue = null;
-            bool foundBaseIAndSubtypes = false;
+            var foundBaseIAndSubtypes = false;
             JsonMapBase classMapToUse = null;
             foreach (JsonMapBase jsonMapBase in cachedData.Mappers.Reverse())
             {

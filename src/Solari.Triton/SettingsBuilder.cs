@@ -4,14 +4,17 @@ using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Solari.Sol;
 using Solari.Triton.JetBrains.Annotations;
 
 namespace Solari.Triton
 {
-    public static class JsonMaps
+
+    public static class SettingsBuilder
     {
         public static JsonSerializerSettings CreateWithJsonMaps(Type[] types)
         {
+            Check.ThrowIfNullOrEmpty(types, nameof(types));
             JsonMapBase[] jsonMaps = GetJsomJsonMaps(types);
             return new JsonSerializerSettings()
             {
@@ -20,9 +23,16 @@ namespace Solari.Triton
             };
         }
 
+        public static JsonSerializerSettings CreateWithJsonMaps(Type[] types, Func<JsonSerializerSettings, JsonSerializerSettings> configure)
+        {
+            Check.ThrowIfNull(configure, nameof(Func<JsonSerializerSettings, JsonSerializerSettings>));
+            return configure(CreateWithJsonMaps(types));
+        }
+
 
         public static JsonSerializerSettings SetJsonMapResolver(this JsonSerializerSettings settings, Type[] types)
         {
+            Check.ThrowIfNullOrEmpty(types, nameof(types));
             JsonMapBase[] maps = GetJsomJsonMaps(types);
             settings.Converters = CreateConverters(maps);
             settings.ContractResolver = CreateContractResolver(maps);
@@ -40,17 +50,13 @@ namespace Solari.Triton
                    .ToArray();
         }
 
-        private static IList<JsonConverter> CreateConverters([NotNull] IEnumerable<JsonMapBase> jsonMaps)
+        private static IList<JsonConverter> CreateConverters(IEnumerable<JsonMapBase> jsonMaps)
         {
-            if (jsonMaps == null)
-                throw new ArgumentNullException(nameof(jsonMaps));
-
             var result = new JsonMapsConverter(jsonMaps);
-
             return new List<JsonConverter>(jsonMaps.Count()) {result}.AsReadOnly();
         }
 
-        private static IContractResolver CreateContractResolver([NotNull] IEnumerable<JsonMapBase> jsonMaps)
+        private static IContractResolver CreateContractResolver(IEnumerable<JsonMapBase> jsonMaps)
         {
             return new JsonMapsContractResolver(jsonMaps);
         }

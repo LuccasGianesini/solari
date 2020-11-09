@@ -5,7 +5,7 @@
     <Title>Solari.Hyperion</Title>
     <PackageId>Solari.Hyperion</PackageId>
     <PackageDescription>Consul library</PackageDescription>
-    <PackageTags>C#; DotnetCore; Consul</PackageTags>
+    <PackageTags>C#; DotnetCore; Consul; Hyperion; Solari</PackageTags>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Hyperion</RootNamespace>

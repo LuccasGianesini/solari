@@ -6,7 +6,7 @@
     <Title>Solari.Ganymede</Title>
     <PackageId>Solari.Ganymede</PackageId>
     <PackageDescription>Http library</PackageDescription>
-    <PackageTags>C#; DotnetCore; Http</PackageTags>
+    <PackageTags>C#; DotnetCore; Http; Ganynmede; Solari</PackageTags>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Ganymede</RootNamespace>

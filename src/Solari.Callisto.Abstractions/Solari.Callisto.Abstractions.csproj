@@ -6,7 +6,7 @@
     <Title>Solari.Callisto.Abstractions</Title>
     <PackageId>Solari.Callisto.Abstractions</PackageId>
     <PackageDescription>Callisto abstractions</PackageDescription>
-    <PackageTags>C#; DotnetCore; MongoDb; Callisto; Solari</PackageTags>
+    <PackageTags>C#; DotnetCore; MongoDb; Callisto; Solari; Abstractions</PackageTags>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Callisto.Abstractions</RootNamespace>

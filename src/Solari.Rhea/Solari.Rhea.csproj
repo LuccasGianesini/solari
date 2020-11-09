@@ -5,8 +5,8 @@
     <Authors>Lauth</Authors>
     <Title>Solari.Rhea</Title>
     <PackageId>Solari.Rhea</PackageId>
-    <PackageDescription>Pipeline</PackageDescription>
-    <PackageTags>Pipelines</PackageTags>
+    <PackageDescription>Compute Pipeline</PackageDescription>
+    <PackageTags>C#; DotNetCore; Solari; Rhea; Compute-Pipeline</PackageTags>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Rhea</RootNamespace>

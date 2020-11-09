@@ -6,7 +6,7 @@
     <Title>Solari.Titan.Abstractions</Title>
     <PackageId>Solari.Titan.Abstractions</PackageId>
     <PackageDescription>Loggin library</PackageDescription>
-    <PackageTags>C#; DotnetCore; Logging; Serilog</PackageTags>
+    <PackageTags>C#; DotnetCore; Logging; Serilog; Solari; Titan; Abstaractions</PackageTags>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Titan.Abstractions</RootNamespace>

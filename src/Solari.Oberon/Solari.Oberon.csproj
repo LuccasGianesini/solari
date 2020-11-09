@@ -5,8 +5,8 @@
     <Authors>Lauth</Authors>
     <Title>Solari.Oberon</Title>
     <PackageId>Solari.Oberon</PackageId>
-    <PackageDescription>Ridis</PackageDescription>
-    <PackageTags>C#; DotnetCore; Redis</PackageTags>
+    <PackageDescription>Ridis integration</PackageDescription>
+    <PackageTags>C#; DotnetCore; Redis; Solari; Oberon</PackageTags>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Oberon</RootNamespace>

@@ -5,8 +5,8 @@
     <Authors>Lauth</Authors>
     <Title>Solari.Hyperion.ConfigurationProvider</Title>
     <PackageId>Solari.Hyperion.ConfigurationProvider</PackageId>
-    <PackageDescription>Hyperion Abstraction library</PackageDescription>
-    <PackageTags>C#; DotnetCore; Hyperion Configuration Provider</PackageTags>
+    <PackageDescription>Hyperion configuration provider library</PackageDescription>
+    <PackageTags>C#; DotnetCore; Consul; Hyperion Configuration Provider; Solari</PackageTags>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Hyperion.ConfigurationProvider</RootNamespace>

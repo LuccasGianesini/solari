@@ -6,7 +6,7 @@
     <Title>Solari.Callisto.Connector</Title>
     <PackageId>Solari.Callisto.Connector</PackageId>
     <PackageDescription>Callisto connector library</PackageDescription>
-    <PackageTags>C#; DotnetCore; MongoDb; Callisto; Solari</PackageTags>
+    <PackageTags>C#; DotnetCore; MongoDb; Callisto; Solari; Connector</PackageTags>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Callisto.Connector</RootNamespace>

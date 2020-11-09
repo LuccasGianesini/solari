@@ -5,8 +5,7 @@
         <Title>Solari.Sol</Title>
         <PackageId>Solari.Sol</PackageId>
         <PackageDescription>Application bootstrapper</PackageDescription>
-        <PackageTags>C#; DotnetCore; Bootstrapper</PackageTags>
-        
+        <PackageTags>C#; DotnetCore; Bootstrapper; Solari; Sol</PackageTags>
         <RootNamespace>Solari.Sol</RootNamespace>
         <repositoryUrl>https://github.com/LuccasGianesini/solari</repositoryUrl>
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
@@ -19,7 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      
+
         <PackageReference Include="FluentValidation" Version="9.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0-rc.2.20475.5" />

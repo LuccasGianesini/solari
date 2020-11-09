@@ -6,7 +6,7 @@
     <Title>Solari.Deimos.Abstractions</Title>
     <PackageId>Solari.Deimos.Abstractions</PackageId>
     <PackageDescription>Abstractions library of Deimos</PackageDescription>
-    <PackageTags>C#; DotnetCore; Abstractions; Deimos</PackageTags>
+    <PackageTags>C#; DotnetCore; Abstractions; Deimos; Opentracing; Jaeger; Solari</PackageTags>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Deimos.Abstractions</RootNamespace>

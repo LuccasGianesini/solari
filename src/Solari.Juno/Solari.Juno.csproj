@@ -6,7 +6,7 @@
     <Title>Solari.Juno</Title>
     <PackageId>Solari.Juno</PackageId>
     <PackageDescription>Hashicorp Vault library for Solari secret management</PackageDescription>
-    <PackageTags>C#; DotnetCore; Vault, Abstractions</PackageTags>
+    <PackageTags>C#; DotnetCore; Vault; Solari; Secrets</PackageTags>
     <TargetFramework>net5.0</TargetFramework>
     <LangVersion>9</LangVersion>
     <RootNamespace>Solari.Juno</RootNamespace>

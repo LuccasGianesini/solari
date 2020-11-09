@@ -5,8 +5,8 @@
       <Authors>Lauth</Authors>
       <Title>Solari.Themis</Title>
       <PackageId>Solari.Themis</PackageId>
-      <PackageDescription>Loggin library</PackageDescription>
-      <PackageTags>C#; APM </PackageTags>
+      <PackageDescription>APM Library</PackageDescription>
+      <PackageTags>C#; DotNetCore; APM; Solari; Themis; Jaeger; Logging; Titan; Ceres; Io; </PackageTags>
       <TargetFramework>net5.0</TargetFramework>
       <LangVersion>9</LangVersion>
       <RootNamespace>Solari.Themis</RootNamespace>
