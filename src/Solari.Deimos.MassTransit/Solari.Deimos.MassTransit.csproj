@@ -23,10 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\LICENSE.txt">
-      <Pack>true</Pack>
-      <PackagePath>LICENSE.txt</PackagePath>
-      <Link>LICENSE.txt</Link>
-    </None>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>
   </ItemGroup>
 </Project>
