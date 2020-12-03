@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using Solari.Ganymede.ContentSerializers;
 using Solari.Ganymede.Domain.Exceptions;
-using Solari.Sol.Extensions;
+using Solari.Sol.Abstractions.Extensions;
 
 // ReSharper disable CollectionNeverUpdated.Global
 

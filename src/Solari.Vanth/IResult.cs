@@ -1,11 +1,9 @@
-using System.Collections.Generic;
+using Solari.Sol.Abstractions;
 
 namespace Solari.Vanth
 {
-    public interface IResult<TData>
+    public interface IResult<T> : ISimpleResult
     {
-        List<IError> Errors { get; set; }
-        int StatusCode { get; set; }
-        TData Data { get; set; }
+        T Data { get; init; }
     }
 }

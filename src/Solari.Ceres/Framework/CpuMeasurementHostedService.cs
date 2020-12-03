@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Solari.Ceres.Abstractions;
-using Solari.Sol.Extensions;
+using Solari.Sol.Abstractions.Extensions;
 
 namespace Solari.Ceres.Framework
 {

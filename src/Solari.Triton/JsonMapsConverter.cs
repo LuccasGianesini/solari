@@ -6,7 +6,8 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Solari.Sol;
-using Solari.Sol.Extensions;
+using Solari.Sol.Abstractions;
+using Solari.Sol.Abstractions.Extensions;
 using Solari.Triton.JetBrains.Annotations;
 using Solari.Triton.Utils;
 

@@ -4,7 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Solari.Callisto.Abstractions;
 using Solari.Callisto.Abstractions.Exceptions;
 using Solari.Sol;
-using Solari.Sol.Extensions;
+using Solari.Sol.Abstractions;
+using Solari.Sol.Abstractions.Extensions;
 
 namespace Solari.Callisto.Integrations.MassTransit
 {

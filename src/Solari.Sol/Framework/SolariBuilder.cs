@@ -5,7 +5,8 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Solari.Sol.Extensions;
+using Solari.Sol.Abstractions;
+using Solari.Sol.Abstractions.Extensions;
 
 namespace Solari.Sol.Framework
 {

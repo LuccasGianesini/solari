@@ -1,19 +1,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Solari.Vanth.Extensions;
 
 namespace Solari.Vanth.Builders
 {
+
     public class ResultBuilder<TData> : IResultBuilder<TData>
     {
         public static ResultBuilder<TData> New => new ResultBuilder<TData>();
         private readonly List<IError> _errors = new List<IError>(2);
         private TData _data;
         private int _statusCode;
+        private bool _success;
 
+        public IResultBuilder<TData> WithSuccess(bool success)
+        {
+            _success = success;
+            return this;
+        }
         public IResultBuilder<TData> WithData(TData model)
         {
             _data = model;
+            _success = true;
             return this;
         }
 
@@ -42,12 +51,14 @@ namespace Solari.Vanth.Builders
             return this;
         }
 
-        public IResult<TData> Build()
-        {
-            if (_data == null && _errors == null) return new Result<TData>();
-            return new Result<TData>().AddErrors(_errors)
-                                      .AddData(_data)
-                                      .AddStatusCode(_statusCode);
-        }
+        // public ISimpleResult<TData> Build()
+        // {
+        //
+        //     // if (_data == null && _errors == null) return new SimpleResult<TData>();
+        //     // return new SimpleResult<TData>().AddErrors(_errors)
+        //     //                           .AddData(_data)
+        //     //                           .AddStatusCode(_statusCode)
+        //     //                           .AddSuccess(_success);
+        // }
     }
 }

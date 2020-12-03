@@ -1,3 +1,5 @@
+using Solari.Sol.Abstractions;
+
 namespace Solari.Sol.Framework
 {
     internal sealed class SolariPostConfigure : ISolariPostConfigure

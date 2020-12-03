@@ -5,6 +5,7 @@ using Solari.Ganymede.Domain;
 using Solari.Ganymede.Domain.Options;
 using Solari.Ganymede.Framework;
 using Solari.Sol;
+using Solari.Sol.Abstractions;
 
 namespace Solari.Ganymede.DependencyInjection
 {

@@ -11,7 +11,8 @@ using OpenTracing.Contrib.NetCore.CoreFx;
 using OpenTracing.Util;
 using Solari.Deimos.Abstractions;
 using Solari.Sol;
-using Solari.Sol.Extensions;
+using Solari.Sol.Abstractions;
+using Solari.Sol.Abstractions.Extensions;
 
 namespace Solari.Deimos
 {

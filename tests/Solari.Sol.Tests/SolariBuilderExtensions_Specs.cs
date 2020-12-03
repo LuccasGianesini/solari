@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Solari.Sol.Abstractions;
 using Solari.Sol.Tests.TestSetup;
 using Xunit;
 
@@ -16,7 +17,7 @@ namespace Solari.Sol.Tests
             IServiceCollection services = ContainerSetup.EmptyServiceCollection();
 
             // Act/Assert
-            Assert.Throws<SolException>(() => services.AddSol(config));
+            Assert.Throws<SolariException>(() => services.AddSol(config));
         }
 
         [Fact]
@@ -27,7 +28,7 @@ namespace Solari.Sol.Tests
             IServiceCollection services = ContainerSetup.EmptyServiceCollection();
 
             // Act/Assert
-            Assert.Throws<SolException>(() => services.AddSol(config));
+            Assert.Throws<SolariException>(() => services.AddSol(config));
         }
 
         [Fact]
@@ -38,7 +39,7 @@ namespace Solari.Sol.Tests
             IServiceCollection services = ContainerSetup.EmptyServiceCollection();
 
             // Act/Assert
-            Assert.Throws<SolException>(() => services.AddSol(config));
+            Assert.Throws<SolariException>(() => services.AddSol(config));
         }
     }
 }

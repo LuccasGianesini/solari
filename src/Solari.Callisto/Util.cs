@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using Solari.Callisto.Abstractions;
-using Solari.Sol.Extensions;
+using Solari.Sol.Abstractions.Extensions;
 
 namespace Solari.Callisto
 {

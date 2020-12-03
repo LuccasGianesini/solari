@@ -2,7 +2,6 @@ using System;
 using Automatonymous;
 using MassTransit.MongoDbIntegration.Saga;
 using Solari.Samples.Domain.Person.Events;
-using Solari.Sol.Extensions;
 
 namespace Solari.Samples.Application.Person
 {

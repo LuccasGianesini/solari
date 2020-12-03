@@ -15,9 +15,9 @@
 
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Serilog.Sinks.Loki" Version="2.2.0"/>
+    <PackageReference Include="Serilog.Sinks.Loki" Version="3.0.0" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Solari.Ganymede.Domain;
 using Solari.Ganymede.Extensions;
-using Solari.Sol.Utils;
+using Solari.Sol.Abstractions;
+using Solari.Sol.Abstractions.Utils;
 
 namespace Solari.Ganymede.Pipeline
 {

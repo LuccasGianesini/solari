@@ -14,10 +14,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Solari.Io.Abstractions\Solari.Io.Abstractions.csproj"/>
+    <ProjectReference Include="..\Solari.Io.Abstractions\Solari.Io.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

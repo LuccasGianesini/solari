@@ -1,5 +1,5 @@
 ﻿using System;
-using Solari.Sol.Extensions;
+using Solari.Sol.Abstractions.Extensions;
 
 namespace Solari.Hyperion.Abstractions
 {

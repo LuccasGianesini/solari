@@ -5,7 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Solari.Hyperion.Abstractions;
 using Solari.Sol;
-using Solari.Sol.Extensions;
+using Solari.Sol.Abstractions;
+using Solari.Sol.Abstractions.Extensions;
 
 namespace Solari.Hyperion.ConfigurationProvider
 {

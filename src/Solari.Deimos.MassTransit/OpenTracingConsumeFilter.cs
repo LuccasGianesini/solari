@@ -10,7 +10,7 @@ using OpenTracing.Propagation;
 using OpenTracing.Tag;
 using OpenTracing.Util;
 using Solari.Deimos.Abstractions;
-using Solari.Sol.Extensions;
+using Solari.Sol.Abstractions.Extensions;
 
 namespace Solari.Deimos.MassTransit
 {

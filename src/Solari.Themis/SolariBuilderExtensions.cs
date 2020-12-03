@@ -6,6 +6,7 @@ using Solari.Deimos;
 using Solari.Deimos.Abstractions;
 using Solari.Io;
 using Solari.Sol;
+using Solari.Sol.Abstractions;
 
 namespace Solari.Themis
 {

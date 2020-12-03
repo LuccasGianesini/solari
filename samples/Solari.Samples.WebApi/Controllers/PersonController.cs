@@ -19,7 +19,7 @@ namespace Solari.Samples.WebApi.Controllers
     public class PersonController : ControllerBase
     {
         private readonly IRequestClient<CreatePersonCommand> _createPersonClient;
-        private readonly IResultFactory _factory;
+
         private readonly ILogger<PersonController> _logger;
 
 
@@ -27,57 +27,53 @@ namespace Solari.Samples.WebApi.Controllers
         {
         }
 
-        [HttpPost]
-        [VanthValidator]
-        [ProducesResponseType(typeof(Result<CreatePersonResult>), 200)]
-        [ProducesResponseType(typeof(Result<object>), 400)]
-        [ProducesResponseType(typeof(Result<CreatePersonResult>), 500)]
-        public async Task<IActionResult> Insert([FromBody] CreatePersonCommand command)
-        {
-            try
-            {
-                Response<IPersonCreatedEvent> response =
-                    await _createPersonClient.GetResponse<IPersonCreatedEvent>(command);
+        // [HttpPost]
+        // [VanthValidator]
+        // public async Task<IActionResult> Insert([FromBody] CreatePersonCommand command)
+        // {
+        //     try
+        //     {
+        //         Response<IPersonCreatedEvent> response =
+        //             await _createPersonClient.GetResponse<IPersonCreatedEvent>(command);
+        //
+        //         // return Ok(_factory.Data(response.Message));
+        //     }
+        //     catch (MongoWriteException exception)
+        //     {
+        //         return CreateExceptionError(exception, "1001", "Error writing new person");
+        //     }
+        //     catch (ArgumentNullException exception)
+        //     {
+        //         return CreateExceptionError(exception, "1001", "Error writing new person");
+        //     }
+        // }
+        //
+        //
+        // [HttpPatch("attributes")]
+        // [VanthValidator]
+        // public async Task<IActionResult> PatchAttributes([FromBody] PersonAttributeCommand command)
+        // {
+        //     try
+        //     {
+        //         // return Ok(command.SimpleResult);
+        //     }
+        //     catch (MongoWriteException exception)
+        //     {
+        //         return CreateExceptionError(exception, "1002", "Error writing person attributes");
+        //     }
+        //     catch (InvalidOperationException exception)
+        //     {
+        //         return CreateExceptionError(exception, "1002", "Error writing person attributes");
+        //     }
+        //     catch (ArgumentOutOfRangeException exception)
+        //     {
+        //         return CreateExceptionError(exception, "1002", "Error writing person attributes");
+        //     }
+        // }
 
-                return Ok(_factory.Data(response.Message));
-            }
-            catch (MongoWriteException exception)
-            {
-                return CreateExceptionError(exception, "1001", "Error writing new person");
-            }
-            catch (ArgumentNullException exception)
-            {
-                return CreateExceptionError(exception, "1001", "Error writing new person");
-            }
-        }
-
-
-        [HttpPatch("attributes")]
-        [VanthValidator]
-        public async Task<IActionResult> PatchAttributes([FromBody] PersonAttributeCommand command)
-        {
-            try
-            {
-                return Ok(command.Result);
-            }
-            catch (MongoWriteException exception)
-            {
-                return CreateExceptionError(exception, "1002", "Error writing person attributes");
-            }
-            catch (InvalidOperationException exception)
-            {
-                return CreateExceptionError(exception, "1002", "Error writing person attributes");
-            }
-            catch (ArgumentOutOfRangeException exception)
-            {
-                return CreateExceptionError(exception, "1002", "Error writing person attributes");
-            }
-        }
-
-        private IActionResult CreateExceptionError(Exception exception, string code, string message)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                              _factory.Exception<CreatePersonResult>(exception, false));
-        }
+        // private IActionResult CreateExceptionError(Exception exception, string code, string message)
+        // {
+        //     // return StatusCode(StatusCodes.Status500InternalServerError, _factory.Exception<CreatePersonResult>(exception, false));
+        // }
     }
 }

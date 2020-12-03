@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Solari.Deimos.Abstractions;
 using Solari.Deimos.CorrelationId.Framework;
 using Solari.Sol;
+using Solari.Sol.Abstractions;
 
 namespace Solari.Deimos.CorrelationId
 {

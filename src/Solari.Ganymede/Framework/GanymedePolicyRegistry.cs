@@ -5,7 +5,7 @@ using Polly.Extensions.Http;
 using Polly.Registry;
 using Solari.Ganymede.Domain;
 using Solari.Ganymede.Domain.Options;
-using Solari.Sol.Extensions;
+using Solari.Sol.Abstractions.Extensions;
 
 namespace Solari.Ganymede.Framework
 {

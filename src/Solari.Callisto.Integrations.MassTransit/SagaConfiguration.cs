@@ -7,7 +7,6 @@ using Solari.Callisto.Abstractions.Contracts;
 using Solari.Callisto.Abstractions.Exceptions;
 using Solari.Callisto.Connector;
 using Solari.Sol;
-using Solari.Sol.Extensions;
 
 namespace Solari.Callisto.Integrations.MassTransit
 {

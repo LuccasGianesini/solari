@@ -1,7 +1,7 @@
 ﻿using System;
 using Solari.Juno.Abstractions;
 using Solari.Sol;
-using Solari.Sol.Helpers;
+using Solari.Sol.Abstractions;
 using VaultSharp;
 using VaultSharp.V1.AuthMethods;
 

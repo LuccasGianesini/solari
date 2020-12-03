@@ -10,6 +10,7 @@ using Solari.Callisto.Framework;
 using Solari.Callisto.Framework.Factories;
 using Solari.Callisto.Framework.Operators;
 using Solari.Sol;
+using Solari.Sol.Abstractions;
 
 // ReSharper disable ParameterOnlyUsedForPreconditionCheck.Local
 

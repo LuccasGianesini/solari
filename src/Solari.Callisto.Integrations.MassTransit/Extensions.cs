@@ -10,7 +10,6 @@ using MassTransit.Transformation.TransformConfigurators;
 using Microsoft.Extensions.Configuration;
 using Solari.Callisto.Abstractions;
 using Solari.Callisto.Abstractions.Exceptions;
-using Solari.Sol.Extensions;
 
 namespace Solari.Callisto.Integrations.MassTransit
 {

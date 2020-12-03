@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Solari.Sol;
+using Solari.Sol.Abstractions;
 using Solari.Vanth.Builders;
+using Solari.Vanth.Extensions;
 
 namespace Solari.Vanth
 {
@@ -56,8 +58,10 @@ namespace Solari.Vanth
                           .WithErrorType(CommonErrorType.Exception)
                           .Build();
 
+            //TODO Arrumar
+            return context.Response.WriteAsync("FAILED");
 
-            return context.Response.WriteAsync(new Result<string>().AddError(error).ToString());
+            // return context.Response.WriteAsync(new SimpleResult<string>().AddError(error).ToString());
         }
     }
 }

@@ -12,8 +12,6 @@ using Solari.Callisto.Connector;
 using Solari.Callisto.Tracer;
 using Solari.Callisto.Tracer.Framework;
 using Solari.Sol;
-using Solari.Sol.Extensions;
-using Solari.Sol.Utils;
 
 namespace Solari.Callisto.Integrations.MassTransit
 {

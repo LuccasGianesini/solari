@@ -6,6 +6,7 @@ using Solari.Callisto.Abstractions;
 using Solari.Callisto.Abstractions.Contracts;
 using Solari.Callisto.Abstractions.Exceptions;
 using Solari.Sol;
+using Solari.Sol.Abstractions;
 
 namespace Solari.Callisto
 {

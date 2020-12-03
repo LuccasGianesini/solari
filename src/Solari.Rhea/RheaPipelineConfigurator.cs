@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using Solari.Sol;
+using Solari.Sol.Abstractions;
 
 namespace Solari.Rhea
 {

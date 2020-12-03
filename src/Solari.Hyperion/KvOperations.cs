@@ -7,7 +7,8 @@ using Consul;
 using Microsoft.Extensions.Options;
 using Solari.Hyperion.Abstractions;
 using Solari.Sol;
-using Solari.Sol.Extensions;
+using Solari.Sol.Abstractions;
+using Solari.Sol.Abstractions.Extensions;
 
 namespace Solari.Hyperion
 {

@@ -6,7 +6,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Solari.Sol.Utils;
+using Solari.Sol.Abstractions;
+using Solari.Sol.Abstractions.Extensions;
+using Solari.Sol.Abstractions.Utils;
 using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace Solari.Ganymede.ContentSerializers
@@ -23,7 +25,7 @@ namespace Solari.Ganymede.ContentSerializers
         }
         public async Task<Maybe<TModel>> Deserialize<TModel>(HttpContent content)
         {
-            await using Stream stream = await content.ReadAsStreamAsync().ConfigureAwait(false);
+            await using Stream stream = await content.ReadAsStreamAsync().DefaultAwait();
             using var reader = new StreamReader(stream);
             using JsonReader json = new JsonTextReader(reader);
             var model = _serializer.Deserialize<TModel>(json);

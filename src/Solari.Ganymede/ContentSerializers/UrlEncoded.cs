@@ -5,8 +5,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Solari.Ganymede.Framework;
-using Solari.Sol.Extensions;
-using Solari.Sol.Utils;
+using Solari.Sol.Abstractions;
+using Solari.Sol.Abstractions.Extensions;
+using Solari.Sol.Abstractions.Utils;
 
 namespace Solari.Ganymede.ContentSerializers
 {

@@ -5,6 +5,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Solari.Sol;
+using Solari.Sol.Abstractions;
 using Solari.Triton.JetBrains.Annotations;
 
 namespace Solari.Triton

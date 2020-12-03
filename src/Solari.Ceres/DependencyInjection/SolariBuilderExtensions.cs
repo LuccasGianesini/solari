@@ -5,7 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Solari.Ceres.Abstractions;
 using Solari.Ceres.Framework;
 using Solari.Sol;
-using Solari.Sol.Extensions;
+using Solari.Sol.Abstractions;
+using Solari.Sol.Abstractions.Extensions;
 
 namespace Solari.Ceres.DependencyInjection
 {

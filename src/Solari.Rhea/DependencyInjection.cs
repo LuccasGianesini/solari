@@ -1,5 +1,6 @@
 using System;
 using Solari.Sol;
+using Solari.Sol.Abstractions;
 using Solari.Vanth.DependencyInjection;
 
 namespace Solari.Rhea

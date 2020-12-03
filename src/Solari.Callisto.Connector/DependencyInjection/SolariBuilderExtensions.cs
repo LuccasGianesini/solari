@@ -6,7 +6,8 @@ using Solari.Callisto.Abstractions.Contracts;
 using Solari.Callisto.Tracer;
 using Solari.Callisto.Tracer.Framework;
 using Solari.Sol;
-using Solari.Sol.Utils;
+using Solari.Sol.Abstractions;
+using Solari.Sol.Abstractions.Utils;
 
 namespace Solari.Callisto.Connector.DependencyInjection
 {

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Solari.Juno.Abstractions;
 using Solari.Sol;
-using Solari.Sol.Helpers;
+using Solari.Sol.Abstractions;
 using VaultSharp;
 using VaultSharp.V1.Commons;
 

@@ -14,7 +14,6 @@
     <ProjectReference Include="..\..\src\Solari.Ceres\Solari.Ceres.csproj" />
     <ProjectReference Include="..\..\src\Solari.Deimos.CorrelationId\Solari.Deimos.CorrelationId.csproj" />
     <ProjectReference Include="..\..\src\Solari.Deimos\Solari.Deimos.csproj" />
-    <ProjectReference Include="..\..\src\Solari.Eris\Solari.Eris.csproj" />
     <ProjectReference Include="..\..\src\Solari.Ganymede\Solari.Ganymede.csproj" />
     <ProjectReference Include="..\..\src\Solari.Io\Solari.Io.csproj" />
     <ProjectReference Include="..\..\src\Solari.Juno\Solari.Juno.csproj" />
@@ -29,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit.Analyzers" Version="7.0.6" />
+    <PackageReference Include="MassTransit.Analyzers" Version="7.0.7" />
   </ItemGroup>
 
 </Project>

@@ -3,7 +3,7 @@ using Serilog;
 using Serilog.Formatting.Json;
 using Serilog.Sinks.Graylog;
 using Serilog.Sinks.Loki;
-using Solari.Sol.Extensions;
+using Solari.Sol.Abstractions.Extensions;
 using Solari.Titan.Abstractions;
 using Solari.Titan.Loki;
 

@@ -7,6 +7,8 @@ using OpenTracing;
 using OpenTracing.Tag;
 using Solari.Callisto.Abstractions;
 using Solari.Sol;
+using Solari.Sol.Abstractions;
+using Solari.Sol.Abstractions.Utils;
 
 namespace Solari.Callisto.Tracer.Framework
 {

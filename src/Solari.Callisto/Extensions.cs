@@ -12,6 +12,7 @@ using Solari.Callisto.Abstractions.Contracts.CQR;
 using Solari.Callisto.Abstractions.Exceptions;
 using Solari.Callisto.Serializers;
 using Solari.Sol;
+using Solari.Sol.Abstractions;
 
 namespace Solari.Callisto
 {

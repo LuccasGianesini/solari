@@ -14,12 +14,12 @@
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt"/>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="VaultSharp" Version="1.4.0.5"/>
+    <PackageReference Include="VaultSharp" Version="1.6.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj"/>
+    <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
   </ItemGroup>
 </Project>

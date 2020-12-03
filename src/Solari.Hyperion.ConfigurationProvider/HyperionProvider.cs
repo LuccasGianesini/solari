@@ -3,8 +3,8 @@ using System.Text;
 using Consul;
 using Newtonsoft.Json.Linq;
 using Solari.Hyperion.Abstractions;
-using Solari.Sol.Helpers;
-using Solari.Sol.Utils;
+using Solari.Sol.Abstractions;
+using Solari.Sol.Abstractions.Utils;
 
 namespace Solari.Hyperion.ConfigurationProvider
 {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Solari.Sol;
+using Solari.Sol.Abstractions;
 using VaultSharp;
 
 namespace Solari.Juno.Abstractions

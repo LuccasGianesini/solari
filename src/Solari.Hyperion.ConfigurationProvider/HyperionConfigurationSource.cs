@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Solari.Hyperion.Abstractions;
 using Solari.Sol;
+using Solari.Sol.Abstractions;
 
 namespace Solari.Hyperion.ConfigurationProvider
 {

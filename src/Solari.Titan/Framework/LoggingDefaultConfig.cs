@@ -3,6 +3,7 @@ using Serilog;
 using Serilog.Core;
 using Serilog.Exceptions;
 using Solari.Sol;
+using Solari.Sol.Abstractions;
 using Solari.Titan.Abstractions;
 
 namespace Solari.Titan.Framework

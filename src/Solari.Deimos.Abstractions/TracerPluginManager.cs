@@ -1,5 +1,6 @@
 ﻿using System;
 using Solari.Sol;
+using Solari.Sol.Abstractions;
 
 namespace Solari.Deimos.Abstractions
 {

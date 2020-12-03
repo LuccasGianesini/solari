@@ -6,7 +6,8 @@ using Solari.Callisto.Abstractions.Contracts;
 using Solari.Callisto.Abstractions.Exceptions;
 using Solari.Callisto.Tracer.Framework;
 using Solari.Sol;
-using Solari.Sol.Extensions;
+using Solari.Sol.Abstractions;
+using Solari.Sol.Abstractions.Extensions;
 
 namespace Solari.Callisto.Connector
 {

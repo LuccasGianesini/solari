@@ -1,18 +1,16 @@
-﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using Newtonsoft.Json;
-using Solari.Sol.Utils;
-using Solari.Vanth.Builders;
 
 namespace Solari.Vanth
 {
-    [Serializable]
-    public class Result<TData> : IResult<TData>
+    public record Result<T> : IResult<T>
     {
-        public List<IError> Errors { get; set; } = new List<IError>();
-        public int StatusCode { get; set; }
-        public TData Data { get; set; }
+        public Result()
+        {
+            Errors = new List<IError>();
+        }
+
+        public T Data { get; init;  }
+        public List<IError> Errors { get; }
+        public bool Success { get; init; }
     }
 }

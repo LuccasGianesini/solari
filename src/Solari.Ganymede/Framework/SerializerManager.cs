@@ -3,7 +3,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Solari.Ganymede.ContentSerializers;
 using Solari.Ganymede.Extensions;
-using Solari.Sol.Utils;
+using Solari.Sol.Abstractions;
+using Solari.Sol.Abstractions.Utils;
 
 namespace Solari.Ganymede.Framework
 {

@@ -6,7 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Solari.Sol;
-using Solari.Sol.Extensions;
+using Solari.Sol.Abstractions;
+using Solari.Sol.Abstractions.Extensions;
 using Solari.Vanth.Validation;
 
 namespace Solari.Vanth.DependencyInjection
@@ -27,7 +28,6 @@ namespace Solari.Vanth.DependencyInjection
             IConfigurationSection section = builder.Configuration.GetSection(VanthLibConstants.AppSettingsSection);
             if (!section.Exists())
             {
-                builder.Services.TryAddTransient<IResultFactory, ResultFactory>();
                 return builder;
             }
 

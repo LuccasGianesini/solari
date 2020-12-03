@@ -11,7 +11,8 @@ using Solari.Ganymede.Domain.Options;
 using Solari.Ganymede.Extensions;
 using Solari.Ganymede.Framework.DelegatingHandlers;
 using Solari.Sol;
-using Solari.Sol.Extensions;
+using Solari.Sol.Abstractions;
+using Solari.Sol.Abstractions.Extensions;
 
 namespace Solari.Ganymede.DependencyInjection
 {

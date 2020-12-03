@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Solari.Vanth.Exceptions;
+using Solari.Vanth.Extensions;
 
 namespace Solari.Vanth.Builders
 {
@@ -61,14 +62,16 @@ namespace Solari.Vanth.Builders
 
         public IError Build()
         {
-            if (string.IsNullOrEmpty(_message)) throw new NullOrEmptyErrorMessageException();
-            return new Error
-            {
-                Code = _code,
-                ErrorType = _errorType,
-                Message = _message,
-                Target = _target
-            }.AddErrorDetail(_details);
+            // TODO Fix
+            return new Error();
+            // if (string.IsNullOrEmpty(_message)) throw new NullOrEmptyErrorMessageException();
+            // return new Error
+            // {
+            //     Code = _code,
+            //     ErrorType = _errorType,
+            //     Message = _message,
+            //     Target = _target
+            // }.AddErrorDetail(_details);
         }
     }
 }

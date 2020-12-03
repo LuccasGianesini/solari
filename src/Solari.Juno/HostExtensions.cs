@@ -8,8 +8,9 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Linq;
 using Solari.Juno.Abstractions;
 using Solari.Sol;
-using Solari.Sol.Extensions;
-using Solari.Sol.Utils;
+using Solari.Sol.Abstractions;
+using Solari.Sol.Abstractions.Extensions;
+using Solari.Sol.Abstractions.Utils;
 
 namespace Solari.Juno
 {
