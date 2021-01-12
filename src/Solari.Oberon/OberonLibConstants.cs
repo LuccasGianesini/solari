@@ -1,6 +1,6 @@
 ﻿namespace Solari.Oberon
 {
-    public class OberonLibConstants
+    internal class OberonLibConstants
     {
         public const string AppSettingsSection = "Oberon";
     }

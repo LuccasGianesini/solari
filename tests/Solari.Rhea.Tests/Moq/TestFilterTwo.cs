@@ -14,7 +14,7 @@ namespace Solari.Rhea.Tests
 
         public Task Call(PipelineContext context)
         {
-            _logger.LogInformation("Calling filter two");
+            _logger.LogInformation("Calling Filter Two");
             return Task.CompletedTask;
         }
     }

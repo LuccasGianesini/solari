@@ -1,10 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Solari.Oberon
 {
-    public static class SerializationHelper
+    internal static class SerializationHelper
     {
-        public static T Deserialize<T>(string json) { return string.IsNullOrEmpty(json) ? default : JsonConvert.DeserializeObject<T>(json); }
+        public static T Deserialize<T>(string json) => string.IsNullOrEmpty(json) ? default : JsonConvert.DeserializeObject<T>(json);
 
         public static bool TrySerializeObject<T>(T @object, out string json)
         {

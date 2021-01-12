@@ -37,8 +37,7 @@ namespace Solari.Juno
             if (string.IsNullOrEmpty(key)) throw new JunoException("Cannot write to Vault with an empty key!");
             if (value == null) throw new JunoException("Null values cannot be written to Vault.");
             await VaultClient.V1.Secrets.KeyValue.V2.WriteSecretAsync(ApplicationOptions.GetApplicationConfigurationPath(key),
-                                                                      value,
-                                                                      mountPoint: mountPoint);
+                                                                      value, mountPoint: mountPoint);
         }
 
 

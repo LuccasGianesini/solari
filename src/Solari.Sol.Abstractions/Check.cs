@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Configuration;
 
 namespace Solari.Sol.Abstractions
 {
@@ -9,6 +11,12 @@ namespace Solari.Sol.Abstractions
     {
         #region Null/Empty Checking
 
+
+        public static void ThrowIfSectionDoesNotExists(IConfigurationSection section, Exception exception)
+        {
+            if (!section.Exists())
+                throw exception;
+        }
         public static bool IsNullOrEmpty(string value)
         {
             return string.IsNullOrEmpty(value.Trim());
@@ -86,6 +94,27 @@ namespace Solari.Sol.Abstractions
         }
 
         /// <summary>
+        /// Checks the specified string to ensure it is not null or empty and if so, throws an <see cref="T:ArgumentNullException"/>.
+        /// </summary>
+        /// <param name="value">The parameter value to check.</param>
+        /// <param name="parameterName">Name of the parameter.</param>
+        /// <param name="inner">The inner exception</param>
+        /// <exception cref="T:ArgumentNullException">The parameter is null.</exception>
+        /// <exception cref="T:ArgumentException">The parameter is an empty string or a string consisting of only whitespace.</exception>
+        public static void ThrowIfNullOrEmpty(string value, Exception exception)
+        {
+            if (value == null)
+            {
+                throw exception;
+            }
+
+            if (value.Trim().Length == 0)
+            {
+                throw exception;
+            }
+        }
+
+        /// <summary>
         /// Checks if a dictionary contains the specified key.
         /// </summary>
         /// <param name="dictionary">The dictionary to be checked</param>
@@ -145,18 +174,18 @@ namespace Solari.Sol.Abstractions
         /// <param name="inner">The inner exception</param>
         /// <exception cref="T:ArgumentNullException">The parameter is null.</exception>
         /// <exception cref="T:ArgumentException">The parameter is an empty array.</exception>
-        public static void ThrowIfNullOrEmpty(Array array, string parameterName = null, Exception inner = null)
-        {
-            if (array == null)
-            {
-                throw new ArgumentNullException(parameterName, inner);
-            }
-
-            if (array.Length == 0)
-            {
-                throw new ArgumentException($"{parameterName ?? "Array"} cannot be an empty array.", parameterName, inner);
-            }
-        }
+        // public static void ThrowIfNullOrEmpty(Array array, string parameterName = null, Exception inner = null)
+        // {
+        //     if (array == null)
+        //     {
+        //         throw new ArgumentNullException(parameterName, inner);
+        //     }
+        //
+        //     if (array.Length == 0)
+        //     {
+        //         throw new ArgumentException($"{parameterName ?? "Array"} cannot be an empty array.", parameterName, inner);
+        //     }
+        // }
 
         /// <summary>
         /// Checks the specified array to ensure it does not contain any null references and if so,
@@ -171,20 +200,20 @@ namespace Solari.Sol.Abstractions
         /// <param name="parameterName">Name of the parameter.</param>
         /// <param name="inner">The inner exception</param>
         /// <exception cref="T:ArgumentException">The array contains at least one null reference.</exception>
-        public static void ThrowIfNullElement(Array array, string parameterName = null, Exception inner = null)
-        {
-            // Don't check null arrays
-            if (array != null)
-            {
-                for (long i = 0; i < array.LongLength; i++)
-                {
-                    if (array.GetValue(i) == null)
-                    {
-                        throw new ArgumentException($"{parameterName ?? "Array"} cannot contain null references.", parameterName, inner);
-                    }
-                }
-            }
-        }
+        // public static void ThrowIfNullElement(Array array, string parameterName = null, Exception inner = null)
+        // {
+        //     // Don't check null arrays
+        //     if (array != null)
+        //     {
+        //         for (long i = 0; i < array.LongLength; i++)
+        //         {
+        //             if (array.GetValue(i) == null)
+        //             {
+        //                 throw new ArgumentException($"{parameterName ?? "Array"} cannot contain null references.", parameterName, inner);
+        //             }
+        //         }
+        //     }
+        // }
 
         /// <summary>
         /// Checks the specified collection to ensure it does not contain any null references and if so,
@@ -245,6 +274,31 @@ namespace Solari.Sol.Abstractions
                 }
             }
         }
+
+        public static void ThrowIfNullOrEmpty<T>(IEnumerable<T> enumerable, string parameterName = null, Exception inner = null)
+        {
+            if (enumerable == null)
+            {
+                throw new ArgumentNullException(parameterName, inner);
+            }
+
+            if (!enumerable.Any())
+            {
+                throw new ArgumentException($"{parameterName ?? "IEnumerableOfT"} cannot be an empty collection.", parameterName, inner);
+            }
+        }
+
+        public static void ThrowIfNullOrEmpty(System.Collections.IEnumerable enumerable, string parameterName = null, Exception inner = null)
+        {
+            if (enumerable == null)
+            {
+                throw new ArgumentNullException(parameterName, inner);
+            }
+
+
+        }
+
+
         public static bool IsValidPrimitive(Type type)
         {
             switch (Type.GetTypeCode(type))
@@ -780,13 +834,8 @@ namespace Solari.Sol.Abstractions
         /// <param name="exception"></param>
         private static void ThrowArgumentOutOfRangeException(string paramName, object actualValue, string message)
         {
-#if !SILVERLIGHT
-            throw new ArgumentOutOfRangeException(paramName, actualValue, message);
-#else
-    throw new ArgumentOutOfRangeException( paramName, message );
-#endif
+            throw new ArgumentOutOfRangeException( paramName, message );
         }
-
         #endregion
     }
 }

@@ -16,19 +16,30 @@ namespace Solari.Rhea
             _provider = provider;
         }
 
-        public RheaPipeline AddFilter(Type filter)
+        /// <summary>
+        /// Add the entrypoint to the pipeline.
+        /// This method can only be called once
+        /// </summary>
+        /// <param name="filter">Filter type</param>
+        /// <returns><see cref="RheaPipeline"/></returns>
+        public RheaPipeline AddFirstFilter(Type filter)
         {
             if (!filter.IsAssignableFrom(typeof(IRheaPipelineFilter)))
             {
                 // throw exception
             }
 
-            if (_first != null)
-                return this;
+            if (_first is not null)
+                throw new SolariException("First filter is already registered");
             _first = filter;
             return this;
         }
 
+        /// <summary>
+        /// Executes the pipeline calling the first filter.
+        /// </summary>
+        /// <param name="context">Pipeline context. <see cref="PipelineContext"/></param>
+        /// <returns><see cref="Task"/></returns>
         public async Task Execute(PipelineContext context)
         {
             Check.ThrowIfNull(context, nameof(PipelineContext));

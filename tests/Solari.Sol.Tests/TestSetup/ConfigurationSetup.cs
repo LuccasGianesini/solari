@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 
 namespace Solari.Sol.Tests.TestSetup
@@ -6,11 +7,8 @@ namespace Solari.Sol.Tests.TestSetup
     internal static class ConfigurationSetup
     {
 
-        public static IConfiguration BuildConfiguration(string configFileName)
-        {
-            return new ConfigurationBuilder().AddJsonFile(configFileName).Build();
-        }
-
-
+        public static IConfiguration BuildConfiguration(ConfigurationKeys keys) => new ConfigurationBuilder()
+                                                                                   .AddInMemoryCollection(ConfigurationCollection.Select(keys))
+                                                                                   .Build();
     }
 }

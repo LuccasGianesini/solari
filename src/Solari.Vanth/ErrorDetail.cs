@@ -6,14 +6,14 @@ using Newtonsoft.Json;
 namespace Solari.Vanth
 {
     [Serializable]
-    public class ErrorDetail : IErrorDetail, ISerializable
+    public record ErrorDetail : IErrorDetail
     {
-        public string Code { get; set; }
-        public string StackTrace { get; set; }
-        public string HelpUrl { get; set; }
-        public string Message { get; set; }
-        public string Target { get; set; }
-        public string Source { get; set; }
+        public string Code { get; init; }
+        public string StackTrace { get; init; }
+        public string HelpUrl { get; init; }
+        public string Message { get; init; }
+        public string Target { get; init; }
+        public string Source { get; init; }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {

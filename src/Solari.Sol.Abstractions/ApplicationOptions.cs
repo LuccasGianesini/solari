@@ -35,12 +35,7 @@ namespace Solari.Sol.Abstractions
         /// </summary>
         public string ApplicationName {
             get => _appName;
-            set
-            {
-                if(string.IsNullOrEmpty(value))
-                    throw new SolariException("The application name was not provided.");
-                _appName = value.ToKebabCase();
-            }
+            set => _appName = value.ToKebabCase();
         }
 
 

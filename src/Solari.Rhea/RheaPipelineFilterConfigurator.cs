@@ -20,7 +20,7 @@ namespace Solari.Rhea
         public RheaPipelineFilterConfigurator AddFilter<T>() where T : class, IRheaPipelineFilter
         {
             _builder.Services.TryAddTransient<T>();
-            _pipeline.AddFilter(typeof(T));
+            _pipeline.AddFirstFilter(typeof(T));
             return this;
         }
 
@@ -34,7 +34,7 @@ namespace Solari.Rhea
                 }
 
                 _builder.Services.TryAddTransient(filter);
-                _pipeline.AddFilter(filter);
+                _pipeline.AddFirstFilter(filter);
             }
 
             return this;

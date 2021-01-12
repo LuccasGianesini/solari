@@ -6,19 +6,22 @@ namespace Solari.Rhea
     public class PayloadCache : IContextPayloadCache
     {
         IList<object> _cache;
+        private readonly object _synLock;
 
         public PayloadCache()
         {
+            _synLock = new object();
         }
 
         public PayloadCache(object[] payloads)
         {
             _cache = new List<object>(payloads);
+            _synLock = new object();
         }
 
         public bool HasPayloadType(Type payloadType)
         {
-            lock (this)
+            lock (_synLock)
             {
                 if (_cache == null)
                     return false;
@@ -42,7 +45,7 @@ namespace Solari.Rhea
                 return false;
             }
 
-            lock (this)
+            lock (_synLock)
             {
                 for (int i = _cache.Count - 1; i >= 0; i--)
                 {
@@ -61,7 +64,7 @@ namespace Solari.Rhea
         public T GetOrAddPayload<T>(PayloadFactory<T> payloadFactory)
             where T : class
         {
-            lock (this)
+            lock (_synLock)
             {
                 if (_cache != null)
                 {
@@ -86,7 +89,7 @@ namespace Solari.Rhea
         public T AddOrUpdatePayload<T>(PayloadFactory<T> addFactory, UpdatePayloadFactory<T> updateFactory)
             where T : class
         {
-            lock (this)
+            lock (_synLock)
             {
                 if (_cache != null)
                 {
@@ -94,7 +97,7 @@ namespace Solari.Rhea
                     {
                         if (_cache[i] is T result)
                         {
-                            var updated = updateFactory(result);
+                            T updated = updateFactory(result);
 
                             _cache[i] = updated;
 

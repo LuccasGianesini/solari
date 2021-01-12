@@ -41,7 +41,7 @@ namespace Solari.Sol.Abstractions
         /// <summary>
         ///     Creates a <see cref="Maybe{T}" /> with no value added to the array. HasValue evaluates to false.
         /// </summary>
-        public static Maybe<T> None => new Maybe<T>(new T[0]);
+        public static Maybe<T> None => new(new T[0]);
 
         /// <summary>
         ///     Checks if the Values array contains any element.

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
+using Solari.Sol.Abstractions;
 
 namespace Solari.Oberon
 {
@@ -19,7 +20,7 @@ namespace Solari.Oberon
         {
             if (SerializationHelper.TrySerializeObject(obj, out string json)) await Cache.SetStringAsync(key, json, options);
 
-            throw new CacheSaveException("Unable to save object to cache TrySerializeObject method returned false.");
+            throw new OberonException("Unable to save object to cache");
         }
     }
 }

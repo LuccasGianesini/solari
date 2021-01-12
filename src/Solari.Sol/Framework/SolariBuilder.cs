@@ -5,6 +5,7 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Solari.Sol.Abstractions;
 using Solari.Sol.Abstractions.Extensions;
 
@@ -14,12 +15,12 @@ namespace Solari.Sol.Framework
     {
         private readonly ApplicationOptions _applicationOptions;
 
-        public SolariBuilder(IServiceCollection services, IConfiguration configuration)
+        public SolariBuilder(IServiceCollection services, IConfiguration configuration, ApplicationOptions appOptions)
         {
             Services = services;
             Configuration = configuration;
             BuildActions = new Queue<BuildAction>(10);
-            _applicationOptions = Configuration.GetApplicationOptions();
+            _applicationOptions = appOptions;
         }
 
         public IConfiguration Configuration { get; }

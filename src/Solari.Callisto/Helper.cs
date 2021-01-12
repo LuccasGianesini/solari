@@ -2,6 +2,7 @@
 using Solari.Callisto.Abstractions;
 using Solari.Callisto.Abstractions.Contracts.CQR;
 using Solari.Callisto.Abstractions.Exceptions;
+using Solari.Sol.Abstractions;
 
 namespace Solari.Callisto
 {
@@ -41,10 +42,9 @@ namespace Solari.Callisto
         }
 
         public static void PreExecutionCheck<T>(ICallistoOperation<T> operation)
-            where T: class, IDocumentRoot
+            where T : class, IDocumentRoot
         {
-            if (operation is null)
-                throw new CallistoException("Please provide a valid instance of a 'ICallistoOperation'");
+            Check.ThrowIfNull(operation, nameof(ICallistoOperation<T>), new CallistoException("Please provide a valid instance of a 'ICallistoOperation'"));
             operation.Validate();
         }
     }

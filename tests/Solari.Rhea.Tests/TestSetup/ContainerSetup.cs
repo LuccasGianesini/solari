@@ -1,9 +1,9 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Solari.Sol.Tests.TestSetup
+namespace Solari.Rhea.Tests.TestSetup
 {
-    internal static class ContainerSetup
+    public class ContainerSetup
     {
         public static IServiceCollection ConfigureContainer(Action<IServiceCollection> registerServices = null)
         {

@@ -16,7 +16,7 @@ namespace Solari.Rhea.Tests
         }
         public async Task Call(PipelineContext context)
         {
-            _logger.LogInformation("Exec filter one");
+            _logger.LogInformation("Calling Filter One");
             await Task.Delay(TimeSpan.FromSeconds(5));
             await _testFilterTwo.Call(context);
 

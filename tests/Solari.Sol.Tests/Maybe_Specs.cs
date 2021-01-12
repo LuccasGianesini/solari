@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Newtonsoft.Json;
 using Solari.Sol.Abstractions;
 using Solari.Sol.Tests.TestSetup;
@@ -12,14 +13,21 @@ namespace Solari.Sol.Tests
             Age = 22,
             Name = "BOLT"
         };
-        // private const string _expectedJsonString = "{"Value":{"Name":"BOB","Age":22}}"
+
+        private const string _expectedJsonString = "{\"Value\":{\"Name\":\"BOLT\",\"Age\":22}}";
 
         [Fact]
         public void Should_Serialize_Only_The_Value_To_Json()
         {
             Maybe<Person> maybe = Maybe<Person>.Some(_person);
             string json = SolariJsonSerializer.New.SerializeToJson(maybe);
+            json.Should().Be(_expectedJsonString);
         }
+        [Fact]
+        public void Should_Deserialize_Only_The_Value_From_Json()
+        {
+            var obj = SolariJsonSerializer.New.DeserializeFromString<Maybe<Person>>(_expectedJsonString);
 
+        }
     }
 }
