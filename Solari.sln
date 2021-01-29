@@ -109,25 +109,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solari.Sol.Abstractions", "src\Solari.Sol.Abstractions\Solari.Sol.Abstractions.csproj", "{903C5036-04FC-456D-8F9B-5F08590A9D79}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{7F504001-E21E-44F0-B1A9-CD2FC86C0A8B}"
-ProjectSection(SolutionItems) = preProject
-	docs\solari.wiki\.gitignore = docs\solari.wiki\.gitignore
-	docs\solari.wiki\Callisto.md = docs\solari.wiki\Callisto.md
-	docs\solari.wiki\Ceres.md = docs\solari.wiki\Ceres.md
-	docs\solari.wiki\Changelog.md = docs\solari.wiki\Changelog.md
-	docs\solari.wiki\Deimos.md = docs\solari.wiki\Deimos.md
-	docs\solari.wiki\Eris.md = docs\solari.wiki\Eris.md
-	docs\solari.wiki\Ganymede.md = docs\solari.wiki\Ganymede.md
-	docs\solari.wiki\Home.md = docs\solari.wiki\Home.md
-	docs\solari.wiki\Hyperion.md = docs\solari.wiki\Hyperion.md
-	docs\solari.wiki\Io.md = docs\solari.wiki\Io.md
-	docs\solari.wiki\Juno.md = docs\solari.wiki\Juno.md
-	docs\solari.wiki\Oberon.md = docs\solari.wiki\Oberon.md
-	docs\solari.wiki\Rhea.md = docs\solari.wiki\Rhea.md
-	docs\solari.wiki\Sol.md = docs\solari.wiki\Sol.md
-	docs\solari.wiki\Themis.md = docs\solari.wiki\Themis.md
-	docs\solari.wiki\Titan.md = docs\solari.wiki\Titan.md
-	docs\solari.wiki\Vanth.md = docs\solari.wiki\Vanth.md
-EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

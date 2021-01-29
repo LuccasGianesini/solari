@@ -12,34 +12,89 @@ namespace Solari.Sol.Abstractions
         #region Null/Empty Checking
 
 
+        /// <summary>
+        /// Check the specified <see cref="IConfigurationSection"/> to ensure it exists, if not throws and <see cref="Exception"/>.
+        /// This method can throw an <see cref="ArgumentNullException"/> if the exception instance is null.
+        /// </summary>
+        /// <param name="exception">The instance of the exception to be thrown</param>
+        /// <param name="section">The confoguration sections to be check</param>
         public static void ThrowIfSectionDoesNotExists(IConfigurationSection section, Exception exception)
         {
             if (!section.Exists())
                 throw exception;
         }
-        public static bool IsNullOrEmpty(string value)
+
+        /// <summary>
+        /// Check the specified <see cref="IConfigurationSection"/> to ensure it exists, if not throws and <see cref="Exception"/>.
+        /// </summary>
+        /// <param name="section">The confoguration sections to be check</param>
+        public static void ThrowIfSectionDoesNotExists(IConfigurationSection section)
         {
-            return string.IsNullOrEmpty(value.Trim());
+            ThrowIfSectionDoesNotExists(section, new Exception($"Section '{section.Key}' does not exists in the AppSettings file"));   
         }
 
+        /// <summary>
+        /// Check the specified string the ensure the same is null or empty. The string is trimmed before performing the check.
+        /// </summary>
+        /// <param name="value">The string to be checked</param>
+        /// <returns>True if the string is null or empty, otherwise returns false</returns>
+        public static bool IsNullOrEmpty(string value)
+        {
+            return IsNullOrEmpty(value, true);
+        }
+
+        /// <summary>
+        /// Check the specified string the ensure the same is null or empty.
+        /// </summary>
+        /// <param name="value">The string to be checked</param>
+        /// <param name="trim">Specifies if the string must be trimmed before performing the check</param>
+        /// <returns>True if the string is null or empty, otherwise returns false</returns>
+        public static bool IsNullOrEmpty(string value, bool trim)
+        {
+            return string.IsNullOrEmpty(trim ? value.Trim() : value);
+        }
+
+        /// <summary>
+        /// Check the specified paramenter to ensure the string is empty. This method checkes the if lenght of the string is equals to 0.
+        /// </summary>
+        /// <param name="value">The string the be checked</param>
+        /// <returns>True if the lenght of the string is equals to 0, otherwise returns false</returns>
         public static bool IsEmpty(string value)
         {
             return value.Trim().Length == 0;
         }
 
+        /// <summary>
+        /// Check the specified paramenter to ensure is value is null.
+        /// </summary>
+        /// <typeparam name="T">Generic value type</typeparam>
+        /// <param name="value">The value to be checked</param>
+        /// <returns>True if the value is null, otherwise returns false.</returns>
         public static bool IsNull<T>(T value)
         {
             return value is null;
         }
 
+        /// <summary>
+        /// Check the specified paramenter to ensure is value is null.
+        /// </summary>
+        /// <param name="value">The value to be checked</param>
+        /// <returns>True if the value is null, otherwise returns false.</returns>
         public static bool IsNull(object value)
         {
             return value is null;
         }
 
+        /// <summary>
+        /// Checks the specified boolean value to ensure it is true, otherwise throws an <see cref="Exception"/>.
+        /// If the provided value is null, this method will throw an <see cref="ArgumentNullException"/>.
+        /// </summary>
+        /// <param name="value">The boolean </param>
+        /// <param name="exception"></param>
+
         public static void ThrowIfFalse(bool value, Exception exception)
         {
-            ThrowIfNull(exception, nameof(Exception), new ArgumentException("Cannot throw a null Exception"));
+            ThrowIfNull(exception, nameof(value), new ArgumentException("Cannot throw a null Exception"));
             if (!value)
                 throw exception;
         }

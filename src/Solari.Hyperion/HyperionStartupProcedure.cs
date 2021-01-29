@@ -107,7 +107,7 @@ namespace Solari.Hyperion
             Uri appUri = GetApplicationUri(address);
             IPAddress ip = Dns.GetHostEntry(Dns.GetHostName()).AddressList.FirstOrDefault(x => x.AddressFamily == AddressFamily.InterNetwork);
             if (ip == null)
-                // Throw when ASPNETCORE_URLS is not defined.
+                // Throws when ASPNETCORE_URLS is not defined.
                 throw new HyperionHostedException("Could not find instance host IP. ");
 
 
@@ -152,6 +152,6 @@ namespace Solari.Hyperion
             return server is null ? "localhost" : server.Features?.Get<IServerAddressesFeature>()?.Addresses.FirstOrDefault();
         }
 
-        private Uri GetApplicationUri(string address) { return string.IsNullOrEmpty(address) ? null : new Uri(address.Replace("*", "localhost")); }
+        private Uri GetApplicationUri(string address) => string.IsNullOrEmpty(address) ? null : new Uri(address.Replace("*", "localhost"));
     }
 }

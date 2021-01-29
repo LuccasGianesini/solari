@@ -20,13 +20,7 @@ namespace Solari.Sol
             return host;
         }
 
-        public static IServiceProvider UseSol(this IServiceProvider provider)
-        {
-            return provider.UseSol();
-        }
-
-        private static IServiceProvider UseSol(this IServiceProvider provider, IApplicationBuilder applicationBuilder = null
-                                             , IHost host = null)
+        private static IServiceProvider UseSol(this IServiceProvider provider, IApplicationBuilder applicationBuilder = null, IHost host = null)
         {
             provider.GetRequiredService<ISolariMarshal>().ConfigureApplication(provider, applicationBuilder, host).ExecuteBuildActions();
             return provider;
