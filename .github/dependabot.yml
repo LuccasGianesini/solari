@@ -1,0 +1,42 @@
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "09:00"
+  open-pull-requests-limit: 10
+  target-branch: develop
+  ignore:
+  - dependency-name: MongoDB.Driver
+    versions:
+    - 2.11.6
+    - 2.12.0
+    - 2.12.1
+  - dependency-name: Microsoft.Extensions.Identity.Core
+    versions:
+    - 5.0.2
+    - 5.0.3
+    - 5.0.4
+  - dependency-name: Microsoft.AspNetCore.Mvc.NewtonsoftJson
+    versions:
+    - 5.0.2
+    - 5.0.3
+    - 5.0.4
+  - dependency-name: Microsoft.Extensions.Identity.Stores
+    versions:
+    - 5.0.2
+    - 5.0.3
+    - 5.0.4
+  - dependency-name: Microsoft.NET.Test.Sdk
+    versions:
+    - 16.9.0-preview-20210127-04
+    - 16.9.1
+  - dependency-name: VaultSharp
+    versions:
+    - 1.6.0.2
+    - 1.6.0.3
+    - 1.6.2
+  - dependency-name: Serilog
+    versions:
+    - 2.10.1-dev-01265
