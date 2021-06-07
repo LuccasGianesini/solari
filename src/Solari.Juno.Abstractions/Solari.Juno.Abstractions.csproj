@@ -17,7 +17,7 @@
     <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="VaultSharp" Version="1.6.0" />
+    <PackageReference Include="VaultSharp" Version="1.6.2.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Solari.Sol\Solari.Sol.csproj" />
